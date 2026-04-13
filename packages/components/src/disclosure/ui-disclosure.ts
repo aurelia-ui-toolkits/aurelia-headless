@@ -9,17 +9,11 @@ let nextPanelId = 0;
 export class UiDisclosure {
   @bindable({ set: booleanAttr })
   open: boolean = false;
-  panelId: string = '';
+  
+  panelId: string = `ui-disclosure-panel-${++nextPanelId}`;
   hover: boolean = false;
   focus: boolean = false;
   active: boolean = false;
-
-  binding(): void {
-    if (!this.panelId) {
-      nextPanelId += 1;
-      this.panelId = `ui-disclosure-panel-${nextPanelId}`;
-    }
-  }
 
   onClick(event: MouseEvent): void {
     event.preventDefault();
