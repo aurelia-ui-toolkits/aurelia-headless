@@ -20,5 +20,13 @@
   pointerdown.trigger="onPointerDown()"
   pointerup.trigger="onPointerUp()"
   pointerleave.trigger="onPointerLeave()">
+  <input ref="controlEl"
+    class="ui-checkbox__control"
+    type="checkbox"
+    id.attr="inputId || null"
+    checked.bind="checked"
+    disabled.bind="disabled"
+    click.trigger="onInputClick($event)"
+    change.trigger="onInputChange($event)">
   <span class="ui-checkbox__indicator" aria-hidden="true"></span>
 </template>

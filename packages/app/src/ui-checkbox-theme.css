@@ -5,6 +5,10 @@
   transition: background-color 140ms ease, border-color 140ms ease, transform 140ms ease;
 }
 
+.ui-checkbox__control {
+  @apply absolute inset-0 m-0 h-full w-full cursor-pointer opacity-0;
+}
+
 .ui-checkbox[data-changing] {
   transition-duration: 90ms;
 }
@@ -24,7 +28,7 @@
 }
 
 .ui-checkbox__indicator {
-  @apply hidden;
+  @apply pointer-events-none hidden;
 }
 
 .ui-checkbox[data-checked] .ui-checkbox__indicator {

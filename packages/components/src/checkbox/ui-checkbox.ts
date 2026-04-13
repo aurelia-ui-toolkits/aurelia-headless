@@ -15,6 +15,9 @@ export class UiCheckbox {
   indeterminate: boolean = false;
 
   @bindable
+  inputId: string = '';
+
+  @bindable
   tabIndex: number = 0;
 
   hover: boolean = false;
@@ -22,11 +25,40 @@ export class UiCheckbox {
   active: boolean = false;
   changing: boolean = false;
 
+  controlEl!: HTMLInputElement;
+
   private changingFrame: number | null = null;
 
   onClick(event: MouseEvent): void {
+    if (event.target instanceof HTMLInputElement) {
+      return;
+    }
+
     event.preventDefault();
     this.toggle();
+  }
+
+  onInputClick(event: MouseEvent): void {
+    event.stopPropagation();
+  }
+
+  onInputChange(event: Event): void {
+    if (!(event.target instanceof HTMLInputElement) || this.disabled) {
+      return;
+    }
+
+    this.changing = true;
+    this.checked = event.target.checked;
+    this.indeterminate = false;
+
+    if (this.changingFrame !== null) {
+      cancelAnimationFrame(this.changingFrame);
+    }
+
+    this.changingFrame = requestAnimationFrame(() => {
+      this.changing = false;
+      this.changingFrame = null;
+    });
   }
 
   onKeyUp(event: KeyboardEvent): void {
@@ -92,6 +124,14 @@ export class UiCheckbox {
     }
   }
 
+  attached(): void {
+    this.syncControlIndeterminate();
+  }
+
+  indeterminateChanged(): void {
+    this.syncControlIndeterminate();
+  }
+
   private toggle(): void {
     if (this.disabled) {
       return;
@@ -129,5 +169,11 @@ export class UiCheckbox {
     }
 
     form.submit();
+  }
+
+  private syncControlIndeterminate(): void {
+    if (this.controlEl) {
+      this.controlEl.indeterminate = this.indeterminate;
+    }
   }
 }

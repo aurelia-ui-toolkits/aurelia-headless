@@ -65,30 +65,30 @@
 
     <demo-block title="Basic">
       <div class="checkbox-row">
-        <ui-checkbox checked.bind="marketingConsent"></ui-checkbox>
-        <label class="checkbox-label" click.trigger="marketingConsent = !marketingConsent">Marketing emails</label>
+        <ui-checkbox input-id="marketing-consent" checked.bind="marketingConsent"></ui-checkbox>
+        <label class="checkbox-label" for="marketing-consent">Marketing emails</label>
         <span class="checkbox-state">${marketingConsent ? 'Subscribed' : 'Unsubscribed'}</span>
       </div>
     </demo-block>
 
     <demo-block title="Disabled">
       <div class="checkbox-row">
-        <ui-checkbox checked disabled></ui-checkbox>
-        <span class="checkbox-label">Security updates</span>
+        <ui-checkbox input-id="security-updates" checked disabled></ui-checkbox>
+        <label class="checkbox-label" for="security-updates">Security updates</label>
       </div>
     </demo-block>
 
     <demo-block title="Indeterminate">
       <div class="checkbox-row">
-        <ui-checkbox indeterminate></ui-checkbox>
-        <span class="checkbox-label">Partially selected group</span>
+        <ui-checkbox input-id="partial-group" indeterminate></ui-checkbox>
+        <label class="checkbox-label" for="partial-group">Partially selected group</label>
       </div>
     </demo-block>
 
     <demo-block title="Two-way binding">
       <div class="checkbox-row">
-        <ui-checkbox checked.bind="termsAccepted"></ui-checkbox>
-        <label class="checkbox-label" click.trigger="termsAccepted = !termsAccepted">Accept terms</label>
+        <ui-checkbox input-id="accept-terms" checked.bind="termsAccepted"></ui-checkbox>
+        <label class="checkbox-label" for="accept-terms">Accept terms</label>
         <span class="checkbox-state">${termsAccepted ? 'Accepted' : 'Required'}</span>
       </div>
     </demo-block>
