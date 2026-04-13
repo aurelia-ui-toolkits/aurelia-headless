@@ -1,5 +1,5 @@
 <template class="ui-disclosure" data-open.attr="open ? '' : null">
-  <div class="ui-disclosure__button"
+  <div class="ui-disclosure__header"
     role="button"
     tabindex="0"
     aria-expanded.attr="open ? 'true' : 'false'"
@@ -18,15 +18,11 @@
     pointerdown.trigger="onPointerDown()"
     pointerup.trigger="onPointerUp()"
     pointerleave.trigger="onPointerLeave()">
-    <div class="ui-disclosure__trigger">
-      <au-slot name="header"></au-slot>
-      <span class="ui-disclosure__chevron" aria-hidden="true">▾</span>
-    </div>
+    <au-slot name="header"></au-slot>
+    <span class="ui-disclosure__chevron" aria-hidden="true">▾</span>
   </div>
 
-  <div class="ui-disclosure__panel" id.bind="panelId" data-open.attr="open ? '' : null" hidden.bind="!open">
-    <div class="ui-disclosure__content">
-      <au-slot name="content"></au-slot>
-    </div>
+  <div class="ui-disclosure__content" id.bind="panelId" data-open.attr="open ? '' : null" hidden.bind="!open">
+    <au-slot name="content"></au-slot>
   </div>
 </template>
