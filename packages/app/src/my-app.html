@@ -38,7 +38,7 @@
 
     <demo-block title="Basic">
       <div class="switch-row">
-        <button ui-switch checked.bind="emailNotifications"></button>
+        <ui-switch checked.bind="emailNotifications"></ui-switch>
         <span class="switch-label">Email notifications</span>
         <span class="switch-state">${emailNotifications ? 'On' : 'Off'}</span>
       </div>
@@ -46,14 +46,14 @@
 
     <demo-block title="Disabled">
       <div class="switch-row">
-        <button ui-switch tag="button" checked disabled></button>
+        <ui-switch checked disabled></ui-switch>
         <span class="switch-label">Auto updates</span>
       </div>
     </demo-block>
 
     <demo-block title="Two-way binding">
       <div class="switch-row">
-        <button ui-switch tag="button" checked.bind="desktopAlerts"></button>
+        <ui-switch checked.bind="desktopAlerts"></ui-switch>
         <span class="switch-label">Desktop alerts</span>
         <span class="switch-state">${desktopAlerts ? 'Enabled' : 'Disabled'}</span>
       </div>
