@@ -59,4 +59,38 @@
       </div>
     </demo-block>
   </section>
+
+  <section class="demo-section">
+    <h2 class="section-title">ui-checkbox</h2>
+
+    <demo-block title="Basic">
+      <div class="checkbox-row">
+        <ui-checkbox checked.bind="marketingConsent"></ui-checkbox>
+        <span class="checkbox-label">Marketing emails</span>
+        <span class="checkbox-state">${marketingConsent ? 'Subscribed' : 'Unsubscribed'}</span>
+      </div>
+    </demo-block>
+
+    <demo-block title="Disabled">
+      <div class="checkbox-row">
+        <ui-checkbox checked disabled></ui-checkbox>
+        <span class="checkbox-label">Security updates</span>
+      </div>
+    </demo-block>
+
+    <demo-block title="Indeterminate">
+      <div class="checkbox-row">
+        <ui-checkbox indeterminate></ui-checkbox>
+        <span class="checkbox-label">Partially selected group</span>
+      </div>
+    </demo-block>
+
+    <demo-block title="Two-way binding">
+      <div class="checkbox-row">
+        <ui-checkbox checked.bind="termsAccepted"></ui-checkbox>
+        <span class="checkbox-label">Accept terms</span>
+        <span class="checkbox-state">${termsAccepted ? 'Accepted' : 'Required'}</span>
+      </div>
+    </demo-block>
+  </section>
 </div>

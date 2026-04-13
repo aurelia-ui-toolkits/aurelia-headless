@@ -57,6 +57,18 @@ body {
   @apply text-sm text-ink-500;
 }
 
+.checkbox-row {
+  @apply flex items-center gap-3;
+}
+
+.checkbox-label {
+  @apply text-ink-900;
+}
+
+.checkbox-state {
+  @apply text-sm text-ink-500;
+}
+
 .btn-toggle {
   @apply ml-3 cursor-pointer rounded-[0.65rem] border border-card-border bg-white px-4 py-2 font-semibold text-ink-700;
   transition: background-color 140ms ease;
@@ -73,7 +85,8 @@ body {
 
   .status-text,
   .btn-toggle,
-  .switch-state {
+  .switch-state,
+  .checkbox-state {
     @apply mt-3 ml-0 block;
   }
 }

@@ -7,6 +7,8 @@ export class MyApp {
   isLoading = false;
   emailNotifications = true;
   desktopAlerts = false;
+  marketingConsent = true;
+  termsAccepted = false;
 
   handleClick(): void {
     this.clickCount++;

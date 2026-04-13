@@ -1,0 +1,25 @@
+<template class="ui-checkbox"
+  role="checkbox"
+  tabindex.bind="disabled ? null : tabIndex"
+  aria-checked.attr="indeterminate ? 'mixed' : checked ? 'true' : 'false'"
+  aria-disabled.attr="disabled ? '' : null"
+  data-checked.attr="checked ? '' : null"
+  data-disabled.attr="disabled ? '' : null"
+  data-indeterminate.attr="indeterminate ? '' : null"
+  data-hover.attr="hover ? '' : null"
+  data-focus.attr="focus ? '' : null"
+  data-active.attr="active ? '' : null"
+  data-changing.attr="changing ? '' : null"
+  click.trigger="onClick($event)"
+  keyup.trigger="onKeyUp($event)"
+  keypress.trigger="onKeyPress($event)"
+  mouseenter.trigger="onMouseEnter()"
+  mouseleave.trigger="onMouseLeave()"
+  focusin.trigger="onFocusIn()"
+  focusout.trigger="onFocusOut()"
+  pointerdown.trigger="onPointerDown()"
+  pointerup.trigger="onPointerUp()"
+  pointerleave.trigger="onPointerLeave()">
+  <span class="ui-checkbox__indicator" aria-hidden="true"></span>
+  <au-slot></au-slot>
+</template>
