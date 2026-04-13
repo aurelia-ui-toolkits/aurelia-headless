@@ -1,5 +1,6 @@
 import { bindable, BindingMode, customElement } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
+import { Keys } from '../base/keys';
 import template from './ui-switch.html?raw';
 
 @customElement({ name: 'ui-switch', template })
@@ -22,19 +23,19 @@ export class UiSwitch {
   }
 
   onKeyUp(event: KeyboardEvent): void {
-    if (event.key === ' ') {
+    if (event.key === Keys.Space) {
       event.preventDefault();
       this.toggle();
       return;
     }
 
-    if (event.key === 'Enter') {
+    if (event.key === Keys.Enter) {
       this.submitClosestForm(event.currentTarget);
     }
   }
 
   onKeyPress(event: KeyboardEvent): void {
-    if (event.key === ' ' || event.key === 'Enter') {
+    if (event.key ===  Keys.Space || event.key === Keys.Enter) {
       event.preventDefault();
     }
   }

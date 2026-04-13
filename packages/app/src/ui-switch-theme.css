@@ -1,7 +1,7 @@
 @reference "./theme.css";
 
 .ui-switch {
-  @apply relative inline-block h-7 w-12 cursor-pointer rounded-full border border-card-border bg-card-muted align-middle;
+  @apply relative inline-block h-7 w-12 cursor-pointer overflow-hidden rounded-full border border-card-border bg-card-muted align-middle;
   transition: background-color 140ms ease, border-color 140ms ease;
 }
 
@@ -9,9 +9,8 @@
   transition-duration: 90ms;
 }
 
-.ui-switch::after {
-  content: "";
-  @apply absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white shadow-sm;
+.ui-switch-thumb {
+  @apply absolute bottom-0 left-0.5 top-0 my-auto h-5 w-5 rounded-full bg-white shadow-sm;
   transition: transform 140ms ease;
 }
 
@@ -19,7 +18,7 @@
   @apply border-primary-600 bg-primary-600;
 }
 
-.ui-switch[data-checked]::after {
+.ui-switch[data-checked] .ui-switch-thumb {
   transform: translateX(1.5rem);
 }
 
@@ -28,11 +27,11 @@
   outline-offset: 2px;
 }
 
-.ui-switch[data-active]::after {
+.ui-switch[data-active] .ui-switch-thumb {
   transform: translateX(0.1rem);
 }
 
-.ui-switch[data-checked][data-active]::after {
+.ui-switch[data-checked][data-active] .ui-switch-thumb {
   transform: translateX(1.4rem);
 }
 
