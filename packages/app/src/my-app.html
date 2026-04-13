@@ -5,31 +5,31 @@
     <h2 class="section-title">ui-button</h2>
 
     <demo-block title="Basic">
-      <ui-button primary click.trigger="handleClick()">
+      <button ui-button primary click.trigger="handleClick()">
         Click me
-      </ui-button>
+      </button>
       <span class="status-text">Clicked: ${clickCount} times</span>
     </demo-block>
 
     <demo-block title="Disabled">
-      <ui-button primary disabled>
+      <button ui-button primary disabled>
         I'm disabled
-      </ui-button>
+      </button>
     </demo-block>
 
     <demo-block title="Toggle disabled">
-      <ui-button primary disabled.bind="isLoading" click.trigger="handleClick()">
+      <button ui-button primary disabled.bind="isLoading" click.trigger="handleClick()">
         ${isLoading ? 'Loading...' : 'Submit'}
-      </ui-button>
-      <button click.trigger="toggleLoading()" class="btn-toggle">
+      </button>
+      <button ui-button click.trigger="toggleLoading()" class="btn-toggle">
         Toggle loading: ${isLoading}
       </button>
     </demo-block>
 
     <demo-block title="Outlined variant">
-      <ui-button outlined click.trigger="handleClick()">
+      <button ui-button outlined click.trigger="handleClick()">
         Outlined
-      </ui-button>
+      </button>
     </demo-block>
   </section>
 
@@ -38,7 +38,7 @@
 
     <demo-block title="Basic">
       <div class="switch-row">
-        <ui-switch checked.bind="emailNotifications"></ui-switch>
+        <button ui-switch checked.bind="emailNotifications"></button>
         <span class="switch-label">Email notifications</span>
         <span class="switch-state">${emailNotifications ? 'On' : 'Off'}</span>
       </div>
@@ -46,14 +46,14 @@
 
     <demo-block title="Disabled">
       <div class="switch-row">
-        <ui-switch tag="button" checked disabled></ui-switch>
+        <button ui-switch tag="button" checked disabled></button>
         <span class="switch-label">Auto updates</span>
       </div>
     </demo-block>
 
     <demo-block title="Two-way binding">
       <div class="switch-row">
-        <ui-switch tag="button" checked.bind="desktopAlerts"></ui-switch>
+        <button ui-switch tag="button" checked.bind="desktopAlerts"></button>
         <span class="switch-label">Desktop alerts</span>
         <span class="switch-state">${desktopAlerts ? 'Enabled' : 'Disabled'}</span>
       </div>
