@@ -11,7 +11,7 @@ export class UiCheckbox {
   @bindable({ set: booleanAttr })
   disabled: boolean = false;
 
-  @bindable({ set: booleanAttr })
+  @bindable({ mode: BindingMode.twoWay, set: booleanAttr })
   indeterminate: boolean = false;
 
   @bindable
@@ -98,7 +98,12 @@ export class UiCheckbox {
     }
 
     this.changing = true;
-    this.checked = !this.checked;
+    if (this.indeterminate) {
+      this.indeterminate = false;
+      this.checked = true;
+    } else {
+      this.checked = !this.checked;
+    }
 
     if (this.changingFrame !== null) {
       cancelAnimationFrame(this.changingFrame);

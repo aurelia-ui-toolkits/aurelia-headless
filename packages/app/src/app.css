@@ -62,7 +62,7 @@ body {
 }
 
 .checkbox-label {
-  @apply text-ink-900;
+  @apply cursor-pointer text-ink-900;
 }
 
 .checkbox-state {

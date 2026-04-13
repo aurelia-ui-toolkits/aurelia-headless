@@ -66,7 +66,7 @@
     <demo-block title="Basic">
       <div class="checkbox-row">
         <ui-checkbox checked.bind="marketingConsent"></ui-checkbox>
-        <span class="checkbox-label">Marketing emails</span>
+        <label class="checkbox-label" click.trigger="marketingConsent = !marketingConsent">Marketing emails</label>
         <span class="checkbox-state">${marketingConsent ? 'Subscribed' : 'Unsubscribed'}</span>
       </div>
     </demo-block>
@@ -87,8 +87,8 @@
 
     <demo-block title="Two-way binding">
       <div class="checkbox-row">
-        <ui-checkbox checked.bind="termsAccepted">Test</ui-checkbox>
-        <span class="checkbox-label">Accept terms</span>
+        <ui-checkbox checked.bind="termsAccepted"></ui-checkbox>
+        <label class="checkbox-label" click.trigger="termsAccepted = !termsAccepted">Accept terms</label>
         <span class="checkbox-state">${termsAccepted ? 'Accepted' : 'Required'}</span>
       </div>
     </demo-block>
