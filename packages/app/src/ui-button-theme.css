@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@reference "./main.css";
+@reference "./theme.css";
 
 .ui-button {
   @apply inline-block cursor-pointer select-none rounded-[0.65rem] border-2 border-transparent px-4 py-2 font-bold leading-none;

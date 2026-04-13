@@ -1,8 +1,7 @@
 import { customElement } from 'aurelia';
-import { DemoBlock } from './elements/demo-block/demo-block';
 import template from './my-app.html?raw';
 
-@customElement({ name: 'my-app', template, dependencies: [DemoBlock] })
+@customElement({ name: 'my-app', template })
 export class MyApp {
   clickCount = 0;
   isLoading = false;
