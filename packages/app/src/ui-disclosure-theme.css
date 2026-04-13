@@ -1,0 +1,36 @@
+@reference "./theme.css";
+
+.ui-disclosure {
+  @apply grid gap-2;
+}
+
+.ui-disclosure__trigger {
+  @apply flex w-full items-center justify-between rounded-lg border border-card-border bg-card px-3 py-2 text-left font-semibold text-ink-900;
+  transition: background-color 140ms ease, border-color 140ms ease;
+}
+
+.ui-disclosure-button[data-hover].ui-disclosure__trigger {
+  @apply bg-card-muted;
+}
+
+.ui-disclosure-button[data-focus].ui-disclosure__trigger {
+  outline: 3px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+.ui-disclosure-button[data-active].ui-disclosure__trigger {
+  @apply bg-card-muted;
+}
+
+.ui-disclosure__chevron {
+  @apply text-sm text-ink-500;
+  transition: transform 160ms ease;
+}
+
+.ui-disclosure-button[data-open] .ui-disclosure__chevron {
+  transform: rotate(180deg);
+}
+
+.ui-disclosure__content {
+  @apply rounded-lg border border-card-border/70 bg-white px-3 py-2 text-sm text-ink-700;
+}

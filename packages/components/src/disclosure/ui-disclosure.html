@@ -1,0 +1,10 @@
+<template class="ui-disclosure"
+  data-open.attr="open ? '' : null"
+  data-button-id.attr="buttonId || null"
+  data-panel-id.attr="panelId || null"
+  ui-disclosure-toggle.trigger="onToggle($event)"
+  ui-disclosure-close.trigger="onClose($event)"
+  ui-disclosure-register-button.trigger="onRegisterButton($event)"
+  ui-disclosure-register-panel.trigger="onRegisterPanel($event)">
+  <au-slot></au-slot>
+</template>

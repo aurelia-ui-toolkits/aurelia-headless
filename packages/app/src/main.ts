@@ -6,6 +6,7 @@ import './theme.css';
 import './app.css';
 import './ui-button-theme.css';
 import './ui-checkbox-theme.css';
+import './ui-disclosure-theme.css';
 import './ui-switch-theme.css';
 
 Aurelia
