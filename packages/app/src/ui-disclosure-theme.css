@@ -4,21 +4,25 @@
   @apply grid gap-2;
 }
 
+.ui-disclosure__button {
+  @apply rounded-lg;
+}
+
 .ui-disclosure__trigger {
-  @apply flex w-full items-center justify-between rounded-lg border border-card-border bg-card px-3 py-2 text-left font-semibold text-ink-900;
+  @apply flex w-full cursor-pointer select-none items-center justify-between rounded-lg border border-card-border bg-card px-3 py-2 text-left font-semibold text-ink-900;
   transition: background-color 140ms ease, border-color 140ms ease;
 }
 
-.ui-disclosure-button[data-hover].ui-disclosure__trigger {
+.ui-disclosure__button[data-hover] .ui-disclosure__trigger {
   @apply bg-card-muted;
 }
 
-.ui-disclosure-button[data-focus].ui-disclosure__trigger {
+.ui-disclosure__button[data-focus] .ui-disclosure__trigger {
   outline: 3px solid var(--color-ring);
   outline-offset: 2px;
 }
 
-.ui-disclosure-button[data-active].ui-disclosure__trigger {
+.ui-disclosure__button[data-active] .ui-disclosure__trigger {
   @apply bg-card-muted;
 }
 
@@ -27,7 +31,7 @@
   transition: transform 160ms ease;
 }
 
-.ui-disclosure-button[data-open] .ui-disclosure__chevron {
+.ui-disclosure[data-open] .ui-disclosure__chevron {
   transform: rotate(180deg);
 }
 

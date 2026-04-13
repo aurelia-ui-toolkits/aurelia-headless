@@ -1,10 +1,27 @@
-<template class="ui-disclosure"
-  data-open.attr="open ? '' : null"
-  data-button-id.attr="buttonId || null"
-  data-panel-id.attr="panelId || null"
-  ui-disclosure-toggle.trigger="onToggle($event)"
-  ui-disclosure-close.trigger="onClose($event)"
-  ui-disclosure-register-button.trigger="onRegisterButton($event)"
-  ui-disclosure-register-panel.trigger="onRegisterPanel($event)">
-  <au-slot></au-slot>
+<template class="ui-disclosure" data-open.attr="open ? '' : null">
+  <div class="ui-disclosure__button"
+    role="button"
+    tabindex="0"
+    aria-expanded.attr="open ? 'true' : 'false'"
+    aria-controls.bind="panelId"
+    data-open.attr="open ? '' : null"
+    data-hover.attr="hover ? '' : null"
+    data-focus.attr="focus ? '' : null"
+    data-active.attr="active ? '' : null"
+    click.trigger="onClick($event)"
+    keydown.trigger="onKeyDown($event)"
+    keyup.trigger="onKeyUp($event)"
+    mouseenter.trigger="onMouseEnter()"
+    mouseleave.trigger="onMouseLeave()"
+    focusin.trigger="onFocusIn()"
+    focusout.trigger="onFocusOut()"
+    pointerdown.trigger="onPointerDown()"
+    pointerup.trigger="onPointerUp()"
+    pointerleave.trigger="onPointerLeave()">
+    <au-slot name="button"></au-slot>
+  </div>
+
+  <div class="ui-disclosure__panel" id.bind="panelId" data-open.attr="open ? '' : null" hidden.bind="!open">
+    <au-slot name="panel"></au-slot>
+  </div>
 </template>

@@ -1,12 +1,9 @@
-import { bindable, customElement, INode, resolve } from 'aurelia';
+import { bindable, customElement } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
+import { Keys } from '../base/keys';
 import template from './ui-disclosure.html?raw';
 
-type DisclosureState = {
-  open: boolean;
-  buttonId: string | null;
-  panelId: string | null;
-};
+let nextPanelId = 0;
 
 @customElement({ name: 'ui-disclosure', template })
 export class UiDisclosure {
@@ -14,59 +11,67 @@ export class UiDisclosure {
   defaultOpen: boolean = false;
 
   open: boolean = false;
-  buttonId: string | null = null;
-  panelId: string | null = null;
-
-  private readonly host = resolve(INode) as HTMLElement;
+  panelId: string = '';
+  hover: boolean = false;
+  focus: boolean = false;
+  active: boolean = false;
 
   binding(): void {
     this.open = this.defaultOpen;
+    if (!this.panelId) {
+      nextPanelId += 1;
+      this.panelId = `ui-disclosure-panel-${nextPanelId}`;
+    }
   }
 
-  attached(): void {
-    this.publishState();
+  onClick(event: MouseEvent): void {
+    event.preventDefault();
+    this.toggle();
   }
 
-  onToggle(event: Event): void {
-    event.stopPropagation();
+  onKeyDown(event: KeyboardEvent): void {
+    if (event.key === Keys.Space || event.key === Keys.Enter) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.toggle();
+    }
+  }
+
+  onKeyUp(event: KeyboardEvent): void {
+    if (event.key === Keys.Space) {
+      event.preventDefault();
+    }
+  }
+
+  onMouseEnter(): void {
+    this.hover = true;
+  }
+
+  onMouseLeave(): void {
+    this.hover = false;
+  }
+
+  onFocusIn(): void {
+    this.focus = true;
+  }
+
+  onFocusOut(): void {
+    this.focus = false;
+  }
+
+  onPointerDown(): void {
+    this.active = true;
+  }
+
+  onPointerUp(): void {
+    this.active = false;
+  }
+
+  onPointerLeave(): void {
+    this.active = false;
+  }
+
+  private toggle(): void {
     this.open = !this.open;
-    this.publishState();
-  }
-
-  onClose(event: Event): void {
-    event.stopPropagation();
-    if (this.open) {
-      this.open = false;
-      this.publishState();
-    }
-  }
-
-  onRegisterButton(event: CustomEvent<{ id?: string }>): void {
-    event.stopPropagation();
-    this.buttonId = event.detail?.id ?? null;
-    this.publishState();
-  }
-
-  onRegisterPanel(event: CustomEvent<{ id?: string }>): void {
-    event.stopPropagation();
-    this.panelId = event.detail?.id ?? null;
-    this.publishState();
-  }
-
-  close(): void {
-    if (this.open) {
-      this.open = false;
-      this.publishState();
-    }
-  }
-
-  private publishState(): void {
-    this.host.dispatchEvent(new CustomEvent<DisclosureState>('ui-disclosure-state', {
-      detail: {
-        open: this.open,
-        buttonId: this.buttonId,
-        panelId: this.panelId
-      }
-    }));
   }
 }
