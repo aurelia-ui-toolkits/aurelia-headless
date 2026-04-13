@@ -1,0 +1,36 @@
+{
+  "name": "@aurelia-headless/components",
+  "version": "0.0.1",
+  "description": "Headless UI components for Aurelia 2",
+  "license": "MIT",
+  "author": "Maxim Balaganskiy <m.balaganskiy@gmail.com>",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
+  "typings": "dist/types/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build:ts": "tsc -p tsconfig.build.json",
+    "build:other": "copyfiles -u 1 src/**/*.html dist",
+    "build": "npm run build:ts && npm run build:other"
+  },
+  "dependencies": {
+    "aurelia": ">=2.0.0-rc.0",
+    "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "copyfiles": "^2.4.1",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.7.0"
+  }
+}

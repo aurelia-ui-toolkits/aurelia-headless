@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Bash(npm install:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(mkdir -p packages/components)",
+      "Bash(mv src:*)",
+      "Bash(mv tsconfig.build.json packages/components/)",
+      "Bash(mv tsconfig.json packages/components/)",
+      "Bash(mv app:*)",
+      "Bash(npx vite:*)"
     ]
   }
 }

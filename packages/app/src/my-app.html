@@ -1,0 +1,61 @@
+<div class="max-w-2xl mx-auto p-8 font-sans">
+  <h1 class="text-3xl font-bold mb-8">Aurelia Headless UI</h1>
+
+  <section class="mb-12">
+    <h2 class="text-xl font-semibold mb-4">ui-button</h2>
+
+    <!-- Basic button -->
+    <div class="mb-6">
+      <h3 class="text-sm font-medium text-gray-500 mb-2">Basic</h3>
+      <ui-button click.trigger="handleClick()"
+        class="px-4 py-2 rounded bg-blue-600 text-white
+          [&[data-hover]]:bg-blue-700
+          [&[data-focus]]:outline [&[data-focus]]:outline-2 [&[data-focus]]:outline-blue-400 [&[data-focus]]:outline-offset-2
+          [&[data-active]]:bg-blue-800 [&[data-active]]:scale-95
+          transition-all inline-block cursor-pointer select-none">
+        Click me
+      </ui-button>
+      <span class="ml-4 text-gray-600">Clicked: ${clickCount} times</span>
+    </div>
+
+    <!-- Disabled button -->
+    <div class="mb-6">
+      <h3 class="text-sm font-medium text-gray-500 mb-2">Disabled</h3>
+      <ui-button disabled.bind="true"
+        class="px-4 py-2 rounded bg-blue-600 text-white
+          [&[data-disabled]]:opacity-50 [&[data-disabled]]:cursor-not-allowed
+          inline-block select-none">
+        I'm disabled
+      </ui-button>
+    </div>
+
+    <!-- Toggle disabled -->
+    <div class="mb-6">
+      <h3 class="text-sm font-medium text-gray-500 mb-2">Toggle disabled</h3>
+      <ui-button disabled.bind="isLoading" click.trigger="handleClick()"
+        class="px-4 py-2 rounded bg-green-600 text-white
+          [&[data-hover]]:bg-green-700
+          [&[data-active]]:bg-green-800
+          [&[data-disabled]]:opacity-50 [&[data-disabled]]:cursor-not-allowed
+          transition-all inline-block cursor-pointer select-none">
+        ${isLoading ? 'Loading...' : 'Submit'}
+      </ui-button>
+      <button click.trigger="toggleLoading()" class="ml-4 px-3 py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-50 cursor-pointer">
+        Toggle loading: ${isLoading}
+      </button>
+    </div>
+
+    <!-- Outlined style -->
+    <div class="mb-6">
+      <h3 class="text-sm font-medium text-gray-500 mb-2">Outlined variant</h3>
+      <ui-button click.trigger="handleClick()"
+        class="px-4 py-2 rounded border-2 border-blue-600 text-blue-600 bg-transparent
+          [&[data-hover]]:bg-blue-50
+          [&[data-focus]]:outline [&[data-focus]]:outline-2 [&[data-focus]]:outline-blue-400 [&[data-focus]]:outline-offset-2
+          [&[data-active]]:bg-blue-100
+          transition-all inline-block cursor-pointer select-none">
+        Outlined
+      </ui-button>
+    </div>
+  </section>
+</div>
