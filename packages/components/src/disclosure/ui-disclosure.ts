@@ -8,8 +8,6 @@ let nextPanelId = 0;
 @customElement({ name: 'ui-disclosure', template })
 export class UiDisclosure {
   @bindable({ set: booleanAttr })
-  defaultOpen: boolean = false;
-
   open: boolean = false;
   panelId: string = '';
   hover: boolean = false;
@@ -17,7 +15,6 @@ export class UiDisclosure {
   active: boolean = false;
 
   binding(): void {
-    this.open = this.defaultOpen;
     if (!this.panelId) {
       nextPanelId += 1;
       this.panelId = `ui-disclosure-panel-${nextPanelId}`;
