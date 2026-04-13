@@ -99,11 +99,10 @@
 
     <demo-block title="Basic">
       <ui-disclosure>
-        <div au-slot="button" class="ui-disclosure__trigger">
+        <div au-slot="header">
           What is Aurelia Headless?
-          <span class="ui-disclosure__chevron" aria-hidden="true">▾</span>
         </div>
-        <div au-slot="panel" class="ui-disclosure__content">
+        <div au-slot="content">
           A set of unstyled, accessible interaction primitives for Aurelia, inspired by Headless UI.
         </div>
       </ui-disclosure>
@@ -111,11 +110,10 @@
 
     <demo-block title="Default open">
       <ui-disclosure default-open>
-        <div au-slot="button" class="ui-disclosure__trigger">
+        <div au-slot="header">
           Shipping details
-          <span class="ui-disclosure__chevron" aria-hidden="true">▾</span>
         </div>
-        <div au-slot="panel" class="ui-disclosure__content">
+        <div au-slot="content">
           Free shipping for orders over $50. Delivery takes 3-5 business days.
         </div>
       </ui-disclosure>

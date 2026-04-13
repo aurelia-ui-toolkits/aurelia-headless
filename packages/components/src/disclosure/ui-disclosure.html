@@ -18,10 +18,15 @@
     pointerdown.trigger="onPointerDown()"
     pointerup.trigger="onPointerUp()"
     pointerleave.trigger="onPointerLeave()">
-    <au-slot name="button"></au-slot>
+    <div class="ui-disclosure__trigger">
+      <au-slot name="header"></au-slot>
+      <span class="ui-disclosure__chevron" aria-hidden="true">▾</span>
+    </div>
   </div>
 
   <div class="ui-disclosure__panel" id.bind="panelId" data-open.attr="open ? '' : null" hidden.bind="!open">
-    <au-slot name="panel"></au-slot>
+    <div class="ui-disclosure__content">
+      <au-slot name="content"></au-slot>
+    </div>
   </div>
 </template>
