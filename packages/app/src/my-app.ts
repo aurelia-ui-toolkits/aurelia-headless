@@ -5,6 +5,8 @@ import template from './my-app.html?raw';
 export class MyApp {
   clickCount = 0;
   isLoading = false;
+  emailNotifications = true;
+  desktopAlerts = false;
 
   handleClick(): void {
     this.clickCount++;

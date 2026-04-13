@@ -1,0 +1,23 @@
+<template class="ui-switch"
+  role="switch"
+  tabindex.bind="disabled ? -1 : 0"
+  aria-checked.attr="checked ? 'true' : 'false'"
+  aria-disabled.attr="disabled ? '' : null"
+  data-checked.attr="checked ? '' : null"
+  data-disabled.attr="disabled ? '' : null"
+  data-hover.attr="hover ? '' : null"
+  data-focus.attr="focus ? '' : null"
+  data-active.attr="active ? '' : null"
+  data-changing.attr="changing ? '' : null"
+  click.trigger="onClick()"
+  keyup.trigger="onKeyUp($event)"
+  keypress.trigger="onKeyPress($event)"
+  mouseenter.trigger="onMouseEnter()"
+  mouseleave.trigger="onMouseLeave()"
+  focusin.trigger="onFocusIn()"
+  focusout.trigger="onFocusOut()"
+  pointerdown.trigger="onPointerDown()"
+  pointerup.trigger="onPointerUp()"
+  pointerleave.trigger="onPointerLeave()">
+  <au-slot></au-slot>
+</template>

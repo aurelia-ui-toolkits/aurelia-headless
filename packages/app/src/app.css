@@ -25,6 +25,10 @@ body {
   @apply grid gap-5;
 }
 
+.demo-section + .demo-section {
+  @apply mt-10;
+}
+
 .section-title {
   @apply m-0 text-[1.35rem] font-semibold;
 }
@@ -39,6 +43,18 @@ body {
 
 .status-text {
   @apply ml-3 text-ink-500;
+}
+
+.switch-row {
+  @apply flex items-center gap-3;
+}
+
+.switch-label {
+  @apply text-ink-900;
+}
+
+.switch-state {
+  @apply text-sm text-ink-500;
 }
 
 .btn-toggle {
@@ -56,7 +72,8 @@ body {
   }
 
   .status-text,
-  .btn-toggle {
+  .btn-toggle,
+  .switch-state {
     @apply mt-3 ml-0 block;
   }
 }

@@ -5,6 +5,7 @@ import { MyApp } from './my-app';
 import './theme.css';
 import './app.css';
 import './ui-button-theme.css';
+import './ui-switch-theme.css';
 
 Aurelia
   .register(AureliaHeadlessConfiguration, DemoBlock)
