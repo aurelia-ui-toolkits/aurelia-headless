@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.build.json",
+  "compilerOptions": {
+    "rootDir": "./packages",
+    "paths": {
+      "aurelia-headless": ["./packages/components/src"]
+    }
+  }
+}
