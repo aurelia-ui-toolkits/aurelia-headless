@@ -15,7 +15,7 @@ export class UiCheckbox {
   indeterminate: boolean = false;
 
   @bindable
-  inputId: string = '';
+  id: string = '';
 
   @bindable
   tabIndex: number = 0;
