@@ -7,6 +7,12 @@ export class UiButton {
   @bindable({ set: booleanAttr })
   disabled: boolean = false;
 
+  @bindable({ set: booleanAttr })
+  primary: boolean = false;
+
+  @bindable({ set: booleanAttr })
+  outlined: boolean = false;
+
   hover: boolean = false;
   focus: boolean = false;
   active: boolean = false;

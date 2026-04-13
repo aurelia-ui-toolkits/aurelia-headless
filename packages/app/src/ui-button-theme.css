@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@reference "./main.css";
+
+.ui-button {
+  @apply inline-block cursor-pointer select-none rounded-[0.65rem] border-2 border-transparent px-4 py-2 font-bold leading-none;
+  transition: background-color 140ms ease, transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+}
+
+.ui-button[data-focus] {
+  outline: 3px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+.ui-button[data-active] {
+  transform: scale(0.97);
+}
+
+.ui-button[data-disabled] {
+  @apply cursor-not-allowed opacity-50;
+}
+
+.ui-button[data-primary] {
+  @apply bg-primary-600 text-white;
+}
+
+.ui-button[data-primary][data-hover] {
+  @apply bg-primary-700;
+}
+
+.ui-button[data-primary][data-active] {
+  @apply bg-primary-800;
+}
+
+.ui-button[data-outlined] {
+  @apply border-primary-600 bg-transparent text-primary-600;
+}
+
+.ui-button[data-outlined][data-hover] {
+  @apply bg-outline-hover;
+}
+
+.ui-button[data-outlined][data-active] {
+  @apply bg-outline-active;
+}
