@@ -4,36 +4,32 @@
   <section class="demo-section">
     <h2 class="section-title">ui-button</h2>
 
-    <div class="demo-block">
-      <h3 class="demo-title">Basic</h3>
+    <demo-block title="Basic">
       <ui-button primary click.trigger="handleClick()">
         Click me
       </ui-button>
       <span class="status-text">Clicked: ${clickCount} times</span>
-    </div>
+    </demo-block>
 
-    <div class="demo-block">
-      <h3 class="demo-title">Disabled</h3>
+    <demo-block title="Disabled">
       <ui-button primary disabled>
         I'm disabled
       </ui-button>
-    </div>
+    </demo-block>
 
-    <div class="demo-block">
-      <h3 class="demo-title">Toggle disabled</h3>
+    <demo-block title="Toggle disabled">
       <ui-button primary disabled.bind="isLoading" click.trigger="handleClick()">
         ${isLoading ? 'Loading...' : 'Submit'}
       </ui-button>
       <button click.trigger="toggleLoading()" class="btn-toggle">
         Toggle loading: ${isLoading}
       </button>
-    </div>
+    </demo-block>
 
-    <div class="demo-block">
-      <h3 class="demo-title">Outlined variant</h3>
+    <demo-block title="Outlined variant">
       <ui-button outlined click.trigger="handleClick()">
         Outlined
       </ui-button>
-    </div>
+    </demo-block>
   </section>
 </div>

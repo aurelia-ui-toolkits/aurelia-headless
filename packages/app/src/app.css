@@ -1,0 +1,62 @@
+@reference "./main.css";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  @apply m-0 min-h-screen font-sans text-ink-900;
+  background: radial-gradient(circle at 20% 10%, #f3f7ff 0%, #eef2ff 35%, #f7fafc 100%);
+}
+
+.app-shell {
+  width: min(48rem, calc(100% - 2rem));
+  @apply mx-auto my-8 rounded-2xl border border-card-border bg-white/90 p-8;
+  backdrop-filter: blur(8px);
+}
+
+.app-title {
+  @apply m-0 mb-7;
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  letter-spacing: -0.02em;
+}
+
+.demo-section {
+  @apply grid gap-5;
+}
+
+.section-title {
+  @apply m-0 text-[1.35rem] font-semibold;
+}
+
+.demo-block {
+  @apply rounded-xl border border-black/10 bg-card p-4;
+}
+
+.demo-title {
+  @apply m-0 mb-3 text-xs font-bold uppercase tracking-wide text-ink-500;
+}
+
+.status-text {
+  @apply ml-3 text-ink-500;
+}
+
+.btn-toggle {
+  @apply ml-3 cursor-pointer rounded-[0.65rem] border border-card-border bg-white px-4 py-2 font-semibold text-ink-700;
+  transition: background-color 140ms ease;
+}
+
+.btn-toggle:hover {
+  @apply bg-card-muted;
+}
+
+@media (max-width: 640px) {
+  .app-shell {
+    @apply my-4 p-4;
+  }
+
+  .status-text,
+  .btn-toggle {
+    @apply mt-3 ml-0 block;
+  }
+}
