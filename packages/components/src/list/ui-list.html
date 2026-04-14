@@ -1,0 +1,9 @@
+<template class="ui-list"
+  role="listbox"
+  tabindex="0"
+  data-orientation.bind="orientation"
+  keydown.trigger="onKeyDown($event)"
+  click.trigger="onClick($event)"
+  mouseover.trigger="onMouseOver($event)">
+  <au-slot></au-slot>
+</template>

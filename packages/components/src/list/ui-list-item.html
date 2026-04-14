@@ -1,0 +1,15 @@
+<template class="ui-list-item"
+  role="option"
+  aria-disabled.attr="disabled ? '' : null"
+  data-active.attr="active ? '' : null"
+  data-disabled.attr="disabled ? '' : null">
+  <span class="ui-list-item__leading">
+    <au-slot name="leading"></au-slot>
+  </span>
+  <span class="ui-list-item__content">
+    <au-slot></au-slot>
+  </span>
+  <span class="ui-list-item__trailing">
+    <au-slot name="trailing"></au-slot>
+  </span>
+</template>

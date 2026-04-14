@@ -69,6 +69,10 @@ body {
   @apply text-sm text-ink-500;
 }
 
+.list-state {
+  @apply mt-2 block text-sm text-ink-500;
+}
+
 .btn-toggle {
   @apply ml-3 cursor-pointer rounded-[0.65rem] border border-card-border bg-white px-4 py-2 font-semibold text-ink-700;
   transition: background-color 140ms ease;
@@ -86,7 +90,8 @@ body {
   .status-text,
   .btn-toggle,
   .switch-state,
-  .checkbox-state {
+  .checkbox-state,
+  .list-state {
     @apply mt-3 ml-0 block;
   }
 }

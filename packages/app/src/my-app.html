@@ -119,4 +119,30 @@
       </ui-disclosure>
     </demo-block>
   </section>
+
+  <section class="demo-section">
+    <h2 class="section-title">ui-list</h2>
+
+    <demo-block title="Fallback to rendered items">
+      <ui-list list-activate.trigger="onListActivate($event)" list-select.trigger="onListSelect($event)">
+        <ui-list-item repeat.for="item of staticList" value.bind="item" disabled.bind="item.disabled">
+          <span au-slot="leading">•</span>
+          ${item.label}
+          <span au-slot="trailing">${item.category}</span>
+        </ui-list-item>
+      </ui-list>
+      <span class="list-state">Active: ${listActivation}</span>
+      <span class="list-state">Selected: ${listSelection}</span>
+    </demo-block>
+
+    <demo-block title="Items bindable (virtual-ready)">
+      <ui-list items.bind="virtualList" list-activate.trigger="onListActivate($event)" list-select.trigger="onListSelect($event)">
+        <ui-list-item repeat.for="item of virtualList" value.bind="item" disabled.bind="item.disabled">
+          <span au-slot="leading">${item.id}</span>
+          ${item.label}
+          <span au-slot="trailing">${item.category}</span>
+        </ui-list-item>
+      </ui-list>
+    </demo-block>
+  </section>
 </div>

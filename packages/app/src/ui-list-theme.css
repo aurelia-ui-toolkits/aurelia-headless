@@ -1,0 +1,27 @@
+@reference "./theme.css";
+
+.ui-list {
+  @apply grid gap-1 rounded-xl border border-card-border bg-white p-1;
+}
+
+.ui-list-item {
+  @apply grid grid-cols-[1.25rem_1fr_auto] items-center gap-3 rounded-lg px-3 py-2 text-sm text-ink-700;
+  transition: background-color 140ms ease;
+}
+
+.ui-list-item[data-active] {
+  @apply bg-outline-hover text-ink-900;
+}
+
+.ui-list-item[data-disabled] {
+  @apply cursor-not-allowed opacity-50;
+}
+
+.ui-list-item__leading,
+.ui-list-item__trailing {
+  @apply text-ink-500;
+}
+
+.ui-list-item__content {
+  @apply truncate;
+}
