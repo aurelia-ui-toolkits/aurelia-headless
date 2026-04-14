@@ -4,6 +4,8 @@ import template from './ui-list-item.html?raw';
 
 @customElement({ name: 'ui-list-item', template })
 export class UiListItem {
+  readonly element = resolve(INode) as HTMLElement;
+
   @bindable
   value: object | null = null;
 
@@ -11,8 +13,6 @@ export class UiListItem {
   disabled: boolean = false;
 
   active: boolean = false;
-
-  readonly element = resolve(INode) as HTMLElement;
 
   getTextValue(): string {
     return this.element.textContent?.trim() ?? '';

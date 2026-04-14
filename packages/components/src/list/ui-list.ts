@@ -13,8 +13,13 @@ type ListEventDetail = {
 
 @customElement({ name: 'ui-list', template })
 export class UiList {
+  private readonly host = resolve(INode) as HTMLElement;
+
   @bindable
   items: object[] | null = null;
+  itemsChanged(): void {
+    this.syncActiveState();
+  }
 
   @bindable({ set: booleanAttr })
   loop: boolean = true;
@@ -30,10 +35,12 @@ export class UiList {
     map: (_node, viewModel) => viewModel
   })
   listItems: UiListItem[] = [];
+  listItemsChanged(): void {
+    this.syncActiveState();
+  }
 
   activeIndex: number = -1;
 
-  private readonly host = resolve(INode) as HTMLElement;
   private activeValue: object | null = null;
   private typeaheadBuffer = '';
   private typeaheadTimer: ReturnType<typeof setTimeout> | null = null;
@@ -44,15 +51,6 @@ export class UiList {
 
   detaching(): void {
     this.clearTypeahead();
-  }
-
-  itemsChanged(): void {
-    this.syncActiveState();
-  }
-
-  listItemsChanged(): void {
-    this.listItems = this.listItems.filter((item): item is UiListItem => item instanceof UiListItem);
-    this.syncActiveState();
   }
 
   onKeyDown(event: KeyboardEvent): void {
