@@ -14,11 +14,30 @@ export class UiListItem {
 
   @bindable({ set: booleanAttr })
   active: boolean = false;
+  activeChanged(): void {
+    this.syncFlag('active', this.active);
+  }
 
   @bindable({ set: booleanAttr })
   selected: boolean = false;
+  selectedChanged(): void {
+    this.syncFlag('selected', this.selected);
+  }
+
+  valueChanged(): void {
+    this.syncFlag('active', this.active);
+    this.syncFlag('selected', this.selected);
+  }
 
   getTextValue(): string {
     return this.element.textContent?.trim() ?? '';
+  }
+
+  private syncFlag(flag: 'active' | 'selected', value: boolean): void {
+    if (!this.value || typeof this.value !== 'object') {
+      return;
+    }
+
+    (this.value as Record<string, unknown>)[flag] = value;
   }
 }

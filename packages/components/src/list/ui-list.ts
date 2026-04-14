@@ -17,9 +17,6 @@ export class UiList {
 
   @bindable
   items: object[] | null = null;
-  itemsChanged(): void {
-    this.syncState();
-  }
 
   @bindable({ set: booleanAttr })
   loop: boolean = true;
@@ -35,18 +32,9 @@ export class UiList {
     map: (_node, viewModel) => viewModel
   })
   listItems: UiListItem[] = [];
-  listItemsChanged(): void {
-    this.syncState();
-  }
-
-  activeIndex: number = -1;
 
   private typeaheadBuffer = '';
   private typeaheadTimer: ReturnType<typeof setTimeout> | null = null;
-
-  attached(): void {
-    this.syncState();
-  }
 
   detaching(): void {
     this.clearTypeahead();
@@ -94,29 +82,21 @@ export class UiList {
   }
 
   onClick(event: MouseEvent): void {
-    const item = this.getTargetItem(event.target);
+    const item = this.resolveItemFromEvent(event.target);
     if (!item || item.disabled) {
       return;
     }
 
-    const index = this.getItemIndex(item.value);
-    if (index === -1) {
-      return;
-    }
-
-    this.selectIndex(index);
+    this.selectItem(item);
   }
 
   onMouseOver(event: MouseEvent): void {
-    const item = this.getTargetItem(event.target);
+    const item = this.resolveItemFromEvent(event.target);
     if (!item || item.disabled) {
       return;
     }
 
-    const index = this.getItemIndex(item.value);
-    if (index !== -1) {
-      this.setActiveIndex(index);
-    }
+    this.activateItem(item);
   }
 
   private getEffectiveItems(): object[] {
@@ -144,142 +124,82 @@ export class UiList {
   }
 
   private move(direction: 1 | -1): void {
-    const values = this.getEffectiveItems();
-    if (values.length === 0) {
+    const enabledItems = this.listItems.filter((item) => !item.disabled);
+    if (enabledItems.length === 0) {
       return;
     }
 
-    let index = this.activeIndex;
-    if (index < 0 || index >= values.length) {
-      index = direction > 0 ? -1 : values.length;
+    const current = this.listItems.find((item) => item.active && !item.disabled);
+    const currentIndex = current ? enabledItems.indexOf(current) : -1;
+    let nextIndex = currentIndex + direction;
+
+    if (this.loop) {
+      nextIndex = (nextIndex + enabledItems.length) % enabledItems.length;
+    } else {
+      nextIndex = Math.max(0, Math.min(enabledItems.length - 1, nextIndex));
     }
 
-    let attempts = 0;
-    let cursor = index;
-    while (attempts < values.length) {
-      cursor += direction;
-      if (this.loop) {
-        cursor = (cursor + values.length) % values.length;
-      }
-
-      if (!this.loop && (cursor < 0 || cursor >= values.length)) {
-        return;
-      }
-
-      if (!this.isDisabledAt(cursor)) {
-        this.setActiveIndex(cursor);
-        return;
-      }
-
-      attempts += 1;
+    const next = enabledItems[nextIndex];
+    if (next) {
+      this.activateItem(next);
     }
   }
 
   private setFirstActive(): void {
-    const values = this.getEffectiveItems();
-    for (let index = 0; index < values.length; index++) {
-      if (!this.isDisabledAt(index)) {
-        this.setActiveIndex(index);
+    for (const item of this.listItems) {
+      if (!item.disabled) {
+        this.activateItem(item);
         return;
       }
     }
   }
 
   private setLastActive(): void {
-    const values = this.getEffectiveItems();
-    for (let index = values.length - 1; index >= 0; index--) {
-      if (!this.isDisabledAt(index)) {
-        this.setActiveIndex(index);
+    for (let index = this.listItems.length - 1; index >= 0; index--) {
+      if (!this.listItems[index].disabled) {
+        this.activateItem(this.listItems[index]);
         return;
       }
     }
   }
 
-  private setActiveIndex(index: number): void {
-    const values = this.getEffectiveItems();
-    if (index < 0 || index >= values.length || this.isDisabledAt(index)) {
-      return;
-    }
-
-    this.activeIndex = index;
-    this.setOnlyFlag('active', index);
-    this.applyRenderedState();
-    this.emitActivate(index);
+  private activateItem(item: UiListItem): void {
+    item.active = true;
+    this.emitActivate(item);
   }
 
   private selectActive(): void {
-    if (this.activeIndex >= 0) {
-      this.selectIndex(this.activeIndex);
+    const current = this.listItems.find((item) => item.active && !item.disabled)
+      ?? this.listItems.find((item) => !item.disabled);
+
+    if (current) {
+      this.selectItem(current);
     }
   }
 
-  private selectIndex(index: number): void {
-    const values = this.getEffectiveItems();
-    if (index < 0 || index >= values.length || this.isDisabledAt(index)) {
-      return;
-    }
-
-    this.activeIndex = index;
-    this.setOnlyFlag('active', index);
-    this.setOnlyFlag('selected', index);
-    this.applyRenderedState();
-    this.emitActivate(index);
-    this.emitSelection(index);
+  private selectItem(item: UiListItem): void {
+    this.activateItem(item);
+    item.selected = true;
+    this.emitSelection(item);
   }
 
-  private emitActivate(index: number): void {
+  private emitActivate(item: UiListItem): void {
+    const detail = this.getDetail(item);
     this.host.dispatchEvent(new CustomEvent<ListEventDetail>('list-activate', {
       bubbles: true,
-      detail: {
-        index,
-        value: this.getEffectiveItems()[index] ?? null
-      }
+      detail
     }));
   }
 
-  private emitSelection(index: number): void {
+  private emitSelection(item: UiListItem): void {
+    const detail = this.getDetail(item);
     this.host.dispatchEvent(new CustomEvent<ListEventDetail>('list-select', {
       bubbles: true,
-      detail: {
-        index,
-        value: this.getEffectiveItems()[index] ?? null
-      }
+      detail
     }));
   }
 
-  private syncState(): void {
-    const values = this.getEffectiveItems();
-    if (values.length === 0) {
-      this.activeIndex = -1;
-      this.applyRenderedState();
-      return;
-    }
-
-    const flaggedActiveIndex = values.findIndex((value, index) => this.readFlag(value, 'active') && !this.isDisabledAt(index));
-    if (flaggedActiveIndex !== -1) {
-      this.activeIndex = flaggedActiveIndex;
-    } else if (this.activeIndex >= values.length || this.activeIndex < -1) {
-      this.activeIndex = -1;
-    }
-
-    this.applyRenderedState();
-  }
-
-  private applyRenderedState(): void {
-    for (const item of this.listItems) {
-      item.active = this.readFlag(item.value, 'active');
-      item.selected = this.readFlag(item.value, 'selected');
-    }
-  }
-
-  private setOnlyFlag(flag: 'active' | 'selected', activeIndex: number): void {
-    const values = this.getEffectiveItems();
-    for (let index = 0; index < values.length; index++) {
-      this.writeFlag(values[index], flag, index === activeIndex);
-    }
-  }
-
-  private getTargetItem(target: EventTarget | null): UiListItem | null {
+  private resolveItemFromEvent(target: EventTarget | null): UiListItem | null {
     const element = target instanceof HTMLElement ? target.closest('ui-list-item') : null;
     if (!element) {
       return null;
@@ -288,42 +208,12 @@ export class UiList {
     return this.listItems.find((item) => item.element === element) ?? null;
   }
 
-  private isDisabledAt(index: number): boolean {
-    const value = this.getEffectiveItems()[index] ?? null;
-    if (value === null) {
-      return true;
-    }
+  private getDetail(item: UiListItem): ListEventDetail {
+    const value = item.value;
+    const values = this.getEffectiveItems();
+    const index = value === null ? -1 : values.findIndex((entry) => entry === value);
 
-    const rendered = this.listItems.find((item) => item.value === value);
-    if (rendered) {
-      return rendered.disabled;
-    }
-
-    return this.readFlag(value, 'disabled');
-  }
-
-  private getItemIndex(value: object | null): number {
-    if (value === null) {
-      return -1;
-    }
-
-    return this.getEffectiveItems().findIndex((item) => item === value);
-  }
-
-  private readFlag(value: object | null, flag: 'active' | 'selected' | 'disabled'): boolean {
-    if (!value || typeof value !== 'object') {
-      return false;
-    }
-
-    return (value as Record<string, unknown>)[flag] === true;
-  }
-
-  private writeFlag(value: object | null, flag: 'active' | 'selected', state: boolean): void {
-    if (!value || typeof value !== 'object') {
-      return;
-    }
-
-    (value as Record<string, unknown>)[flag] = state;
+    return { index, value };
   }
 
   private isTypeaheadKey(event: KeyboardEvent): boolean {
@@ -331,8 +221,8 @@ export class UiList {
   }
 
   private handleTypeahead(character: string): void {
-    const values = this.getEffectiveItems();
-    if (values.length === 0) {
+    const enabledItems = this.listItems.filter((item) => !item.disabled);
+    if (enabledItems.length === 0) {
       return;
     }
 
@@ -343,38 +233,17 @@ export class UiList {
       this.typeaheadTimer = null;
     }, 350);
 
-    const startIndex = this.activeIndex < 0 ? 0 : this.activeIndex + 1;
-    for (let step = 0; step < values.length; step++) {
-      const index = (startIndex + step) % values.length;
-      if (this.isDisabledAt(index)) {
-        continue;
-      }
+    const current = this.listItems.find((item) => item.active && !item.disabled);
+    const startIndex = current ? (enabledItems.indexOf(current) + 1) % enabledItems.length : 0;
 
-      const label = this.getTextValueAt(index).toLowerCase();
+    for (let step = 0; step < enabledItems.length; step++) {
+      const index = (startIndex + step) % enabledItems.length;
+      const label = enabledItems[index].getTextValue().toLowerCase();
       if (label.startsWith(this.typeaheadBuffer)) {
-        this.setActiveIndex(index);
+        this.activateItem(enabledItems[index]);
         return;
       }
     }
-  }
-
-  private getTextValueAt(index: number): string {
-    const value = this.getEffectiveItems()[index] ?? null;
-    if (value === null) {
-      return '';
-    }
-
-    const rendered = this.listItems.find((item) => item.value === value);
-    if (rendered) {
-      return rendered.getTextValue();
-    }
-
-    const fromLabel = (value as Record<string, unknown>).label;
-    if (typeof fromLabel === 'string') {
-      return fromLabel;
-    }
-
-    return String(value);
   }
 
   private clearTypeahead(): void {
