@@ -18,7 +18,7 @@ export class UiList {
   @bindable
   items: object[] | null = null;
   itemsChanged(): void {
-    this.syncActiveState();
+    this.syncState();
   }
 
   @bindable({ set: booleanAttr })
@@ -36,17 +36,16 @@ export class UiList {
   })
   listItems: UiListItem[] = [];
   listItemsChanged(): void {
-    this.syncActiveState();
+    this.syncState();
   }
 
   activeIndex: number = -1;
 
-  private activeValue: object | null = null;
   private typeaheadBuffer = '';
   private typeaheadTimer: ReturnType<typeof setTimeout> | null = null;
 
   attached(): void {
-    this.syncActiveState();
+    this.syncState();
   }
 
   detaching(): void {
@@ -85,7 +84,7 @@ export class UiList {
 
     if (event.key === Keys.Enter || event.key === Keys.Space) {
       event.preventDefault();
-      this.emitSelection();
+      this.selectActive();
       return;
     }
 
@@ -105,8 +104,7 @@ export class UiList {
       return;
     }
 
-    this.setActiveIndex(index);
-    this.emitSelection();
+    this.selectIndex(index);
   }
 
   onMouseOver(event: MouseEvent): void {
@@ -199,70 +197,85 @@ export class UiList {
 
   private setActiveIndex(index: number): void {
     const values = this.getEffectiveItems();
-    if (index < 0 || index >= values.length) {
+    if (index < 0 || index >= values.length || this.isDisabledAt(index)) {
       return;
     }
 
     this.activeIndex = index;
-    this.activeValue = values[index] ?? null;
-    this.applyActiveStateToRenderedItems();
-    this.emitActivate();
+    this.setOnlyFlag('active', index);
+    this.applyRenderedState();
+    this.emitActivate(index);
   }
 
-  private emitActivate(): void {
-    if (this.activeIndex < 0) {
+  private selectActive(): void {
+    if (this.activeIndex >= 0) {
+      this.selectIndex(this.activeIndex);
+    }
+  }
+
+  private selectIndex(index: number): void {
+    const values = this.getEffectiveItems();
+    if (index < 0 || index >= values.length || this.isDisabledAt(index)) {
       return;
     }
 
+    this.activeIndex = index;
+    this.setOnlyFlag('active', index);
+    this.setOnlyFlag('selected', index);
+    this.applyRenderedState();
+    this.emitActivate(index);
+    this.emitSelection(index);
+  }
+
+  private emitActivate(index: number): void {
     this.host.dispatchEvent(new CustomEvent<ListEventDetail>('list-activate', {
       bubbles: true,
       detail: {
-        index: this.activeIndex,
-        value: this.activeValue
+        index,
+        value: this.getEffectiveItems()[index] ?? null
       }
     }));
   }
 
-  private emitSelection(): void {
-    if (this.activeIndex < 0) {
-      return;
-    }
-
+  private emitSelection(index: number): void {
     this.host.dispatchEvent(new CustomEvent<ListEventDetail>('list-select', {
       bubbles: true,
       detail: {
-        index: this.activeIndex,
-        value: this.activeValue
+        index,
+        value: this.getEffectiveItems()[index] ?? null
       }
     }));
   }
 
-  private syncActiveState(): void {
+  private syncState(): void {
     const values = this.getEffectiveItems();
     if (values.length === 0) {
       this.activeIndex = -1;
-      this.activeValue = null;
-      this.applyActiveStateToRenderedItems();
+      this.applyRenderedState();
       return;
     }
 
-    if (this.activeValue !== null) {
-      const index = this.getItemIndex(this.activeValue);
-      if (index !== -1) {
-        this.activeIndex = index;
-        this.applyActiveStateToRenderedItems();
-        return;
-      }
+    const flaggedActiveIndex = values.findIndex((value, index) => this.readFlag(value, 'active') && !this.isDisabledAt(index));
+    if (flaggedActiveIndex !== -1) {
+      this.activeIndex = flaggedActiveIndex;
+    } else if (this.activeIndex >= values.length || this.activeIndex < -1) {
+      this.activeIndex = -1;
     }
 
-    this.activeIndex = -1;
-    this.activeValue = null;
-    this.applyActiveStateToRenderedItems();
+    this.applyRenderedState();
   }
 
-  private applyActiveStateToRenderedItems(): void {
+  private applyRenderedState(): void {
     for (const item of this.listItems) {
-      item.active = this.activeValue !== null && item.value === this.activeValue;
+      item.active = this.readFlag(item.value, 'active');
+      item.selected = this.readFlag(item.value, 'selected');
+    }
+  }
+
+  private setOnlyFlag(flag: 'active' | 'selected', activeIndex: number): void {
+    const values = this.getEffectiveItems();
+    for (let index = 0; index < values.length; index++) {
+      this.writeFlag(values[index], flag, index === activeIndex);
     }
   }
 
@@ -282,7 +295,11 @@ export class UiList {
     }
 
     const rendered = this.listItems.find((item) => item.value === value);
-    return rendered?.disabled ?? false;
+    if (rendered) {
+      return rendered.disabled;
+    }
+
+    return this.readFlag(value, 'disabled');
   }
 
   private getItemIndex(value: object | null): number {
@@ -291,6 +308,22 @@ export class UiList {
     }
 
     return this.getEffectiveItems().findIndex((item) => item === value);
+  }
+
+  private readFlag(value: object | null, flag: 'active' | 'selected' | 'disabled'): boolean {
+    if (!value || typeof value !== 'object') {
+      return false;
+    }
+
+    return (value as Record<string, unknown>)[flag] === true;
+  }
+
+  private writeFlag(value: object | null, flag: 'active' | 'selected', state: boolean): void {
+    if (!value || typeof value !== 'object') {
+      return;
+    }
+
+    (value as Record<string, unknown>)[flag] = state;
   }
 
   private isTypeaheadKey(event: KeyboardEvent): boolean {
@@ -334,6 +367,11 @@ export class UiList {
     const rendered = this.listItems.find((item) => item.value === value);
     if (rendered) {
       return rendered.getTextValue();
+    }
+
+    const fromLabel = (value as Record<string, unknown>).label;
+    if (typeof fromLabel === 'string') {
+      return fromLabel;
     }
 
     return String(value);

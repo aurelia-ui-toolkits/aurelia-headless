@@ -13,6 +13,14 @@
   @apply bg-outline-hover text-ink-900;
 }
 
+.ui-list-item[data-selected] {
+  @apply bg-primary-600 text-white;
+}
+
+.ui-list-item[data-selected][data-active] {
+  @apply bg-primary-700;
+}
+
 .ui-list-item[data-disabled] {
   @apply cursor-not-allowed opacity-50;
 }
@@ -20,6 +28,11 @@
 .ui-list-item__leading,
 .ui-list-item__trailing {
   @apply text-ink-500;
+}
+
+.ui-list-item[data-selected] .ui-list-item__leading,
+.ui-list-item[data-selected] .ui-list-item__trailing {
+  @apply text-white/80;
 }
 
 .ui-list-item__content {

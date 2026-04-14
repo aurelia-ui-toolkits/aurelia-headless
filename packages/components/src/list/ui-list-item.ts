@@ -12,7 +12,11 @@ export class UiListItem {
   @bindable({ set: booleanAttr })
   disabled: boolean = false;
 
+  @bindable({ set: booleanAttr })
   active: boolean = false;
+
+  @bindable({ set: booleanAttr })
+  selected: boolean = false;
 
   getTextValue(): string {
     return this.element.textContent?.trim() ?? '';
