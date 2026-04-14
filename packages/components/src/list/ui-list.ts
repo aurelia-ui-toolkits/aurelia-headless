@@ -164,6 +164,10 @@ export class UiList {
   }
 
   private activateItem(item: UiListItem): void {
+    for (const current of this.listItems) {
+      current.active = current === item;
+    }
+
     item.active = true;
     this.emitActivate(item);
   }
@@ -179,6 +183,11 @@ export class UiList {
 
   private selectItem(item: UiListItem): void {
     this.activateItem(item);
+
+    for (const current of this.listItems) {
+      current.selected = current === item;
+    }
+
     item.selected = true;
     this.emitSelection(item);
   }
