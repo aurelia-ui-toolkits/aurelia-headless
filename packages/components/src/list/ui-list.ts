@@ -33,6 +33,8 @@ export class UiList {
   })
   listItems: UiListItem[] = [];
 
+  private activeItem: UiListItem | null = null;
+  private selectedItem: UiListItem | null = null;
   private typeaheadBuffer = '';
   private typeaheadTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -129,7 +131,7 @@ export class UiList {
       return;
     }
 
-    const current = this.listItems.find((item) => item.active && !item.disabled);
+    const current = this.activeItem && !this.activeItem.disabled ? this.activeItem : null;
     const currentIndex = current ? enabledItems.indexOf(current) : -1;
     let nextIndex = currentIndex + direction;
 
@@ -164,16 +166,21 @@ export class UiList {
   }
 
   private activateItem(item: UiListItem): void {
-    for (const current of this.listItems) {
-      current.active = current === item;
+    if (this.activeItem === item) {
+      return;
     }
 
+    if (this.activeItem !== null) {
+      this.activeItem.active = false;
+    }
+
+    this.activeItem = item;
     item.active = true;
     this.emitActivate(item);
   }
 
   private selectActive(): void {
-    const current = this.listItems.find((item) => item.active && !item.disabled)
+    const current = (this.activeItem && !this.activeItem.disabled ? this.activeItem : null)
       ?? this.listItems.find((item) => !item.disabled);
 
     if (current) {
@@ -184,10 +191,11 @@ export class UiList {
   private selectItem(item: UiListItem): void {
     this.activateItem(item);
 
-    for (const current of this.listItems) {
-      current.selected = current === item;
+    if (this.selectedItem !== null && this.selectedItem !== item) {
+      this.selectedItem.selected = false;
     }
 
+    this.selectedItem = item;
     item.selected = true;
     this.emitSelection(item);
   }
@@ -242,7 +250,7 @@ export class UiList {
       this.typeaheadTimer = null;
     }, 350);
 
-    const current = this.listItems.find((item) => item.active && !item.disabled);
+    const current = this.activeItem && !this.activeItem.disabled ? this.activeItem : null;
     const startIndex = current ? (enabledItems.indexOf(current) + 1) % enabledItems.length : 0;
 
     for (let step = 0; step < enabledItems.length; step++) {
