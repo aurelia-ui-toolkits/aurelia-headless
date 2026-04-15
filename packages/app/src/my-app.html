@@ -137,7 +137,7 @@
     </demo-block>
 
     <demo-block title="Items bindable (virtual-ready)">
-      <ui-list items.bind="virtualList" list-activate.trigger="onListActivate($event)"
+      <ui-list items.bind="virtualList" list-activate.trigger="onListActivate($event)" typeahead-field="label"
         list-select.trigger="onListSelect($event)" style="height: 300px; overflow-y: auto;">
         <ui-list-item virtual-repeat.for="item of virtualList" value.bind="item" active.bind="item.active"
           selected.bind="item.selected" disabled.bind="item.disabled">

@@ -1,4 +1,4 @@
-import { bindable, children, customElement, INode, resolve } from 'aurelia';
+import { bindable, children, customElement, INode, queueAsyncTask, queueTask, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
 import { UiListItem } from './ui-list-item';
@@ -6,17 +6,12 @@ import template from './ui-list.html?raw';
 
 type ListOrientation = 'vertical' | 'horizontal';
 
-type ListEventDetail = {
-  index: number;
-  value: object | null;
-};
-
 @customElement({ name: 'ui-list', template })
 export class UiList {
   private readonly host = resolve(INode) as HTMLElement;
 
   @bindable
-  items: object[] | null = null;
+  items: any[] = [];
 
   @bindable({ set: booleanAttr })
   loop: boolean = true;
@@ -24,17 +19,22 @@ export class UiList {
   @bindable
   orientation: ListOrientation = 'vertical';
 
-  @bindable({ set: booleanAttr })
-  typeahead: boolean = true;
+  @bindable
+  typeaheadField: string | undefined;;
 
   @children({
     query: 'ui-list-item',
     map: (_node, viewModel) => viewModel
   })
   listItems: UiListItem[] = [];
+  listItemsChanged() {
+    if (!this.items.length) {
+      this.items = this.listItems.map(x => x.value);
+    }
+  }
 
-  private activeItem: UiListItem | null = null;
-  private selectedItem: UiListItem | null = null;
+  private activeItem: object | undefined;
+  private selectedItem: object | undefined;
   private typeaheadBuffer = '';
   private typeaheadTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -72,29 +72,34 @@ export class UiList {
       return;
     }
 
-    if (event.key === Keys.Enter || event.key === Keys.Space) {
+    if (event.key === Keys.Enter) {
       event.preventDefault();
       this.selectActive();
       return;
     }
 
-    if (this.typeahead && this.isTypeaheadKey(event)) {
+    if (this.typeaheadField && this.isTypeaheadKey(event)) {
       this.handleTypeahead(event.key.toLowerCase());
     }
   }
 
   onClick(event: MouseEvent): void {
     const item = this.resolveItemFromEvent(event.target);
-    if (!item || item.disabled) {
+    if (!item /*|| item.disabled*/) {
       return;
     }
 
     this.selectItem(item);
   }
 
+  suppressMouseOver = false;
   onMouseOver(event: MouseEvent): void {
+    if (this.suppressMouseOver) {
+      this.suppressMouseOver = false;
+      return;
+    }
     const item = this.resolveItemFromEvent(event.target);
-    if (!item || item.disabled) {
+    if (!item /*|| item.disabled*/) {
       return;
     }
 
@@ -126,132 +131,89 @@ export class UiList {
   }
 
   private move(direction: 1 | -1): void {
-    const enabledItems = this.listItems.filter((item) => !item.disabled);
-    if (enabledItems.length === 0) {
-      return;
-    }
-
-    const current = this.activeItem && !this.activeItem.disabled ? this.activeItem : null;
-    const currentIndex = current ? enabledItems.indexOf(current) : -1;
+    const currentIndex = this.activeItem ? this.items.indexOf(this.activeItem) : -1;
     let nextIndex = currentIndex + direction;
 
     if (this.loop) {
-      nextIndex = (nextIndex + enabledItems.length) % enabledItems.length;
+      nextIndex = (nextIndex + this.items.length) % this.items.length;
     } else {
-      nextIndex = Math.max(0, Math.min(enabledItems.length - 1, nextIndex));
+      nextIndex = Math.max(0, Math.min(this.items.length - 1, nextIndex));
     }
 
-    const next = enabledItems[nextIndex];
+    const next = this.items[nextIndex];
     if (next) {
+      this.scrollItemIntoView(next);
       this.activateItem(next);
     }
   }
 
-  private setFirstActive(): void {
-    for (const item of this.listItems) {
-      if (!item.disabled) {
-        this.activateItem(item);
-        return;
-      }
-    }
+  private async setFirstActive() {
+    const firstItem = this.items[0];
+    this.scrollItemIntoView(firstItem);
+    this.activateItem(firstItem);
   }
 
   private setLastActive(): void {
-    for (let index = this.listItems.length - 1; index >= 0; index--) {
-      if (!this.listItems[index].disabled) {
-        this.activateItem(this.listItems[index]);
-        return;
-      }
-    }
+    const lastItem = this.items[this.items.length - 1];
+    this.scrollItemIntoView(lastItem);
+    this.activateItem(lastItem);
   }
 
-  private activateItem(item: UiListItem): void {
-    if (this.activeItem === null) {
-      this.activeItem = this.listItems.find((current) => current.active) ?? null;
-    }
-
-    if (this.activeItem === item) {
-      return;
-    }
-
-    if (this.activeItem !== null) {
-      this.activeItem.active = false;
-    }
-
+  private activateItem(item: object): void {
     this.activeItem = item;
-    item.active = true;
-    this.scrollItemIntoView(item);
     this.emitActivate(item);
   }
 
   private selectActive(): void {
-    const current = (this.activeItem && !this.activeItem.disabled ? this.activeItem : null)
-      ?? this.listItems.find((item) => !item.disabled);
-
-    if (current) {
-      this.selectItem(current);
+    if (this.activeItem) {
+      this.selectItem(this.activeItem);
     }
   }
 
-  private selectItem(item: UiListItem): void {
+  private selectItem(item: object): void {
     this.activateItem(item);
 
-    if (this.selectedItem === null) {
-      this.selectedItem = this.listItems.find((current) => current.selected) ?? null;
+    if (!this.selectedItem) {
+      this.selectedItem = this.items.find((current) => current.selected);
     }
 
-    if (this.selectedItem !== null && this.selectedItem !== item) {
-      this.selectedItem.selected = false;
+    if (this.selectedItem && this.selectedItem !== item) {
+      // this.selectedListItem.selected = false;
     }
 
     this.selectedItem = item;
-    item.selected = true;
+    // item.selected = true;
     this.emitSelection(item);
   }
 
-  private emitActivate(item: UiListItem): void {
-    const detail = this.getDetail(item);
-    this.host.dispatchEvent(new CustomEvent<ListEventDetail>('list-activate', {
+  private emitActivate(item: object): void {
+    this.host.dispatchEvent(new CustomEvent('list-activate', {
       bubbles: true,
-      detail
+      detail: item
     }));
   }
 
-  private emitSelection(item: UiListItem): void {
-    const detail = this.getDetail(item);
-    this.host.dispatchEvent(new CustomEvent<ListEventDetail>('list-select', {
+  private emitSelection(item: object): void {
+    this.host.dispatchEvent(new CustomEvent('list-select', {
       bubbles: true,
-      detail
+      detail: item
     }));
   }
 
-  private resolveItemFromEvent(target: EventTarget | null): UiListItem | null {
+  private resolveItemFromEvent(target: EventTarget | null) {
     const element = target instanceof HTMLElement ? target.closest('ui-list-item') : null;
     if (!element) {
-      return null;
+      return undefined;
     }
 
-    return this.listItems.find((item) => item.element === element) ?? null;
-  }
-
-  private getDetail(item: UiListItem): ListEventDetail {
-    const value = item.value;
-    const values = this.getEffectiveItems();
-    const index = value === null ? -1 : values.findIndex((entry) => entry === value);
-
-    return { index, value };
+    return this.listItems.find((item) => item.element === element)?.value;
   }
 
   private isTypeaheadKey(event: KeyboardEvent): boolean {
-    return event.key.length === 1 && !event.altKey && !event.ctrlKey && !event.metaKey;
+    return (event.key.length === 1 || event.key === ' ') && !event.altKey && !event.ctrlKey && !event.metaKey;
   }
 
   private handleTypeahead(character: string): void {
-    const enabledItems = this.listItems.filter((item) => !item.disabled);
-    if (enabledItems.length === 0) {
-      return;
-    }
-
     this.typeaheadBuffer += character;
     this.clearTypeahead();
     this.typeaheadTimer = setTimeout(() => {
@@ -259,14 +221,13 @@ export class UiList {
       this.typeaheadTimer = null;
     }, 350);
 
-    const current = this.activeItem && !this.activeItem.disabled ? this.activeItem : null;
-    const startIndex = current ? (enabledItems.indexOf(current) + 1) % enabledItems.length : 0;
+    const startIndex = this.activeItem ? this.items.indexOf(this.activeItem) + 1 : 0;
 
-    for (let step = 0; step < enabledItems.length; step++) {
-      const index = (startIndex + step) % enabledItems.length;
-      const label = enabledItems[index].getTextValue().toLowerCase();
+    for (let step = 0; step < this.items.length; step++) {
+      const index = (startIndex + step) % this.items.length;
+      const label = this.items[index][this.typeaheadField!].toLowerCase();
       if (label.startsWith(this.typeaheadBuffer)) {
-        this.activateItem(enabledItems[index]);
+        this.activateItem(this.items[index]);
         return;
       }
     }
@@ -279,10 +240,15 @@ export class UiList {
     }
   }
 
-  private scrollItemIntoView(item: UiListItem): void {
-    item.element.scrollIntoView({
-      block: 'nearest',
-      inline: 'nearest'
-    });
+  private scrollItemIntoView(item: object): void {
+    const listItem = this.listItems.find(x => x.value === item);
+    this.suppressMouseOver = true;
+
+    if (listItem) {
+      listItem.element.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    } else {
+      const index = this.items.indexOf(item);
+      this.host.scrollTo({ top: this.host.scrollHeight * index / this.items.length });
+    }
   }
 }
