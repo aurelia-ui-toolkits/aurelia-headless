@@ -1,4 +1,4 @@
-import { bindable, children, customElement, INode, queueAsyncTask, queueTask, resolve } from 'aurelia';
+import { bindable, children, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
 import { UiListItem } from './ui-list-item';
@@ -92,10 +92,16 @@ export class UiList {
     this.selectItem(item);
   }
 
-  suppressMouseOver = false;
-  onMouseOver(event: MouseEvent): void {
+  private suppressMouseOver = false;
+
+  onMouseMove(): void {
     if (this.suppressMouseOver) {
       this.suppressMouseOver = false;
+    }
+  }
+
+  onMouseOver(event: MouseEvent): void {
+    if (this.suppressMouseOver) {
       return;
     }
     const item = this.resolveItemFromEvent(event.target);
