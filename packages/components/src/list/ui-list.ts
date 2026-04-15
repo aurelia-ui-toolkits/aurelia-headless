@@ -20,7 +20,10 @@ export class UiList {
   orientation: ListOrientation = 'vertical';
 
   @bindable
-  typeaheadField: string | undefined;;
+  typeaheadField: string | undefined;
+
+  @bindable({ mode: 'twoWay' })
+  selected: object | undefined;
 
   @children({
     query: 'ui-list-item',
@@ -34,7 +37,6 @@ export class UiList {
   }
 
   private activeItem: object | undefined;
-  private selectedItem: object | undefined;
   private typeaheadBuffer = '';
   private typeaheadTimer: ReturnType<typeof setTimeout> | null = null;
 
@@ -178,17 +180,7 @@ export class UiList {
 
   private selectItem(item: object): void {
     this.activateItem(item);
-
-    if (!this.selectedItem) {
-      this.selectedItem = this.items.find((current) => current.selected);
-    }
-
-    if (this.selectedItem && this.selectedItem !== item) {
-      // this.selectedListItem.selected = false;
-    }
-
-    this.selectedItem = item;
-    // item.selected = true;
+    this.selected = item;
     this.emitSelection(item);
   }
 

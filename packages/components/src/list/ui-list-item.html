@@ -3,7 +3,7 @@
   aria-selected.attr="selected ? 'true' : 'false'"
   aria-disabled.attr="disabled ? '' : null"
   data-active.attr="parentList.activeItem === value ? '' : null"
-  data-selected.attr="selected ? '' : null"
+  data-selected.attr="parentList.selected === value ? '' : null"
   data-disabled.attr="disabled ? '' : null">
   <span class="ui-list-item__leading">
     <au-slot name="leading"></au-slot>

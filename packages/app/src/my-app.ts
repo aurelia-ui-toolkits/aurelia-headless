@@ -19,7 +19,7 @@ export class MyApp {
   marketingConsent = true;
   termsAccepted = false;
   listActivation = 'None';
-  listSelection = 'None';
+  selectedItem: ListDemoItem | undefined;
 
   readonly staticList: ListDemoItem[] = [
     { id: 1, label: 'Dashboard', category: 'General', active: false, selected: false },
@@ -43,18 +43,5 @@ export class MyApp {
 
   toggleLoading(): void {
     this.isLoading = !this.isLoading;
-  }
-
-  onListActivate(event: CustomEvent<{ index: number; value: ListDemoItem | null }>): void {
-    this.listActivation = this.describeListEvent(event.detail);
-  }
-
-  onListSelect(event: CustomEvent<{ index: number; value: ListDemoItem | null }>): void {
-    this.listSelection = this.describeListEvent(event.detail);
-  }
-
-  private describeListEvent(detail: { index: number; value: ListDemoItem | null }): string {
-    const label = detail.value?.label ?? 'Unknown';
-    return `${label} (#${detail.index + 1})`;
   }
 }

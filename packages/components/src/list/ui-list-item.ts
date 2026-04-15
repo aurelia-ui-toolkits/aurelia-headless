@@ -1,4 +1,4 @@
-import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
+import { bindable, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import template from './ui-list-item.html?raw';
 import { UiList } from './ui-list';
@@ -13,7 +13,4 @@ export class UiListItem {
 
   @bindable({ set: booleanAttr })
   disabled: boolean = false;
-
-  @bindable({ mode: BindingMode.twoWay, set: booleanAttr })
-  selected: boolean = false;
 }
