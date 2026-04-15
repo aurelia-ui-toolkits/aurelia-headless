@@ -166,6 +166,10 @@ export class UiList {
   }
 
   private activateItem(item: UiListItem): void {
+    if (this.activeItem === null) {
+      this.activeItem = this.listItems.find((current) => current.active) ?? null;
+    }
+
     if (this.activeItem === item) {
       return;
     }
@@ -176,6 +180,7 @@ export class UiList {
 
     this.activeItem = item;
     item.active = true;
+    this.scrollItemIntoView(item);
     this.emitActivate(item);
   }
 
@@ -190,6 +195,10 @@ export class UiList {
 
   private selectItem(item: UiListItem): void {
     this.activateItem(item);
+
+    if (this.selectedItem === null) {
+      this.selectedItem = this.listItems.find((current) => current.selected) ?? null;
+    }
 
     if (this.selectedItem !== null && this.selectedItem !== item) {
       this.selectedItem.selected = false;
@@ -268,5 +277,12 @@ export class UiList {
       clearTimeout(this.typeaheadTimer);
       this.typeaheadTimer = null;
     }
+  }
+
+  private scrollItemIntoView(item: UiListItem): void {
+    item.element.scrollIntoView({
+      block: 'nearest',
+      inline: 'nearest'
+    });
   }
 }

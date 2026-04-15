@@ -125,7 +125,8 @@
 
     <demo-block title="Fallback to rendered items">
       <ui-list list-activate.trigger="onListActivate($event)" list-select.trigger="onListSelect($event)">
-        <ui-list-item repeat.for="item of staticList" value.bind="item" active.bind="item.active" selected.bind="item.selected" disabled.bind="item.disabled">
+        <ui-list-item repeat.for="item of staticList" value.bind="item" active.bind="item.active"
+          selected.bind="item.selected" disabled.bind="item.disabled">
           <span au-slot="leading">•</span>
           ${item.label}
           <span au-slot="trailing">${item.category}</span>
@@ -136,8 +137,10 @@
     </demo-block>
 
     <demo-block title="Items bindable (virtual-ready)">
-      <ui-list items.bind="virtualList" list-activate.trigger="onListActivate($event)" list-select.trigger="onListSelect($event)">
-        <ui-list-item repeat.for="item of virtualList" value.bind="item" active.bind="item.active" selected.bind="item.selected" disabled.bind="item.disabled">
+      <ui-list items.bind="virtualList" list-activate.trigger="onListActivate($event)"
+        list-select.trigger="onListSelect($event)" style="height: 300px; overflow-y: auto;">
+        <ui-list-item virtual-repeat.for="item of virtualList" value.bind="item" active.bind="item.active"
+          selected.bind="item.selected" disabled.bind="item.disabled">
           <span au-slot="leading">${item.id}</span>
           ${item.label}
           <span au-slot="trailing">${item.category}</span>

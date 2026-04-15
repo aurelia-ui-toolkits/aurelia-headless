@@ -30,6 +30,7 @@
     "typescript": "5.9.3"
   },
   "dependencies": {
+    "@aurelia/ui-virtualization": "^2.0.0-rc.1",
     "@aurelia/vite-plugin": ">=2.0.0-rc.1",
     "vite": "^7.0.0",
     "vite-plugin-node-polyfills": "^0.25.0"
