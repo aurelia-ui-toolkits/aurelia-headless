@@ -81,6 +81,7 @@ export class UiList {
     }
 
     if (this.typeaheadField && this.isTypeaheadKey(event)) {
+      event.preventDefault();
       this.handleTypeahead(event.key.toLowerCase());
     }
   }
@@ -217,14 +218,15 @@ export class UiList {
     this.typeaheadTimer = setTimeout(() => {
       this.typeaheadBuffer = '';
       this.typeaheadTimer = null;
-    }, 350);
+    }, 800);
 
-    const startIndex = this.activeItem ? this.items.indexOf(this.activeItem) + 1 : 0;
+    const startIndex = this.activeItem ? this.items.indexOf(this.activeItem) : 0;
 
     for (let step = 0; step < this.items.length; step++) {
       const index = (startIndex + step) % this.items.length;
       const label = this.items[index][this.typeaheadField!].toLowerCase();
       if (label.startsWith(this.typeaheadBuffer)) {
+        this.scrollItemIntoView(this.items[index]);
         this.activateItem(this.items[index]);
         return;
       }
