@@ -127,11 +127,18 @@ export class UiPopup {
     }
 
     this.listening = listen;
-    const action = listen ? 'addEventListener' : 'removeEventListener';
-    window[action]('pointerdown', this.onWindowPointerDown, true);
-    window[action]('keydown', this.onWindowKeyDown, true);
-    window[action]('resize', this.onWindowLayoutChange);
-    window[action]('scroll', this.onWindowLayoutChange, true);
+    if (listen) {
+      window.addEventListener('pointerdown', this.onWindowPointerDown, true);
+      window.addEventListener('keydown', this.onWindowKeyDown, true);
+      window.addEventListener('resize', this.onWindowLayoutChange);
+      window.addEventListener('scroll', this.onWindowLayoutChange, true);
+      return;
+    }
+
+    window.removeEventListener('pointerdown', this.onWindowPointerDown, true);
+    window.removeEventListener('keydown', this.onWindowKeyDown, true);
+    window.removeEventListener('resize', this.onWindowLayoutChange);
+    window.removeEventListener('scroll', this.onWindowLayoutChange, true);
   }
 
   private queuePositionUpdate(): void {
