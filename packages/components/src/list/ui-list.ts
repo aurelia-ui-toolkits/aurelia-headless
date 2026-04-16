@@ -22,6 +22,9 @@ export class UiList {
   @bindable
   typeaheadField: string | undefined;
 
+  @bindable
+  disabledField: string | ((item: object) => boolean) = 'disabled';
+
   @bindable({ mode: 'twoWay' })
   selected: object | undefined;
 
@@ -86,9 +89,19 @@ export class UiList {
     }
   }
 
+  isItemDisabled(item: object): boolean {
+    if (typeof this.disabledField === 'string') {
+      return !!(item as any)[this.disabledField];
+    } else if (typeof this.disabledField === 'function') {
+      return this.disabledField(item);
+    }
+
+    return false;
+  }
+
   onClick(event: MouseEvent): void {
     const item = this.resolveItemFromEvent(event.target);
-    if (!item /*|| item.disabled*/) {
+    if (!item || this.isItemDisabled(item)) {
       return;
     }
 
@@ -108,7 +121,7 @@ export class UiList {
       return;
     }
     const item = this.resolveItemFromEvent(event.target);
-    if (!item /*|| item.disabled*/) {
+    if (!item || this.isItemDisabled(item)) {
       return;
     }
 
