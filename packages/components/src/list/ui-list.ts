@@ -186,13 +186,21 @@ export class UiList {
   }
 
   private async setFirstActive() {
-    const firstItem = this.items[0];
+    const firstItem = this.getNonDisabled(this.items[0], 1);
+    if (!firstItem) {
+      return;
+    }
+
     this.scrollItemIntoView(firstItem);
     this.activateItem(firstItem);
   }
 
   private setLastActive(): void {
-    const lastItem = this.items[this.items.length - 1];
+    const lastItem = this.getNonDisabled(this.items[this.items.length - 1], -1);
+    if (!lastItem) {
+      return;
+    }
+
     this.scrollItemIntoView(lastItem);
     this.activateItem(lastItem);
   }
@@ -203,7 +211,7 @@ export class UiList {
   }
 
   private selectActive(): void {
-    if (this.activeItem) {
+    if (this.activeItem && !this.isItemDisabled(this.activeItem)) {
       this.selectItem(this.activeItem);
     }
   }
