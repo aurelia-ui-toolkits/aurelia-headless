@@ -1,4 +1,4 @@
-import { bindable, children, customElement, INode, queueTask, resolve } from 'aurelia';
+import { bindable, children, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
 import { UiListItem } from './ui-list-item';
