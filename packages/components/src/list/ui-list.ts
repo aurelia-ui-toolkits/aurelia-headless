@@ -292,6 +292,9 @@ export class UiList {
     } else {
       const index = this.items.indexOf(item);
       this.host.scrollTo({ top: this.host.scrollHeight / this.items.length * index });
+      // this is a workaround to ensure the active item is scrolled into view after the items are rendered,
+      // if CSS defines a gap between items the virtual-repeat spacer height might be incorrect
+      // so we need to adjust the scroll after the list item gets rendered
       this.listItemsChangedCallback = () => this.scrollItemIntoView(item);
     }
   }
