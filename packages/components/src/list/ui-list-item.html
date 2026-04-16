@@ -9,7 +9,12 @@
     <au-slot name="leading"></au-slot>
   </span>
   <span class="ui-list-item__content">
-    <au-slot></au-slot>
+    <span class="ui-list-item__primary">
+      <au-slot></au-slot>
+    </span>
+    <span class="ui-list-item__secondary">
+      <au-slot name="secondary"></au-slot>
+    </span>
   </span>
   <span class="ui-list-item__trailing">
     <au-slot name="trailing"></au-slot>

@@ -36,5 +36,17 @@
 }
 
 .ui-list-item__content {
+  @apply min-w-0 grid gap-0.5;
+}
+
+.ui-list-item__primary {
   @apply truncate;
+}
+
+.ui-list-item__secondary {
+  @apply truncate text-xs text-ink-500;
+}
+
+.ui-list-item[data-selected] .ui-list-item__secondary {
+  @apply text-white/80;
 }
