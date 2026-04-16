@@ -1,4 +1,4 @@
-import { bindable, children, customElement, INode, resolve } from 'aurelia';
+import { bindable, children, customElement, INode, queueTask, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
 import { UiListItem } from './ui-list-item';
@@ -37,8 +37,13 @@ export class UiList {
     if (!this.items.length) {
       this.items = this.listItems.map(x => x.value);
     }
+    if (this.listItemsChangedCallback) {
+      this.listItemsChangedCallback();
+      this.listItemsChangedCallback = undefined;
+    }
   }
 
+  private listItemsChangedCallback: (() => void) | undefined;
   private activeItem: object | undefined;
   private typeaheadBuffer = '';
   private typeaheadTimer: ReturnType<typeof setTimeout> | null = null;
@@ -283,10 +288,11 @@ export class UiList {
     this.suppressMouseOver = true;
 
     if (listItem) {
-      listItem.element.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      listItem.element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
     } else {
       const index = this.items.indexOf(item);
-      this.host.scrollTo({ top: this.host.scrollHeight * index / this.items.length });
+      this.host.scrollTo({ top: this.host.scrollHeight / this.items.length * index });
+      this.listItemsChangedCallback = () => this.scrollItemIntoView(item);
     }
   }
 }
