@@ -9,25 +9,47 @@ body {
   background: radial-gradient(circle at 20% 10%, #f3f7ff 0%, #eef2ff 35%, #f7fafc 100%);
 }
 
-.app-shell {
-  width: min(48rem, calc(100% - 2rem));
-  @apply mx-auto my-8 rounded-2xl border border-card-border bg-white/90 p-8;
+.app-title {
+  @apply m-0 mb-6;
+  font-size: clamp(1.3rem, 2vw, 1.75rem);
+  letter-spacing: -0.02em;
+}
+
+.app-layout {
+  min-height: 100vh;
+  @apply grid grid-cols-[17rem_1fr];
+}
+
+.side-panel {
+  @apply sticky top-0 h-screen border-r border-card-border bg-white/85 p-5;
   backdrop-filter: blur(8px);
 }
 
-.app-title {
-  @apply m-0 mb-7;
-  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
-  letter-spacing: -0.02em;
+.side-menu {
+  @apply grid gap-1;
+}
+
+.side-menu__item {
+  @apply cursor-pointer rounded-lg border border-transparent bg-transparent px-3 py-2 text-left font-semibold text-ink-700;
+}
+
+.side-menu__item:hover {
+  @apply bg-card-muted;
+}
+
+.side-menu__item.is-active {
+  @apply border-primary-600 bg-primary-600 text-white;
+}
+
+.content-panel {
+  @apply p-8;
 }
 
 .demo-section {
   @apply grid gap-5;
 }
 
-.demo-section + .demo-section {
-  @apply mt-10;
-}
+.demo-section + .demo-section { @apply mt-10; }
 
 .section-title {
   @apply m-0 text-[1.35rem] font-semibold;
@@ -78,20 +100,4 @@ body {
   transition: background-color 140ms ease;
 }
 
-.btn-toggle:hover {
-  @apply bg-card-muted;
-}
-
-@media (max-width: 640px) {
-  .app-shell {
-    @apply my-4 p-4;
-  }
-
-  .status-text,
-  .btn-toggle,
-  .switch-state,
-  .checkbox-state,
-  .list-state {
-    @apply mt-3 ml-0 block;
-  }
-}
+.btn-toggle:hover { @apply bg-card-muted; }

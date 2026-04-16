@@ -1,47 +1,40 @@
-import { customElement } from 'aurelia';
+import { customElement, resolve } from 'aurelia';
+import { ICurrentRoute, IRouter } from '@aurelia/router';
+import { ButtonView } from './views/button/button-view';
+import { CheckboxView } from './views/checkbox/checkbox-view';
+import { DisclosureView } from './views/disclosure/disclosure-view';
+import { ListView } from './views/list/list-view';
+import { SwitchView } from './views/switch/switch-view';
 import template from './my-app.html?raw';
 
-type ListDemoItem = {
-  id: number;
-  label: string;
-  category: string;
-  active: boolean;
-  selected: boolean;
-  disabled?: boolean;
-};
+type DemoRoute = { id: string; path: string; title: string; component: unknown };
 
 @customElement({ name: 'my-app', template })
 export class MyApp {
-  clickCount = 0;
-  isLoading = false;
-  emailNotifications = true;
-  desktopAlerts = false;
-  marketingConsent = true;
-  termsAccepted = false;
-  listActivation = 'None';
-  selectedItem: ListDemoItem | undefined;
-
-  readonly staticList: ListDemoItem[] = [
-    { id: 1, label: 'Dashboard', category: 'General', active: false, selected: false },
-    { id: 2, label: 'Billing', category: 'General', active: false, selected: false },
-    { id: 3, label: 'Audit logs', category: 'Security', active: false, selected: false, disabled: true },
-    { id: 4, label: 'Integrations', category: 'Settings', active: false, selected: true }
+  static routes: DemoRoute[] = [
+    { id: 'button', path: '', title: 'ui-button', component: ButtonView },
+    { id: 'button-alt', path: 'button', title: 'ui-button', component: ButtonView },
+    { id: 'switch', path: 'switch', title: 'ui-switch', component: SwitchView },
+    { id: 'checkbox', path: 'checkbox', title: 'ui-checkbox', component: CheckboxView },
+    { id: 'disclosure', path: 'disclosure', title: 'ui-disclosure', component: DisclosureView },
+    { id: 'list', path: 'list', title: 'ui-list', component: ListView }
   ];
 
-  readonly virtualList: ListDemoItem[] = Array.from({ length: 40 }, (_, index) => ({
-    id: index + 1,
-    label: `Dataset ${index + 1}`,
-    category: index % 2 === 0 ? 'Primary' : 'Secondary',
-    active: false,
-    selected: false,
-    disabled: (index + 1) % 9 === 0
-  }));
+  private readonly router = resolve(IRouter);
+  private readonly currentRoute = resolve(ICurrentRoute)
 
-  handleClick(): void {
-    this.clickCount++;
+  readonly menuItems = MyApp.routes.filter((route) => route.id !== 'button-alt');
+
+  navigate(path: string): void {
+    void this.router.load(path || '');
   }
 
-  toggleLoading(): void {
-    this.isLoading = !this.isLoading;
+  isActive(path: string): boolean {
+    const current = this.currentRoute.path ?? '';
+    if (path === '') {
+      return current === '';
+    }
+
+    return current === path || current.startsWith(`${path}/`);
   }
 }

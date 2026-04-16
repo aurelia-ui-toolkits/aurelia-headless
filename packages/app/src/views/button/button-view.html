@@ -1,0 +1,31 @@
+<section class="demo-section">
+  <h2 class="section-title">ui-button</h2>
+
+  <demo-block title="Basic">
+    <button ui-button primary click.trigger="handleClick()">
+      Click me
+    </button>
+    <span class="status-text">Clicked: ${clickCount} times</span>
+  </demo-block>
+
+  <demo-block title="Disabled">
+    <button ui-button primary disabled>
+      I'm disabled
+    </button>
+  </demo-block>
+
+  <demo-block title="Toggle disabled">
+    <button ui-button primary disabled.bind="isLoading" click.trigger="handleClick()">
+      ${isLoading ? 'Loading...' : 'Submit'}
+    </button>
+    <button ui-button click.trigger="toggleLoading()" class="btn-toggle">
+      Toggle loading: ${isLoading}
+    </button>
+  </demo-block>
+
+  <demo-block title="Outlined variant">
+    <button ui-button outlined click.trigger="handleClick()">
+      Outlined
+    </button>
+  </demo-block>
+</section>

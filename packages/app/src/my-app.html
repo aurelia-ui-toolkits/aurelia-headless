@@ -1,151 +1,17 @@
-<div class="app-shell">
-  <h1 class="app-title">Aurelia Headless UI</h1>
-
-  <section class="demo-section">
-    <h2 class="section-title">ui-button</h2>
-
-    <demo-block title="Basic">
-      <button ui-button primary click.trigger="handleClick()">
-        Click me
+<div class="app-layout">
+  <aside class="side-panel">
+    <h1 class="app-title">Aurelia Headless UI</h1>
+    <nav class="side-menu" aria-label="Components">
+      <button repeat.for="item of menuItems"
+        type="button"
+        class="side-menu__item ${isActive(item.path) ? 'is-active' : ''}"
+        click.trigger="navigate(item.path)">
+        ${item.title}
       </button>
-      <span class="status-text">Clicked: ${clickCount} times</span>
-    </demo-block>
+    </nav>
+  </aside>
 
-    <demo-block title="Disabled">
-      <button ui-button primary disabled>
-        I'm disabled
-      </button>
-    </demo-block>
-
-    <demo-block title="Toggle disabled">
-      <button ui-button primary disabled.bind="isLoading" click.trigger="handleClick()">
-        ${isLoading ? 'Loading...' : 'Submit'}
-      </button>
-      <button ui-button click.trigger="toggleLoading()" class="btn-toggle">
-        Toggle loading: ${isLoading}
-      </button>
-    </demo-block>
-
-    <demo-block title="Outlined variant">
-      <button ui-button outlined click.trigger="handleClick()">
-        Outlined
-      </button>
-    </demo-block>
-  </section>
-
-  <section class="demo-section">
-    <h2 class="section-title">ui-switch</h2>
-
-    <demo-block title="Basic">
-      <div class="switch-row">
-        <ui-switch checked.bind="emailNotifications"></ui-switch>
-        <span class="switch-label">Email notifications</span>
-        <span class="switch-state">${emailNotifications ? 'On' : 'Off'}</span>
-      </div>
-    </demo-block>
-
-    <demo-block title="Disabled">
-      <div class="switch-row">
-        <ui-switch checked disabled></ui-switch>
-        <span class="switch-label">Auto updates</span>
-      </div>
-    </demo-block>
-
-    <demo-block title="Two-way binding">
-      <div class="switch-row">
-        <ui-switch checked.bind="desktopAlerts"></ui-switch>
-        <span class="switch-label">Desktop alerts</span>
-        <span class="switch-state">${desktopAlerts ? 'Enabled' : 'Disabled'}</span>
-      </div>
-    </demo-block>
-  </section>
-
-  <section class="demo-section">
-    <h2 class="section-title">ui-checkbox</h2>
-
-    <demo-block title="Basic">
-      <div class="checkbox-row">
-        <ui-checkbox id="marketing-consent" checked.bind="marketingConsent"></ui-checkbox>
-        <label class="checkbox-label" for="marketing-consent">Marketing emails</label>
-        <span class="checkbox-state">${marketingConsent ? 'Subscribed' : 'Unsubscribed'}</span>
-      </div>
-    </demo-block>
-
-    <demo-block title="Disabled">
-      <div class="checkbox-row">
-        <ui-checkbox id="security-updates" checked disabled></ui-checkbox>
-        <label class="checkbox-label" for="security-updates">Security updates</label>
-      </div>
-    </demo-block>
-
-    <demo-block title="Indeterminate">
-      <div class="checkbox-row">
-        <ui-checkbox id="partial-group" indeterminate></ui-checkbox>
-        <label class="checkbox-label" for="partial-group">Partially selected group</label>
-      </div>
-    </demo-block>
-
-    <demo-block title="Two-way binding">
-      <div class="checkbox-row">
-        <ui-checkbox id="accept-terms" checked.bind="termsAccepted"></ui-checkbox>
-        <label class="checkbox-label" for="accept-terms">Accept terms</label>
-        <span class="checkbox-state">${termsAccepted ? 'Accepted' : 'Required'}</span>
-      </div>
-    </demo-block>
-  </section>
-
-  <section class="demo-section">
-    <h2 class="section-title">ui-disclosure</h2>
-
-    <demo-block title="Basic">
-      <ui-disclosure>
-        <template au-slot="header">
-          What is Aurelia Headless?
-        </template>
-        <template au-slot="content">
-          A set of unstyled, accessible interaction primitives for Aurelia, inspired by Headless UI.
-        </template>
-      </ui-disclosure>
-    </demo-block>
-
-    <demo-block title="Default open">
-      <ui-disclosure open>
-        <template au-slot="header">
-          Shipping details
-        </template>
-        <template au-slot="content">
-          Free shipping for orders over $50. Delivery takes 3-5 business days.
-        </template>
-      </ui-disclosure>
-    </demo-block>
-  </section>
-
-  <section class="demo-section">
-    <h2 class="section-title">ui-list</h2>
-
-    <demo-block title="Fallback to rendered items">
-      <ui-list list-activate.trigger="onListActivate($event)" list-select.trigger="onListSelect($event)">
-        <ui-list-item repeat.for="item of staticList" value.bind="item" active.bind="item.active"
-          selected.bind="item.selected" disabled.bind="item.disabled">
-          <span au-slot="leading">•</span>
-          ${item.label}
-          <span au-slot="secondary">Workspace section</span>
-          <span au-slot="trailing">${item.category}</span>
-        </ui-list-item>
-      </ui-list>
-    </demo-block>
-
-    <demo-block title="Items bindable (virtual-ready)">
-      <ui-list items.bind="virtualList" typeahead-field="label" selected.bind="selectedItem"
-        style="height: 300px; overflow-y: auto;">
-        <ui-list-item virtual-repeat.for="item of virtualList" value.bind="item" disabled.bind="item.disabled">
-          <span au-slot="leading">${item.id}</span>
-          ${item.label}
-          <span au-slot="secondary">${item.id % 2 === 0 ? 'Synced recently' : 'Pending sync'}</span>
-          <span au-slot="trailing">${item.category}</span>
-        </ui-list-item>
-      </ui-list>
-      <span class="list-state">Selected: ${selectedItem.label}</span>
-    </demo-block>
-  </section>
+  <main class="content-panel">
+    <au-viewport></au-viewport>
+  </main>
 </div>
