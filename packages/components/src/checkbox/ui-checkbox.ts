@@ -27,7 +27,7 @@ export class UiCheckbox {
 
   controlEl!: HTMLInputElement;
 
-  private changingFrame: number | null = null;
+  private changingFrame: number | undefined;
 
   onClick(event: MouseEvent): void {
     if (event.target instanceof HTMLInputElement) {
@@ -51,13 +51,13 @@ export class UiCheckbox {
     this.checked = event.target.checked;
     this.indeterminate = false;
 
-    if (this.changingFrame !== null) {
+    if (this.changingFrame !== undefined) {
       cancelAnimationFrame(this.changingFrame);
     }
 
     this.changingFrame = requestAnimationFrame(() => {
       this.changing = false;
-      this.changingFrame = null;
+      this.changingFrame = undefined;
     });
   }
 
@@ -118,9 +118,9 @@ export class UiCheckbox {
   }
 
   detaching(): void {
-    if (this.changingFrame !== null) {
+    if (this.changingFrame !== undefined) {
       cancelAnimationFrame(this.changingFrame);
-      this.changingFrame = null;
+      this.changingFrame = undefined;
     }
   }
 
@@ -145,13 +145,13 @@ export class UiCheckbox {
       this.checked = !this.checked;
     }
 
-    if (this.changingFrame !== null) {
+    if (this.changingFrame !== undefined) {
       cancelAnimationFrame(this.changingFrame);
     }
 
     this.changingFrame = requestAnimationFrame(() => {
       this.changing = false;
-      this.changingFrame = null;
+      this.changingFrame = undefined;
     });
   }
 

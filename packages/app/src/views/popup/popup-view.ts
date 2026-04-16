@@ -6,5 +6,7 @@ export class PopupView {
   basicOpen = false;
   inlineOpen = false;
 
-  inlineTarget: Element | null = null;
+  basicAnchor: Element | undefined;
+  inlineAnchor: Element | undefined;
+  inlineTarget: Element | undefined;
 }

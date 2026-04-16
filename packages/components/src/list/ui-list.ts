@@ -46,7 +46,7 @@ export class UiList {
   private listItemsChangedCallback: (() => void) | undefined;
   private activeItem: object | undefined;
   private typeaheadBuffer = '';
-  private typeaheadTimer: ReturnType<typeof setTimeout> | null = null;
+  private typeaheadTimer: ReturnType<typeof setTimeout> | undefined;
 
   detaching(): void {
     this.clearTypeahead();
@@ -259,7 +259,7 @@ export class UiList {
     this.clearTypeahead();
     this.typeaheadTimer = setTimeout(() => {
       this.typeaheadBuffer = '';
-      this.typeaheadTimer = null;
+      this.typeaheadTimer = undefined;
     }, 800);
 
     const startIndex = this.activeItem ? this.items.indexOf(this.activeItem) : 0;
@@ -277,9 +277,9 @@ export class UiList {
   }
 
   private clearTypeahead(): void {
-    if (this.typeaheadTimer !== null) {
+    if (this.typeaheadTimer !== undefined) {
       clearTimeout(this.typeaheadTimer);
-      this.typeaheadTimer = null;
+      this.typeaheadTimer = undefined;
     }
   }
 

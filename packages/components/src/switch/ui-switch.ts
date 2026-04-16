@@ -16,7 +16,7 @@ export class UiSwitch {
   active: boolean = false;
   changing: boolean = false;
 
-  private changingFrame: number | null = null;
+  private changingFrame: number | undefined;
 
   onClick(): void {
     this.toggle();
@@ -75,9 +75,9 @@ export class UiSwitch {
   }
 
   detaching(): void {
-    if (this.changingFrame !== null) {
+    if (this.changingFrame !== undefined) {
       cancelAnimationFrame(this.changingFrame);
-      this.changingFrame = null;
+      this.changingFrame = undefined;
     }
   }
 
@@ -89,13 +89,13 @@ export class UiSwitch {
     this.changing = true;
     this.checked = !this.checked;
 
-    if (this.changingFrame !== null) {
+    if (this.changingFrame !== undefined) {
       cancelAnimationFrame(this.changingFrame);
     }
 
     this.changingFrame = requestAnimationFrame(() => {
       this.changing = false;
-      this.changingFrame = null;
+      this.changingFrame = undefined;
     });
   }
 

@@ -1,26 +1,9 @@
 <template class="ui-popup" data-open.attr="open ? '' : null">
-  <button class="ui-popup__trigger"
-    id.bind="triggerId"
-    ref="triggerElement"
-    type="button"
-    aria-haspopup="dialog"
-    aria-expanded.attr="open ? 'true' : 'false'"
-    aria-controls.bind="panelId"
-    disabled.bind="disabled"
-    data-open.attr="open ? '' : null"
-    data-disabled.attr="disabled ? '' : null"
-    click.trigger="onTriggerClick($event)"
-    keydown.trigger="onTriggerKeyDown($event)">
-    <au-slot name="trigger"></au-slot>
-  </button>
-
   <div if.bind="open"
     portal="target.bind: portalTarget; position.bind: portalPosition">
     <div class="ui-popup__panel"
-      id.bind="panelId"
       ref="panelElement"
       role="dialog"
-      aria-labelledby.bind="triggerId"
       style.bind="panelStyle"
       data-open.attr="open ? '' : null">
       <au-slot></au-slot>
