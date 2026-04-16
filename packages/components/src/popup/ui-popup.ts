@@ -7,10 +7,13 @@ type PopupPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
 
 @customElement({ name: 'ui-popup', template })
 export class UiPopup {
+  private readonly hiddenPanelStyle = 'position: fixed; top: -10000px; left: -10000px; visibility: hidden;';
+
   @bindable({ mode: BindingMode.twoWay, set: booleanAttr })
   open: boolean = false;
   openChanged(newValue: boolean): void {
     if (newValue) {
+      this.panelStyle = this.hiddenPanelStyle;
       this.startOpenState();
       return;
     }
@@ -54,7 +57,7 @@ export class UiPopup {
   @bindable
   portalPosition: InsertPosition = 'beforeend';
 
-  panelStyle = '';
+  panelStyle = this.hiddenPanelStyle;
   panelElement: HTMLElement | undefined;
 
   attaching(): void {
@@ -107,6 +110,7 @@ export class UiPopup {
 
   private stopOpenState(): void {
     this.setListeners(false);
+    this.panelStyle = this.hiddenPanelStyle;
     if (this.positionFrame) {
       cancelAnimationFrame(this.positionFrame);
       this.positionFrame = undefined;
@@ -151,7 +155,7 @@ export class UiPopup {
     }
 
     if (!this.anchor) {
-      this.panelStyle = '';
+      this.panelStyle = this.hiddenPanelStyle;
       return;
     }
 

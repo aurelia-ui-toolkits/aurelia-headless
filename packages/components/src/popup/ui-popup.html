@@ -1,9 +1,9 @@
 <template class="ui-popup" data-open.attr="open ? '' : null">
-  <div if.bind="open"
-    portal="target.bind: portalTarget; position.bind: portalPosition">
+  <div portal="target.bind: portalTarget; position.bind: portalPosition">
     <div class="ui-popup__panel"
       ref="panelElement"
       role="dialog"
+      show.bind="open"
       style.bind="panelStyle"
       data-open.attr="open ? '' : null">
       <au-slot></au-slot>
