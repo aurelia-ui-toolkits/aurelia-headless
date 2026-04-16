@@ -186,7 +186,7 @@ export class UiPopup {
     let left = alignEnd ? anchorRect.right - panelRect.width : anchorRect.left;
     left = Math.max(viewportPadding, Math.min(left, window.innerWidth - panelRect.width - viewportPadding));
 
-    const minWidth = this.matchAnchorWidth ? `min-width: ${Math.round(anchorRect.width)}px;` : '';
-    this.panelStyle = `position: fixed; top: ${Math.round(top)}px; left: ${Math.round(left)}px; ${minWidth}`;
+    const minWidth = this.matchAnchorWidth ? `min-width: ${anchorRect.width}px;` : '';
+    this.panelStyle = `position: fixed; top: ${top}px; left: ${left}px; ${minWidth}`;
   }
 }
