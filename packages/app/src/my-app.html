@@ -129,6 +129,7 @@
           selected.bind="item.selected" disabled.bind="item.disabled">
           <span au-slot="leading">•</span>
           ${item.label}
+          <span au-slot="secondary">Workspace section</span>
           <span au-slot="trailing">${item.category}</span>
         </ui-list-item>
       </ui-list>
@@ -140,6 +141,7 @@
         <ui-list-item virtual-repeat.for="item of virtualList" value.bind="item" disabled.bind="item.disabled">
           <span au-slot="leading">${item.id}</span>
           ${item.label}
+          <span au-slot="secondary">${item.id % 2 === 0 ? 'Synced recently' : 'Pending sync'}</span>
           <span au-slot="trailing">${item.category}</span>
         </ui-list-item>
       </ui-list>
