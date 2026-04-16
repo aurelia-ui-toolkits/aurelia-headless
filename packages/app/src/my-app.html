@@ -2,12 +2,15 @@
   <aside class="side-panel">
     <h1 class="app-title">Aurelia Headless UI</h1>
     <nav class="side-menu" aria-label="Components">
-      <button repeat.for="item of menuItems"
-        type="button"
-        class="side-menu__item ${isActive(item.path) ? 'is-active' : ''}"
-        click.trigger="navigate(item.path)">
-        ${item.title}
-      </button>
+      <ui-list class="side-menu-list"
+        items.bind="menuItems"
+        selected.bind="selectedMenuItem"
+        typeahead-field="title"
+        list-select.trigger="navigate($event.detail.path)">
+        <ui-list-item repeat.for="item of menuItems" value.bind="item">
+          ${item.title}
+        </ui-list-item>
+      </ui-list>
     </nav>
   </aside>
 

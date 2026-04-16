@@ -24,6 +24,11 @@ export class MyApp {
   private readonly currentRoute = resolve(ICurrentRoute)
 
   readonly menuItems = MyApp.routes.filter((route) => route.id !== 'button-alt');
+  selectedMenuItem: DemoRoute | undefined;
+
+  binding(): void {
+    this.selectedMenuItem = this.menuItems.find((item) => this.isActive(item.path));
+  }
 
   navigate(path: string): void {
     void this.router.load(path || '');

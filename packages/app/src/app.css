@@ -29,16 +29,30 @@ body {
   @apply grid gap-1;
 }
 
-.side-menu__item {
-  @apply cursor-pointer rounded-lg border border-transparent bg-transparent px-3 py-2 text-left font-semibold text-ink-700;
+.side-menu-list {
+  @apply border-0 bg-transparent p-0;
 }
 
-.side-menu__item:hover {
-  @apply bg-card-muted;
+.side-menu-list .ui-list-item {
+  @apply grid-cols-[1fr] gap-0 px-3 py-2 font-semibold text-ink-700;
 }
 
-.side-menu__item.is-active {
-  @apply border-primary-600 bg-primary-600 text-white;
+.side-menu-list .ui-list-item[data-active] {
+  @apply bg-card-muted text-ink-900;
+}
+
+.side-menu-list .ui-list-item[data-selected] {
+  @apply bg-primary-600 text-white;
+}
+
+.side-menu-list .ui-list-item[data-selected][data-active] {
+  @apply bg-primary-700;
+}
+
+.side-menu-list .ui-list-item__leading,
+.side-menu-list .ui-list-item__secondary,
+.side-menu-list .ui-list-item__trailing {
+  @apply hidden;
 }
 
 .content-panel {
