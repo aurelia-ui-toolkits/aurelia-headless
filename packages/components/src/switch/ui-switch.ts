@@ -75,7 +75,7 @@ export class UiSwitch {
   }
 
   detaching(): void {
-    if (this.changingFrame !== undefined) {
+    if (this.changingFrame) {
       cancelAnimationFrame(this.changingFrame);
       this.changingFrame = undefined;
     }
@@ -89,7 +89,7 @@ export class UiSwitch {
     this.changing = true;
     this.checked = !this.checked;
 
-    if (this.changingFrame !== undefined) {
+    if (this.changingFrame) {
       cancelAnimationFrame(this.changingFrame);
     }
 

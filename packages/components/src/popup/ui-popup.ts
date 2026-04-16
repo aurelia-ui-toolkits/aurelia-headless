@@ -107,7 +107,7 @@ export class UiPopup {
 
   private stopOpenState(): void {
     this.setListeners(false);
-    if (this.positionFrame !== undefined) {
+    if (this.positionFrame) {
       cancelAnimationFrame(this.positionFrame);
       this.positionFrame = undefined;
     }
@@ -135,7 +135,7 @@ export class UiPopup {
       return;
     }
 
-    if (this.positionFrame !== undefined) {
+    if (this.positionFrame) {
       cancelAnimationFrame(this.positionFrame);
     }
 
@@ -150,7 +150,7 @@ export class UiPopup {
       return;
     }
 
-    if (this.anchor === undefined) {
+    if (!this.anchor) {
       this.panelStyle = '';
       return;
     }

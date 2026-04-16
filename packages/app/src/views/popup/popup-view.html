@@ -1,7 +1,7 @@
 <demo-section title="ui-popup">
 
   <demo-block title="Default target (document body)">
-    <button ui-button ref="basicAnchor" click.trigger="basicOpen = !basicOpen">
+    <button ui-button primary ref="basicAnchor" click.trigger="basicOpen = !basicOpen">
       ${basicOpen ? 'Hide actions' : 'Show actions'}
     </button>
 
@@ -17,7 +17,7 @@
   <demo-block title="Custom portal target">
     <div class="popup-demo-target" ref="inlineTarget"></div>
 
-    <button ui-button ref="inlineAnchor" click.trigger="inlineOpen = !inlineOpen">
+    <button ui-button primary ref="inlineAnchor" click.trigger="inlineOpen = !inlineOpen">
       ${inlineOpen ? 'Hide inline popup' : 'Show inline popup'}
     </button>
 

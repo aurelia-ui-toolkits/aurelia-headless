@@ -51,7 +51,7 @@ export class UiCheckbox {
     this.checked = event.target.checked;
     this.indeterminate = false;
 
-    if (this.changingFrame !== undefined) {
+    if (this.changingFrame) {
       cancelAnimationFrame(this.changingFrame);
     }
 
@@ -118,7 +118,7 @@ export class UiCheckbox {
   }
 
   detaching(): void {
-    if (this.changingFrame !== undefined) {
+    if (this.changingFrame) {
       cancelAnimationFrame(this.changingFrame);
       this.changingFrame = undefined;
     }
@@ -145,7 +145,7 @@ export class UiCheckbox {
       this.checked = !this.checked;
     }
 
-    if (this.changingFrame !== undefined) {
+    if (this.changingFrame) {
       cancelAnimationFrame(this.changingFrame);
     }
 

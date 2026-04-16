@@ -277,7 +277,7 @@ export class UiList {
   }
 
   private clearTypeahead(): void {
-    if (this.typeaheadTimer !== undefined) {
+    if (this.typeaheadTimer) {
       clearTimeout(this.typeaheadTimer);
       this.typeaheadTimer = undefined;
     }
