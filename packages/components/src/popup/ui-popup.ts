@@ -35,7 +35,9 @@ export class UiPopup {
 
   @bindable
   anchor: Element | undefined;
-  anchorChanged(): void {
+  anchorChanged(newValue: Element | undefined, oldValue: Element | undefined): void {
+    oldValue?.removeEventListener('pointerdown', this.onAnchorPointerDownCapture, true);
+    newValue?.addEventListener('pointerdown', this.onAnchorPointerDownCapture, true);
     this.queuePositionUpdate();
   }
 
@@ -61,17 +63,28 @@ export class UiPopup {
   panelElement: HTMLElement | undefined;
 
   attaching(): void {
+    this.anchor?.addEventListener('pointerdown', this.onAnchorPointerDownCapture, true);
     if (this.open) {
       this.startOpenState();
     }
   }
 
   detaching(): void {
+    this.anchor?.removeEventListener('pointerdown', this.onAnchorPointerDownCapture, true);
     this.stopOpenState();
   }
 
   private listening = false;
   private positionFrame: number | undefined;
+  private anchorRectSnapshot: DOMRect | undefined;
+
+  private readonly onAnchorPointerDownCapture = (): void => {
+    if (!this.anchor) {
+      return;
+    }
+
+    this.anchorRectSnapshot = this.anchor.getBoundingClientRect();
+  };
 
   private readonly onWindowPointerDown = (event: PointerEvent): void => {
     if (!this.open || !this.closeOnOutside) {
@@ -110,6 +123,7 @@ export class UiPopup {
 
   private stopOpenState(): void {
     this.setListeners(false);
+    this.anchorRectSnapshot = undefined;
     this.panelStyle = this.hiddenPanelStyle;
     if (this.positionFrame) {
       cancelAnimationFrame(this.positionFrame);
@@ -166,7 +180,8 @@ export class UiPopup {
       return;
     }
 
-    const anchorRect = this.anchor.getBoundingClientRect();
+    const anchorRect = this.anchorRectSnapshot || this.anchor.getBoundingClientRect();
+    this.anchorRectSnapshot = undefined;
     const panelRect = this.panelElement.getBoundingClientRect();
     const viewportPadding = 8;
     const alignEnd = this.placement.endsWith('end');
