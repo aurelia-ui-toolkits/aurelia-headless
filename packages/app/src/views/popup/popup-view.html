@@ -1,0 +1,34 @@
+<demo-section title="ui-popup">
+
+  <demo-block title="Default target (document body)">
+    <ui-popup open.bind="basicOpen" match-trigger-width>
+      <template au-slot="trigger">
+        ${basicOpen ? 'Hide actions' : 'Show actions'}
+      </template>
+
+      <div class="popup-demo-card">
+        <strong>Quick actions</strong>
+        <span>Use this primitive for menu and lookup overlays.</span>
+        <button ui-button outlined click.trigger="basicOpen = false">Close</button>
+      </div>
+    </ui-popup>
+  </demo-block>
+
+  <demo-block title="Custom portal target">
+    <div class="popup-demo-target" ref="inlineTarget"></div>
+
+    <ui-popup open.bind="inlineOpen"
+      portal-target.bind="inlineTarget"
+      placement="top-end"
+      offset="10">
+      <template au-slot="trigger">
+        ${inlineOpen ? 'Hide inline popup' : 'Show inline popup'}
+      </template>
+
+      <div class="popup-demo-card">
+        <strong>Inline target</strong>
+        <span>This popup is portalled into the dashed container above.</span>
+      </div>
+    </ui-popup>
+  </demo-block>
+</demo-section>

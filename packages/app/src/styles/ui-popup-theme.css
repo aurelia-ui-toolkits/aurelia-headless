@@ -1,0 +1,35 @@
+@reference "./theme.css";
+
+.ui-popup {
+  @apply inline-block;
+}
+
+.ui-popup__trigger {
+  @apply cursor-pointer rounded-[0.65rem] border border-card-border bg-white px-4 py-2 font-semibold text-ink-900;
+  transition: background-color 140ms ease, border-color 140ms ease;
+}
+
+.ui-popup__trigger[data-open] {
+  @apply border-primary-600 bg-outline-hover;
+}
+
+.ui-popup__trigger:focus-visible {
+  outline: 3px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+.ui-popup__trigger[data-disabled] {
+  @apply cursor-not-allowed opacity-50;
+}
+
+.ui-popup__panel {
+  @apply z-50 rounded-xl border border-card-border bg-white p-3 text-sm text-ink-700 shadow-xl;
+}
+
+.popup-demo-card {
+  @apply grid min-w-56 gap-2;
+}
+
+.popup-demo-target {
+  @apply mb-3 min-h-14 rounded-xl border border-dashed border-card-border bg-card-muted;
+}
