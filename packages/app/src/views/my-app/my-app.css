@@ -1,4 +1,4 @@
-@reference "./theme.css";
+@reference "../../styles/theme.css";
 
 * {
   box-sizing: border-box;
@@ -63,7 +63,9 @@ body {
   @apply grid gap-5;
 }
 
-.demo-section + .demo-section { @apply mt-10; }
+.demo-section + .demo-section {
+  @apply mt-10;
+}
 
 .section-title {
   @apply m-0 text-[1.35rem] font-semibold;
@@ -114,4 +116,6 @@ body {
   transition: background-color 140ms ease;
 }
 
-.btn-toggle:hover { @apply bg-card-muted; }
+.btn-toggle:hover {
+  @apply bg-card-muted;
+}

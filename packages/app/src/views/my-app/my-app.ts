@@ -1,11 +1,12 @@
 import { customElement, resolve } from 'aurelia';
 import { ICurrentRoute, IRouter } from '@aurelia/router';
-import { ButtonView } from './views/button/button-view';
-import { CheckboxView } from './views/checkbox/checkbox-view';
-import { DisclosureView } from './views/disclosure/disclosure-view';
-import { ListView } from './views/list/list-view';
-import { SwitchView } from './views/switch/switch-view';
+import { ButtonView } from '../button/button-view';
+import { CheckboxView } from '../checkbox/checkbox-view';
+import { DisclosureView } from '../disclosure/disclosure-view';
+import { ListView } from '../list/list-view';
+import { SwitchView } from '../switch/switch-view';
 import template from './my-app.html?raw';
+import './my-app.css';
 
 type DemoRoute = { id: string; path: string; title: string; component: unknown };
 
@@ -21,25 +22,21 @@ export class MyApp {
   ];
 
   private readonly router = resolve(IRouter);
-  private readonly currentRoute = resolve(ICurrentRoute)
+  private readonly currentRoute = resolve(ICurrentRoute);
 
   readonly menuItems = MyApp.routes.filter((route) => route.id !== 'button-alt');
-  selectedMenuItem: DemoRoute | undefined;
 
-  binding(): void {
-    this.selectedMenuItem = this.menuItems.find((item) => this.isActive(item.path));
+  get selectedMenuItem(): DemoRoute | undefined {
+    const current = this.normalizePath(this.currentRoute.path ?? '');
+    return this.menuItems.find((item) => this.normalizePath(item.path) === current)
+      ?? this.menuItems[0];
   }
 
   navigate(path: string): void {
     void this.router.load(path || '');
   }
 
-  isActive(path: string): boolean {
-    const current = this.currentRoute.path ?? '';
-    if (path === '') {
-      return current === '';
-    }
-
-    return current === path || current.startsWith(`${path}/`);
+  private normalizePath(path: string): string {
+    return path.replace(/^\/+/, '');
   }
 }

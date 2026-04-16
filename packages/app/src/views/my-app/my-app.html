@@ -4,7 +4,7 @@
     <nav class="side-menu" aria-label="Components">
       <ui-list class="side-menu-list"
         items.bind="menuItems"
-        selected.bind="selectedMenuItem"
+        selected.to-view="selectedMenuItem"
         typeahead-field="title"
         list-select.trigger="navigate($event.detail.path)">
         <ui-list-item repeat.for="item of menuItems" value.bind="item">
