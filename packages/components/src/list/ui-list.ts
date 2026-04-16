@@ -162,11 +162,27 @@ export class UiList {
       nextIndex = Math.max(0, Math.min(this.items.length - 1, nextIndex));
     }
 
-    const next = this.items[nextIndex];
+    const next = this.getNonDisabled(this.items[nextIndex], direction);
     if (next) {
       this.scrollItemIntoView(next);
       this.activateItem(next);
     }
+  }
+
+  private getNonDisabled(item: object, direction: 1 | -1): object | undefined {
+    if (!this.isItemDisabled(item)) {
+      return item;
+    }
+    const startIndex = this.items.indexOf(item);
+    for (let step = 1; step < this.items.length; step++) {
+      const index = (startIndex + direction * step + this.items.length) % this.items.length;
+      const next = this.items[index];
+      if (!this.isItemDisabled(next)) {
+        return next;
+      }
+    }
+
+    return undefined;
   }
 
   private async setFirstActive() {
@@ -237,10 +253,11 @@ export class UiList {
 
     for (let step = 0; step < this.items.length; step++) {
       const index = (startIndex + step) % this.items.length;
-      const label = this.items[index][this.typeaheadField!].toLowerCase();
-      if (label.startsWith(this.typeaheadBuffer)) {
-        this.scrollItemIntoView(this.items[index]);
-        this.activateItem(this.items[index]);
+      const item = this.items[index];
+      const label = item[this.typeaheadField!].toLowerCase();
+      if (label.startsWith(this.typeaheadBuffer) && !this.isItemDisabled(item)) {
+        this.scrollItemIntoView(item);
+        this.activateItem(item);
         return;
       }
     }
