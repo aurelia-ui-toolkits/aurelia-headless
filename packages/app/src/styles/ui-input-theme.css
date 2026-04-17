@@ -14,7 +14,7 @@ ui-input,
 }
 
 .ui-input__control {
-  @apply grid w-full grid-cols-[auto_1fr_auto] items-center gap-2 rounded-xl border border-card-border bg-white px-3;
+  @apply grid w-full grid-cols-[auto_1fr_auto] items-center gap-0 rounded-xl border border-card-border bg-white px-3;
   position: relative;
   transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
 }
@@ -40,6 +40,14 @@ ui-input,
 .ui-input__trailing {
   @apply text-sm text-ink-500;
   grid-row: 1;
+}
+
+.ui-input__leading {
+  margin-right: 0.5rem;
+}
+
+.ui-input__trailing {
+  margin-left: 0.5rem;
 }
 
 .ui-input__inset-label {
