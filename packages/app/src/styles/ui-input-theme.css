@@ -39,24 +39,25 @@ ui-input,
 .ui-input__leading,
 .ui-input__trailing {
   @apply text-sm text-ink-500;
+  grid-row: 1;
 }
 
 .ui-input__inset-label {
-  @apply pointer-events-none absolute text-sm text-ink-500;
-  left: 0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
+  @apply pointer-events-none text-sm text-ink-500;
+  align-self: center;
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: start;
+  z-index: 2;
   transform-origin: left top;
-  transition: top 140ms ease, transform 140ms ease, font-size 140ms ease, color 140ms ease;
-}
-
-.ui-input[data-has-leading] .ui-input__inset-label {
-  left: 2rem;
+  transition: transform 140ms ease, font-size 140ms ease, color 140ms ease;
 }
 
 .ui-input__native {
   @apply h-11 min-w-0 w-full bg-transparent text-sm text-ink-900 outline-none;
   grid-column: 2;
+  grid-row: 1;
+  z-index: 1;
 }
 
 .ui-input:not([data-inset]) .ui-input__inset-label {
@@ -75,8 +76,7 @@ ui-input,
 
 .ui-input[data-inset][data-focus] .ui-input__inset-label,
 .ui-input[data-inset][data-has-value] .ui-input__inset-label {
-  top: 0.45rem;
-  transform: none;
+  transform: translateY(-0.85rem) scale(0.75);
   font-size: 0.75rem;
   color: var(--color-ink-700);
 }
