@@ -8,6 +8,7 @@ import { UiListItem } from './list/ui-list-item';
 import { UiPopup } from './popup/ui-popup';
 import { UiSwitch } from './switch/ui-switch';
 import { EnhanceUiButton } from './button/enhance-ui-button';
+import { EnhanceUiInput } from './input/enhance-ui-input';
 
 export { UiButton };
 export { UiCheckbox };
@@ -21,6 +22,6 @@ export { UiSwitch };
 
 export const AureliaHeadlessConfiguration = {
   register(container: IContainer): IContainer {
-    return container.register(UiButton, EnhanceUiButton, UiCheckbox, UiDisclosure, UiInput, UiList, UiListItem, UiPopup, UiSwitch);
+    return container.register(UiButton, EnhanceUiButton, UiCheckbox, UiDisclosure, UiInput, EnhanceUiInput, UiList, UiListItem, UiPopup, UiSwitch);
   }
 };

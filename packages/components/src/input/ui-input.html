@@ -1,37 +1,21 @@
-<template class="ui-input"
-  data-disabled.attr="disabled ? '' : null"
-  data-invalid.attr="invalid || errors.size ? '' : null"
-  data-focus.attr="focus ? '' : null"
+<template class="ui-input" data-disabled.attr="disabled ? '' : null"
+  data-invalid.attr="invalid || errors.size ? '' : null" data-focus.attr="focus ? '' : null"
   data-active.attr="active ? '' : null">
-  <label class="ui-input__label" id.bind="labelId" for.bind="id" show.bind="label || labelNodes.length">
-    <au-slot name="label">${label}</au-slot>
-  </label>
+  <div class="ui-input__label" id.bind="labelId" for.bind="id" show.bind="label">${label}</div>
 
   <div class="ui-input__control">
     <span class="ui-input__leading" show.bind="leadingNodes.length">
       <au-slot name="leading"></au-slot>
     </span>
 
-    <input ref="inputEl"
-      class="ui-input__native"
-      id.bind="id"
-      type.bind="type"
-      name.attr="name || null"
-      value.bind="value"
-      placeholder.attr="placeholder || null"
-      autocomplete.attr="autocomplete || null"
-      disabled.bind="disabled"
-      readonly.bind="readonly"
-      required.bind="required"
+    <input ref="inputEl" class="ui-input__native" id.bind="id" type.bind="type" name.attr="name || null"
+      value.bind="value" placeholder.attr="placeholder || null" autocomplete.attr="autocomplete || null"
+      disabled.bind="disabled" readonly.bind="readonly" required.bind="required"
       aria-labelledby.bind="labelNodes.length ? labelId : null"
       aria-invalid.bind="invalid || errors.size ? 'true' : 'false'"
       aria-describedby.bind="errors.size ? errorsId : (helperNodes.length ? helperId : null)"
-      input.trigger="onInput($event)"
-      change.trigger="onChange($event)"
-      focusin.trigger="onFocusIn()"
-      focusout.trigger="onFocusOut()"
-      pointerdown.trigger="onPointerDown()"
-      pointerup.trigger="onPointerUp()"
+      input.trigger="onInput($event)" change.trigger="onChange($event)" focusin.trigger="onFocusIn()"
+      focusout.trigger="onFocusOut()" pointerdown.trigger="onPointerDown()" pointerup.trigger="onPointerUp()"
       pointerleave.trigger="onPointerLeave()">
 
     <span class="ui-input__trailing" show.bind="trailingNodes.length">

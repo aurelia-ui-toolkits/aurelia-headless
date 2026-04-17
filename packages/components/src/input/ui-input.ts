@@ -49,9 +49,6 @@ export class UiInput {
   @bindable
   errors = new Map<IError, boolean>();
 
-  @slotted({ slotName: 'label' })
-  labelNodes: readonly Node[] = [];
-
   @slotted({ slotName: 'helper' })
   helperNodes: readonly Node[] = [];
 
