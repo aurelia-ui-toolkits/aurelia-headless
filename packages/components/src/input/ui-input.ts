@@ -14,10 +14,10 @@ export class UiInput {
   value: string = '';
 
   @bindable
-  label: string = '';
+  label: string | undefined;
 
   @bindable
-  helperText: string = '';
+  helperText: string | undefined;
 
   @bindable
   id: string = `ui-input-${++nextInputId}`;
@@ -26,13 +26,13 @@ export class UiInput {
   type: string = 'text';
 
   @bindable
-  name: string = '';
+  name: string | undefined;
 
   @bindable
-  placeholder: string = '';
+  placeholder: string | undefined;
 
   @bindable
-  autocomplete: AutoFill | '' = '';
+  autocomplete: AutoFill | undefined;
 
   @bindable({ set: booleanAttr })
   disabled: boolean = false;

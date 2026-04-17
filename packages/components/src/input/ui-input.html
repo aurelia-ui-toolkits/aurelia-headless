@@ -3,7 +3,7 @@
   data-invalid.attr="invalid || errors.size ? '' : null"
   data-focus.attr="focus ? '' : null"
   data-active.attr="active ? '' : null">
-  <label class="ui-input__label" id.bind="labelId" show.bind="label || labelNodes.length">
+  <label class="ui-input__label" id.bind="labelId" for.bind="id" show.bind="label || labelNodes.length">
     <au-slot name="label">${label}</au-slot>
   </label>
 
@@ -16,10 +16,10 @@
       class="ui-input__native"
       id.bind="id"
       type.bind="type"
-      name.bind="name"
+      name.attr="name || null"
       value.bind="value"
-      placeholder.bind="placeholder"
-      autocomplete.bind="autocomplete"
+      placeholder.attr="placeholder || null"
+      autocomplete.attr="autocomplete || null"
       disabled.bind="disabled"
       readonly.bind="readonly"
       required.bind="required"
