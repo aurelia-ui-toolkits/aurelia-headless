@@ -12,9 +12,15 @@ export interface IError {
 export class UiInput {
   @bindable({ mode: BindingMode.twoWay })
   value: string = '';
+  valueChanged(): void {
+    this.syncHasValue();
+  }
 
   @bindable
   label: string | undefined;
+
+  @bindable({ set: booleanAttr })
+  inset: boolean = false;
 
   @bindable
   helperText: string | undefined;
@@ -60,8 +66,13 @@ export class UiInput {
 
   focus: boolean = false;
   active: boolean = false;
+  hasValue: boolean = false;
 
   inputEl!: HTMLInputElement;
+
+  attaching(): void {
+    this.syncHasValue();
+  }
 
   get labelId(): string {
     return `${this.id}-label`;
@@ -86,12 +97,14 @@ export class UiInput {
   onInput(event: Event): void {
     if (event.target instanceof HTMLInputElement) {
       this.value = event.target.value;
+      this.syncHasValue();
     }
   }
 
   onChange(event: Event): void {
     if (event.target instanceof HTMLInputElement) {
       this.value = event.target.value;
+      this.syncHasValue();
     }
   }
 
@@ -117,5 +130,9 @@ export class UiInput {
 
   onPointerLeave(): void {
     this.active = false;
+  }
+
+  private syncHasValue(): void {
+    this.hasValue = !!this.value;
   }
 }
