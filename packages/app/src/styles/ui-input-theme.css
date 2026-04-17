@@ -1,0 +1,64 @@
+@reference "./theme.css";
+
+.ui-input {
+  @apply grid gap-2;
+}
+
+.ui-input__label {
+  @apply text-sm font-semibold text-ink-900;
+}
+
+.ui-input__control {
+  @apply grid grid-cols-[auto_1fr_auto] items-center gap-2 rounded-xl border border-card-border bg-white px-3;
+  transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
+}
+
+.ui-input[data-focus] .ui-input__control {
+  @apply border-primary-600;
+  box-shadow: 0 0 0 3px var(--color-ring);
+}
+
+.ui-input[data-active] .ui-input__control {
+  @apply border-primary-700;
+}
+
+.ui-input[data-invalid] .ui-input__control {
+  @apply border-red-500;
+}
+
+.ui-input[data-disabled] .ui-input__control {
+  @apply cursor-not-allowed bg-card-muted opacity-60;
+}
+
+.ui-input__leading,
+.ui-input__trailing {
+  @apply text-sm text-ink-500;
+}
+
+.ui-input__native {
+  @apply h-11 w-full bg-transparent text-sm text-ink-900 outline-none;
+}
+
+.ui-input__native::placeholder {
+  @apply text-ink-500;
+}
+
+.ui-input__native:disabled {
+  @apply cursor-not-allowed;
+}
+
+.ui-input__subscript {
+  @apply text-xs leading-5;
+}
+
+.ui-input__helper {
+  @apply text-ink-500;
+}
+
+.ui-input__errors {
+  @apply text-red-600;
+}
+
+.input-state {
+  @apply text-xs text-ink-500;
+}

@@ -3,6 +3,7 @@ import { ICurrentRoute, IRouter } from '@aurelia/router';
 import { ButtonView } from '../button/button-view';
 import { CheckboxView } from '../checkbox/checkbox-view';
 import { DisclosureView } from '../disclosure/disclosure-view';
+import { InputView } from '../input/input-view';
 import { ListView } from '../list/list-view';
 import { PopupView } from '../popup/popup-view';
 import { SwitchView } from '../switch/switch-view';
@@ -19,6 +20,7 @@ export class MyApp {
     { id: 'switch', path: 'switch', title: 'ui-switch', component: SwitchView },
     { id: 'checkbox', path: 'checkbox', title: 'ui-checkbox', component: CheckboxView },
     { id: 'disclosure', path: 'disclosure', title: 'ui-disclosure', component: DisclosureView },
+    { id: 'input', path: 'input', title: 'ui-input', component: InputView },
     { id: 'list', path: 'list', title: 'ui-list', component: ListView },
     { id: 'popup', path: 'popup', title: 'ui-popup', component: PopupView }
   ];

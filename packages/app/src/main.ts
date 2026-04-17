@@ -10,6 +10,7 @@ import './styles/theme.css';
 import './styles/ui-button-theme.css';
 import './styles/ui-checkbox-theme.css';
 import './styles/ui-disclosure-theme.css';
+import './styles/ui-input-theme.css';
 import './styles/ui-list-theme.css';
 import './styles/ui-popup-theme.css';
 import './styles/ui-switch-theme.css';
