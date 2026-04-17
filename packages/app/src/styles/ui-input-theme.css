@@ -1,7 +1,12 @@
 @reference "./theme.css";
 
+ui-input,
 .ui-input {
-  @apply grid gap-2;
+  @apply block w-full;
+}
+
+.ui-input {
+  @apply grid gap-2 w-full;
 }
 
 .ui-input__label {
@@ -9,7 +14,7 @@
 }
 
 .ui-input__control {
-  @apply grid grid-cols-[auto_1fr_auto] items-center gap-2 rounded-xl border border-card-border bg-white px-3;
+  @apply grid w-full grid-cols-[auto_1fr_auto] items-center gap-2 rounded-xl border border-card-border bg-white px-3;
   transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
 }
 
@@ -36,7 +41,8 @@
 }
 
 .ui-input__native {
-  @apply h-11 w-full bg-transparent text-sm text-ink-900 outline-none;
+  @apply h-11 min-w-0 w-full bg-transparent text-sm text-ink-900 outline-none;
+  grid-column: 2;
 }
 
 .ui-input__native::placeholder {
