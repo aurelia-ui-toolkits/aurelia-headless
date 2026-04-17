@@ -22,7 +22,7 @@
     <input ref="inputEl"
       class="ui-input__native"
       id.bind="id"
-      type.bind="type"
+      type.bind="type || null"
       name.attr="name || null"
       value.bind="value"
       placeholder.attr="inset ? null : placeholder || null"

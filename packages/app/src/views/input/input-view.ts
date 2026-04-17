@@ -1,6 +1,8 @@
-import { customElement } from 'aurelia';
+import { customElement, newInstanceForScope, resolve } from 'aurelia';
 import { IError } from 'aurelia-headless';
 import template from './input-view.html?raw';
+import { IValidationController } from '@aurelia/validation-html';
+import { IValidationRules } from '@aurelia/validation';
 
 @customElement({ name: 'input-view', template })
 export class InputView {
@@ -10,24 +12,10 @@ export class InputView {
 
   emailErrors = new Map<IError, boolean>();
 
-  private readonly requiredError: IError = { message: 'Email is required.' };
-  private readonly formatError: IError = { message: 'Please enter a valid email address.' };
+  public validationController: IValidationController = resolve(newInstanceForScope(IValidationController))
 
-  onEmailInput(): void {
-    if (!this.emailValue.trim()) {
-      this.emailErrors.set(this.requiredError, true);
-      this.emailErrors.delete(this.formatError);
-      return;
-    }
-
-    this.emailErrors.delete(this.requiredError);
-
-    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.emailValue)) {
-      this.emailErrors.delete(this.formatError);
-      return;
-    }
-
-    this.emailErrors.set(this.formatError, true);
+  constructor() {
+    resolve(IValidationRules).on(InputView).ensure(x => x.emailValue).required().email();
   }
 
   clearSearch(): void {

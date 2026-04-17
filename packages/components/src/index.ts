@@ -9,11 +9,13 @@ import { UiPopup } from './popup/ui-popup';
 import { UiSwitch } from './switch/ui-switch';
 import { EnhanceUiButton } from './button/enhance-ui-button';
 import { EnhanceUiInput } from './input/enhance-ui-input';
+import { UiValidationControllerFactory } from './validation/ui-validation-controller-factory';
 
 export { UiButton };
 export { UiCheckbox };
 export { UiDisclosure };
 export { UiInput };
+export { UiValidationControllerFactory };
 export type { IError };
 export { UiList };
 export { UiListItem };

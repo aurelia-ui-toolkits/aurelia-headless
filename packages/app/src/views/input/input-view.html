@@ -1,31 +1,23 @@
 <demo-section title="ui-input">
 
   <demo-block title="Label and helper bindables">
-    <ui-input value.bind="basicValue"
-      label="Workspace name"
-      helper-text="Use 3 to 40 characters."
+    <ui-input value.bind="basicValue" label="Workspace name" helper-text="Use 3 to 40 characters."
       placeholder="Acme production">
     </ui-input>
     <span class="input-state">Value: ${basicValue || 'empty'}</span>
   </demo-block>
 
-  <demo-block title="Inset label with slots">
-    <ui-input value.bind="searchValue"
-      inset
-      label="Search"
-      helper-text="Try searching by project name."
+  <demo-block title="Inset label">
+    <ui-input value.bind="searchValue" inset label="Search" helper-text="Try searching by project name."
       placeholder="Find a project">
       <span au-slot="leading">#</span>
       <button ui-button outlined au-slot="trailing" click.trigger="clearSearch()">Clear</button>
     </ui-input>
   </demo-block>
 
-  <demo-block title="Errors map">
-    <ui-input value.bind="emailValue"
-      label="Contact email"
-      helper-text="We use this for important notifications."
-      placeholder="name@company.com"
-      errors.bind="emailErrors"
+  <demo-block title="Validation">
+    <ui-input value.bind="emailValue & validate" label="Contact email"
+      helper-text="We use this for important notifications." placeholder="name@company.com"
       input.trigger="onEmailInput()">
     </ui-input>
   </demo-block>

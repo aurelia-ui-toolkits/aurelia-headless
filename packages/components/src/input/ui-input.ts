@@ -15,6 +15,11 @@ export class UiInput {
     defineUiInputElementApis(resolve(Element) as HTMLElement);
   }
 
+  errors = new Map<IError, boolean>();
+  focus: boolean = false;
+  active: boolean = false;
+  inputEl!: HTMLInputElement;
+
   @bindable
   label: string | undefined;
 
@@ -28,7 +33,7 @@ export class UiInput {
   id: string = `ui-input-${++nextInputId}`;
 
   @bindable
-  type: string = 'text';
+  type: string | undefined;
 
   @bindable
   name: string | undefined;
@@ -50,9 +55,6 @@ export class UiInput {
 
   @bindable({ set: booleanAttr })
   invalid: boolean = false;
-
-  @bindable
-  errors = new Map<IError, boolean>();
 
   @slotted({ slotName: 'helper' })
   helperNodes: readonly Node[] = [];
@@ -79,12 +81,6 @@ export class UiInput {
     }
   }
 
-
-  focus: boolean = false;
-  active: boolean = false;
-  hasValue: boolean = false;
-
-  inputEl!: HTMLInputElement;
 
   get labelId(): string {
     return `${this.id}-label`;
