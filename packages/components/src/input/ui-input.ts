@@ -1,6 +1,7 @@
-import { bindable, BindingMode, customElement, slotted } from 'aurelia';
+import { bindable, CustomElement, customElement, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import template from './ui-input.html?raw';
+import { IValidatedElement } from '../base/i-validated-element';
 
 let nextInputId = 0;
 
@@ -10,10 +11,8 @@ export interface IError {
 
 @customElement({ name: 'ui-input', template })
 export class UiInput {
-  @bindable({ mode: BindingMode.twoWay })
-  value: string = '';
-  valueChanged(): void {
-    this.syncHasValue();
+  constructor() {
+    defineUiInputElementApis(resolve(Element) as HTMLElement);
   }
 
   @bindable
@@ -64,15 +63,28 @@ export class UiInput {
   @slotted({ slotName: 'trailing' })
   trailingNodes: readonly Node[] = [];
 
+  private initialValue: string | undefined;
+  get value(): string | undefined {
+    if (this.inputEl) {
+      return this.inputEl.value;
+    } else {
+      return this.initialValue;
+    }
+  }
+  set value(value: string) {
+    if (this.inputEl) {
+      this.inputEl.value = value;
+    } else {
+      this.initialValue = value;
+    }
+  }
+
+
   focus: boolean = false;
   active: boolean = false;
   hasValue: boolean = false;
 
   inputEl!: HTMLInputElement;
-
-  attaching(): void {
-    this.syncHasValue();
-  }
 
   get labelId(): string {
     return `${this.id}-label`;
@@ -86,26 +98,18 @@ export class UiInput {
     return `${this.id}-errors`;
   }
 
+  attached() {
+    if (this.initialValue !== undefined) {
+      this.value = this.initialValue;
+    }
+  }
+
   addError(error: IError): void {
     this.errors.set(error, true);
   }
 
   removeError(error: IError): void {
     this.errors.delete(error);
-  }
-
-  onInput(event: Event): void {
-    if (event.target instanceof HTMLInputElement) {
-      this.value = event.target.value;
-      this.syncHasValue();
-    }
-  }
-
-  onChange(event: Event): void {
-    if (event.target instanceof HTMLInputElement) {
-      this.value = event.target.value;
-      this.syncHasValue();
-    }
   }
 
   onFocusIn(): void {
@@ -131,8 +135,75 @@ export class UiInput {
   onPointerLeave(): void {
     this.active = false;
   }
+}
 
-  private syncHasValue(): void {
-    this.hasValue = !!this.value;
-  }
+export interface IUiInputElement extends IValidatedElement {
+  value: string;
+}
+
+function defineUiInputElementApis(element: HTMLElement) {
+  Object.defineProperties(element, {
+    tagName: {
+      get() {
+        return 'UI-INPUT';
+      }
+    },
+    value: {
+      get(this: IUiInputElement) {
+        return CustomElement.for<UiInput>(this).viewModel.value;
+      },
+      set(this: IUiInputElement, value: string) {
+        CustomElement.for<UiInput>(this).viewModel.value = value;
+      },
+      configurable: true
+    },
+    disabled: {
+      get(this: IUiInputElement) {
+        return CustomElement.for<UiInput>(this).viewModel.disabled;
+      },
+      set(this: IUiInputElement, value: boolean) {
+        CustomElement.for<UiInput>(this).viewModel.disabled = value;
+      },
+      configurable: true
+    },
+    readOnly: {
+      get(this: IUiInputElement) {
+        return CustomElement.for<UiInput>(this).viewModel.readonly;
+      },
+      set(this: IUiInputElement, value: boolean) {
+        CustomElement.for<UiInput>(this).viewModel.readonly = value;
+      },
+      configurable: true
+    },
+    addError: {
+      value(this: IUiInputElement, error: IError) {
+        CustomElement.for<UiInput>(this).viewModel.addError(error);
+      },
+      configurable: true
+    },
+    removeError: {
+      value(this: IUiInputElement, error: IError) {
+        CustomElement.for<UiInput>(this).viewModel.removeError(error);
+      },
+      configurable: true
+    },
+    focus: {
+      value(this: IUiInputElement) {
+        CustomElement.for<UiInput>(this).viewModel.inputEl.focus();
+      },
+      configurable: true
+    },
+    blur: {
+      value(this: IUiInputElement) {
+        CustomElement.for<UiInput>(this).viewModel.inputEl.blur();
+      },
+      configurable: true
+    },
+    isFocused: {
+      get(this: IUiInputElement) {
+        return document.activeElement === CustomElement.for<UiInput>(this).viewModel.inputEl;
+      },
+      configurable: true
+    }
+  });
 }
