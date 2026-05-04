@@ -1,6 +1,7 @@
 import Aurelia from 'aurelia';
 import { AureliaHeadlessConfiguration, UiValidationControllerFactory } from 'aurelia-headless';
 import { RouterConfiguration } from '@aurelia/router';
+import { SVGAnalyzer } from '@aurelia/runtime-html';
 import { DemoBlock } from './elements/demo-block/demo-block';
 import { DemoSection } from './elements/demo-section/demo-section';
 import { MyApp } from './views/my-app/my-app';
@@ -29,6 +30,6 @@ Aurelia
     ValidationHtmlConfiguration.customize(o => {
       o.ValidationControllerFactoryType = UiValidationControllerFactory;
     }),
-    DefaultVirtualizationConfiguration, AureliaHeadlessConfiguration, DemoBlock, DemoSection)
+    DefaultVirtualizationConfiguration, AureliaHeadlessConfiguration, SVGAnalyzer, DemoBlock, DemoSection)
   .app(MyApp)
   .start();

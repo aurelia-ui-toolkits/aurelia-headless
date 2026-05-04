@@ -9,12 +9,6 @@ body {
   background: radial-gradient(circle at 20% 10%, #f3f7ff 0%, #eef2ff 35%, #f7fafc 100%);
 }
 
-.app-title {
-  @apply m-0 mb-6;
-  font-size: clamp(1.3rem, 2vw, 1.75rem);
-  letter-spacing: -0.02em;
-}
-
 .app-layout {
   min-height: 100vh;
   @apply grid grid-cols-[17rem_1fr];
@@ -23,6 +17,27 @@ body {
 .side-panel {
   @apply sticky top-0 h-screen border-r border-card-border bg-white/85 p-5;
   backdrop-filter: blur(8px);
+}
+
+.brand {
+  @apply mb-6 grid grid-cols-[3.75rem_1fr] items-center gap-3 rounded-2xl border border-card-border bg-white/70 p-3 text-ink-900 no-underline shadow-sm;
+}
+
+.brand-logo {
+  @apply block h-[3.75rem] w-[3.75rem];
+}
+
+.brand-copy {
+  @apply grid gap-1;
+}
+
+.brand-name {
+  @apply text-[1.05rem] font-extrabold leading-tight;
+  letter-spacing: -0.03em;
+}
+
+.brand-tagline {
+  @apply text-xs font-bold leading-snug text-ink-500;
 }
 
 .side-menu {
@@ -118,4 +133,18 @@ body {
 
 .btn-toggle:hover {
   @apply bg-card-muted;
+}
+
+@media (max-width: 760px) {
+  .app-layout {
+    @apply block;
+  }
+
+  .side-panel {
+    @apply static h-auto border-b border-r-0;
+  }
+
+  .content-panel {
+    @apply p-5;
+  }
 }

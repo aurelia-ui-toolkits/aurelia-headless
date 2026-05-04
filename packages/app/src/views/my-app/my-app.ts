@@ -7,6 +7,7 @@ import { InputView } from '../input/input-view';
 import { ListView } from '../list/list-view';
 import { PopupView } from '../popup/popup-view';
 import { SwitchView } from '../switch/switch-view';
+import logoUrl from '../../assets/aurelia-headless-logo.svg';
 import template from './my-app.html?raw';
 import './my-app.css';
 
@@ -29,6 +30,7 @@ export class MyApp {
   private readonly currentRoute = resolve(ICurrentRoute);
 
   readonly menuItems = MyApp.routes.filter((route) => route.id !== 'button-alt');
+  readonly logoUrl = logoUrl;
 
   get selectedMenuItem(): DemoRoute | undefined {
     const current = this.normalizePath(this.currentRoute.path ?? '');

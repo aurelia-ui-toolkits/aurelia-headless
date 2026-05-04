@@ -1,6 +1,12 @@
 <div class="app-layout">
   <aside class="side-panel">
-    <h1 class="app-title">Aurelia Headless UI</h1>
+    <a class="brand" href="/" aria-label="Aurelia Headless UI home">
+      <img class="brand-logo" src.bind="logoUrl" alt="Aurelia Headless UI logo" />
+      <span class="brand-copy">
+        <span class="brand-name">Aurelia Headless UI</span>
+        <span class="brand-tagline">Components with no head. Mostly.</span>
+      </span>
+    </a>
     <nav class="side-menu" aria-label="Components">
       <ui-list class="side-menu-list"
         items.bind="menuItems"
