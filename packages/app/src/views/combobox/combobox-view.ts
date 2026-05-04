@@ -21,9 +21,17 @@ export class ComboboxView {
   initialProjectQuery = 'Helios';
   initialProjectId: string = 'helios';
   initialProject: Project | undefined;
-  virtualProjectQuery = '';
   selectedVirtualProjectId: string | undefined;
   selectedVirtualProject: Project | undefined;
+  filteredVirtualProjects: Project[] = [];
+  private currentVirtualProjectQuery = '';
+  get virtualProjectQuery(): string {
+    return this.currentVirtualProjectQuery;
+  }
+  set virtualProjectQuery(value: string) {
+    this.currentVirtualProjectQuery = value;
+    this.filteredVirtualProjects = this.filterVirtualProjects(value);
+  }
 
   public validationController: IValidationController = resolve(newInstanceForScope(IValidationController));
 
@@ -43,6 +51,7 @@ export class ComboboxView {
 
   constructor() {
     this.initialProject = this.projects.find(project => project.id === this.initialProjectId);
+    this.filteredVirtualProjects = this.virtualProjects;
     resolve(IValidationRules).on(ComboboxView).ensure(x => x.selectedProjectId).required();
   }
 
@@ -58,10 +67,6 @@ export class ComboboxView {
     return this.filterProjects(this.initialProjectQuery);
   }
 
-  get filteredVirtualProjects(): Project[] {
-    return this.filterVirtualProjects(this.virtualProjectQuery);
-  }
-
   private filterProjects(query: string | undefined): Project[] {
     const value = query?.trim().toLowerCase();
     if (!value) {
@@ -75,6 +80,10 @@ export class ComboboxView {
     const value = query?.trim().toLowerCase();
     if (!value) {
       return this.virtualProjects;
+    }
+
+    if (this.selectedVirtualProject?.name.toLowerCase() === value) {
+      return [this.selectedVirtualProject];
     }
 
     return this.virtualProjects.filter(project => `${project.name} ${project.region}`.toLowerCase().includes(value));
