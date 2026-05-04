@@ -120,6 +120,7 @@ export class UiPopup {
   private startOpenState(): void {
     this.setListeners(true);
     this.queuePositionUpdate();
+    this.focusPanel();
   }
 
   private stopOpenState(): void {
@@ -142,6 +143,13 @@ export class UiPopup {
       bubbles: true,
       detail: (event as CustomEvent).detail
     }));
+  }
+
+  private focusPanel(): void {
+    requestAnimationFrame(() => {
+      const focusTarget = this.panelElement?.querySelector('[tabindex]') as HTMLElement | null;
+      (focusTarget ?? this.panelElement)?.focus();
+    });
   }
 
   private setListeners(listen: boolean): void {
