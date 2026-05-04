@@ -78,6 +78,7 @@ export class UiPopup {
   private listening = false;
   private positionFrame: number | undefined;
   private anchorRectSnapshot: DOMRect | undefined;
+  private previousFocus: HTMLElement | undefined;
 
   private readonly onAnchorPointerDownCapture = (): void => {
     if (!this.anchor) {
@@ -118,6 +119,7 @@ export class UiPopup {
   };
 
   private startOpenState(): void {
+    this.previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : undefined;
     this.setListeners(true);
     this.queuePositionUpdate();
     this.focusPanel();
@@ -131,6 +133,7 @@ export class UiPopup {
       cancelAnimationFrame(this.positionFrame);
       this.positionFrame = undefined;
     }
+    this.restoreFocus();
   }
 
   private requestClose(): void {
@@ -150,6 +153,16 @@ export class UiPopup {
       const focusTarget = this.panelElement?.querySelector('[tabindex]') as HTMLElement | null;
       (focusTarget ?? this.panelElement)?.focus();
     });
+  }
+
+  private restoreFocus(): void {
+    if (!this.previousFocus || !document.contains(this.previousFocus)) {
+      this.previousFocus = undefined;
+      return;
+    }
+
+    this.previousFocus.focus();
+    this.previousFocus = undefined;
   }
 
   private setListeners(listen: boolean): void {
