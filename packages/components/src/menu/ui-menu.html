@@ -2,6 +2,7 @@
   <ui-popup component.ref="popup"
     open.bind="open"
     anchor.bind="anchor"
+    tab-reference.bind="tabReference"
     placement.bind="placement"
     offset.bind="offset"
     portal-target.bind="portalTarget"
@@ -11,6 +12,7 @@
     match-anchor-width.bind="matchAnchorWidth"
     focus-on-open.bind="focusOnOpen"
     restore-focus.bind="restoreFocus"
+    popup-tab-away.trigger="onPopupTabAway($event)"
     list-select.trigger="onListSelect($event)">
     <au-slot></au-slot>
   </ui-popup>

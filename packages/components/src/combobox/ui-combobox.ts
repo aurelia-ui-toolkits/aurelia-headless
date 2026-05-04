@@ -176,6 +176,11 @@ export class UiCombobox {
     this.dispatchValueEvent('change');
   }
 
+  onMenuTabAway(): void {
+    this.open = false;
+    this.focus = false;
+  }
+
   onFocusIn(): void {
     if (!this.disabled) {
       this.focus = true;

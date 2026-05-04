@@ -51,7 +51,9 @@
 
   <ui-menu open.bind="open"
     anchor.bind="controlEl"
+    tab-reference.bind="controlEl"
     match-anchor-width
+    menu-tab-away.trigger="onMenuTabAway()"
     menu-select.trigger="onMenuSelect($event)">
     <au-slot></au-slot>
   </ui-menu>

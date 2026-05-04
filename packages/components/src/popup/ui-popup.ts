@@ -49,6 +49,9 @@ export class UiPopup {
   }
 
   @bindable
+  tabReference: HTMLElement | undefined;
+
+  @bindable
   placement: PopupPlacement = 'bottom-start';
   placementChanged(): void {
     this.queuePositionUpdate();
@@ -112,7 +115,17 @@ export class UiPopup {
   };
 
   private readonly onWindowKeyDown = (event: KeyboardEvent): void => {
-    if (!this.open || !this.closeOnEscape || event.key !== Keys.Escape) {
+    if (!this.open) {
+      return;
+    }
+
+    if (event.key === Keys.Tab && this.panelElement?.contains(event.target as Node | null)) {
+      this.focusNextFromTabReference(event.shiftKey);
+      event.preventDefault();
+      return;
+    }
+
+    if (!this.closeOnEscape || event.key !== Keys.Escape) {
       return;
     }
 
@@ -181,6 +194,59 @@ export class UiPopup {
 
     this.previousFocus.focus();
     this.previousFocus = undefined;
+  }
+
+  private focusNextFromTabReference(reverse: boolean): void {
+    const reference = this.tabReference ?? this.anchor;
+    if (!(reference instanceof HTMLElement)) {
+      this.requestClose();
+      return;
+    }
+
+    const focusable = this.getFocusableElements();
+    const index = focusable.indexOf(reference);
+    if (index < 0) {
+      this.requestClose();
+      return;
+    }
+
+    const target = focusable[index + (reverse ? -1 : 1)];
+
+    this.element.dispatchEvent(new CustomEvent('popup-tab-away', {
+      bubbles: true,
+      detail: { reverse }
+    }));
+    this.requestClose();
+    target?.focus();
+  }
+
+  private getFocusableElements(): HTMLElement[] {
+    const selector = [
+      'a[href]',
+      'button',
+      'input:not([type="hidden"])',
+      'select',
+      'textarea',
+      'iframe',
+      '[tabindex]',
+      '[contenteditable="true"]'
+    ].join(',');
+
+    return Array.from(document.querySelectorAll<HTMLElement>(selector))
+      .filter((element) => this.isFocusable(element));
+  }
+
+  private isFocusable(element: HTMLElement): boolean {
+    if (this.panelElement?.contains(element)) {
+      return false;
+    }
+
+    if (element.tabIndex < 0 || element.hasAttribute('disabled') || element.getAttribute('aria-hidden') === 'true') {
+      return false;
+    }
+
+    const style = window.getComputedStyle(element);
+    return style.display !== 'none' && style.visibility !== 'hidden';
   }
 
   private setListeners(listen: boolean): void {

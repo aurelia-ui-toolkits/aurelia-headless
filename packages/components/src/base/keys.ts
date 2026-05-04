@@ -7,5 +7,6 @@ export enum Keys {
   Escape = 'Escape',
   Enter = 'Enter',
   Home = 'Home',
-  Space = ' '
+  Space = ' ',
+  Tab = 'Tab'
 }

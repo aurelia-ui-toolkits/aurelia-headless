@@ -23,6 +23,9 @@ export class UiMenu {
   anchor: Element | undefined;
 
   @bindable
+  tabReference: HTMLElement | undefined;
+
+  @bindable
   placement: MenuPlacement = 'bottom-start';
 
   @bindable
@@ -61,6 +64,13 @@ export class UiMenu {
     if (this.closeOnSelect) {
       this.open = false;
     }
+  }
+
+  onPopupTabAway(event: CustomEvent): void {
+    this.element.dispatchEvent(new CustomEvent('menu-tab-away', {
+      bubbles: true,
+      detail: event.detail
+    }));
   }
 
   focus(): void {

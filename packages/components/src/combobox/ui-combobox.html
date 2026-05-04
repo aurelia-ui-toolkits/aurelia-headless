@@ -54,9 +54,11 @@
   <ui-menu component.ref="menu"
     open.bind="open"
     anchor.bind="controlEl"
+    tab-reference.bind="inputEl"
     match-anchor-width
     focus-on-open.bind="false"
     restore-focus.bind="false"
+    menu-tab-away.trigger="onMenuTabAway()"
     menu-select.trigger="onMenuSelect($event)">
     <au-slot></au-slot>
   </ui-menu>
