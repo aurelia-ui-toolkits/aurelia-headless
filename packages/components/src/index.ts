@@ -7,9 +7,11 @@ import { UiMenu } from './menu/ui-menu';
 import { UiList } from './list/ui-list';
 import { UiListItem } from './list/ui-list-item';
 import { UiPopup } from './popup/ui-popup';
+import { UiSelect } from './select/ui-select';
 import { UiSwitch } from './switch/ui-switch';
 import { EnhanceUiButton } from './button/enhance-ui-button';
 import { EnhanceUiInput } from './input/enhance-ui-input';
+import { EnhanceUiSelect } from './select/enhance-ui-select';
 import { UiValidationControllerFactory } from './validation/ui-validation-controller-factory';
 
 export { UiButton };
@@ -22,6 +24,7 @@ export type { IError };
 export { UiList };
 export { UiListItem };
 export { UiPopup };
+export { UiSelect };
 export { UiSwitch };
 
 let registered = false; //
@@ -64,9 +67,11 @@ export const AureliaHeadlessConfiguration = {
 
       attrMapper.useTwoWay((el, property) => el.hasAttribute('ui-input-element') ? property === 'value' : false);
       nodeObserverLocator.useConfig('UI-INPUT', 'value', { events: ['input', 'change'] });
+      attrMapper.useTwoWay((el, property) => el.hasAttribute('ui-select-element') ? property === 'value' : false);
+      nodeObserverLocator.useConfig('UI-SELECT', 'value', { events: ['input', 'change'] });
 
     }).register(container);
 
-    return container.register(UiButton, EnhanceUiButton, UiCheckbox, UiDisclosure, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiSwitch);
+    return container.register(UiButton, EnhanceUiButton, UiCheckbox, UiDisclosure, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiSelect, EnhanceUiSelect, UiSwitch);
   }
 };

@@ -137,6 +137,7 @@ export class UiPopup {
   }
 
   onListSelect(event: Event): void {
+    event.stopPropagation();
     this.element.dispatchEvent(new CustomEvent('list-select', {
       bubbles: true,
       detail: (event as CustomEvent).detail

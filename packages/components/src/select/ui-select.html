@@ -1,0 +1,65 @@
+<template class="ui-select"
+  data-disabled.attr="disabled ? '' : null"
+  data-invalid.attr="invalid || errors.size ? '' : null"
+  data-focus.attr="focus ? '' : null"
+  data-active.attr="active ? '' : null"
+  data-inset.attr="inset ? '' : null"
+  data-has-value.attr="hasValue ? '' : null">
+  <label class="ui-select__label"
+    for.bind="id"
+    id.bind="!inset && label ? labelId : null"
+    show.bind="label && !inset">${label}</label>
+
+  <div class="ui-select__control"
+    ref="controlEl"
+    id.bind="id"
+    role="button"
+    tabindex.bind="disabled ? -1 : 0"
+    aria-haspopup="listbox"
+    aria-expanded.attr="open ? 'true' : 'false'"
+    aria-labelledby.bind="label ? labelId : null"
+    aria-invalid.bind="invalid || errors.size ? 'true' : 'false'"
+    aria-describedby.bind="errors.size ? errorsId : (helperNodes.length ? helperId : null)"
+    aria-disabled.attr="disabled ? '' : null"
+    aria-required.attr="required ? 'true' : null"
+    click.trigger="onClick()"
+    keydown.trigger="onKeyDown($event)"
+    focusin.trigger="onFocusIn()"
+    focusout.trigger="onFocusOut()"
+    pointerdown.trigger="onPointerDown()"
+    pointerup.trigger="onPointerUp()"
+    pointerleave.trigger="onPointerLeave()">
+    <span class="ui-select__leading" show.bind="leadingNodes.length">
+      <au-slot name="leading"></au-slot>
+    </span>
+
+    <span class="ui-select__inset-label"
+      id.bind="inset && label ? labelId : null"
+      show.bind="label && inset">${label}</span>
+
+    <span class="ui-select__value" data-placeholder.attr="displayText ? null : ''">
+      ${displayText || placeholder}
+    </span>
+
+    <span class="ui-select__trailing">
+      <au-slot name="trailing">⌄</au-slot>
+    </span>
+  </div>
+
+  <ui-menu open.bind="open"
+    anchor.bind="controlEl"
+    match-anchor-width
+    menu-select.trigger="onMenuSelect($event)">
+    <au-slot></au-slot>
+  </ui-menu>
+
+  <div class="ui-select__subscript" show.bind="errors.size || helperText || helperNodes.length">
+    <div class="ui-select__helper" id.bind="helperId" show.bind="!errors.size && (helperText || helperNodes.length)">
+      <au-slot name="helper">${helperText}</au-slot>
+    </div>
+
+    <div class="ui-select__errors" id.bind="errorsId" show.bind="errors.size">
+      <div class="ui-select__error" repeat.for="[error, _] of errors" if.bind="error.message">${error.message}</div>
+    </div>
+  </div>
+</template>
