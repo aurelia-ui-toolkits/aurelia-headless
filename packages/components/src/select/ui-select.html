@@ -3,6 +3,7 @@
   data-invalid.attr="invalid || errors.size ? '' : null"
   data-focus.attr="focus ? '' : null"
   data-active.attr="active ? '' : null"
+  data-open.attr="open ? '' : null"
   data-inset.attr="inset ? '' : null"
   data-has-value.attr="hasValue ? '' : null">
   <label class="ui-select__label"
@@ -42,7 +43,9 @@
     </span>
 
     <span class="ui-select__trailing">
-      <au-slot name="trailing">⌄</au-slot>
+      <au-slot name="trailing">
+        <span class="ui-select__chevron" aria-hidden="true"></span>
+      </au-slot>
     </span>
   </div>
 
