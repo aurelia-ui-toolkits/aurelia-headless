@@ -114,6 +114,7 @@ export class UiCombobox {
   private getOptions: ((filter: string | undefined, value: unknown) => unknown[] | Promise<unknown[]>) | undefined;
   private optionsRequest = 0;
   private suppressValueChanged = false;
+  private suppressFocusOpen = false;
   get textValue(): string | undefined {
     if (this.inputEl) {
       return this.inputEl.value;
@@ -210,11 +211,11 @@ export class UiCombobox {
     }
   }
 
-  async onMenuSelect(event: CustomEvent): Promise<void> {
+  onMenuSelect(event: CustomEvent): void {
     this.selectedItem = event.detail;
     this.value = this.getItemValue(event.detail);
-    await this.updateFilterBasedOnValue();
     this.open = false;
+    this.suppressFocusOpen = true;
     this.inputEl.focus();
     this.dispatchValueEvent('input');
     this.dispatchValueEvent('change');
@@ -226,6 +227,12 @@ export class UiCombobox {
   }
 
   async onFocusIn(): Promise<void> {
+    if (this.suppressFocusOpen) {
+      this.suppressFocusOpen = false;
+      this.focus = true;
+      return;
+    }
+
     if (!this.disabled) {
       this.focus = true;
       await this.loadOptions(true, this.value);
