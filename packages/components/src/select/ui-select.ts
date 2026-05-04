@@ -106,10 +106,20 @@ export class UiSelect {
   }
 
   addError(error: IError): void {
+    if (this.findError(error)) {
+      return;
+    }
+
     this.errors.set(error, true);
   }
 
   removeError(error: IError): void {
+    const existing = this.findError(error);
+    if (existing) {
+      this.errors.delete(existing);
+      return;
+    }
+
     this.errors.delete(error);
   }
 
@@ -199,6 +209,16 @@ export class UiSelect {
 
   private dispatchValueEvent(type: 'input' | 'change'): void {
     this.element.dispatchEvent(new Event(type, { bubbles: true }));
+  }
+
+  private findError(error: IError): IError | undefined {
+    for (const existing of this.errors.keys()) {
+      if (existing === error || existing.message === error.message) {
+        return existing;
+      }
+    }
+
+    return undefined;
   }
 }
 
