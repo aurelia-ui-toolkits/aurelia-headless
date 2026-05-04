@@ -1,0 +1,71 @@
+<template class="ui-combobox"
+  data-disabled.attr="disabled ? '' : null"
+  data-invalid.attr="invalid || errors.size ? '' : null"
+  data-focus.attr="focus ? '' : null"
+  data-active.attr="active ? '' : null"
+  data-open.attr="open ? '' : null"
+  data-inset.attr="inset ? '' : null"
+  data-has-value.attr="hasValue ? '' : null">
+  <label class="ui-combobox__label"
+    for.bind="id"
+    id.bind="!inset && label ? labelId : null"
+    show.bind="label && !inset">${label}</label>
+
+  <div class="ui-combobox__control">
+    <span class="ui-combobox__leading" show.bind="leadingNodes.length">
+      <au-slot name="leading"></au-slot>
+    </span>
+
+    <span class="ui-combobox__inset-label"
+      id.bind="inset && label ? labelId : null"
+      show.bind="label && inset">${label}</span>
+
+    <input ref="inputEl"
+      class="ui-combobox__native"
+      id.bind="id"
+      name.attr="name || null"
+      value.bind="textValue"
+      placeholder.attr="placeholderText || null"
+      autocomplete.attr="autocomplete || null"
+      disabled.bind="disabled"
+      readonly.bind="readonly"
+      required.bind="required"
+      role="combobox"
+      aria-haspopup="listbox"
+      aria-expanded.attr="open ? 'true' : 'false'"
+      aria-labelledby.bind="label ? labelId : null"
+      aria-invalid.bind="invalid || errors.size ? 'true' : 'false'"
+      aria-describedby.bind="errors.size ? errorsId : (helperNodes.length ? helperId : null)"
+      input.trigger="onInput()"
+      keydown.trigger="onKeyDown($event)"
+      focusin.trigger="onFocusIn()"
+      focusout.trigger="onFocusOut($event)"
+      pointerdown.trigger="onPointerDown()"
+      pointerup.trigger="onPointerUp()"
+      pointerleave.trigger="onPointerLeave()">
+
+    <span class="ui-combobox__trailing">
+      <au-slot name="trailing">
+        <span class="ui-combobox__chevron" aria-hidden="true"></span>
+      </au-slot>
+    </span>
+  </div>
+
+  <ui-menu open.bind="open"
+    anchor.bind="inputEl"
+    match-anchor-width
+    focus-on-open.bind="false"
+    menu-select.trigger="onMenuSelect($event)">
+    <au-slot></au-slot>
+  </ui-menu>
+
+  <div class="ui-combobox__subscript" show.bind="errors.size || helperText || helperNodes.length">
+    <div class="ui-combobox__helper" id.bind="helperId" show.bind="!errors.size && (helperText || helperNodes.length)">
+      <au-slot name="helper">${helperText}</au-slot>
+    </div>
+
+    <div class="ui-combobox__errors" id.bind="errorsId" show.bind="errors.size">
+      <div class="ui-combobox__error" repeat.for="[error, _] of errors" if.bind="error.message">${error.message}</div>
+    </div>
+  </div>
+</template>

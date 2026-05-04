@@ -2,6 +2,7 @@ import { customElement, resolve } from 'aurelia';
 import { ICurrentRoute, IRouter } from '@aurelia/router';
 import { ButtonView } from '../button/button-view';
 import { CheckboxView } from '../checkbox/checkbox-view';
+import { ComboboxView } from '../combobox/combobox-view';
 import { DisclosureView } from '../disclosure/disclosure-view';
 import { InputView } from '../input/input-view';
 import { ListView } from '../list/list-view';
@@ -22,6 +23,7 @@ export class MyApp {
     { id: 'button-alt', path: 'button', title: 'ui-button', component: ButtonView },
     { id: 'switch', path: 'switch', title: 'ui-switch', component: SwitchView },
     { id: 'checkbox', path: 'checkbox', title: 'ui-checkbox', component: CheckboxView },
+    { id: 'combobox', path: 'combobox', title: 'ui-combobox', component: ComboboxView },
     { id: 'disclosure', path: 'disclosure', title: 'ui-disclosure', component: DisclosureView },
     { id: 'input', path: 'input', title: 'ui-input', component: InputView },
     { id: 'list', path: 'list', title: 'ui-list', component: ListView },

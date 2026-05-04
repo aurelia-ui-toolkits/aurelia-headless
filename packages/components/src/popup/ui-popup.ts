@@ -34,6 +34,9 @@ export class UiPopup {
     this.queuePositionUpdate();
   }
 
+  @bindable({ set: booleanAttr })
+  focusOnOpen: boolean = true;
+
   @bindable
   anchor: Element | undefined;
   anchorChanged(newValue: Element | undefined, oldValue: Element | undefined): void {
@@ -122,7 +125,9 @@ export class UiPopup {
     this.previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : undefined;
     this.setListeners(true);
     this.queuePositionUpdate();
-    this.focusPanel();
+    if (this.focusOnOpen) {
+      this.focusPanel();
+    }
   }
 
   private stopOpenState(): void {

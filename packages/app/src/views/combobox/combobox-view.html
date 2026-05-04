@@ -1,0 +1,41 @@
+<demo-section title="ui-combobox">
+  <demo-block title="Consumer-filtered custom list">
+    <ui-combobox text.bind="projectQuery"
+      value.bind="selectedProjectId & validate"
+      selected-item.bind="selectedProject"
+      value-field="id"
+      label-field="name"
+      label="Project"
+      helper-text="Type to filter projects."
+      placeholder="Search projects">
+      <ui-list items.bind="filteredProjects" selected.bind="selectedProject" typeahead-field="name">
+        <ui-list-item repeat.for="project of filteredProjects" value.bind="project" disabled.bind="project.disabled">
+          ${project.name}
+          <span au-slot="secondary">${project.region}</span>
+        </ui-list-item>
+      </ui-list>
+    </ui-combobox>
+    <span class="combobox-state">Value: ${selectedProjectId || 'none'} · Text: ${projectQuery || 'empty'}</span>
+  </demo-block>
+
+  <demo-block title="Inset label with slotted adornment">
+    <ui-combobox text.bind="teamQuery"
+      value.bind="selectedTeamId"
+      selected-item.bind="selectedTeam"
+      value-field="id"
+      label-field="name"
+      inset
+      label="Team"
+      helper-text="Manual text is kept if it does not match an item."
+      placeholder="Search teams">
+      <span au-slot="leading">#</span>
+      <ui-list items.bind="filteredTeams" selected.bind="selectedTeam" typeahead-field="name">
+        <ui-list-item repeat.for="project of filteredTeams" value.bind="project" disabled.bind="project.disabled">
+          ${project.name}
+          <span au-slot="secondary">${project.region}</span>
+          <span au-slot="trailing">${project.id}</span>
+        </ui-list-item>
+      </ui-list>
+    </ui-combobox>
+  </demo-block>
+</demo-section>

@@ -11,6 +11,7 @@ import { ValidationHtmlConfiguration } from '@aurelia/validation-html';
 import './styles/theme.css';
 import './styles/ui-button-theme.css';
 import './styles/ui-checkbox-theme.css';
+import './styles/ui-combobox-theme.css';
 import './styles/ui-disclosure-theme.css';
 import './styles/ui-input-theme.css';
 import './styles/ui-list-theme.css';

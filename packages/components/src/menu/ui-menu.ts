@@ -36,6 +36,9 @@ export class UiMenu {
   matchAnchorWidth: boolean = false;
 
   @bindable({ set: booleanAttr })
+  focusOnOpen: boolean = true;
+
+  @bindable({ set: booleanAttr })
   closeOnSelect: boolean = true;
 
   onListSelect(event: Event): void {
