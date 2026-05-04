@@ -88,6 +88,8 @@ export class UiPopup {
   private positionFrame: number | undefined;
   private anchorRectSnapshot: DOMRect | undefined;
   private previousFocus: HTMLElement | undefined;
+  private resizeObserver: ResizeObserver | undefined;
+  private mutationObserver: MutationObserver | undefined;
 
   private readonly onAnchorPointerDownCapture = (): void => {
     if (!this.anchor) {
@@ -140,6 +142,7 @@ export class UiPopup {
   private startOpenState(): void {
     this.previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : undefined;
     this.setListeners(true);
+    this.observePanelSize();
     this.queuePositionUpdate();
     if (this.focusOnOpen) {
       this.focusPanel();
@@ -148,6 +151,10 @@ export class UiPopup {
 
   private stopOpenState(): void {
     this.setListeners(false);
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = undefined;
+    this.mutationObserver?.disconnect();
+    this.mutationObserver = undefined;
     this.anchorRectSnapshot = undefined;
     this.panelStyle = this.hiddenPanelStyle;
     if (this.positionFrame) {
@@ -267,6 +274,24 @@ export class UiPopup {
     window.removeEventListener('keydown', this.onWindowKeyDown, true);
     window.removeEventListener('resize', this.onWindowLayoutChange);
     window.removeEventListener('scroll', this.onWindowLayoutChange, true);
+  }
+
+  private observePanelSize(): void {
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = undefined;
+    this.mutationObserver?.disconnect();
+    this.mutationObserver = undefined;
+
+    requestAnimationFrame(() => {
+      if (!this.open || !this.panelElement) {
+        return;
+      }
+
+      this.resizeObserver = new ResizeObserver(() => this.queuePositionUpdate());
+      this.resizeObserver.observe(this.panelElement);
+      this.mutationObserver = new MutationObserver(() => this.queuePositionUpdate());
+      this.mutationObserver.observe(this.panelElement, { childList: true, subtree: true });
+    });
   }
 
   private queuePositionUpdate(): void {
