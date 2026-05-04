@@ -7,7 +7,8 @@
     portal-position.bind="portalPosition"
     close-on-outside.bind="closeOnOutside"
     close-on-escape.bind="closeOnEscape"
-    match-anchor-width.bind="matchAnchorWidth">
+    match-anchor-width.bind="matchAnchorWidth"
+    list-select.trigger="onListSelect($event)">
     <au-slot></au-slot>
   </ui-popup>
 </template>

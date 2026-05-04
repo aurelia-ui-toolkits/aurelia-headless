@@ -1,0 +1,21 @@
+<demo-section title="ui-menu">
+  <demo-block title="Slotted list content">
+    <button ui-button primary ref="anchor" click.trigger="open = !open">
+      ${open ? 'Close menu' : 'Open menu'}
+    </button>
+
+    <ui-menu open.bind="open"
+      anchor.bind="anchor"
+      close-on-select
+      menu-select.trigger="onMenuSelect($event)">
+      <ui-list items.bind="actions" selected.bind="selectedAction" typeahead-field="label">
+        <ui-list-item repeat.for="item of actions" value.bind="item" disabled.bind="item.disabled">
+          ${item.label}
+          <span au-slot="trailing">${item.hint}</span>
+        </ui-list-item>
+      </ui-list>
+    </ui-menu>
+
+    <span class="menu-state">Selected: ${selectedAction?.label || 'none'}</span>
+  </demo-block>
+</demo-section>

@@ -1,22 +1,57 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title desc">
-  <title id="title">Aurelia Headless UI logo</title>
-  <desc id="desc">A cheerful rounded mascot head with an open top and exposed brain.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-labelledby="title desc">
+  <title id="title">Brain mascot head</title>
+  <desc id="desc">A simple friendly mascot showing a smiling head with the top open and pink brain folds exposed.</desc>
   <defs>
-    <linearGradient id="head" x1="21" x2="75" y1="25" y2="88" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#6fa3ff" />
-      <stop offset="1" stop-color="#2f66cf" />
-    </linearGradient>
-    <linearGradient id="brain" x1="29" x2="70" y1="11" y2="43" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#ffc1d9" />
-      <stop offset="1" stop-color="#ff7eb6" />
-    </linearGradient>
+    <style>
+      .outline{stroke:#0e2a47;stroke-width:8;stroke-linecap:round;stroke-linejoin:round}
+    </style>
+    <clipPath id="headClip">
+      <path d="M146 170 Q146 118 256 118 Q366 118 366 170 L366 287 Q366 392 256 428 Q146 392 146 287 Z"/>
+    </clipPath>
   </defs>
-  <path fill="url(#brain)" stroke="#10213b" stroke-linejoin="round" stroke-width="4" d="M29 35c0-13 9-23 22-23 11 0 20 9 20 20 0 10-8 18-18 18H35c-4-3-6-8-6-15Z" />
-  <path fill="none" stroke="#b83271" stroke-linecap="round" stroke-width="4" d="M45 16c-5 4-5 11 0 15m14-12c-5 4-5 11 1 16M35 32c6-4 13-3 18 3m8 4c3-5 8-7 13-5" />
-  <path fill="url(#head)" d="M20 42c0-5 4-9 9-9h7v9h24v-9h7c5 0 9 4 9 9v20c0 16-12 27-28 27S20 78 20 62V42Z" />
-  <path fill="#1f468f" d="M20 42c0-5 4-9 9-9h7v9h24v-9h7c5 0 9 4 9 9v7c-8-3-17-5-28-5s-20 2-28 5v-7Z" opacity="0.35" />
-  <path fill="none" stroke="#10213b" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M36 33v9h24v-9" />
-  <path fill="#f7fafc" d="M39 59c0 4-3 7-6 7s-6-3-6-7 3-7 6-7 6 3 6 7Zm30 0c0 4-3 7-6 7s-6-3-6-7 3-7 6-7 6 3 6 7Z" />
-  <path fill="none" stroke="#f7fafc" stroke-linecap="round" stroke-width="5" d="M38 74c6 5 14 5 20 0" />
-  <path fill="#10213b" d="M49 45h-2v-9h2v9Z" opacity="0.5" />
+
+  <!-- ears -->
+  <g class="outline" fill="#f0c194">
+    <path d="M112 250 C78 248 64 274 64 312 C64 351 84 379 117 375 C133 373 144 356 144 312 C144 274 132 252 112 250 Z"/>
+    <path d="M400 250 C434 248 448 274 448 312 C448 351 428 379 395 375 C379 373 368 356 368 312 C368 274 380 252 400 250 Z"/>
+  </g>
+
+  <!-- head -->
+  <g>
+    <path class="outline" fill="#f6d9b6" d="M146 170 Q146 118 256 118 Q366 118 366 170 L366 287 Q366 392 256 428 Q146 392 146 287 Z"/>
+    <path class="outline" fill="#fff4df" d="M150 170 Q256 136 362 170 L362 190 Q256 160 150 190 Z"/>
+  </g>
+
+  <!-- brain -->
+  <g clip-path="url(#headClip)">
+    <g class="outline" fill="#ff9bb2">
+      <path d="M148 86 C165 66 195 61 220 75 C235 50 276 49 293 76 C320 58 351 65 364 90 C388 95 405 119 398 143 C413 154 420 176 414 195 C404 226 374 238 347 226 C332 244 307 249 286 241 C264 255 241 255 221 240 C199 248 175 242 161 226 C132 237 101 222 98 189 C94 168 103 149 115 140 C111 119 124 97 148 86 Z"/>
+      <path fill="none" d="M256 82 C255 117 255 152 256 187"/>
+      <path fill="none" d="M178 112 C204 104 224 114 233 135"/>
+      <path fill="none" d="M146 154 C174 140 205 150 215 175"/>
+      <path fill="none" d="M190 188 C208 176 231 177 243 195"/>
+      <path fill="none" d="M334 112 C308 104 288 114 279 135"/>
+      <path fill="none" d="M366 154 C338 140 307 150 297 175"/>
+      <path fill="none" d="M322 188 C304 176 281 177 269 195"/>
+      <path fill="none" d="M222 91 C235 96 243 107 244 119"/>
+      <path fill="none" d="M289 91 C276 96 268 107 267 119"/>
+    </g>
+  </g>
+
+  <!-- face -->
+  <g>
+    <path class="outline" fill="#0e2a47" d="M176 230 C191 219 213 220 226 231"/>
+    <path class="outline" fill="#0e2a47" d="M286 231 C299 220 321 219 336 230"/>
+
+    <ellipse class="outline" fill="#0e2a47" cx="202" cy="284" rx="20" ry="28"/>
+    <ellipse class="outline" fill="#0e2a47" cx="310" cy="284" rx="20" ry="28"/>
+    <ellipse fill="#ffffff" cx="195" cy="273" rx="6" ry="9"/>
+    <ellipse fill="#ffffff" cx="303" cy="273" rx="6" ry="9"/>
+
+    <path class="outline" fill="#efc392" d="M256 309 C244 309 238 318 242 328 C247 338 265 338 272 330"/>
+
+    <path class="outline" fill="#0e2a47" d="M200 344 C226 364 286 364 312 344 C308 388 205 389 200 344 Z"/>
+    <path class="outline" fill="#ffffff" d="M213 350 C234 358 277 358 298 350 C287 344 225 344 213 350 Z"/>
+    <path class="outline" fill="#ff6b8f" d="M232 380 C244 369 268 369 280 380 C268 389 244 389 232 380 Z"/>
+  </g>
 </svg>

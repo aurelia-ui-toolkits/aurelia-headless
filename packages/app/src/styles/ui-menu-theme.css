@@ -1,0 +1,9 @@
+@reference "./theme.css";
+
+.ui-menu .ui-list {
+  @apply min-w-56;
+}
+
+.menu-state {
+  @apply mt-2 block text-sm text-ink-500;
+}

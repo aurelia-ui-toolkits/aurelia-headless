@@ -38,30 +38,7 @@ export class UiMenu {
   @bindable({ set: booleanAttr })
   closeOnSelect: boolean = true;
 
-  @bindable
-  selectEvent: string = 'list-select';
-  selectEventChanged(newValue: string, oldValue: string): void {
-    if (oldValue) {
-      this.element.removeEventListener(oldValue, this.onPanelEvent as EventListener);
-    }
-    if (newValue) {
-      this.element.addEventListener(newValue, this.onPanelEvent as EventListener);
-    }
-  }
-
-  attaching(): void {
-    this.element.addEventListener(this.selectEvent, this.onPanelEvent as EventListener);
-  }
-
-  detaching(): void {
-    this.element.removeEventListener(this.selectEvent, this.onPanelEvent as EventListener);
-  }
-
-  onPanelEvent(event: Event): void {
-    if (event.type !== this.selectEvent) {
-      return;
-    }
-
+  onListSelect(event: Event): void {
     this.element.dispatchEvent(new CustomEvent('menu-select', {
       bubbles: true,
       detail: (event as CustomEvent).detail

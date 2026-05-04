@@ -5,6 +5,7 @@ import { CheckboxView } from '../checkbox/checkbox-view';
 import { DisclosureView } from '../disclosure/disclosure-view';
 import { InputView } from '../input/input-view';
 import { ListView } from '../list/list-view';
+import { MenuView } from '../menu/menu-view';
 import { PopupView } from '../popup/popup-view';
 import { SwitchView } from '../switch/switch-view';
 import logoUrl from '../../assets/aurelia-headless-logo.svg';
@@ -23,6 +24,7 @@ export class MyApp {
     { id: 'disclosure', path: 'disclosure', title: 'ui-disclosure', component: DisclosureView },
     { id: 'input', path: 'input', title: 'ui-input', component: InputView },
     { id: 'list', path: 'list', title: 'ui-list', component: ListView },
+    { id: 'menu', path: 'menu', title: 'ui-menu', component: MenuView },
     { id: 'popup', path: 'popup', title: 'ui-popup', component: PopupView }
   ];
 
