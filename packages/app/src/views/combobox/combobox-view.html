@@ -37,6 +37,29 @@
     <span class="combobox-state">Value: ${initialProjectId || 'none'} · Text: ${initialProjectQuery || 'empty'}</span>
   </demo-block>
 
+  <demo-block title="Virtual-repeat list">
+    <ui-combobox text.bind="virtualProjectQuery"
+      value.bind="selectedVirtualProjectId"
+      selected-item.bind="selectedVirtualProject"
+      value-field="id"
+      label-field="name"
+      label="Large project list"
+      helper-text="Uses virtual-repeat inside the popup list."
+      placeholder="Search 200 projects">
+      <ui-list items.bind="filteredVirtualProjects"
+        selected.bind="selectedVirtualProject"
+        typeahead-field="name"
+        style="height: 280px; overflow-y: auto;">
+        <ui-list-item virtual-repeat.for="project of filteredVirtualProjects" value.bind="project" disabled.bind="project.disabled">
+          ${project.name}
+          <span au-slot="secondary">${project.region}</span>
+          <span au-slot="trailing">${project.id}</span>
+        </ui-list-item>
+      </ui-list>
+    </ui-combobox>
+    <span class="combobox-state">Value: ${selectedVirtualProjectId || 'none'} · Text: ${virtualProjectQuery || 'empty'}</span>
+  </demo-block>
+
   <demo-block title="Inset label with slotted adornment">
     <ui-combobox text.bind="teamQuery"
       value.bind="selectedTeamId"

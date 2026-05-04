@@ -2,6 +2,7 @@
 
 .ui-list {
   @apply grid gap-1 rounded-xl border border-card-border bg-white p-1;
+  align-content: start;
 }
 
 .ui-list-item {
