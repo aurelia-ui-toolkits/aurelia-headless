@@ -171,6 +171,7 @@ export class UiCombobox {
     this.value = this.getItemValue(event.detail);
     this.textValue = this.getItemLabel(event.detail);
     this.open = false;
+    this.inputEl.focus();
     this.dispatchValueEvent('input');
     this.dispatchValueEvent('change');
   }
