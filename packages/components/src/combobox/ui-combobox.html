@@ -11,7 +11,7 @@
     id.bind="!inset && label ? labelId : null"
     show.bind="label && !inset">${label}</label>
 
-  <div class="ui-combobox__control">
+  <div class="ui-combobox__control" ref="controlEl">
     <span class="ui-combobox__leading" show.bind="leadingNodes.length">
       <au-slot name="leading"></au-slot>
     </span>
@@ -52,7 +52,7 @@
   </div>
 
   <ui-menu open.bind="open"
-    anchor.bind="inputEl"
+    anchor.bind="controlEl"
     match-anchor-width
     focus-on-open.bind="false"
     menu-select.trigger="onMenuSelect($event)">

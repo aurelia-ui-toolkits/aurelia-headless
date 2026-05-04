@@ -17,6 +17,7 @@ export class UiCombobox {
   errors = new Map<IError, boolean>();
   focus: boolean = false;
   active: boolean = false;
+  controlEl!: HTMLElement;
   inputEl!: HTMLInputElement;
 
   @bindable({ mode: BindingMode.twoWay })
