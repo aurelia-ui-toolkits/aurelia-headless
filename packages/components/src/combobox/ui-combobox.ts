@@ -6,6 +6,7 @@ import { UiMenu } from '../menu/ui-menu';
 import template from './ui-combobox.html?raw';
 
 let nextComboboxId = 0;
+type ComboboxOptions = unknown[] | ((filter: string | undefined, value: unknown) => unknown[] | Promise<unknown[]>);
 
 @customElement({ name: 'ui-combobox', template })
 export class UiCombobox {
@@ -24,12 +25,39 @@ export class UiCombobox {
 
   @bindable({ mode: BindingMode.twoWay })
   value: unknown;
+  async valueChanged(): Promise<void> {
+    if (this.suppressValueChanged) {
+      this.suppressValueChanged = false;
+      return;
+    }
+
+    await this.updateFilterBasedOnValue();
+  }
 
   @bindable({ mode: BindingMode.twoWay })
   text: string | undefined;
+  textChanged(): void {
+    if (this.inputEl && this.inputEl.value !== (this.text ?? '')) {
+      this.inputEl.value = this.text ?? '';
+    }
+  }
 
   @bindable({ mode: BindingMode.twoWay })
   selectedItem: unknown;
+
+  @bindable
+  items: ComboboxOptions = [];
+  async itemsChanged(): Promise<void> {
+    this.setGetOptions();
+    await this.updateFilterBasedOnValue();
+  }
+
+  @bindable({ mode: BindingMode.twoWay })
+  filteredItems: unknown[] = [];
+
+  @bindable
+  filterField: string | undefined;
+  filterFieldChanged(): void {}
 
   @bindable({ mode: BindingMode.twoWay, set: booleanAttr })
   open: boolean = false;
@@ -83,6 +111,9 @@ export class UiCombobox {
   trailingNodes: readonly Node[] = [];
 
   private initialText: string | undefined;
+  private getOptions: ((filter: string | undefined, value: unknown) => unknown[] | Promise<unknown[]>) | undefined;
+  private optionsRequest = 0;
+  private suppressValueChanged = false;
   get textValue(): string | undefined {
     if (this.inputEl) {
       return this.inputEl.value;
@@ -121,10 +152,12 @@ export class UiCombobox {
     return this.placeholder;
   }
 
-  attached(): void {
+  async attached(): Promise<void> {
+    this.setGetOptions();
     if (this.text !== undefined) {
       this.textValue = this.text;
     }
+    await this.updateFilterBasedOnValue();
   }
 
   addError(error: IError): void {
@@ -145,15 +178,16 @@ export class UiCombobox {
     this.errors.delete(error);
   }
 
-  onInput(): void {
+  async onInput(): Promise<void> {
     this.text = this.inputEl.value;
     this.selectedItem = undefined;
-    this.value = undefined;
+    this.setValue(undefined);
     this.open = true;
+    await this.loadOptions(true, undefined);
     this.dispatchValueEvent('input');
   }
 
-  onKeyDown(event: KeyboardEvent): void {
+  async onKeyDown(event: KeyboardEvent): Promise<void> {
     if (this.disabled || this.readonly) {
       return;
     }
@@ -165,7 +199,7 @@ export class UiCombobox {
 
     if (event.key === Keys.ArrowDown || event.key === Keys.ArrowUp) {
       event.preventDefault();
-      this.open = true;
+      await this.loadOptions(true, this.value);
       this.menu.focus(event.key === Keys.ArrowDown ? Keys.Home : Keys.End);
       return;
     }
@@ -176,10 +210,10 @@ export class UiCombobox {
     }
   }
 
-  onMenuSelect(event: CustomEvent): void {
+  async onMenuSelect(event: CustomEvent): Promise<void> {
     this.selectedItem = event.detail;
     this.value = this.getItemValue(event.detail);
-    this.textValue = this.getItemLabel(event.detail);
+    await this.updateFilterBasedOnValue();
     this.open = false;
     this.inputEl.focus();
     this.dispatchValueEvent('input');
@@ -191,10 +225,10 @@ export class UiCombobox {
     this.focus = false;
   }
 
-  onFocusIn(): void {
+  async onFocusIn(): Promise<void> {
     if (!this.disabled) {
       this.focus = true;
-      this.open = true;
+      await this.loadOptions(true, this.value);
     }
   }
 
@@ -231,11 +265,87 @@ export class UiCombobox {
   }
 
   private getItemLabel(item: unknown): string {
-    if (this.labelField && item && typeof item === 'object') {
-      const label = (item as Record<string, unknown>)[this.labelField];
+    const labelField = this.labelField ?? this.filterField;
+    if (labelField && item && typeof item === 'object') {
+      const label = (item as Record<string, unknown>)[labelField];
       return label === undefined || label === null ? '' : String(label);
     }
     return item === undefined || item === null ? '' : String(item);
+  }
+
+  private setValue(value: unknown): void {
+    if (this.value === value) {
+      return;
+    }
+
+    this.suppressValueChanged = true;
+    this.value = value;
+  }
+
+  private setGetOptions(): void {
+    if (this.items instanceof Function) {
+      this.getOptions = this.items;
+      return;
+    }
+
+    this.getOptions = this.getOptionsDefault;
+  }
+
+  private getOptionsDefault = (filter: string | undefined, value: unknown): unknown[] => {
+    const options = Array.isArray(this.items) ? this.items : [];
+    if (value !== undefined) {
+      const option = options.find(item => this.getItemValue(item) === value);
+      return option === undefined ? [] : [option];
+    }
+
+    const text = filter?.trim().toLowerCase();
+    if (!text) {
+      return options;
+    }
+
+    return options.filter(item => this.getItemFilterText(item).toLowerCase().includes(text));
+  };
+
+  private async loadOptions(open: boolean, value: unknown): Promise<void> {
+    if (!this.getOptions) {
+      return;
+    }
+
+    const request = ++this.optionsRequest;
+    const options = await this.getOptions(this.textValue, value);
+    if (request !== this.optionsRequest) {
+      return;
+    }
+
+    this.filteredItems = options;
+    if (open) {
+      this.open = true;
+    }
+  }
+
+  private async updateFilterBasedOnValue(): Promise<void> {
+    if (this.value !== undefined) {
+      await this.loadOptions(false, this.value);
+    } else {
+      this.filteredItems = [];
+    }
+
+    if (this.filteredItems.length) {
+      this.selectedItem = this.filteredItems[0];
+      this.textValue = this.getItemLabel(this.filteredItems[0]);
+    } else if (this.value !== undefined) {
+      this.selectedItem = undefined;
+      this.textValue = undefined;
+    }
+  }
+
+  private getItemFilterText(item: unknown): string {
+    if (this.filterField && item && typeof item === 'object') {
+      const filterValue = (item as Record<string, unknown>)[this.filterField];
+      return filterValue === undefined || filterValue === null ? '' : String(filterValue);
+    }
+
+    return this.getItemLabel(item);
   }
 
   private dispatchValueEvent(type: 'input' | 'change'): void {

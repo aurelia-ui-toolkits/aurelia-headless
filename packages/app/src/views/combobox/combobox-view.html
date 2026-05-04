@@ -1,6 +1,8 @@
 <demo-section title="ui-combobox">
-  <demo-block title="Consumer-filtered custom list">
+  <demo-block title="Built-in filtered custom list">
     <ui-combobox text.bind="projectQuery"
+      items.bind="projects"
+      filtered-items.bind="filteredProjects"
       value.bind="selectedProjectId & validate"
       selected-item.bind="selectedProject"
       value-field="id"
@@ -20,6 +22,8 @@
 
   <demo-block title="Initial value">
     <ui-combobox text.bind="initialProjectQuery"
+      items.bind="projects"
+      filtered-items.bind="filteredInitialProjects"
       value.bind="initialProjectId"
       selected-item.bind="initialProject"
       value-field="id"
@@ -39,6 +43,8 @@
 
   <demo-block title="Virtual-repeat list">
     <ui-combobox text.bind="virtualProjectQuery"
+      items.bind="virtualProjects"
+      filtered-items.bind="filteredVirtualProjects"
       value.bind="selectedVirtualProjectId"
       selected-item.bind="selectedVirtualProject"
       value-field="id"
@@ -61,6 +67,8 @@
 
   <demo-block title="Inset label with slotted adornment">
     <ui-combobox text.bind="teamQuery"
+      items.bind="projects"
+      filtered-items.bind="filteredTeams"
       value.bind="selectedTeamId"
       selected-item.bind="selectedTeam"
       value-field="id"

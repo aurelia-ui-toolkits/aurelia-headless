@@ -1,4 +1,4 @@
-import { customElement, newInstanceForScope, observable, resolve } from 'aurelia';
+import { customElement, newInstanceForScope, resolve } from 'aurelia';
 import { IValidationRules } from '@aurelia/validation';
 import { IValidationController } from '@aurelia/validation-html';
 import template from './combobox-view.html?raw';
@@ -15,28 +15,19 @@ export class ComboboxView {
   projectQuery = '';
   selectedProjectId: string | undefined;
   selectedProject: Project | undefined;
+  filteredProjects: Project[] = [];
   teamQuery = '';
   selectedTeamId: string | undefined;
   selectedTeam: Project | undefined;
+  filteredTeams: Project[] = [];
   initialProjectQuery = 'Helios';
   initialProjectId: string = 'helios';
   initialProject: Project | undefined;
+  filteredInitialProjects: Project[] = [];
   selectedVirtualProjectId: string | undefined;
-
-  @observable
   selectedVirtualProject: Project | undefined;
-  selectedVirtualProjectChanged(): void {
-    this.queueVirtualProjectFilterUpdate();
-  }
-  
   filteredVirtualProjects: Project[] = [];
-  private virtualProjectFilterFrame: number | undefined;
-
-  @observable
   virtualProjectQuery: string = '';
-  virtualProjectQueryChanged() {
-    this.queueVirtualProjectFilterUpdate();
-  }
 
   public validationController: IValidationController = resolve(newInstanceForScope(IValidationController));
 
@@ -56,58 +47,6 @@ export class ComboboxView {
 
   constructor() {
     this.initialProject = this.projects.find(project => project.id === this.initialProjectId);
-    this.filteredVirtualProjects = this.virtualProjects;
     resolve(IValidationRules).on(ComboboxView).ensure(x => x.selectedProjectId).required();
-  }
-
-  detaching(): void {
-    if (this.virtualProjectFilterFrame) {
-      cancelAnimationFrame(this.virtualProjectFilterFrame);
-    }
-  }
-
-  get filteredProjects(): Project[] {
-    return this.filterProjects(this.projectQuery);
-  }
-
-  get filteredTeams(): Project[] {
-    return this.filterProjects(this.teamQuery);
-  }
-
-  get filteredInitialProjects(): Project[] {
-    return this.filterProjects(this.initialProjectQuery);
-  }
-
-  private filterProjects(query: string | undefined): Project[] {
-    const value = query?.trim().toLowerCase();
-    if (!value) {
-      return this.projects;
-    }
-
-    return this.projects.filter(project => `${project.name} ${project.region}`.toLowerCase().includes(value));
-  }
-
-  private filterVirtualProjects(query: string | undefined): Project[] {
-    const value = query?.trim().toLowerCase();
-    if (!value) {
-      return this.virtualProjects;
-    }
-
-    if (this.selectedVirtualProject?.name.toLowerCase() === value) {
-      return [this.selectedVirtualProject];
-    }
-
-    return this.virtualProjects.filter(project => `${project.name} ${project.region}`.toLowerCase().includes(value));
-  }
-
-  private queueVirtualProjectFilterUpdate(): void {
-    if (this.virtualProjectFilterFrame) {
-      cancelAnimationFrame(this.virtualProjectFilterFrame);
-    }
-
-    this.virtualProjectFilterFrame = requestAnimationFrame(() => {
-      this.virtualProjectFilterFrame = undefined;
-      this.filteredVirtualProjects = this.filterVirtualProjects(this.virtualProjectQuery);
-    });
   }
 }
