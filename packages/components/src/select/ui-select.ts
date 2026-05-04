@@ -142,7 +142,12 @@ export class UiSelect {
     }
   }
 
-  onFocusOut(): void {
+  onFocusOut(event: FocusEvent): void {
+    if (this.open) {
+      event.stopPropagation();
+      return;
+    }
+
     this.focus = false;
   }
 
