@@ -300,22 +300,24 @@ export class UiPopup {
     const viewportPadding = 8;
     const alignEnd = this.placement.endsWith('end');
     const preferTop = this.placement.startsWith('top');
-    const fallbackTop = anchorRect.top - panelRect.height - this.offset;
     const fallbackBottom = anchorRect.bottom + this.offset;
+    const availableTop = Math.max(0, anchorRect.top - this.offset - viewportPadding);
+    const availableBottom = Math.max(0, window.innerHeight - fallbackBottom - viewportPadding);
+    const placeTop = preferTop
+      ? panelRect.height <= availableTop || availableTop >= availableBottom
+      : panelRect.height > availableBottom && availableTop > availableBottom;
+    const availableHeight = placeTop ? availableTop : availableBottom;
+    const panelHeight = Math.min(panelRect.height, availableHeight);
 
-    let top = preferTop ? fallbackTop : fallbackBottom;
-    if (top < viewportPadding) {
-      top = fallbackBottom;
-    }
-    if (top + panelRect.height > window.innerHeight - viewportPadding) {
-      top = fallbackTop;
-    }
-    top = Math.max(viewportPadding, Math.min(top, window.innerHeight - panelRect.height - viewportPadding));
+    let top = placeTop ? anchorRect.top - this.offset - panelHeight : fallbackBottom;
+    top = Math.max(viewportPadding, Math.min(top, window.innerHeight - panelHeight - viewportPadding));
 
     let left = alignEnd ? anchorRect.right - panelRect.width : anchorRect.left;
     left = Math.max(viewportPadding, Math.min(left, window.innerWidth - panelRect.width - viewportPadding));
 
-    const minWidth = this.matchAnchorWidth ? `min-width: ${anchorRect.width}px;` : '';
-    this.panelStyle = `position: fixed; top: ${top}px; left: ${left}px; ${minWidth}`;
+    const maxWidth = `max-width: calc(100vw - ${viewportPadding * 2}px);`;
+    const maxHeight = `max-height: ${availableHeight}px; --ui-popup-available-height: ${availableHeight}px;`;
+    const minWidth = this.matchAnchorWidth ? `min-width: min(${anchorRect.width}px, calc(100vw - ${viewportPadding * 2}px));` : '';
+    this.panelStyle = `position: fixed; top: ${top}px; left: ${left}px; ${maxWidth} ${maxHeight} ${minWidth}`;
   }
 }
