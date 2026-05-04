@@ -35,6 +35,7 @@
 }
 
 .ui-list-item__trailing {
+  justify-self: end;
   margin-left: 0.75rem;
 }
 
