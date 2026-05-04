@@ -1,5 +1,10 @@
 @reference "./theme.css";
 
+ui-menu,
+.ui-menu {
+  @apply contents;
+}
+
 .ui-menu .ui-list {
   @apply min-w-56;
 }
