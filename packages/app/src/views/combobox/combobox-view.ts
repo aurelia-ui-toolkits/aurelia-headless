@@ -1,4 +1,4 @@
-import { customElement, newInstanceForScope, resolve } from 'aurelia';
+import { customElement, newInstanceForScope, observable, resolve } from 'aurelia';
 import { IValidationRules } from '@aurelia/validation';
 import { IValidationController } from '@aurelia/validation-html';
 import template from './combobox-view.html?raw';
@@ -24,13 +24,11 @@ export class ComboboxView {
   selectedVirtualProjectId: string | undefined;
   selectedVirtualProject: Project | undefined;
   filteredVirtualProjects: Project[] = [];
-  private currentVirtualProjectQuery = '';
-  get virtualProjectQuery(): string {
-    return this.currentVirtualProjectQuery;
-  }
-  set virtualProjectQuery(value: string) {
-    this.currentVirtualProjectQuery = value;
-    this.filteredVirtualProjects = this.filterVirtualProjects(value);
+
+  @observable
+  virtualProjectQuery: string = '';
+  virtualProjectQueryChanged() {
+    this.filteredVirtualProjects = this.filterVirtualProjects(this.virtualProjectQuery);
   }
 
   public validationController: IValidationController = resolve(newInstanceForScope(IValidationController));
