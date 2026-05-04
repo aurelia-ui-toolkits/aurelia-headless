@@ -37,6 +37,9 @@ export class UiPopup {
   @bindable({ set: booleanAttr })
   focusOnOpen: boolean = true;
 
+  @bindable({ set: booleanAttr })
+  restoreFocus: boolean = true;
+
   @bindable
   anchor: Element | undefined;
   anchorChanged(newValue: Element | undefined, oldValue: Element | undefined): void {
@@ -138,7 +141,9 @@ export class UiPopup {
       cancelAnimationFrame(this.positionFrame);
       this.positionFrame = undefined;
     }
-    this.restoreFocus();
+    if (this.restoreFocus) {
+      this.restorePreviousFocus();
+    }
   }
 
   private requestClose(): void {
@@ -168,7 +173,7 @@ export class UiPopup {
     });
   }
 
-  private restoreFocus(): void {
+  private restorePreviousFocus(): void {
     if (!this.previousFocus || !document.contains(this.previousFocus)) {
       this.previousFocus = undefined;
       return;

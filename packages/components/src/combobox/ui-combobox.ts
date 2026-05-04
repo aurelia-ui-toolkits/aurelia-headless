@@ -148,6 +148,11 @@ export class UiCombobox {
       return;
     }
 
+    if (event.key === Keys.Tab) {
+      this.open = false;
+      return;
+    }
+
     if (event.key === Keys.ArrowDown || event.key === Keys.ArrowUp) {
       event.preventDefault();
       this.open = true;

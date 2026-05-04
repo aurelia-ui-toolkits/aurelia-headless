@@ -41,6 +41,9 @@ export class UiMenu {
   focusOnOpen: boolean = true;
 
   @bindable({ set: booleanAttr })
+  restoreFocus: boolean = true;
+
+  @bindable({ set: booleanAttr })
   closeOnSelect: boolean = true;
 
   onListSelect(event: Event): void {
