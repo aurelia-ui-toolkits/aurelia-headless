@@ -1,5 +1,6 @@
 import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
+import { UiPopup } from '../popup/ui-popup';
 import template from './ui-menu.html?raw';
 
 type MenuPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
@@ -7,6 +8,7 @@ type MenuPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
 @customElement({ name: 'ui-menu', template })
 export class UiMenu {
   readonly element = resolve(INode) as HTMLElement;
+  popup!: UiPopup;
 
   @bindable({ mode: BindingMode.twoWay, set: booleanAttr })
   open: boolean = false;
@@ -50,5 +52,13 @@ export class UiMenu {
     if (this.closeOnSelect) {
       this.open = false;
     }
+  }
+
+  focus(): void {
+    this.popup.focus();
+  }
+
+  contains(target: Node): boolean {
+    return this.popup.contains(target);
   }
 }

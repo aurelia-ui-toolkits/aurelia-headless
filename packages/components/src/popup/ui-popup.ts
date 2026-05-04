@@ -153,6 +153,14 @@ export class UiPopup {
     }));
   }
 
+  focus(): void {
+    this.focusPanel();
+  }
+
+  contains(target: Node): boolean {
+    return !!this.panelElement?.contains(target);
+  }
+
   private focusPanel(): void {
     requestAnimationFrame(() => {
       const focusTarget = this.panelElement?.querySelector('[tabindex]') as HTMLElement | null;

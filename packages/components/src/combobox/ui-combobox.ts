@@ -2,6 +2,7 @@ import { bindable, BindingMode, CustomElement, customElement, resolve, slotted }
 import { booleanAttr } from '../base/boolean-attr';
 import { IError, IValidatedElement } from '../base/i-validated-element';
 import { Keys } from '../base/keys';
+import { UiMenu } from '../menu/ui-menu';
 import template from './ui-combobox.html?raw';
 
 let nextComboboxId = 0;
@@ -19,6 +20,7 @@ export class UiCombobox {
   active: boolean = false;
   controlEl!: HTMLElement;
   inputEl!: HTMLInputElement;
+  menu!: UiMenu;
 
   @bindable({ mode: BindingMode.twoWay })
   value: unknown;
@@ -146,9 +148,10 @@ export class UiCombobox {
       return;
     }
 
-    if (event.key === Keys.ArrowDown) {
+    if (event.key === Keys.ArrowDown || event.key === Keys.ArrowUp) {
       event.preventDefault();
       this.open = true;
+      this.menu.focus();
       return;
     }
 
@@ -175,11 +178,13 @@ export class UiCombobox {
   }
 
   onFocusOut(event: FocusEvent): void {
-    if (this.open) {
+    const next = event.relatedTarget as Node | null;
+    if (next && this.menu.contains(next)) {
       event.stopPropagation();
       return;
     }
 
+    this.open = false;
     this.focus = false;
   }
 

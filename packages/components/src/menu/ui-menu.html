@@ -1,5 +1,6 @@
 <template class="ui-menu" role="menu" data-open.attr="open ? '' : null">
-  <ui-popup open.bind="open"
+  <ui-popup component.ref="popup"
+    open.bind="open"
     anchor.bind="anchor"
     placement.bind="placement"
     offset.bind="offset"
