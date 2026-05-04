@@ -3,6 +3,7 @@
     <div class="ui-popup__panel"
       ref="panelElement"
       role="dialog"
+      list-select.trigger="onListSelect($event)"
       show.bind="open"
       style.bind="panelStyle"
       data-open.attr="open ? '' : null">

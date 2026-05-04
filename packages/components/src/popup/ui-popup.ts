@@ -1,4 +1,4 @@
-import { bindable, BindingMode, customElement } from 'aurelia';
+import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
 import template from './ui-popup.html?raw';
@@ -7,6 +7,7 @@ type PopupPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
 
 @customElement({ name: 'ui-popup', template })
 export class UiPopup {
+  readonly element = resolve(INode) as HTMLElement;
   private readonly hiddenPanelStyle = 'position: fixed; top: -10000px; left: -10000px; visibility: hidden;';
 
   @bindable({ mode: BindingMode.twoWay, set: booleanAttr })
@@ -133,6 +134,13 @@ export class UiPopup {
 
   private requestClose(): void {
     this.open = false;
+  }
+
+  onListSelect(event: Event): void {
+    this.element.dispatchEvent(new CustomEvent('list-select', {
+      bubbles: true,
+      detail: (event as CustomEvent).detail
+    }));
   }
 
   private setListeners(listen: boolean): void {
