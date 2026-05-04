@@ -8,7 +8,7 @@ import { ListView } from '../list/list-view';
 import { MenuView } from '../menu/menu-view';
 import { PopupView } from '../popup/popup-view';
 import { SwitchView } from '../switch/switch-view';
-import logoUrl from '../../assets/aurelia-headless-logo.svg';
+import logoUrl from '../../assets/aurelia-headless-logo.png';
 import template from './my-app.html?raw';
 import './my-app.css';
 
