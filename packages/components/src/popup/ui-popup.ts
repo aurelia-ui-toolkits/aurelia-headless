@@ -85,7 +85,6 @@ export class UiPopup {
   }
 
   private listening = false;
-  private positionFrame: number | undefined;
   private anchorRectSnapshot: DOMRect | undefined;
   private previousFocus: HTMLElement | undefined;
   private resizeObserver: ResizeObserver | undefined;
@@ -160,10 +159,6 @@ export class UiPopup {
     this.preservePlacementUpdate = false;
     this.anchorRectSnapshot = undefined;
     this.panelStyle = this.hiddenPanelStyle;
-    if (this.positionFrame) {
-      cancelAnimationFrame(this.positionFrame);
-      this.positionFrame = undefined;
-    }
     if (this.restoreFocus) {
       this.restorePreviousFocus();
     }
@@ -190,10 +185,8 @@ export class UiPopup {
   }
 
   private focusPanel(): void {
-    requestAnimationFrame(() => {
-      const focusTarget = this.panelElement?.querySelector('[tabindex]') as HTMLElement | null;
-      (focusTarget ?? this.panelElement)?.focus();
-    });
+    const focusTarget = this.panelElement?.querySelector('[tabindex]') as HTMLElement | null;
+    (focusTarget ?? this.panelElement)?.focus();
   }
 
   private restorePreviousFocus(): void {
@@ -284,23 +277,21 @@ export class UiPopup {
     this.resizeObserver = undefined;
     this.observedPanelHeight = undefined;
 
-    requestAnimationFrame(() => {
-      if (!this.open || !this.panelElement) {
+    if (!this.open || !this.panelElement) {
+      return;
+    }
+
+    this.resizeObserver = new ResizeObserver(([entry]) => {
+      const height = entry.contentRect.height;
+      if (this.observedPanelHeight === undefined) {
+        this.observedPanelHeight = height;
         return;
       }
 
-      this.resizeObserver = new ResizeObserver(([entry]) => {
-        const height = entry.contentRect.height;
-        if (this.observedPanelHeight === undefined) {
-          this.observedPanelHeight = height;
-          return;
-        }
-
-        this.observedPanelHeight = height;
-        this.queuePositionUpdate(true);
-      });
-      this.resizeObserver.observe(this.panelElement);
+      this.observedPanelHeight = height;
+      this.queuePositionUpdate(true);
     });
+    this.resizeObserver.observe(this.panelElement);
   }
 
   private queuePositionUpdate(preservePlacement = false): void {
@@ -309,16 +300,9 @@ export class UiPopup {
     }
 
     this.preservePlacementUpdate = this.preservePlacementUpdate || preservePlacement;
-    if (this.positionFrame) {
-      cancelAnimationFrame(this.positionFrame);
-    }
-
-    this.positionFrame = requestAnimationFrame(() => {
-      this.positionFrame = undefined;
-      const shouldPreservePlacement = this.preservePlacementUpdate;
-      this.preservePlacementUpdate = false;
-      this.updatePosition(shouldPreservePlacement);
-    });
+    const shouldPreservePlacement = this.preservePlacementUpdate;
+    this.preservePlacementUpdate = false;
+    this.updatePosition(shouldPreservePlacement);
   }
 
   private updatePosition(preservePlacement = false): void {

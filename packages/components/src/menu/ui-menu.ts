@@ -75,20 +75,18 @@ export class UiMenu {
   }
 
   focus(key: Keys.Home | Keys.End = Keys.Home): void {
-    requestAnimationFrame(() => {
-      const list = this.popup.panelElement?.querySelector('ui-list') as HTMLElement | null;
-      if (!list) {
-        this.popup.focus();
-        return;
-      }
+    const list = this.popup.panelElement?.querySelector('ui-list') as HTMLElement | null;
+    if (!list) {
+      this.popup.focus();
+      return;
+    }
 
-      const listViewModel = CustomElement.for<UiList>(list).viewModel;
-      if (key === Keys.End) {
-        listViewModel.focusLast();
-      } else {
-        listViewModel.focusFirst();
-      }
-    });
+    const listViewModel = CustomElement.for<UiList>(list).viewModel;
+    if (key === Keys.End) {
+      listViewModel.focusLast();
+    } else {
+      listViewModel.focusFirst();
+    }
   }
 
   contains(target: Node): boolean {
