@@ -1,0 +1,13 @@
+<template class="ui-menu" role="menu" data-open.attr="open ? '' : null">
+  <ui-popup open.bind="open"
+    anchor.bind="anchor"
+    placement.bind="placement"
+    offset.bind="offset"
+    portal-target.bind="portalTarget"
+    portal-position.bind="portalPosition"
+    close-on-outside.bind="closeOnOutside"
+    close-on-escape.bind="closeOnEscape"
+    match-anchor-width.bind="matchAnchorWidth">
+    <au-slot></au-slot>
+  </ui-popup>
+</template>

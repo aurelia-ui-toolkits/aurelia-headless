@@ -3,6 +3,7 @@ import { UiButton } from './button/ui-button';
 import { UiCheckbox } from './checkbox/ui-checkbox';
 import { UiDisclosure } from './disclosure/ui-disclosure';
 import { IError, UiInput } from './input/ui-input';
+import { UiMenu } from './menu/ui-menu';
 import { UiList } from './list/ui-list';
 import { UiListItem } from './list/ui-list-item';
 import { UiPopup } from './popup/ui-popup';
@@ -15,6 +16,7 @@ export { UiButton };
 export { UiCheckbox };
 export { UiDisclosure };
 export { UiInput };
+export { UiMenu };
 export { UiValidationControllerFactory };
 export type { IError };
 export { UiList };
@@ -65,6 +67,6 @@ export const AureliaHeadlessConfiguration = {
 
     }).register(container);
 
-    return container.register(UiButton, EnhanceUiButton, UiCheckbox, UiDisclosure, UiInput, EnhanceUiInput, UiList, UiListItem, UiPopup, UiSwitch);
+    return container.register(UiButton, EnhanceUiButton, UiCheckbox, UiDisclosure, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiSwitch);
   }
 };
