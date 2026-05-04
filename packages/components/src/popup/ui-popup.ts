@@ -89,7 +89,9 @@ export class UiPopup {
   private anchorRectSnapshot: DOMRect | undefined;
   private previousFocus: HTMLElement | undefined;
   private resizeObserver: ResizeObserver | undefined;
-  private mutationObserver: MutationObserver | undefined;
+  private observedPanelHeight: number | undefined;
+  private currentPlaceTop: boolean | undefined;
+  private preservePlacementUpdate = false;
 
   private readonly onAnchorPointerDownCapture = (): void => {
     if (!this.anchor) {
@@ -153,8 +155,9 @@ export class UiPopup {
     this.setListeners(false);
     this.resizeObserver?.disconnect();
     this.resizeObserver = undefined;
-    this.mutationObserver?.disconnect();
-    this.mutationObserver = undefined;
+    this.observedPanelHeight = undefined;
+    this.currentPlaceTop = undefined;
+    this.preservePlacementUpdate = false;
     this.anchorRectSnapshot = undefined;
     this.panelStyle = this.hiddenPanelStyle;
     if (this.positionFrame) {
@@ -279,37 +282,46 @@ export class UiPopup {
   private observePanelSize(): void {
     this.resizeObserver?.disconnect();
     this.resizeObserver = undefined;
-    this.mutationObserver?.disconnect();
-    this.mutationObserver = undefined;
+    this.observedPanelHeight = undefined;
 
     requestAnimationFrame(() => {
       if (!this.open || !this.panelElement) {
         return;
       }
 
-      this.resizeObserver = new ResizeObserver(() => this.queuePositionUpdate());
+      this.resizeObserver = new ResizeObserver(([entry]) => {
+        const height = entry.contentRect.height;
+        if (this.observedPanelHeight === undefined) {
+          this.observedPanelHeight = height;
+          return;
+        }
+
+        this.observedPanelHeight = height;
+        this.queuePositionUpdate(true);
+      });
       this.resizeObserver.observe(this.panelElement);
-      this.mutationObserver = new MutationObserver(() => this.queuePositionUpdate());
-      this.mutationObserver.observe(this.panelElement, { childList: true, subtree: true });
     });
   }
 
-  private queuePositionUpdate(): void {
+  private queuePositionUpdate(preservePlacement = false): void {
     if (!this.open) {
       return;
     }
 
+    this.preservePlacementUpdate = this.preservePlacementUpdate || preservePlacement;
     if (this.positionFrame) {
       cancelAnimationFrame(this.positionFrame);
     }
 
     this.positionFrame = requestAnimationFrame(() => {
       this.positionFrame = undefined;
-      this.updatePosition();
+      const shouldPreservePlacement = this.preservePlacementUpdate;
+      this.preservePlacementUpdate = false;
+      this.updatePosition(shouldPreservePlacement);
     });
   }
 
-  private updatePosition(): void {
+  private updatePosition(preservePlacement = false): void {
     if (!this.open || !this.panelElement) {
       return;
     }
@@ -322,15 +334,18 @@ export class UiPopup {
     const anchorRect = this.anchorRectSnapshot || this.anchor.getBoundingClientRect();
     this.anchorRectSnapshot = undefined;
     const panelRect = this.panelElement.getBoundingClientRect();
+    this.observedPanelHeight = panelRect.height;
     const viewportPadding = 8;
     const alignEnd = this.placement.endsWith('end');
     const preferTop = this.placement.startsWith('top');
     const fallbackBottom = anchorRect.bottom + this.offset;
     const availableTop = Math.max(0, anchorRect.top - this.offset - viewportPadding);
     const availableBottom = Math.max(0, window.innerHeight - fallbackBottom - viewportPadding);
-    const placeTop = preferTop
+    const nextPlaceTop = preferTop
       ? panelRect.height <= availableTop || availableTop >= availableBottom
       : panelRect.height > availableBottom && availableTop > availableBottom;
+    const placeTop = preservePlacement && this.currentPlaceTop !== undefined ? this.currentPlaceTop : nextPlaceTop;
+    this.currentPlaceTop = placeTop;
     const availableHeight = placeTop ? availableTop : availableBottom;
     const panelHeight = Math.min(panelRect.height, availableHeight);
 
