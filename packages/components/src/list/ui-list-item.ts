@@ -1,4 +1,4 @@
-import { bindable, customElement, INode, resolve } from 'aurelia';
+import { bindable, customElement, INode, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import template from './ui-list-item.html?raw';
 import { UiList } from './ui-list';
@@ -7,6 +7,15 @@ import { UiList } from './ui-list';
 export class UiListItem {
   readonly element = resolve(INode) as HTMLElement;
   readonly parentList = resolve(UiList);
+
+  @slotted({ slotName: 'leading' })
+  leadingNodes: readonly Node[] = [];
+
+  @slotted({ slotName: 'secondary' })
+  secondaryNodes: readonly Node[] = [];
+
+  @slotted({ slotName: 'trailing' })
+  trailingNodes: readonly Node[] = [];
 
   @bindable
   value: object = this;

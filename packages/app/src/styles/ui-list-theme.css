@@ -5,7 +5,7 @@
 }
 
 .ui-list-item {
-  @apply grid grid-cols-[1.25rem_1fr_auto] items-center gap-3 rounded-lg px-3 py-2 text-sm text-ink-700;
+  @apply grid grid-cols-[auto_1fr_auto] items-center gap-0 rounded-lg px-3 py-2 text-sm text-ink-700;
   transition: background-color 140ms ease;
 }
 
@@ -28,6 +28,14 @@
 .ui-list-item__leading,
 .ui-list-item__trailing {
   @apply text-ink-500;
+}
+
+.ui-list-item__leading {
+  margin-right: 0.75rem;
+}
+
+.ui-list-item__trailing {
+  margin-left: 0.75rem;
 }
 
 .ui-list-item[data-selected] .ui-list-item__leading,

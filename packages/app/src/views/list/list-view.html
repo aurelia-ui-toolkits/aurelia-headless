@@ -24,4 +24,12 @@
     </ui-list>
     <span class="list-state">Selected: ${selectedItem?.label}</span>
   </demo-block>
+
+  <demo-block title="No leading or trailing slots">
+    <ui-list>
+      <ui-list-item repeat.for="item of staticList" value.bind="item" disabled.bind="item.disabled">
+        ${item.label}
+      </ui-list-item>
+    </ui-list>
+  </demo-block>
 </demo-section>

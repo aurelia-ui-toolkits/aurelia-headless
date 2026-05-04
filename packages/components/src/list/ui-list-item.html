@@ -5,18 +5,18 @@
   data-active.attr="parentList.activeItem === value ? '' : null"
   data-selected.attr="parentList.selected === value ? '' : null"
   data-disabled.attr="disabled ? '' : null">
-  <span class="ui-list-item__leading">
+  <span class="ui-list-item__leading" show.bind="leadingNodes.length">
     <au-slot name="leading"></au-slot>
   </span>
   <span class="ui-list-item__content">
     <span class="ui-list-item__primary">
       <au-slot></au-slot>
     </span>
-    <span class="ui-list-item__secondary">
+    <span class="ui-list-item__secondary" show.bind="secondaryNodes.length">
       <au-slot name="secondary"></au-slot>
     </span>
   </span>
-  <span class="ui-list-item__trailing">
+  <span class="ui-list-item__trailing" show.bind="trailingNodes.length">
     <au-slot name="trailing"></au-slot>
   </span>
 </template>
