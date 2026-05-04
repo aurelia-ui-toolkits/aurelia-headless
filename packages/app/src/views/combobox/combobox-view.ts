@@ -22,13 +22,20 @@ export class ComboboxView {
   initialProjectId: string = 'helios';
   initialProject: Project | undefined;
   selectedVirtualProjectId: string | undefined;
+
+  @observable
   selectedVirtualProject: Project | undefined;
+  selectedVirtualProjectChanged(): void {
+    this.queueVirtualProjectFilterUpdate();
+  }
+  
   filteredVirtualProjects: Project[] = [];
+  private virtualProjectFilterFrame: number | undefined;
 
   @observable
   virtualProjectQuery: string = '';
   virtualProjectQueryChanged() {
-    this.filteredVirtualProjects = this.filterVirtualProjects(this.virtualProjectQuery);
+    this.queueVirtualProjectFilterUpdate();
   }
 
   public validationController: IValidationController = resolve(newInstanceForScope(IValidationController));
@@ -51,6 +58,12 @@ export class ComboboxView {
     this.initialProject = this.projects.find(project => project.id === this.initialProjectId);
     this.filteredVirtualProjects = this.virtualProjects;
     resolve(IValidationRules).on(ComboboxView).ensure(x => x.selectedProjectId).required();
+  }
+
+  detaching(): void {
+    if (this.virtualProjectFilterFrame) {
+      cancelAnimationFrame(this.virtualProjectFilterFrame);
+    }
   }
 
   get filteredProjects(): Project[] {
@@ -85,5 +98,16 @@ export class ComboboxView {
     }
 
     return this.virtualProjects.filter(project => `${project.name} ${project.region}`.toLowerCase().includes(value));
+  }
+
+  private queueVirtualProjectFilterUpdate(): void {
+    if (this.virtualProjectFilterFrame) {
+      cancelAnimationFrame(this.virtualProjectFilterFrame);
+    }
+
+    this.virtualProjectFilterFrame = requestAnimationFrame(() => {
+      this.virtualProjectFilterFrame = undefined;
+      this.filteredVirtualProjects = this.filterVirtualProjects(this.virtualProjectQuery);
+    });
   }
 }
