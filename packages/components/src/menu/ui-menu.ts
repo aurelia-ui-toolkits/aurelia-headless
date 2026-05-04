@@ -1,5 +1,6 @@
 import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
+import { Keys } from '../base/keys';
 import { UiPopup } from '../popup/ui-popup';
 import template from './ui-menu.html?raw';
 
@@ -12,6 +13,11 @@ export class UiMenu {
 
   @bindable({ mode: BindingMode.twoWay, set: booleanAttr })
   open: boolean = false;
+  openChanged(newValue: boolean): void {
+    if (newValue && this.focusOnOpen) {
+      this.focus();
+    }
+  }
 
   @bindable
   anchor: Element | undefined;
@@ -58,7 +64,16 @@ export class UiMenu {
   }
 
   focus(): void {
-    this.popup.focus();
+    requestAnimationFrame(() => {
+      const list = this.popup.panelElement?.querySelector('ui-list') as HTMLElement | null;
+      if (!list) {
+        this.popup.focus();
+        return;
+      }
+
+      list.focus();
+      list.dispatchEvent(new KeyboardEvent('keydown', { key: Keys.Home, bubbles: true }));
+    });
   }
 
   contains(target: Node): boolean {
