@@ -1,4 +1,4 @@
-import { bindable, BindingMode, CustomElement, customElement, resolve, slotted } from 'aurelia';
+import { bindable, BindingMode, computed, CustomElement, customElement, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { IError, IValidatedElement } from '../base/i-validated-element';
 import { Keys } from '../base/keys';
@@ -80,6 +80,7 @@ export class UiSelect {
     return `${this.id}-errors`;
   }
 
+  @computed({ flush: 'async' })
   get displayText(): string | undefined {
     if (this.selectedItem !== undefined) {
       return this.getItemLabel(this.selectedItem);
@@ -89,6 +90,15 @@ export class UiSelect {
     }
 
     return undefined;
+  }
+
+  @computed({ flush: 'async' })
+  get placeholderText(): string | undefined {
+    if (this.inset && !this.focus) {
+      return undefined;
+    }
+
+    return this.placeholder;
   }
 
   get hasValue(): boolean {
