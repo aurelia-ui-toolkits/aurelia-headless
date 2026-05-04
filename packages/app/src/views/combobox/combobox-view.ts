@@ -18,6 +18,9 @@ export class ComboboxView {
   teamQuery = '';
   selectedTeamId: string | undefined;
   selectedTeam: Project | undefined;
+  initialProjectQuery = 'Helios';
+  initialProjectId: string = 'helios';
+  initialProject: Project | undefined;
 
   public validationController: IValidationController = resolve(newInstanceForScope(IValidationController));
 
@@ -29,6 +32,7 @@ export class ComboboxView {
   ];
 
   constructor() {
+    this.initialProject = this.projects.find(project => project.id === this.initialProjectId);
     resolve(IValidationRules).on(ComboboxView).ensure(x => x.selectedProjectId).required();
   }
 
@@ -38,6 +42,10 @@ export class ComboboxView {
 
   get filteredTeams(): Project[] {
     return this.filterProjects(this.teamQuery);
+  }
+
+  get filteredInitialProjects(): Project[] {
+    return this.filterProjects(this.initialProjectQuery);
   }
 
   private filterProjects(query: string | undefined): Project[] {

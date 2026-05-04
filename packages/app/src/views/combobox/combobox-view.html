@@ -18,6 +18,25 @@
     <span class="combobox-state">Value: ${selectedProjectId || 'none'} · Text: ${projectQuery || 'empty'}</span>
   </demo-block>
 
+  <demo-block title="Initial value">
+    <ui-combobox text.bind="initialProjectQuery"
+      value.bind="initialProjectId"
+      selected-item.bind="initialProject"
+      value-field="id"
+      label-field="name"
+      label="Project"
+      helper-text="Starts with Helios selected."
+      placeholder="Search projects">
+      <ui-list items.bind="filteredInitialProjects" selected.bind="initialProject" typeahead-field="name">
+        <ui-list-item repeat.for="project of filteredInitialProjects" value.bind="project" disabled.bind="project.disabled">
+          ${project.name}
+          <span au-slot="secondary">${project.region}</span>
+        </ui-list-item>
+      </ui-list>
+    </ui-combobox>
+    <span class="combobox-state">Value: ${initialProjectId || 'none'} · Text: ${initialProjectQuery || 'empty'}</span>
+  </demo-block>
+
   <demo-block title="Inset label with slotted adornment">
     <ui-combobox text.bind="teamQuery"
       value.bind="selectedTeamId"
