@@ -1,6 +1,7 @@
-import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
+import { bindable, BindingMode, CustomElement, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
+import { UiList } from '../list/ui-list';
 import { UiPopup } from '../popup/ui-popup';
 import template from './ui-menu.html?raw';
 
@@ -73,7 +74,7 @@ export class UiMenu {
     }));
   }
 
-  focus(): void {
+  focus(key: Keys.Home | Keys.End = Keys.Home): void {
     requestAnimationFrame(() => {
       const list = this.popup.panelElement?.querySelector('ui-list') as HTMLElement | null;
       if (!list) {
@@ -81,8 +82,12 @@ export class UiMenu {
         return;
       }
 
-      list.focus();
-      list.dispatchEvent(new KeyboardEvent('keydown', { key: Keys.Home, bubbles: true }));
+      const listViewModel = CustomElement.for<UiList>(list).viewModel;
+      if (key === Keys.End) {
+        listViewModel.focusLast();
+      } else {
+        listViewModel.focusFirst();
+      }
     });
   }
 

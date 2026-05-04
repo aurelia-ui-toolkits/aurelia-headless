@@ -156,7 +156,7 @@ export class UiCombobox {
     if (event.key === Keys.ArrowDown || event.key === Keys.ArrowUp) {
       event.preventDefault();
       this.open = true;
-      this.menu.focus();
+      this.menu.focus(event.key === Keys.ArrowDown ? Keys.Home : Keys.End);
       return;
     }
 

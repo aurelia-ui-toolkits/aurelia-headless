@@ -133,6 +133,16 @@ export class UiList {
     this.activateItem(item);
   }
 
+  focusFirst(): void {
+    this.host.focus();
+    this.setFirstActive();
+  }
+
+  focusLast(): void {
+    this.host.focus();
+    this.setLastActive();
+  }
+
   private getEffectiveItems(): object[] {
     if (this.items != null) {
       return this.items;
