@@ -4,7 +4,6 @@
       items.bind="projects"
       filtered-items.bind="filteredProjects"
       value.bind="selectedProjectId & validate"
-      selected-item.bind="selectedProject"
       value-field="id"
       label-field="name"
       label="Project"
@@ -25,7 +24,6 @@
       items.bind="projects"
       filtered-items.bind="filteredInitialProjects"
       value.bind="initialProjectId"
-      selected-item.bind="initialProject"
       value-field="id"
       label-field="name"
       label="Project"
@@ -46,15 +44,12 @@
       items.bind="virtualProjects"
       filtered-items.bind="filteredVirtualProjects"
       value.bind="selectedVirtualProjectId"
-      selected-item.bind="selectedVirtualProject"
       value-field="id"
       label-field="name"
       label="Large project list"
       helper-text="Uses virtual-repeat inside the popup list."
       placeholder="Search 200 projects">
-      <ui-list items.bind="filteredVirtualProjects"
-        selected.bind="selectedVirtualProject"
-        typeahead-field="name">
+      <ui-list items.bind="filteredVirtualProjects" selected.bind="selectedVirtualProject" typeahead-field="name">
         <ui-list-item virtual-repeat.for="project of filteredVirtualProjects" value.bind="project" disabled.bind="project.disabled">
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
@@ -70,7 +65,6 @@
       items.bind="projects"
       filtered-items.bind="filteredTeams"
       value.bind="selectedTeamId"
-      selected-item.bind="selectedTeam"
       value-field="id"
       label-field="name"
       inset

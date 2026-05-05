@@ -42,9 +42,6 @@ export class UiCombobox {
     }
   }
 
-  @bindable({ mode: BindingMode.twoWay })
-  selectedItem: unknown;
-
   @bindable
   items: ComboboxOptions = [];
   async itemsChanged(): Promise<void> {
@@ -181,7 +178,6 @@ export class UiCombobox {
 
   async onInput(): Promise<void> {
     this.text = this.inputEl.value;
-    this.selectedItem = undefined;
     this.setValue(undefined);
     this.open = true;
     await this.loadOptions(true, undefined);
@@ -212,7 +208,6 @@ export class UiCombobox {
   }
 
   onMenuSelect(event: CustomEvent): void {
-    this.selectedItem = event.detail;
     this.value = this.getItemValue(event.detail);
     this.open = false;
     this.suppressFocusOpen = true;
@@ -338,10 +333,8 @@ export class UiCombobox {
     }
 
     if (this.filteredItems.length) {
-      this.selectedItem = this.filteredItems[0];
       this.textValue = this.getItemLabel(this.filteredItems[0]);
     } else if (this.value !== undefined) {
-      this.selectedItem = undefined;
       this.textValue = undefined;
     }
   }
