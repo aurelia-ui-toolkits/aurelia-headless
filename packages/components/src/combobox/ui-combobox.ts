@@ -15,6 +15,7 @@ export class UiCombobox {
   }
 
   readonly element = resolve(Element) as HTMLElement;
+  readonly slotHost = this;
 
   errors = new Map<IError, boolean>();
   focus: boolean = false;

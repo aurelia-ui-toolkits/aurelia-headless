@@ -15,18 +15,14 @@ export class ComboboxView {
   projectQuery = '';
   selectedProjectId: string | undefined;
   selectedProject: Project | undefined;
-  filteredProjects: Project[] = [];
   teamQuery = '';
   selectedTeamId: string | undefined;
   selectedTeam: Project | undefined;
-  filteredTeams: Project[] = [];
   initialProjectQuery = 'Helios';
   initialProjectId: string = 'helios';
   initialProject: Project | undefined;
-  filteredInitialProjects: Project[] = [];
   selectedVirtualProjectId: string | undefined;
   selectedVirtualProject: Project | undefined;
-  filteredVirtualProjects: Project[] = [];
   virtualProjectQuery: string = '';
 
   public validationController: IValidationController = resolve(newInstanceForScope(IValidationController));

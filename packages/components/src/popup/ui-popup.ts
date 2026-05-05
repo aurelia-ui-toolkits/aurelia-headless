@@ -8,6 +8,7 @@ type PopupPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
 @customElement({ name: 'ui-popup', template })
 export class UiPopup {
   readonly element = resolve(INode) as HTMLElement;
+  readonly slotHost = this;
   private readonly hiddenPanelStyle = 'position: fixed; top: -10000px; left: -10000px; visibility: hidden;';
 
   @bindable({ mode: BindingMode.twoWay, set: booleanAttr })
@@ -69,8 +70,15 @@ export class UiPopup {
   @bindable
   portalPosition: InsertPosition = 'beforeend';
 
+  @bindable
+  exposedHost: unknown;
+
   panelStyle = this.hiddenPanelStyle;
   panelElement: HTMLElement | undefined;
+
+  get effectiveSlotHost(): unknown {
+    return this.exposedHost ?? this.slotHost;
+  }
 
   attaching(): void {
     this.anchor?.addEventListener('pointerdown', this.onAnchorPointerDownCapture, true);

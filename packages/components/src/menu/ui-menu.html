@@ -7,6 +7,7 @@
     offset.bind="offset"
     portal-target.bind="portalTarget"
     portal-position.bind="portalPosition"
+    exposed-host.bind="effectiveSlotHost"
     close-on-outside.bind="closeOnOutside"
     close-on-escape.bind="closeOnEscape"
     match-anchor-width.bind="matchAnchorWidth"
@@ -14,6 +15,6 @@
     restore-focus.bind="restoreFocus"
     popup-tab-away.trigger="onPopupTabAway($event)"
     list-select.trigger="onListSelect($event)">
-    <au-slot></au-slot>
+    <au-slot expose.bind="effectiveSlotHost"></au-slot>
   </ui-popup>
 </template>

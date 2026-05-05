@@ -8,7 +8,7 @@
       show.bind="open"
       style.bind="panelStyle"
       data-open.attr="open ? '' : null">
-      <au-slot></au-slot>
+      <au-slot expose.bind="effectiveSlotHost"></au-slot>
     </div>
   </div>
 </template>

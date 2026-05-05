@@ -10,6 +10,7 @@ type MenuPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
 @customElement({ name: 'ui-menu', template })
 export class UiMenu {
   readonly element = resolve(INode) as HTMLElement;
+  readonly slotHost = this;
   popup!: UiPopup;
 
   @bindable({ mode: BindingMode.twoWay, set: booleanAttr })
@@ -38,6 +39,9 @@ export class UiMenu {
   @bindable
   portalPosition: InsertPosition = 'beforeend';
 
+  @bindable
+  exposedHost: unknown;
+
   @bindable({ set: booleanAttr })
   closeOnOutside: boolean = true;
 
@@ -55,6 +59,10 @@ export class UiMenu {
 
   @bindable({ set: booleanAttr })
   closeOnSelect: boolean = true;
+
+  get effectiveSlotHost(): unknown {
+    return this.exposedHost ?? this.slotHost;
+  }
 
   onListSelect(event: Event): void {
     this.element.dispatchEvent(new CustomEvent('menu-select', {
