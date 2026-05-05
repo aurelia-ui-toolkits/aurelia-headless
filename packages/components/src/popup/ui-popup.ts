@@ -288,8 +288,9 @@ export class UiPopup {
         return;
       }
 
+      const preservePlacement = height <= this.observedPanelHeight;
       this.observedPanelHeight = height;
-      this.queuePositionUpdate(true);
+      this.queuePositionUpdate(preservePlacement);
     });
     this.resizeObserver.observe(this.panelElement);
   }
