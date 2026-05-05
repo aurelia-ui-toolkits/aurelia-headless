@@ -89,6 +89,8 @@ export class UiPopup {
   private previousFocus: HTMLElement | undefined;
   private resizeObserver: ResizeObserver | undefined;
   private observedPanelHeight: number | undefined;
+  private observedPanelScrollHeight: number | undefined;
+  private mutationObserver: MutationObserver | undefined;
   private currentPlaceTop: boolean | undefined;
   private preservePlacementUpdate = false;
 
@@ -154,7 +156,10 @@ export class UiPopup {
     this.setListeners(false);
     this.resizeObserver?.disconnect();
     this.resizeObserver = undefined;
+    this.mutationObserver?.disconnect();
+    this.mutationObserver = undefined;
     this.observedPanelHeight = undefined;
+    this.observedPanelScrollHeight = undefined;
     this.currentPlaceTop = undefined;
     this.preservePlacementUpdate = false;
     this.anchorRectSnapshot = undefined;
@@ -275,7 +280,10 @@ export class UiPopup {
   private observePanelSize(): void {
     this.resizeObserver?.disconnect();
     this.resizeObserver = undefined;
+    this.mutationObserver?.disconnect();
+    this.mutationObserver = undefined;
     this.observedPanelHeight = undefined;
+    this.observedPanelScrollHeight = undefined;
 
     if (!this.open || !this.panelElement) {
       return;
@@ -293,6 +301,24 @@ export class UiPopup {
       this.queuePositionUpdate(preservePlacement);
     });
     this.resizeObserver.observe(this.panelElement);
+    this.mutationObserver = new MutationObserver(() => this.handlePanelContentChange());
+    this.mutationObserver.observe(this.panelElement, { childList: true, subtree: true, characterData: true });
+  }
+
+  private handlePanelContentChange(): void {
+    if (!this.open || !this.panelElement) {
+      return;
+    }
+
+    const scrollHeight = this.panelElement.scrollHeight;
+    if (this.observedPanelScrollHeight === undefined) {
+      this.observedPanelScrollHeight = scrollHeight;
+      return;
+    }
+
+    const preservePlacement = scrollHeight <= this.observedPanelScrollHeight;
+    this.observedPanelScrollHeight = scrollHeight;
+    this.queuePositionUpdate(preservePlacement);
   }
 
   private queuePositionUpdate(preservePlacement = false): void {
@@ -320,6 +346,7 @@ export class UiPopup {
     this.anchorRectSnapshot = undefined;
     const panelRect = this.panelElement.getBoundingClientRect();
     this.observedPanelHeight = panelRect.height;
+    this.observedPanelScrollHeight = this.panelElement.scrollHeight;
     const viewportPadding = 8;
     const alignEnd = this.placement.endsWith('end');
     const preferTop = this.placement.startsWith('top');
