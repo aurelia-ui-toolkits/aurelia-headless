@@ -146,7 +146,6 @@ export class UiPopup {
     this.previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : undefined;
     this.setListeners(true);
     this.observePanelSize();
-    this.queuePositionUpdate();
     if (this.focusOnOpen) {
       this.focusPanel();
     }
@@ -293,6 +292,9 @@ export class UiPopup {
       const height = entry.contentRect.height;
       if (this.observedPanelHeight === undefined) {
         this.observedPanelHeight = height;
+        if (height > 0) {
+          this.queuePositionUpdate();
+        }
         return;
       }
 
