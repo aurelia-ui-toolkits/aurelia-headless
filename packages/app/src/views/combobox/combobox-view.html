@@ -1,15 +1,10 @@
 <demo-section title="ui-combobox">
   <demo-block title="Built-in filtered custom list">
-    <ui-combobox text.bind="projectQuery"
-      items.bind="projects"
-      value.bind="selectedProjectId & validate"
-      value-field="id"
-      label-field="name"
-      label="Project"
-      helper-text="Type to filter projects."
+    <ui-combobox text.bind="projectQuery" items.bind="projects" value.bind="selectedProjectId & validate"
+      value-field="id" label-field="name" label="Project" helper-text="Type to filter projects."
       placeholder="Search projects">
-      <ui-list au-slot items.bind="$host.filteredItems" selected.bind="selectedProject" typeahead-field="name">
-        <ui-list-item repeat.for="project of $host.items" value.bind="project" disabled.bind="project.disabled">
+      <ui-list au-slot items.bind="$host.filteredItems" selected.bind="$host.value" typeahead-field="name">
+        <ui-list-item repeat.for="project of $host.items" value.bind="project.id" disabled.bind="project.disabled">
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
         </ui-list-item>
@@ -19,16 +14,10 @@
   </demo-block>
 
   <demo-block title="Initial value">
-    <ui-combobox text.bind="initialProjectQuery"
-      items.bind="projects"
-      value.bind="initialProjectId"
-      value-field="id"
-      label-field="name"
-      label="Project"
-      helper-text="Starts with Helios selected."
-      placeholder="Search projects">
-      <ui-list au-slot items.bind="$host.filteredItems" selected.bind="initialProject" typeahead-field="name">
-        <ui-list-item repeat.for="project of $host.items" value.bind="project" disabled.bind="project.disabled">
+    <ui-combobox text.bind="initialProjectQuery" items.bind="projects" value.bind="initialProjectId" value-field="id"
+      label-field="name" label="Project" helper-text="Starts with Helios selected." placeholder="Search projects">
+      <ui-list au-slot items.bind="$host.filteredItems" selected.bind="$host.value" typeahead-field="name">
+        <ui-list-item repeat.for="project of $host.items" value.bind="project.id" disabled.bind="project.disabled">
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
         </ui-list-item>
@@ -38,38 +27,29 @@
   </demo-block>
 
   <demo-block title="Virtual-repeat list">
-    <ui-combobox text.bind="virtualProjectQuery"
-      items.bind="virtualProjects"
-      value.bind="selectedVirtualProjectId"
-      value-field="id"
-      label-field="name"
-      label="Large project list"
-      helper-text="Uses virtual-repeat inside the popup list."
-      placeholder="Search 200 projects">
-      <ui-list au-slot items.bind="$host.filteredItems" selected.bind="selectedVirtualProject" typeahead-field="name">
-        <ui-list-item virtual-repeat.for="project of $host.items" value.bind="project" disabled.bind="project.disabled">
+    <ui-combobox text.bind="virtualProjectQuery" items.bind="virtualProjects" value.bind="selectedVirtualProjectId"
+      value-field="id" label-field="name" label="Large project list"
+      helper-text="Uses virtual-repeat inside the popup list." placeholder="Search 200 projects">
+      <ui-list au-slot items.bind="$host.filteredItems" selected.bind="$host.value" typeahead-field="name">
+        <ui-list-item virtual-repeat.for="project of $host.items" value.bind="project.id"
+          disabled.bind="project.disabled">
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
           <span au-slot="trailing">${project.id}</span>
         </ui-list-item>
       </ui-list>
     </ui-combobox>
-    <span class="combobox-state">Value: ${selectedVirtualProjectId || 'none'} · Text: ${virtualProjectQuery || 'empty'}</span>
+    <span class="combobox-state">Value: ${selectedVirtualProjectId || 'none'} · Text: ${virtualProjectQuery ||
+      'empty'}</span>
   </demo-block>
 
   <demo-block title="Inset label with slotted adornment">
-    <ui-combobox text.bind="teamQuery"
-      items.bind="projects"
-      value.bind="selectedTeamId"
-      value-field="id"
-      label-field="name"
-      inset
-      label="Team"
-      helper-text="Manual text is kept if it does not match an item."
+    <ui-combobox text.bind="teamQuery" items.bind="projects" value.bind="selectedTeamId" value-field="id"
+      label-field="name" inset label="Team" helper-text="Manual text is kept if it does not match an item."
       placeholder="Search teams">
       <span au-slot="leading">#</span>
-      <ui-list au-slot items.bind="$host.filteredItems" selected.bind="selectedTeam" typeahead-field="name">
-        <ui-list-item repeat.for="project of $host.items" value.bind="project" disabled.bind="project.disabled">
+      <ui-list au-slot items.bind="$host.filteredItems" selected.bind="$host.value" typeahead-field="name">
+        <ui-list-item repeat.for="project of $host.items" value.bind="project.id" disabled.bind="project.disabled">
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
           <span au-slot="trailing">${project.id}</span>
