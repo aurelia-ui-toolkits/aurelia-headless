@@ -26,7 +26,7 @@ export class UiList {
   disabledField: string | ((item: object) => boolean) = 'disabled';
 
   @bindable({ mode: 'twoWay' })
-  selected: object | undefined;
+  selected: unknown;
 
   @children({
     query: 'ui-list-item',
@@ -44,7 +44,7 @@ export class UiList {
   }
 
   private listItemsChangedCallback: (() => void) | undefined;
-  private activeItem: object | undefined;
+  activeItem: unknown;
   private typeaheadBuffer = '';
   private typeaheadTimer: ReturnType<typeof setTimeout> | undefined;
 
@@ -94,7 +94,12 @@ export class UiList {
     }
   }
 
-  isItemDisabled(item: object): boolean {
+  isItemDisabled(item: unknown): boolean {
+    const listItem = this.listItems.find(x => x.value === item);
+    if (listItem) {
+      return listItem.disabled;
+    }
+
     if (typeof this.disabledField === 'string') {
       return !!(item as any)[this.disabledField];
     } else if (typeof this.disabledField === 'function') {
@@ -106,7 +111,7 @@ export class UiList {
 
   onClick(event: MouseEvent): void {
     const item = this.resolveItemFromEvent(event.target);
-    if (!item || this.isItemDisabled(item)) {
+    if (item === undefined || item === null || this.isItemDisabled(item)) {
       return;
     }
 
@@ -126,7 +131,7 @@ export class UiList {
       return;
     }
     const item = this.resolveItemFromEvent(event.target);
-    if (!item || this.isItemDisabled(item)) {
+    if (item === undefined || item === null || this.isItemDisabled(item)) {
       return;
     }
 
@@ -143,12 +148,16 @@ export class UiList {
     this.setLastActive();
   }
 
-  private getEffectiveItems(): object[] {
-    if (this.items != null) {
+  private getEffectiveItems(): unknown[] {
+    if (this.listItems.length) {
+      return this.listItems.map(item => item.value);
+    }
+
+    if (this.items) {
       return this.items;
     }
 
-    return this.listItems.map((item) => item.value).filter((value): value is object => value !== null);
+    return [];
   }
 
   private isNextKey(key: string): boolean {
@@ -168,30 +177,31 @@ export class UiList {
   }
 
   private move(direction: 1 | -1): void {
-    const currentIndex = this.activeItem ? this.items.indexOf(this.activeItem) : -1;
+    const items = this.getEffectiveItems();
+    const currentIndex = this.activeItem ? items.indexOf(this.activeItem) : -1;
     let nextIndex = currentIndex + direction;
 
     if (this.loop) {
-      nextIndex = (nextIndex + this.items.length) % this.items.length;
+      nextIndex = (nextIndex + items.length) % items.length;
     } else {
-      nextIndex = Math.max(0, Math.min(this.items.length - 1, nextIndex));
+      nextIndex = Math.max(0, Math.min(items.length - 1, nextIndex));
     }
 
-    const next = this.getNonDisabled(this.items[nextIndex], direction);
+    const next = this.getNonDisabled(items[nextIndex], direction, items);
     if (next) {
       this.scrollItemIntoView(next);
       this.activateItem(next);
     }
   }
 
-  private getNonDisabled(item: object, direction: 1 | -1): object | undefined {
+  private getNonDisabled(item: unknown, direction: 1 | -1, items = this.getEffectiveItems()): unknown {
     if (!this.isItemDisabled(item)) {
       return item;
     }
-    const startIndex = this.items.indexOf(item);
-    for (let step = 1; step < this.items.length; step++) {
-      const index = (startIndex + direction * step + this.items.length) % this.items.length;
-      const next = this.items[index];
+    const startIndex = items.indexOf(item);
+    for (let step = 1; step < items.length; step++) {
+      const index = (startIndex + direction * step + items.length) % items.length;
+      const next = items[index];
       if (!this.isItemDisabled(next)) {
         return next;
       }
@@ -201,7 +211,8 @@ export class UiList {
   }
 
   private async setFirstActive() {
-    const firstItem = this.getNonDisabled(this.items[0], 1);
+    const items = this.getEffectiveItems();
+    const firstItem = this.getNonDisabled(items[0], 1, items);
     if (!firstItem) {
       return;
     }
@@ -211,7 +222,8 @@ export class UiList {
   }
 
   private setLastActive(): void {
-    const lastItem = this.getNonDisabled(this.items[this.items.length - 1], -1);
+    const items = this.getEffectiveItems();
+    const lastItem = this.getNonDisabled(items[items.length - 1], -1, items);
     if (!lastItem) {
       return;
     }
@@ -220,7 +232,7 @@ export class UiList {
     this.activateItem(lastItem);
   }
 
-  private activateItem(item: object): void {
+  private activateItem(item: unknown): void {
     this.activeItem = item;
     this.emitActivate(item);
   }
@@ -231,20 +243,20 @@ export class UiList {
     }
   }
 
-  private selectItem(item: object): void {
+  private selectItem(item: unknown): void {
     this.activateItem(item);
     this.selected = item;
     this.emitSelection(item);
   }
 
-  private emitActivate(item: object): void {
+  private emitActivate(item: unknown): void {
     this.host.dispatchEvent(new CustomEvent('list-activate', {
       bubbles: true,
       detail: item
     }));
   }
 
-  private emitSelection(item: object): void {
+  private emitSelection(item: unknown): void {
     this.host.dispatchEvent(new CustomEvent('list-select', {
       bubbles: true,
       detail: item
@@ -272,12 +284,13 @@ export class UiList {
       this.typeaheadTimer = undefined;
     }, 800);
 
-    const startIndex = this.activeItem ? this.items.indexOf(this.activeItem) : 0;
+    const items = this.getEffectiveItems();
+    const startIndex = this.activeItem ? items.indexOf(this.activeItem) : 0;
 
-    for (let step = 0; step < this.items.length; step++) {
-      const index = (startIndex + step) % this.items.length;
-      const item = this.items[index];
-      const label = item[this.typeaheadField!].toLowerCase();
+    for (let step = 0; step < items.length; step++) {
+      const index = (startIndex + step) % items.length;
+      const item = items[index];
+      const label = String(item).toLowerCase();
       if (label.startsWith(this.typeaheadBuffer) && !this.isItemDisabled(item)) {
         this.scrollItemIntoView(item);
         this.activateItem(item);
@@ -293,15 +306,16 @@ export class UiList {
     }
   }
 
-  private scrollItemIntoView(item: object): void {
+  private scrollItemIntoView(item: unknown): void {
     const listItem = this.listItems.find(x => x.value === item);
     this.suppressMouseOver = true;
 
     if (listItem) {
       listItem.element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
     } else {
-      const index = this.items.indexOf(item);
-      this.host.scrollTo({ top: this.host.scrollHeight / this.items.length * index });
+      const items = this.getEffectiveItems();
+      const index = items.indexOf(item);
+      this.host.scrollTo({ top: this.host.scrollHeight / items.length * index });
       // this is a workaround to ensure the active item is scrolled into view after the items are rendered,
       // if CSS defines a gap between items the virtual-repeat spacer height might be incorrect
       // so we need to adjust the scroll after the list item gets rendered
