@@ -19,6 +19,7 @@ import './styles/ui-menu-theme.css';
 import './styles/ui-popup-theme.css';
 import './styles/ui-select-theme.css';
 import './styles/ui-switch-theme.css';
+import './styles/ui-tabs-theme.css';
 import { RegexRule, RequiredRule, ValidationConfiguration } from '@aurelia/validation';
 
 Aurelia

@@ -1,0 +1,31 @@
+<demo-section title="ui-tabs">
+  <demo-block title="Controlled tab header">
+    <ui-tabs value.bind="selectedTab">
+      <ui-tab value="overview">Overview</ui-tab>
+      <ui-tab value="activity">Activity</ui-tab>
+      <ui-tab value="settings">Settings</ui-tab>
+    </ui-tabs>
+
+    <div class="tabs-panel" if.bind="selectedTab === 'overview'">
+      Overview content. The selected tab value is owned by the consumer.
+    </div>
+    <div class="tabs-panel" if.bind="selectedTab === 'activity'">
+      Activity content. Arrow keys move selection across the tab header.
+    </div>
+    <div class="tabs-panel" if.bind="selectedTab === 'settings'">
+      Settings content. No panel primitive is required.
+    </div>
+
+    <span class="tabs-state">Selected: ${selectedTab}</span>
+  </demo-block>
+
+  <demo-block title="Initial selection and disabled tab">
+    <ui-tabs value.bind="compactTab">
+      <ui-tab value="profile">Profile</ui-tab>
+      <ui-tab value="security" disabled>Security</ui-tab>
+      <ui-tab value="billing">Billing</ui-tab>
+    </ui-tabs>
+
+    <span class="tabs-state">Selected: ${compactTab}</span>
+  </demo-block>
+</demo-section>

@@ -10,6 +10,7 @@ import { MenuView } from '../menu/menu-view';
 import { PopupView } from '../popup/popup-view';
 import { SelectView } from '../select/select-view';
 import { SwitchView } from '../switch/switch-view';
+import { TabsView } from '../tabs/tabs-view';
 import logoUrl from '../../assets/aurelia-headless-logo.png';
 import template from './my-app.html?raw';
 import './my-app.css';
@@ -29,7 +30,8 @@ export class MyApp {
     { id: 'list', path: 'list', title: 'ui-list', component: ListView },
     { id: 'menu', path: 'menu', title: 'ui-menu', component: MenuView },
     { id: 'popup', path: 'popup', title: 'ui-popup', component: PopupView },
-    { id: 'select', path: 'select', title: 'ui-select', component: SelectView }
+    { id: 'select', path: 'select', title: 'ui-select', component: SelectView },
+    { id: 'tabs', path: 'tabs', title: 'ui-tabs', component: TabsView }
   ];
 
   private readonly router = resolve(IRouter);

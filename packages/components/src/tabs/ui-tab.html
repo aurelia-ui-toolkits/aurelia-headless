@@ -1,0 +1,10 @@
+<template class="ui-tab"
+  role="tab"
+  tabindex.bind="tabIndex"
+  aria-selected.attr="selected ? 'true' : 'false'"
+  aria-disabled.attr="disabled ? '' : null"
+  data-selected.attr="selected ? '' : null"
+  data-disabled.attr="disabled ? '' : null"
+  click.trigger="onClick()">
+  <au-slot></au-slot>
+</template>

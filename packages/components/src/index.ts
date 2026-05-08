@@ -10,6 +10,8 @@ import { UiListItem } from './list/ui-list-item';
 import { UiPopup } from './popup/ui-popup';
 import { UiSelect } from './select/ui-select';
 import { UiSwitch } from './switch/ui-switch';
+import { UiTab } from './tabs/ui-tab';
+import { UiTabs } from './tabs/ui-tabs';
 import { EnhanceUiButton } from './button/enhance-ui-button';
 import { EnhanceUiCombobox } from './combobox/enhance-ui-combobox';
 import { EnhanceUiInput } from './input/enhance-ui-input';
@@ -29,6 +31,8 @@ export { UiListItem };
 export { UiPopup };
 export { UiSelect };
 export { UiSwitch };
+export { UiTab };
+export { UiTabs };
 
 let registered = false; //
 
@@ -77,6 +81,6 @@ export const AureliaHeadlessConfiguration = {
 
     }).register(container);
 
-    return container.register(UiButton, EnhanceUiButton, UiCheckbox, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiSelect, EnhanceUiSelect, UiSwitch);
+    return container.register(UiButton, EnhanceUiButton, UiCheckbox, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiSelect, EnhanceUiSelect, UiSwitch, UiTab, UiTabs);
   }
 };
