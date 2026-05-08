@@ -10,7 +10,6 @@
     aria-invalid.bind="invalid || errors.size ? 'true' : 'false'"
     aria-describedby.bind="errors.size ? errorsId : (helperNodes.length ? helperId : null)"
     aria-required.attr="required ? 'true' : null"
-    keydown.trigger="onKeyDown($event)"
     focusin.trigger="onFocusIn()"
     focusout.trigger="onFocusOut()">
     <au-slot></au-slot>

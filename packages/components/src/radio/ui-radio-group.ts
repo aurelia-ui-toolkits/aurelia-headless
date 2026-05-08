@@ -1,4 +1,4 @@
-import { bindable, BindingMode, children, CustomElement, customElement, INode, resolve, slotted } from 'aurelia';
+import { bindable, BindingMode, CustomElement, customElement, INode, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { IError, IValidatedElement } from '../base/i-validated-element';
 import { Keys } from '../base/keys';
@@ -45,11 +45,12 @@ export class UiRadioGroup {
   @slotted({ slotName: 'helper' })
   helperNodes: readonly Node[] = [];
 
-  @children({
-    query: 'ui-radio',
-    map: (_node, viewModel) => viewModel
-  })
-  radios: UiRadio[] = [];
+  @slotted('ui-radio')
+  radioElements: readonly HTMLElement[] = [];
+
+  get radios(): UiRadio[] {
+    return this.radioElements.map(element => CustomElement.for<UiRadio>(element).viewModel);
+  }
 
   get labelId(): string {
     return `${this.id}-label`;
@@ -77,18 +78,6 @@ export class UiRadioGroup {
     return this.value === radio.value;
   }
 
-  getTabIndex(radio: UiRadio): number {
-    if (this.disabled || radio.disabled) {
-      return -1;
-    }
-
-    if (this.isSelected(radio)) {
-      return 0;
-    }
-
-    return this.radios.some(item => !item.disabled && this.isSelected(item)) ? -1 : this.enabledRadios[0] === radio ? 0 : -1;
-  }
-
   addError(error: IError): void {
     if (this.findError(error)) {
       return;
@@ -107,7 +96,7 @@ export class UiRadioGroup {
     this.errors.delete(error);
   }
 
-  onKeyDown(event: KeyboardEvent): void {
+  onRadioKeyDown(radio: UiRadio, event: KeyboardEvent): void {
     if (this.disabled || this.readonly) {
       return;
     }
@@ -118,10 +107,9 @@ export class UiRadioGroup {
     }
 
     if (event.key === Keys.Space || event.key === Keys.Enter) {
-      const focused = this.radios.find(radio => radio.element === document.activeElement);
-      if (focused && !focused.disabled) {
+      if (!radio.disabled) {
         event.preventDefault();
-        this.select(focused.value);
+        this.select(radio.value);
       }
       return;
     }
@@ -144,8 +132,7 @@ export class UiRadioGroup {
     }
 
     event.preventDefault();
-    const active = this.radios.find(radio => radio.element === document.activeElement) ?? this.radios.find(radio => this.isSelected(radio));
-    const index = active ? radios.indexOf(active) : -1;
+    const index = radios.indexOf(radio);
     this.focusRadio(radios[(index + direction + radios.length) % radios.length]);
   }
 
@@ -164,7 +151,6 @@ export class UiRadioGroup {
   }
 
   private focusRadio(radio: UiRadio): void {
-    this.select(radio.value);
     radio.element.focus();
   }
 

@@ -8,6 +8,10 @@ export class UiRadio {
   readonly element = resolve(INode) as HTMLElement;
   readonly parentGroup = resolve(UiRadioGroup);
 
+  private readonly onHostKeyDown = (event: KeyboardEvent): void => {
+    this.parentGroup.onRadioKeyDown(this, event);
+  };
+
   @bindable
   value: unknown = this;
 
@@ -19,7 +23,7 @@ export class UiRadio {
   }
 
   get tabIndex(): number {
-    return this.parentGroup.getTabIndex(this);
+    return this.parentGroup.disabled || this.disabled ? -1 : 0;
   }
 
   onClick(): void {
@@ -27,4 +31,13 @@ export class UiRadio {
       this.parentGroup.select(this.value);
     }
   }
+
+  attaching(): void {
+    this.element.addEventListener('keydown', this.onHostKeyDown);
+  }
+
+  detaching(): void {
+    this.element.removeEventListener('keydown', this.onHostKeyDown);
+  }
+
 }
