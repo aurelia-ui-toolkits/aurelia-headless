@@ -195,6 +195,12 @@ export class UiCombobox {
       return;
     }
 
+    if (event.ctrlKey && event.key === Keys.Space) {
+      event.preventDefault();
+      await this.loadOptions(true, this.value);
+      return;
+    }
+
     if (event.key === Keys.ArrowDown || event.key === Keys.ArrowUp) {
       event.preventDefault();
       await this.loadOptions(true, this.value);
