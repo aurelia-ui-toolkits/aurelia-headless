@@ -1,9 +1,9 @@
 <template class="ui-radio"
   role="radio"
-  tabindex.bind="tabIndex"
-  aria-checked.attr="selected ? 'true' : 'false'"
+  tabindex.bind="parentGroup.disabled || disabled ? -1 : 0"
+  aria-checked.attr="parentGroup.value === value ? 'true' : 'false'"
   aria-disabled.attr="disabled || parentGroup.disabled ? '' : null"
-  data-selected.attr="selected ? '' : null"
+  data-selected.attr="parentGroup.value === value ? '' : null"
   data-disabled.attr="disabled || parentGroup.disabled ? '' : null"
   click.trigger="onClick()">
   <span class="ui-radio__indicator" aria-hidden="true"></span>

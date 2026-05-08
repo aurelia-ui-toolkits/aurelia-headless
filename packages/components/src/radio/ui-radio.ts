@@ -18,14 +18,6 @@ export class UiRadio {
   @bindable({ set: booleanAttr })
   disabled: boolean = false;
 
-  get selected(): boolean {
-    return this.parentGroup.isSelected(this);
-  }
-
-  get tabIndex(): number {
-    return this.parentGroup.disabled || this.disabled ? -1 : 0;
-  }
-
   onClick(): void {
     if (!this.disabled) {
       this.parentGroup.select(this.value);
