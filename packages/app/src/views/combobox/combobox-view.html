@@ -3,8 +3,8 @@
     <ui-combobox text.bind="projectQuery" items.bind="projects" value.bind="selectedProjectId & validate"
       value-field="id" label-field="name" label="Project" helper-text="Type to filter projects."
       placeholder="Search projects">
-      <ui-list au-slot items.bind="$host.filteredItems" selected.bind="$host.value" typeahead-field="name">
-        <ui-list-item repeat.for="project of $host.items" value.bind="project.id" disabled.bind="project.disabled">
+      <ui-list au-slot items.bind="$host.filteredItems" selected.bind="$host.selectedOption" typeahead-field="name">
+        <ui-list-item repeat.for="project of $host.items" value.bind="project" disabled.bind="project.disabled">
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
         </ui-list-item>
@@ -16,8 +16,8 @@
   <demo-block title="Initial value">
     <ui-combobox text.bind="initialProjectQuery" items.bind="projects" value.bind="initialProjectId" value-field="id"
       label-field="name" label="Project" helper-text="Starts with Helios selected." placeholder="Search projects">
-      <ui-list au-slot items.bind="$host.filteredItems" selected.bind="$host.value" typeahead-field="name">
-        <ui-list-item repeat.for="project of $host.items" value.bind="project.id" disabled.bind="project.disabled">
+      <ui-list au-slot items.bind="$host.filteredItems" selected.bind="$host.selectedOption" typeahead-field="name">
+        <ui-list-item repeat.for="project of $host.items" value.bind="project" disabled.bind="project.disabled">
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
         </ui-list-item>
@@ -30,8 +30,8 @@
     <ui-combobox text.bind="virtualProjectQuery" items.bind="virtualProjects" value.bind="selectedVirtualProjectId"
       value-field="id" label-field="name" label="Large project list"
       helper-text="Uses virtual-repeat inside the popup list." placeholder="Search 200 projects">
-      <ui-list au-slot items.bind="$host.filteredItems" selected.bind="$host.value" typeahead-field="name">
-        <ui-list-item virtual-repeat.for="project of $host.items" value.bind="project.id"
+      <ui-list au-slot items.bind="$host.filteredItems" selected.bind="$host.selectedOption" typeahead-field="name">
+        <ui-list-item virtual-repeat.for="project of $host.items" value.bind="project"
           disabled.bind="project.disabled">
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
@@ -48,8 +48,8 @@
       label-field="name" inset label="Team" helper-text="Manual text is kept if it does not match an item."
       placeholder="Search teams">
       <span au-slot="leading">#</span>
-      <ui-list au-slot items.bind="$host.filteredItems" selected.bind="$host.value" typeahead-field="name">
-        <ui-list-item repeat.for="project of $host.items" value.bind="project.id" disabled.bind="project.disabled">
+      <ui-list au-slot items.bind="$host.filteredItems" selected.bind="$host.selectedOption" typeahead-field="name">
+        <ui-list-item repeat.for="project of $host.items" value.bind="project" disabled.bind="project.disabled">
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
           <span au-slot="trailing">${project.id}</span>

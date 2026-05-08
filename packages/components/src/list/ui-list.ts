@@ -149,15 +149,11 @@ export class UiList {
   }
 
   private getEffectiveItems(): unknown[] {
-    if (this.listItems.length) {
-      return this.listItems.map(item => item.value);
-    }
-
-    if (this.items) {
+    if (this.items?.length) {
       return this.items;
     }
 
-    return [];
+    return this.listItems.map(item => item.value);
   }
 
   private isNextKey(key: string): boolean {
@@ -188,7 +184,7 @@ export class UiList {
     }
 
     const next = this.getNonDisabled(items[nextIndex], direction, items);
-    if (next) {
+    if (next !== undefined) {
       this.scrollItemIntoView(next);
       this.activateItem(next);
     }
@@ -213,7 +209,7 @@ export class UiList {
   private async setFirstActive() {
     const items = this.getEffectiveItems();
     const firstItem = this.getNonDisabled(items[0], 1, items);
-    if (!firstItem) {
+    if (firstItem === undefined) {
       return;
     }
 
@@ -224,7 +220,7 @@ export class UiList {
   private setLastActive(): void {
     const items = this.getEffectiveItems();
     const lastItem = this.getNonDisabled(items[items.length - 1], -1, items);
-    if (!lastItem) {
+    if (lastItem === undefined) {
       return;
     }
 
@@ -238,7 +234,7 @@ export class UiList {
   }
 
   private selectActive(): void {
-    if (this.activeItem && !this.isItemDisabled(this.activeItem)) {
+    if (this.activeItem !== undefined && !this.isItemDisabled(this.activeItem)) {
       this.selectItem(this.activeItem);
     }
   }
@@ -290,13 +286,22 @@ export class UiList {
     for (let step = 0; step < items.length; step++) {
       const index = (startIndex + step) % items.length;
       const item = items[index];
-      const label = String(item).toLowerCase();
+      const label = this.getItemText(item).toLowerCase();
       if (label.startsWith(this.typeaheadBuffer) && !this.isItemDisabled(item)) {
         this.scrollItemIntoView(item);
         this.activateItem(item);
         return;
       }
     }
+  }
+
+  private getItemText(item: unknown): string {
+    if (this.typeaheadField && item && typeof item === 'object') {
+      const value = (item as Record<string, unknown>)[this.typeaheadField];
+      return value === undefined || value === null ? '' : String(value);
+    }
+
+    return item === undefined || item === null ? '' : String(item);
   }
 
   private clearTypeahead(): void {
