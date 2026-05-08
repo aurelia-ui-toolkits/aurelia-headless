@@ -1,0 +1,28 @@
+<template class="ui-radio-group"
+  data-disabled.attr="disabled ? '' : null"
+  data-invalid.attr="invalid || errors.size ? '' : null"
+  data-focus.attr="focus ? '' : null">
+  <div class="ui-radio-group__label" id.bind="label ? labelId : null" show.bind="label">${label}</div>
+
+  <div class="ui-radio-group__control"
+    role="radiogroup"
+    aria-labelledby.bind="label ? labelId : null"
+    aria-invalid.bind="invalid || errors.size ? 'true' : 'false'"
+    aria-describedby.bind="errors.size ? errorsId : (helperNodes.length ? helperId : null)"
+    aria-required.attr="required ? 'true' : null"
+    keydown.trigger="onKeyDown($event)"
+    focusin.trigger="onFocusIn()"
+    focusout.trigger="onFocusOut()">
+    <au-slot></au-slot>
+  </div>
+
+  <div class="ui-radio-group__subscript" show.bind="errors.size || helperText || helperNodes.length">
+    <div class="ui-radio-group__helper" id.bind="helperId" show.bind="!errors.size && (helperText || helperNodes.length)">
+      <au-slot name="helper">${helperText}</au-slot>
+    </div>
+
+    <div class="ui-radio-group__errors" id.bind="errorsId" show.bind="errors.size">
+      <div class="ui-radio-group__error" repeat.for="[error, _] of errors" if.bind="error.message">${error.message}</div>
+    </div>
+  </div>
+</template>

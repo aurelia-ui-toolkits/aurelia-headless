@@ -8,6 +8,8 @@ import { UiMenu } from './menu/ui-menu';
 import { UiList } from './list/ui-list';
 import { UiListItem } from './list/ui-list-item';
 import { UiPopup } from './popup/ui-popup';
+import { UiRadio } from './radio/ui-radio';
+import { UiRadioGroup } from './radio/ui-radio-group';
 import { UiSelect } from './select/ui-select';
 import { UiSwitch } from './switch/ui-switch';
 import { UiTab } from './tabs/ui-tab';
@@ -29,6 +31,8 @@ export type { IError };
 export { UiList };
 export { UiListItem };
 export { UiPopup };
+export { UiRadio };
+export { UiRadioGroup };
 export { UiSelect };
 export { UiSwitch };
 export { UiTab };
@@ -78,9 +82,11 @@ export const AureliaHeadlessConfiguration = {
       nodeObserverLocator.useConfig('UI-SELECT', 'value', { events: ['input', 'change'] });
       attrMapper.useTwoWay((el, property) => el.hasAttribute('ui-combobox-element') ? property === 'value' : false);
       nodeObserverLocator.useConfig('UI-COMBOBOX', 'value', { events: ['input', 'change'] });
+      attrMapper.useTwoWay((el, property) => el.tagName === 'UI-RADIO-GROUP' ? property === 'value' : false);
+      nodeObserverLocator.useConfig('UI-RADIO-GROUP', 'value', { events: ['input', 'change'] });
 
     }).register(container);
 
-    return container.register(UiButton, EnhanceUiButton, UiCheckbox, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiSelect, EnhanceUiSelect, UiSwitch, UiTab, UiTabs);
+    return container.register(UiButton, EnhanceUiButton, UiCheckbox, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiRadio, UiRadioGroup, UiSelect, EnhanceUiSelect, UiSwitch, UiTab, UiTabs);
   }
 };

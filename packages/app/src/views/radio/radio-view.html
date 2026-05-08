@@ -1,0 +1,21 @@
+<demo-section title="ui-radio-group">
+  <demo-block title="Required plan selector">
+    <ui-radio-group value.bind="plan & validate" label="Plan" helper-text="Choose one plan." required>
+      <ui-radio value="free">Free</ui-radio>
+      <ui-radio value="pro">Pro</ui-radio>
+      <ui-radio value="team" disabled>Team</ui-radio>
+    </ui-radio-group>
+
+    <span class="radio-state">Value: ${plan || 'none'}</span>
+  </demo-block>
+
+  <demo-block title="Preset value">
+    <ui-radio-group value.bind="density" label="Density">
+      <ui-radio value="compact">Compact</ui-radio>
+      <ui-radio value="comfortable">Comfortable</ui-radio>
+      <ui-radio value="spacious">Spacious</ui-radio>
+    </ui-radio-group>
+
+    <span class="radio-state">Value: ${density}</span>
+  </demo-block>
+</demo-section>
