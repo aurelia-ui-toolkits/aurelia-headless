@@ -1,5 +1,6 @@
 import { customElement, resolve } from 'aurelia';
 import { ICurrentRoute, IRouter } from '@aurelia/router';
+import { AlertView } from '../alert/alert-view';
 import { ButtonView } from '../button/button-view';
 import { CheckboxView } from '../checkbox/checkbox-view';
 import { ComboboxView } from '../combobox/combobox-view';
@@ -13,6 +14,7 @@ import { RadioView } from '../radio/radio-view';
 import { SelectView } from '../select/select-view';
 import { SwitchView } from '../switch/switch-view';
 import { TabsView } from '../tabs/tabs-view';
+import { ToastView } from '../toast/toast-view';
 import { TooltipView } from '../tooltip/tooltip-view';
 import logoUrl from '../../assets/aurelia-headless-logo.png';
 import template from './my-app.html?raw';
@@ -24,6 +26,7 @@ type DemoRoute = { id: string; path: string; title: string; component: unknown }
 export class MyApp {
   static routes: DemoRoute[] = [
     { id: 'button', path: '', title: 'ui-button', component: ButtonView },
+    { id: 'alert', path: 'alert', title: 'ui-alert', component: AlertView },
     { id: 'button-alt', path: 'button', title: 'ui-button', component: ButtonView },
     { id: 'switch', path: 'switch', title: 'ui-switch', component: SwitchView },
     { id: 'checkbox', path: 'checkbox', title: 'ui-checkbox', component: CheckboxView },
@@ -37,6 +40,7 @@ export class MyApp {
     { id: 'radio', path: 'radio', title: 'ui-radio-group', component: RadioView },
     { id: 'select', path: 'select', title: 'ui-select', component: SelectView },
     { id: 'tabs', path: 'tabs', title: 'ui-tabs', component: TabsView },
+    { id: 'toast', path: 'toast', title: 'ui-toast', component: ToastView },
     { id: 'tooltip', path: 'tooltip', title: 'ui-tooltip', component: TooltipView }
   ];
 

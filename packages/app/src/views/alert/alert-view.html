@@ -1,0 +1,18 @@
+<demo-section title="ui-alert">
+  <demo-block title="Tones">
+    <div class="alert-demo-stack">
+      <ui-alert tone="info" title="Workspace ready">Invite teammates or start a new project.</ui-alert>
+      <ui-alert tone="success" title="Saved">Changes were saved successfully.</ui-alert>
+      <ui-alert tone="warning" title="Storage almost full">Archive old projects before uploading more files.</ui-alert>
+      <ui-alert tone="danger" title="Deploy failed" role="alert">Check required settings and try again.</ui-alert>
+    </div>
+  </demo-block>
+
+  <demo-block title="Dismissible">
+    <ui-alert tone="warning" title="Unsaved changes" dismissible open.bind="warningOpen">
+      Leaving this page may discard changes.
+      <button au-slot="actions" ui-button outlined click.trigger="warningOpen = false">Discard</button>
+    </ui-alert>
+    <button ui-button if.bind="!warningOpen" click.trigger="warningOpen = true">Show alert</button>
+  </demo-block>
+</demo-section>

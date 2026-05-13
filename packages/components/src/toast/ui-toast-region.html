@@ -1,0 +1,11 @@
+<template class="ui-toast-region" role="region" aria-label="Notifications">
+  <ui-alert repeat.for="toast of toasts"
+    class="ui-toast-region__toast"
+    tone.bind="toast.tone"
+    title.bind="toast.title"
+    role.bind="toast.tone === 'danger' ? 'alert' : 'status'"
+    dismissible
+    alert-close.trigger="close(toast)">
+    ${toast.message}
+  </ui-alert>
+</template>

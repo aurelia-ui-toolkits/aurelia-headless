@@ -1,4 +1,5 @@
 import { AppTask, IAttrMapper, IContainer, NodeObserverLocator, Registration } from 'aurelia';
+import { UiAlert } from './alert/ui-alert';
 import { UiButton } from './button/ui-button';
 import { UiCheckbox } from './checkbox/ui-checkbox';
 import { UiCombobox } from './combobox/ui-combobox';
@@ -15,6 +16,8 @@ import { UiSelect } from './select/ui-select';
 import { UiSwitch } from './switch/ui-switch';
 import { UiTab } from './tabs/ui-tab';
 import { UiTabs } from './tabs/ui-tabs';
+import { UiToastRegion } from './toast/ui-toast-region';
+import { UiToastService } from './toast/ui-toast-service';
 import { UiTooltip } from './tooltip/ui-tooltip';
 import { UiTooltipService } from './tooltip/ui-tooltip-service';
 import { EnhanceUiButton } from './button/enhance-ui-button';
@@ -24,6 +27,7 @@ import { EnhanceUiSelect } from './select/enhance-ui-select';
 import { UiValidationControllerFactory } from './validation/ui-validation-controller-factory';
 
 export { UiButton };
+export { UiAlert };
 export { UiCheckbox };
 export { UiCombobox };
 export { UiDisclosure };
@@ -41,6 +45,8 @@ export { UiSelect };
 export { UiSwitch };
 export { UiTab };
 export { UiTabs };
+export { UiToastRegion };
+export { UiToastService };
 export { UiTooltip };
 export { UiTooltipService };
 
@@ -93,6 +99,6 @@ export const AureliaHeadlessConfiguration = {
 
     }).register(container);
 
-    return container.register(UiButton, EnhanceUiButton, UiCheckbox, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSelect, EnhanceUiSelect, UiSwitch, UiTab, UiTabs, UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService));
+    return container.register(UiAlert, UiButton, EnhanceUiButton, UiCheckbox, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSelect, EnhanceUiSelect, UiSwitch, UiTab, UiTabs, UiToastRegion, Registration.singleton(UiToastService, UiToastService), UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService));
   }
 };
