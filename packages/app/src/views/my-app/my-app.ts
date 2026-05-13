@@ -12,6 +12,7 @@ import { RadioView } from '../radio/radio-view';
 import { SelectView } from '../select/select-view';
 import { SwitchView } from '../switch/switch-view';
 import { TabsView } from '../tabs/tabs-view';
+import { TooltipView } from '../tooltip/tooltip-view';
 import logoUrl from '../../assets/aurelia-headless-logo.png';
 import template from './my-app.html?raw';
 import './my-app.css';
@@ -33,7 +34,8 @@ export class MyApp {
     { id: 'popup', path: 'popup', title: 'ui-popup', component: PopupView },
     { id: 'radio', path: 'radio', title: 'ui-radio-group', component: RadioView },
     { id: 'select', path: 'select', title: 'ui-select', component: SelectView },
-    { id: 'tabs', path: 'tabs', title: 'ui-tabs', component: TabsView }
+    { id: 'tabs', path: 'tabs', title: 'ui-tabs', component: TabsView },
+    { id: 'tooltip', path: 'tooltip', title: 'ui-tooltip', component: TooltipView }
   ];
 
   private readonly router = resolve(IRouter);

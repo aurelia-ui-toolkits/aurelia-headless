@@ -1,0 +1,38 @@
+<demo-section title="ui-tooltip">
+  <demo-block title="Default tooltip">
+    <button ui-button primary ui-tooltip="Save changes">
+      Save
+    </button>
+  </demo-block>
+
+  <demo-block title="Placement">
+    <div class="tooltip-demo-row">
+      <button ui-button outlined ui-tooltip="text: Appears above; placement: top-start">
+        Top start
+      </button>
+      <button ui-button outlined ui-tooltip="text: Appears below; placement: bottom-start">
+        Bottom start
+      </button>
+      <button ui-button outlined ui-tooltip="text: Aligns to end; placement: top-end">
+        Top end
+      </button>
+    </div>
+  </demo-block>
+
+  <demo-block title="Delay and binding">
+    <div class="tooltip-demo-row">
+      <button ui-button ui-tooltip="text: Opens after 800ms; open-delay: 800">
+        Slow open
+      </button>
+      <button ui-button ui-tooltip.bind="dynamicTooltip">
+        Bound text
+      </button>
+    </div>
+  </demo-block>
+
+  <demo-block title="Keyboard focus">
+    <button ui-button outlined ui-tooltip="Focus opens this tooltip. Escape closes it.">
+      Focus me
+    </button>
+  </demo-block>
+</demo-section>

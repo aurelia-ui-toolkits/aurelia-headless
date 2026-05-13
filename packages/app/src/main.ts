@@ -21,6 +21,7 @@ import './styles/ui-radio-theme.css';
 import './styles/ui-select-theme.css';
 import './styles/ui-switch-theme.css';
 import './styles/ui-tabs-theme.css';
+import './styles/ui-tooltip-theme.css';
 import { RegexRule, RequiredRule, ValidationConfiguration } from '@aurelia/validation';
 
 Aurelia

@@ -73,6 +73,12 @@ export class UiPopup {
   @bindable
   exposedHost: unknown;
 
+  @bindable
+  panelRole: string = 'dialog';
+
+  @bindable
+  panelId: string | undefined;
+
   panelStyle = this.hiddenPanelStyle;
   panelElement: HTMLElement | undefined;
 

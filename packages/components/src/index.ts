@@ -1,4 +1,4 @@
-import { AppTask, IAttrMapper, IContainer, NodeObserverLocator } from 'aurelia';
+import { AppTask, IAttrMapper, IContainer, NodeObserverLocator, Registration } from 'aurelia';
 import { UiButton } from './button/ui-button';
 import { UiCheckbox } from './checkbox/ui-checkbox';
 import { UiCombobox } from './combobox/ui-combobox';
@@ -14,6 +14,8 @@ import { UiSelect } from './select/ui-select';
 import { UiSwitch } from './switch/ui-switch';
 import { UiTab } from './tabs/ui-tab';
 import { UiTabs } from './tabs/ui-tabs';
+import { UiTooltip } from './tooltip/ui-tooltip';
+import { UiTooltipService } from './tooltip/ui-tooltip-service';
 import { EnhanceUiButton } from './button/enhance-ui-button';
 import { EnhanceUiCombobox } from './combobox/enhance-ui-combobox';
 import { EnhanceUiInput } from './input/enhance-ui-input';
@@ -37,6 +39,8 @@ export { UiSelect };
 export { UiSwitch };
 export { UiTab };
 export { UiTabs };
+export { UiTooltip };
+export { UiTooltipService };
 
 let registered = false; //
 
@@ -87,6 +91,6 @@ export const AureliaHeadlessConfiguration = {
 
     }).register(container);
 
-    return container.register(UiButton, EnhanceUiButton, UiCheckbox, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiRadio, UiRadioGroup, UiSelect, EnhanceUiSelect, UiSwitch, UiTab, UiTabs);
+    return container.register(UiButton, EnhanceUiButton, UiCheckbox, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiRadio, UiRadioGroup, UiSelect, EnhanceUiSelect, UiSwitch, UiTab, UiTabs, UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService));
   }
 };

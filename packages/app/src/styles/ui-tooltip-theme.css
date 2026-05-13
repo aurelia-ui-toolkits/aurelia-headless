@@ -1,0 +1,17 @@
+@reference "./theme.css";
+
+.ui-tooltip {
+  @apply contents;
+}
+
+.ui-popup__panel[data-role="tooltip"] {
+  @apply rounded-lg border-0 bg-ink-900 px-2.5 py-1.5 text-xs font-medium text-white shadow-lg;
+}
+
+.ui-tooltip__content {
+  @apply block max-w-64;
+}
+
+.tooltip-demo-row {
+  @apply flex flex-wrap gap-3;
+}

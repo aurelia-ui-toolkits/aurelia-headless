@@ -2,11 +2,13 @@
   <div portal="target.bind: portalTarget; position.bind: portalPosition">
     <div class="ui-popup__panel"
       ref="panelElement"
-      role="dialog"
+      id.bind="panelId"
+      role.bind="panelRole"
       tabindex="-1"
       list-select.trigger="onListSelect($event)"
       show.bind="open"
       style.bind="panelStyle"
+      data-role.attr="panelRole"
       data-open.attr="open ? '' : null">
       <au-slot expose.bind="effectiveSlotHost"></au-slot>
     </div>
