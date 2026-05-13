@@ -1,0 +1,5 @@
+@reference "../../styles/theme.css";
+
+.segmented-control-state {
+  @apply mt-3 block text-sm text-ink-500;
+}

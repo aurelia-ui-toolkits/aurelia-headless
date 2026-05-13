@@ -11,6 +11,7 @@ import { MenuView } from '../menu/menu-view';
 import { PopupView } from '../popup/popup-view';
 import { ProgressView } from '../progress/progress-view';
 import { RadioView } from '../radio/radio-view';
+import { SegmentedControlView } from '../segmented-control/segmented-control-view';
 import { SelectView } from '../select/select-view';
 import { SwitchView } from '../switch/switch-view';
 import { TabsView } from '../tabs/tabs-view';
@@ -38,6 +39,7 @@ export class MyApp {
     { id: 'popup', path: 'popup', title: 'ui-popup', component: PopupView },
     { id: 'progress', path: 'progress', title: 'ui-progress', component: ProgressView },
     { id: 'radio', path: 'radio', title: 'ui-radio-group', component: RadioView },
+    { id: 'segmented-control', path: 'segmented-control', title: 'ui-segmented-control', component: SegmentedControlView },
     { id: 'select', path: 'select', title: 'ui-select', component: SelectView },
     { id: 'tabs', path: 'tabs', title: 'ui-tabs', component: TabsView },
     { id: 'toast', path: 'toast', title: 'ui-toast', component: ToastView },

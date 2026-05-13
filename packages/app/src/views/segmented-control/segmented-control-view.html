@@ -1,0 +1,27 @@
+<demo-section title="ui-segmented-control">
+  <demo-block title="Basic">
+    <ui-segmented-control value.bind="view" label="View mode">
+      <ui-segment value="list">List</ui-segment>
+      <ui-segment value="grid">Grid</ui-segment>
+      <ui-segment value="map">Map</ui-segment>
+    </ui-segmented-control>
+    <span class="segmented-control-state">Selected: ${view}</span>
+  </demo-block>
+
+  <demo-block title="Disabled option">
+    <ui-segmented-control value.bind="density" label="Density">
+      <ui-segment value="compact">Compact</ui-segment>
+      <ui-segment value="comfortable">Comfortable</ui-segment>
+      <ui-segment value="spacious" disabled>Spacious</ui-segment>
+    </ui-segmented-control>
+    <span class="segmented-control-state">Selected: ${density}</span>
+  </demo-block>
+
+  <demo-block title="Disabled group">
+    <ui-segmented-control value="list" label="Disabled view mode" disabled>
+      <ui-segment value="list">List</ui-segment>
+      <ui-segment value="grid">Grid</ui-segment>
+      <ui-segment value="map">Map</ui-segment>
+    </ui-segmented-control>
+  </demo-block>
+</demo-section>

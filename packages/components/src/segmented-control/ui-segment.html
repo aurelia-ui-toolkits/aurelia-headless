@@ -1,0 +1,10 @@
+<template class="ui-segment"
+  role="radio"
+  tabindex.bind="parentControl.disabled || disabled ? -1 : parentControl.value === value ? 0 : -1"
+  aria-checked.attr="parentControl.value === value ? 'true' : 'false'"
+  aria-disabled.attr="parentControl.disabled || disabled ? '' : null"
+  data-selected.attr="parentControl.value === value ? '' : null"
+  data-disabled.attr="parentControl.disabled || disabled ? '' : null"
+  click.trigger="onClick()">
+  <au-slot></au-slot>
+</template>
