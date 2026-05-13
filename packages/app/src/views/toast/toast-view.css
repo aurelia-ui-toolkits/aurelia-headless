@@ -1,0 +1,5 @@
+@reference "../../styles/theme.css";
+
+.toast-demo-row {
+  @apply flex flex-wrap gap-3;
+}

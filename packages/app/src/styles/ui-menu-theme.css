@@ -13,7 +13,3 @@ ui-menu,
   max-height: calc(var(--ui-popup-available-height, 100vh) - 1.5rem);
   overflow-y: auto;
 }
-
-.menu-state {
-  @apply mt-2 block text-sm text-ink-500;
-}

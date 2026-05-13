@@ -7,7 +7,3 @@
 .ui-toast-region__toast {
   @apply pointer-events-auto shadow-xl;
 }
-
-.toast-demo-row {
-  @apply flex flex-wrap gap-3;
-}

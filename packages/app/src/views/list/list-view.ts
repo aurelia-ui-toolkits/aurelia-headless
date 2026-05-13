@@ -1,5 +1,6 @@
 import { customElement } from 'aurelia';
 import template from './list-view.html?raw';
+import './list-view.css';
 
 type ListDemoItem = {
   id: number;

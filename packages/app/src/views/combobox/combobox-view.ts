@@ -2,6 +2,7 @@ import { customElement, newInstanceForScope, resolve } from 'aurelia';
 import { IValidationRules } from '@aurelia/validation';
 import { IValidationController } from '@aurelia/validation-html';
 import template from './combobox-view.html?raw';
+import './combobox-view.css';
 
 type Project = {
   id: string;

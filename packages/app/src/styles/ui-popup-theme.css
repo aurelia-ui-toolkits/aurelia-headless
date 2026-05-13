@@ -7,11 +7,3 @@
 .ui-popup__panel {
   @apply z-50 rounded-xl border border-card-border bg-white p-3 text-sm text-ink-700 shadow-xl;
 }
-
-.popup-demo-card {
-  @apply grid min-w-56 gap-2;
-}
-
-.popup-demo-target {
-  @apply mb-3 min-h-14 rounded-xl border border-dashed border-card-border bg-card-muted;
-}

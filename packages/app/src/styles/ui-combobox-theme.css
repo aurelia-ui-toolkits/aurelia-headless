@@ -120,7 +120,3 @@ ui-combobox,
 .ui-combobox__errors {
   @apply text-red-600;
 }
-
-.combobox-state {
-  @apply mt-2 block text-sm text-ink-500;
-}

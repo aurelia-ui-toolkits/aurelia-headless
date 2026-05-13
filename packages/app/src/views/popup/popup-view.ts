@@ -1,5 +1,6 @@
 import { customElement } from 'aurelia';
 import template from './popup-view.html?raw';
+import './popup-view.css';
 
 @customElement({ name: 'popup-view', template })
 export class PopupView {

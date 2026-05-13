@@ -1,0 +1,5 @@
+@reference "../../styles/theme.css";
+
+.input-state {
+  @apply text-xs text-ink-500;
+}

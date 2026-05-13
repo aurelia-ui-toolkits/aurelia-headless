@@ -30,11 +30,3 @@ ui-tab[data-disabled],
 .ui-tab[data-disabled] {
   @apply pointer-events-none cursor-not-allowed opacity-45;
 }
-
-.tabs-panel {
-  @apply mt-4 rounded-xl border border-card-border bg-white p-4 text-sm text-ink-700;
-}
-
-.tabs-state {
-  @apply mt-3 block text-sm text-ink-500;
-}

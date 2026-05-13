@@ -1,0 +1,5 @@
+@reference "../../styles/theme.css";
+
+.alert-demo-stack {
+  @apply grid gap-3;
+}

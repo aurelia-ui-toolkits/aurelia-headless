@@ -73,7 +73,3 @@
 .ui-alert__close-icon::after {
   transform: translate(-50%, -50%) rotate(-45deg);
 }
-
-.alert-demo-stack {
-  @apply grid gap-3;
-}

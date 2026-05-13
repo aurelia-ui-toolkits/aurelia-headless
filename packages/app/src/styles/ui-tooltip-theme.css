@@ -11,7 +11,3 @@
 .ui-tooltip__content {
   @apply block max-w-64;
 }
-
-.tooltip-demo-row {
-  @apply flex flex-wrap gap-3;
-}

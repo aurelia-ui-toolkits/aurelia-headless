@@ -1,6 +1,7 @@
 import { customElement, newInstanceForScope, resolve } from 'aurelia';
 import { IError } from 'aurelia-headless';
 import template from './input-view.html?raw';
+import './input-view.css';
 import { IValidationController } from '@aurelia/validation-html';
 import { IValidationRules } from '@aurelia/validation';
 

@@ -1,5 +1,6 @@
 import { customElement } from 'aurelia';
 import template from './menu-view.html?raw';
+import './menu-view.css';
 
 type MenuAction = {
   id: string;

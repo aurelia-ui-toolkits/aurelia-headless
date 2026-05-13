@@ -119,7 +119,3 @@ ui-select,
 .ui-select__errors {
   @apply text-red-600;
 }
-
-.select-state {
-  @apply mt-2 block text-sm text-ink-500;
-}

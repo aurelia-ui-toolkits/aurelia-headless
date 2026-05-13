@@ -1,6 +1,7 @@
 import { customElement, resolve } from 'aurelia';
 import { UiToastService } from 'aurelia-headless';
 import template from './toast-view.html?raw';
+import './toast-view.css';
 
 @customElement({ name: 'toast-view', template })
 export class ToastView {

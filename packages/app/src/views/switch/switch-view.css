@@ -1,0 +1,13 @@
+@reference "../../styles/theme.css";
+
+.switch-row {
+  @apply flex items-center gap-3;
+}
+
+.switch-label {
+  @apply text-ink-900;
+}
+
+.switch-state {
+  @apply text-sm text-ink-500;
+}

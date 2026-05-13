@@ -1,0 +1,9 @@
+@reference "../../styles/theme.css";
+
+.popup-demo-card {
+  @apply grid min-w-56 gap-2;
+}
+
+.popup-demo-target {
+  @apply mb-3 min-h-14 rounded-xl border border-dashed border-card-border bg-card-muted;
+}

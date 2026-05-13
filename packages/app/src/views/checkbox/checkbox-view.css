@@ -1,0 +1,13 @@
+@reference "../../styles/theme.css";
+
+.checkbox-row {
+  @apply flex items-center gap-3;
+}
+
+.checkbox-label {
+  @apply cursor-pointer text-ink-900;
+}
+
+.checkbox-state {
+  @apply text-sm text-ink-500;
+}

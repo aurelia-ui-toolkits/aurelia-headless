@@ -1,0 +1,5 @@
+@reference "../../styles/theme.css";
+
+.combobox-state {
+  @apply mt-2 block text-sm text-ink-500;
+}

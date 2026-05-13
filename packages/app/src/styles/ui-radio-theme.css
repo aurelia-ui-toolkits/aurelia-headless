@@ -75,7 +75,3 @@ ui-radio[data-selected] .ui-radio__indicator::after,
 .ui-radio-group__errors {
   @apply text-red-600;
 }
-
-.radio-state {
-  @apply mt-2 block text-sm text-ink-500;
-}

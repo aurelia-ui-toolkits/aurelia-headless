@@ -1,0 +1,5 @@
+@reference "../../styles/theme.css";
+
+.tooltip-demo-row {
+  @apply flex flex-wrap gap-3;
+}

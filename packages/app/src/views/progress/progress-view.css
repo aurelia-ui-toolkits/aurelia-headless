@@ -1,0 +1,17 @@
+@reference "../../styles/theme.css";
+
+.progress-demo-stack {
+  @apply grid max-w-xl gap-3;
+}
+
+.progress-demo-row {
+  @apply flex items-center gap-4;
+}
+
+.progress-demo-state {
+  @apply text-sm text-ink-500;
+}
+
+.progress-demo-range {
+  @apply w-full accent-primary-600;
+}

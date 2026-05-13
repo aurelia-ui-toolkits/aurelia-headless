@@ -2,6 +2,7 @@ import { customElement, newInstanceForScope, resolve } from 'aurelia';
 import { IValidationRules } from '@aurelia/validation';
 import { IValidationController } from '@aurelia/validation-html';
 import template from './radio-view.html?raw';
+import './radio-view.css';
 
 @customElement({ name: 'radio-view', template })
 export class RadioView {
