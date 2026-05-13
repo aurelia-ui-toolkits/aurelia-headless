@@ -1,0 +1,17 @@
+<template class="ui-progress"
+  role="progressbar"
+  aria-label.attr="label || null"
+  aria-valuemin="0"
+  aria-valuemax.attr="indeterminate ? null : normalizedMax"
+  aria-valuenow.attr="indeterminate ? null : normalizedValue"
+  aria-valuetext.attr="indeterminate ? 'Loading' : null"
+  data-circular.attr="circular ? '' : null"
+  data-indeterminate.attr="indeterminate ? '' : null">
+  <span class="ui-progress__track" aria-hidden="true" if.bind="!circular">
+    <span class="ui-progress__bar" style.bind="barStyle"></span>
+  </span>
+  <svg class="ui-progress__circle" viewBox="0 0 36 36" aria-hidden="true" if.bind="circular">
+    <circle class="ui-progress__circle-track" cx="18" cy="18" r="16" pathLength="100" fill="none"></circle>
+    <circle class="ui-progress__circle-bar" cx="18" cy="18" r="16" pathLength="100" fill="none" style.bind="circleStyle"></circle>
+  </svg>
+</template>

@@ -8,6 +8,7 @@ import { InputView } from '../input/input-view';
 import { ListView } from '../list/list-view';
 import { MenuView } from '../menu/menu-view';
 import { PopupView } from '../popup/popup-view';
+import { ProgressView } from '../progress/progress-view';
 import { RadioView } from '../radio/radio-view';
 import { SelectView } from '../select/select-view';
 import { SwitchView } from '../switch/switch-view';
@@ -32,6 +33,7 @@ export class MyApp {
     { id: 'list', path: 'list', title: 'ui-list', component: ListView },
     { id: 'menu', path: 'menu', title: 'ui-menu', component: MenuView },
     { id: 'popup', path: 'popup', title: 'ui-popup', component: PopupView },
+    { id: 'progress', path: 'progress', title: 'ui-progress', component: ProgressView },
     { id: 'radio', path: 'radio', title: 'ui-radio-group', component: RadioView },
     { id: 'select', path: 'select', title: 'ui-select', component: SelectView },
     { id: 'tabs', path: 'tabs', title: 'ui-tabs', component: TabsView },

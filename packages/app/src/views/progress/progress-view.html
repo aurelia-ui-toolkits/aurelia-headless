@@ -1,0 +1,30 @@
+<demo-section title="ui-progress">
+  <demo-block title="Determinate">
+    <div class="progress-demo-stack">
+      <ui-progress value.bind="uploadProgress" max="100" label="Upload progress"></ui-progress>
+      <span class="progress-demo-state">Upload: ${uploadProgress}%</span>
+    </div>
+  </demo-block>
+
+  <demo-block title="Bound value">
+    <div class="progress-demo-stack">
+      <input class="progress-demo-range" type="range" min="0" max="100" value.bind="storageUsed">
+      <ui-progress value.bind="storageUsed" max="100" label="Storage used"></ui-progress>
+      <span class="progress-demo-state">Storage used: ${storageUsed}%</span>
+    </div>
+  </demo-block>
+
+  <demo-block title="Indeterminate">
+    <div class="progress-demo-stack">
+      <ui-progress label="Loading workspace"></ui-progress>
+      <span class="progress-demo-state">Loading workspace...</span>
+    </div>
+  </demo-block>
+
+  <demo-block title="Circular">
+    <div class="progress-demo-row">
+      <ui-progress circular value.bind="uploadProgress" max="100" label="Circular upload progress"></ui-progress>
+      <ui-progress circular label="Circular loading"></ui-progress>
+    </div>
+  </demo-block>
+</demo-section>

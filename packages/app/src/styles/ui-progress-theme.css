@@ -1,0 +1,83 @@
+@reference "./theme.css";
+
+.ui-progress {
+  @apply block w-full;
+}
+
+.ui-progress[data-circular] {
+  @apply inline-block h-12 w-12 shrink-0;
+}
+
+.ui-progress__track {
+  @apply relative block h-2 overflow-hidden rounded-full bg-card-muted;
+}
+
+.ui-progress__bar {
+  @apply block h-full rounded-full bg-primary-600;
+  transition: width 160ms ease;
+}
+
+.ui-progress[data-indeterminate] .ui-progress__bar {
+  @apply absolute w-1/3;
+  animation: ui-progress-indeterminate 1.1s ease-in-out infinite;
+}
+
+.ui-progress__circle {
+  @apply block h-full w-full;
+  transform: rotate(-90deg);
+}
+
+.ui-progress__circle-track,
+.ui-progress__circle-bar {
+  stroke-width: 4;
+}
+
+.ui-progress__circle-track {
+  stroke: var(--color-card-muted);
+}
+
+.ui-progress__circle-bar {
+  stroke: var(--color-primary-600);
+  stroke-linecap: round;
+  transition: stroke-dasharray 160ms ease;
+}
+
+.ui-progress[data-circular][data-indeterminate] .ui-progress__circle {
+  animation: ui-progress-spin 0.9s linear infinite;
+}
+
+.ui-progress[data-circular][data-indeterminate] .ui-progress__circle-bar {
+  stroke-dasharray: 28 100;
+}
+
+.progress-demo-stack {
+  @apply grid max-w-xl gap-3;
+}
+
+.progress-demo-row {
+  @apply flex items-center gap-4;
+}
+
+.progress-demo-state {
+  @apply text-sm text-ink-500;
+}
+
+.progress-demo-range {
+  @apply w-full accent-primary-600;
+}
+
+@keyframes ui-progress-indeterminate {
+  0% {
+    transform: translateX(-120%);
+  }
+
+  100% {
+    transform: translateX(320%);
+  }
+}
+
+@keyframes ui-progress-spin {
+  100% {
+    transform: rotate(270deg);
+  }
+}

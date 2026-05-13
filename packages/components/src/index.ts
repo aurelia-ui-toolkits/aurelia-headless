@@ -8,6 +8,7 @@ import { UiMenu } from './menu/ui-menu';
 import { UiList } from './list/ui-list';
 import { UiListItem } from './list/ui-list-item';
 import { UiPopup } from './popup/ui-popup';
+import { UiProgress } from './progress/ui-progress';
 import { UiRadio } from './radio/ui-radio';
 import { UiRadioGroup } from './radio/ui-radio-group';
 import { UiSelect } from './select/ui-select';
@@ -33,6 +34,7 @@ export type { IError };
 export { UiList };
 export { UiListItem };
 export { UiPopup };
+export { UiProgress };
 export { UiRadio };
 export { UiRadioGroup };
 export { UiSelect };
@@ -91,6 +93,6 @@ export const AureliaHeadlessConfiguration = {
 
     }).register(container);
 
-    return container.register(UiButton, EnhanceUiButton, UiCheckbox, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiRadio, UiRadioGroup, UiSelect, EnhanceUiSelect, UiSwitch, UiTab, UiTabs, UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService));
+    return container.register(UiButton, EnhanceUiButton, UiCheckbox, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSelect, EnhanceUiSelect, UiSwitch, UiTab, UiTabs, UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService));
   }
 };
