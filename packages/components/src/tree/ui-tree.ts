@@ -18,6 +18,7 @@ export interface UiTreeRow {
   disabled: boolean;
   posInSet: number;
   setSize: number;
+  element: HTMLElement | undefined;
   slotHost: UiTreeRowSlotHost;
 }
 
@@ -187,6 +188,7 @@ export class UiTree {
         disabled: this.getBooleanFieldValue(item, this.disabledField),
         posInSet: index + 1,
         setSize: items.length,
+        element: undefined,
         slotHost: undefined as unknown as UiTreeRowSlotHost
       } satisfies UiTreeRow;
       row.slotHost = { item, row };
@@ -300,7 +302,7 @@ export class UiTree {
     }
 
     this.activeValue = row.value;
-    this.host.querySelector<HTMLElement>(`[data-tree-row-id="${row.id}"]`)?.focus();
+    row.element?.focus();
   }
 
   private selectRow(row: UiTreeRow): void {

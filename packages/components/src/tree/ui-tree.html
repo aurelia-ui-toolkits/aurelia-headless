@@ -6,6 +6,7 @@
   keydown.trigger="onKeyDown($event)">
   <div class="ui-tree__item"
     repeat.for="row of visibleRows"
+    ref="row.element"
     role="treeitem"
     tabindex.bind="!disabled && !row.disabled && activeValue === row.value ? 0 : -1"
     aria-level.attr="row.depth + 1"
