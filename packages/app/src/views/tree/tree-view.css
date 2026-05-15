@@ -1,0 +1,17 @@
+@reference "../../styles/theme.css";
+
+.tree-demo-row {
+  @apply flex min-w-0 items-center justify-between gap-3;
+}
+
+.tree-demo-name {
+  @apply truncate;
+}
+
+.tree-demo-name[data-kind="folder"] {
+  @apply font-semibold;
+}
+
+.tree-demo-state {
+  @apply mt-3 block text-sm text-ink-500;
+}

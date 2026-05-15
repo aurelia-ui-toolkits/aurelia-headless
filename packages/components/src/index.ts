@@ -22,6 +22,7 @@ import { UiToastRegion } from './toast/ui-toast-region';
 import { UiToastService } from './toast/ui-toast-service';
 import { UiTooltip } from './tooltip/ui-tooltip';
 import { UiTooltipService } from './tooltip/ui-tooltip-service';
+import { UiTree } from './tree/ui-tree';
 import { EnhanceUiButton } from './button/enhance-ui-button';
 import { EnhanceUiCombobox } from './combobox/enhance-ui-combobox';
 import { EnhanceUiInput } from './input/enhance-ui-input';
@@ -53,6 +54,7 @@ export { UiToastRegion };
 export { UiToastService };
 export { UiTooltip };
 export { UiTooltipService };
+export { UiTree };
 
 let registered = false; //
 
@@ -103,6 +105,6 @@ export const AureliaHeadlessConfiguration = {
 
     }).register(container);
 
-    return container.register(UiAlert, UiButton, EnhanceUiButton, UiCheckbox, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSegment, UiSegmentedControl, UiSelect, EnhanceUiSelect, UiSwitch, UiTab, UiTabs, UiToastRegion, Registration.singleton(UiToastService, UiToastService), UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService));
+    return container.register(UiAlert, UiButton, EnhanceUiButton, UiCheckbox, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSegment, UiSegmentedControl, UiSelect, EnhanceUiSelect, UiSwitch, UiTab, UiTabs, UiToastRegion, Registration.singleton(UiToastService, UiToastService), UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService), UiTree);
   }
 };

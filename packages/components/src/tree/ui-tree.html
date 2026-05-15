@@ -1,0 +1,37 @@
+<template class="ui-tree"
+  role="tree"
+  aria-label.attr="label || null"
+  aria-disabled.attr="disabled ? '' : null"
+  data-disabled.attr="disabled ? '' : null"
+  keydown.trigger="onKeyDown($event)">
+  <div class="ui-tree__item"
+    repeat.for="row of visibleRows"
+    role="treeitem"
+    tabindex.bind="!disabled && !row.disabled && activeValue === row.value ? 0 : -1"
+    aria-level.attr="row.depth + 1"
+    aria-posinset.attr="row.posInSet"
+    aria-setsize.attr="row.setSize"
+    aria-expanded.attr="row.children.length ? row.expanded ? 'true' : 'false' : null"
+    aria-selected.attr="selectionMode === 'none' ? null : value === row.value ? 'true' : 'false'"
+    aria-disabled.attr="disabled || row.disabled ? '' : null"
+    data-tree-row-id.attr="row.id"
+    data-depth.attr="row.depth"
+    data-expanded.attr="row.expanded ? '' : null"
+    data-selected.attr="value === row.value ? '' : null"
+    data-active.attr="activeValue === row.value ? '' : null"
+    data-disabled.attr="disabled || row.disabled ? '' : null"
+    style.bind="`--ui-tree-depth: ${row.depth}`"
+    click.trigger="onRowClick(row)">
+    <button class="ui-tree__toggle"
+      type="button"
+      tabindex="-1"
+      aria-hidden="true"
+      data-hidden.attr="row.children.length ? null : ''"
+      click.trigger="onToggleClick(row, $event)">
+      <span class="ui-tree__toggle-icon"></span>
+    </button>
+    <div class="ui-tree__content">
+      <au-slot name="item" expose.bind="row.slotHost">${row.label}</au-slot>
+    </div>
+  </div>
+</template>

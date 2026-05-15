@@ -17,6 +17,7 @@ import { SwitchView } from '../switch/switch-view';
 import { TabsView } from '../tabs/tabs-view';
 import { ToastView } from '../toast/toast-view';
 import { TooltipView } from '../tooltip/tooltip-view';
+import { TreeView } from '../tree/tree-view';
 import logoUrl from '../../assets/aurelia-headless-logo.png';
 import template from './my-app.html?raw';
 import './my-app.css';
@@ -43,7 +44,8 @@ export class MyApp {
     { id: 'select', path: 'select', title: 'ui-select', component: SelectView },
     { id: 'tabs', path: 'tabs', title: 'ui-tabs', component: TabsView },
     { id: 'toast', path: 'toast', title: 'ui-toast', component: ToastView },
-    { id: 'tooltip', path: 'tooltip', title: 'ui-tooltip', component: TooltipView }
+    { id: 'tooltip', path: 'tooltip', title: 'ui-tooltip', component: TooltipView },
+    { id: 'tree', path: 'tree', title: 'ui-tree', component: TreeView }
   ];
 
   private readonly router = resolve(IRouter);
