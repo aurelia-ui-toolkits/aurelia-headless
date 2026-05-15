@@ -332,13 +332,29 @@ export class UiTree {
   private expandRow(row: UiTreeRow): void {
     this.expandedValues.add(row.value);
     this.host.dispatchEvent(new CustomEvent('tree-expand', { bubbles: true, detail: row.item }));
+    this.activeValue = row.value;
     this.rebuildRows();
+    this.restoreFocus(row.value);
   }
 
   private collapseRow(row: UiTreeRow): void {
     this.expandedValues.delete(row.value);
     this.host.dispatchEvent(new CustomEvent('tree-collapse', { bubbles: true, detail: row.item }));
+    this.activeValue = row.value;
     this.rebuildRows();
+    this.restoreFocus(row.value);
+  }
+
+  private restoreFocus(value: unknown): void {
+    const row = this.visibleRows.find(item => item.value === value);
+    if (row?.element) {
+      row.element.focus();
+      return;
+    }
+
+    queueMicrotask(() => {
+      this.visibleRows.find(item => item.value === value)?.element?.focus();
+    });
   }
 
   private dispatchValueEvent(type: 'input' | 'change'): void {
