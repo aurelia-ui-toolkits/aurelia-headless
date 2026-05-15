@@ -1,5 +1,9 @@
 @reference "../../styles/theme.css";
 
+.tree-demo-scroller {
+  @apply max-h-80 overflow-y-auto rounded-xl;
+}
+
 .tree-demo-row {
   @apply flex min-w-0 items-center justify-between gap-3;
 }

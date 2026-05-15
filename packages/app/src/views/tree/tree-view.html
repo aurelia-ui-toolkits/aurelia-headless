@@ -1,21 +1,23 @@
 <demo-section title="ui-tree">
   <demo-block title="Parent-child data with custom rows">
-    <ui-tree items.bind="files"
-      value.bind="selectedFile"
-      label="Project files"
-      value-field="id"
-      label-field="name">
-      <template au-slot="item">
-        <span class="tree-demo-row">
-          <span class="tree-demo-name" data-kind.attr="$host.item.kind">${$host.item.name}</span>
-          <button ui-button outlined
-            if.bind="$host.item.kind === 'file'"
-            click.trigger="openNode($host.item, $event)">
-            Open
-          </button>
-        </span>
-      </template>
-    </ui-tree>
+    <div class="tree-demo-scroller">
+      <ui-tree items.bind="files"
+        value.bind="selectedFile"
+        label="Project files"
+        value-field="id"
+        label-field="name">
+        <template au-slot="item">
+          <span class="tree-demo-row">
+            <span class="tree-demo-name" data-kind.attr="$host.item.kind">${$host.item.name}</span>
+            <button ui-button outlined
+              if.bind="$host.item.kind === 'file'"
+              click.trigger="openNode($host.item, $event)">
+              Open
+            </button>
+          </span>
+        </template>
+      </ui-tree>
+    </div>
     <span class="tree-demo-state">Selected: ${selectedFile || 'none'} · Action: ${lastAction}</span>
   </demo-block>
 </demo-section>
