@@ -1,0 +1,34 @@
+@reference "../../styles/theme.css";
+
+.table-demo-select-cell {
+  @apply w-12 text-center;
+}
+
+.table-demo-status {
+  @apply inline-block rounded-full px-2 py-1 text-xs font-semibold;
+}
+
+.table-demo-status[data-status="Open"] {
+  @apply bg-outline-hover text-primary-700;
+}
+
+.table-demo-status[data-status="Closed"] {
+  @apply bg-card-muted text-ink-700;
+}
+
+.table-demo-status[data-status="Archived"] {
+  background: #fffbeb;
+  color: #451a03;
+}
+
+.table-demo-icon {
+  @apply h-4 w-4;
+}
+
+.table-demo-pagination {
+  @apply mt-4 flex flex-wrap items-center gap-3 text-sm text-ink-500;
+}
+
+.table-demo-pagination ui-select {
+  @apply w-32;
+}

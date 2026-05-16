@@ -16,6 +16,7 @@ import { SegmentedControlView } from '../segmented-control/segmented-control-vie
 import { SelectView } from '../select/select-view';
 import { SwitchView } from '../switch/switch-view';
 import { TabsView } from '../tabs/tabs-view';
+import { TableView } from '../table/table-view';
 import { ToastView } from '../toast/toast-view';
 import { TooltipView } from '../tooltip/tooltip-view';
 import { TreeView } from '../tree/tree-view';
@@ -47,6 +48,7 @@ export class MyApp {
     { id: 'segmented-control', path: 'segmented-control', title: 'ui-segmented-control', component: SegmentedControlView },
     { id: 'select', path: 'select', title: 'ui-select', component: SelectView },
     { id: 'tabs', path: 'tabs', title: 'ui-tabs', component: TabsView },
+    { id: 'table', path: 'table', title: 'ui-table', component: TableView },
     { id: 'toast', path: 'toast', title: 'ui-toast', component: ToastView },
     { id: 'tooltip', path: 'tooltip', title: 'ui-tooltip', component: TooltipView },
     { id: 'tree', path: 'tree', title: 'ui-tree', component: TreeView }

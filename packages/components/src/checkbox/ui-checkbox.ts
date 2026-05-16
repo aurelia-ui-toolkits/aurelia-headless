@@ -145,6 +145,9 @@ export class UiCheckbox {
       this.checked = !this.checked;
     }
 
+    this.dispatchValueEvent('input');
+    this.dispatchValueEvent('change');
+
     if (this.changingFrame) {
       cancelAnimationFrame(this.changingFrame);
     }
@@ -175,5 +178,11 @@ export class UiCheckbox {
     if (this.controlEl) {
       this.controlEl.indeterminate = this.indeterminate;
     }
+  }
+
+  private dispatchValueEvent(type: 'input' | 'change'): void {
+    this.controlEl.checked = this.checked;
+    this.controlEl.indeterminate = this.indeterminate;
+    this.controlEl.dispatchEvent(new Event(type, { bubbles: true }));
   }
 }

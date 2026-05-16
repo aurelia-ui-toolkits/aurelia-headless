@@ -1,0 +1,47 @@
+@reference "./theme.css";
+
+.ui-table {
+  @apply block overflow-x-auto rounded-xl border border-card-border bg-white;
+}
+
+.ui-table table {
+  @apply w-full border-collapse text-sm;
+  table-layout: fixed;
+}
+
+.ui-table th,
+.ui-table td {
+  @apply border-b border-card-border px-3 py-2 text-left align-middle;
+}
+
+.ui-table th {
+  @apply bg-card-muted font-semibold text-ink-900;
+}
+
+.ui-table tbody tr[data-selected] {
+  @apply bg-outline-hover;
+}
+
+.ui-table-column {
+  @apply relative select-none;
+}
+
+.ui-table-column[aria-sort] {
+  @apply text-primary-700;
+}
+
+.ui-table-column[aria-sort="ascending"]::after {
+  content: ' ↑';
+}
+
+.ui-table-column[aria-sort="descending"]::after {
+  content: ' ↓';
+}
+
+.ui-table-column__resize-handle {
+  @apply absolute bottom-0 right-0 top-0 w-2 cursor-col-resize touch-none;
+}
+
+.ui-table-column__resize-handle::after {
+  @apply absolute bottom-2 right-0 top-2 w-px bg-card-border content-[''];
+}

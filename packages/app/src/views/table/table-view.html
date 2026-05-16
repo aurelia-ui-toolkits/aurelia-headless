@@ -1,0 +1,58 @@
+<demo-section title="ui-table">
+  <demo-block title="Consumer-owned table">
+    <ui-table sort.bind="sort"
+      page.bind="page"
+      page-size.bind="pageSize"
+      total.bind="total"
+      storage-key="projects-demo"
+      sort-change.trigger="onSortChange()">
+      <table>
+        <thead>
+          <tr>
+            <th class="table-demo-select-cell">
+              <ui-checkbox checked.to-view="allVisibleSelected"
+                indeterminate.to-view="someVisibleSelected"
+                change.trigger="toggleVisibleSelection()"
+                aria-label="Select visible rows"></ui-checkbox>
+            </th>
+            <th ui-table-column="name" sortable resizable>Name</th>
+            <th ui-table-column="status" sortable resizable>Status</th>
+            <th ui-table-column="owner" sortable resizable>Owner</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr repeat.for="project of pageRows" data-selected.attr="project.selected ? '' : null">
+            <td class="table-demo-select-cell">
+              <ui-checkbox checked.to-view="project.selected"
+                change.trigger="toggleSelected(project)"
+                aria-label="Select ${project.name}"></ui-checkbox>
+            </td>
+            <td>${project.name}</td>
+            <td><span class="table-demo-status" data-status.attr="project.status">${project.status}</span></td>
+            <td>${project.owner}</td>
+            <td>
+              <button ui-icon-button aria-label="Open ${project.name}">
+                <svg class="table-demo-icon" viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M3.5 8h.01M8 8h.01M12.5 8h.01" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path>
+                </svg>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ui-table>
+
+    <div class="table-demo-pagination">
+      <button ui-button outlined disabled.bind="page === 1" click.trigger="setPage(page - 1)">Previous</button>
+      <span>Page ${page} of ${totalPages}</span>
+      <button ui-button outlined disabled.bind="page === totalPages" click.trigger="setPage(page + 1)">Next</button>
+      <ui-select value.bind="pageSize" selected-item.bind="pageSize" label="Rows" placeholder="Rows">
+        <ui-list items.bind="pageSizes" selected.bind="pageSize">
+          <ui-list-item repeat.for="size of pageSizes" value.bind="size">${size}</ui-list-item>
+        </ui-list>
+      </ui-select>
+      <button ui-button outlined click.trigger="setPageSize(pageSize)">Apply page size</button>
+    </div>
+  </demo-block>
+</demo-section>

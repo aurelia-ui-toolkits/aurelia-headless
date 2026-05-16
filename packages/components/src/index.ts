@@ -20,6 +20,8 @@ import { UiSelect } from './select/ui-select';
 import { UiSwitch } from './switch/ui-switch';
 import { UiTab } from './tabs/ui-tab';
 import { UiTabs } from './tabs/ui-tabs';
+import { UiTable } from './table/ui-table';
+import { UiTableColumn } from './table/ui-table-column';
 import { UiToastRegion } from './toast/ui-toast-region';
 import { UiToastService } from './toast/ui-toast-service';
 import { UiTooltip } from './tooltip/ui-tooltip';
@@ -54,6 +56,9 @@ export { UiSelect };
 export { UiSwitch };
 export { UiTab };
 export { UiTabs };
+export { UiTable };
+export type { UiTableSort, UiTableSortDirection } from './table/ui-table';
+export { UiTableColumn };
 export { UiToastRegion };
 export { UiToastService };
 export { UiTooltip };
@@ -109,6 +114,6 @@ export const AureliaHeadlessConfiguration = {
 
     }).register(container);
 
-    return container.register(UiAlert, UiButton, UiIconButton, EnhanceUiButton, UiCheckbox, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiDrawer, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSegment, UiSegmentedControl, UiSelect, EnhanceUiSelect, UiSwitch, UiTab, UiTabs, UiToastRegion, Registration.singleton(UiToastService, UiToastService), UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService), UiTree);
+    return container.register(UiAlert, UiButton, UiIconButton, EnhanceUiButton, UiCheckbox, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiDrawer, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSegment, UiSegmentedControl, UiSelect, EnhanceUiSelect, UiSwitch, UiTab, UiTabs, UiTable, UiTableColumn, UiToastRegion, Registration.singleton(UiToastService, UiToastService), UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService), UiTree);
   }
 };

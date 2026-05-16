@@ -25,6 +25,7 @@ import './styles/ui-select-theme.css';
 import './styles/ui-segmented-control-theme.css';
 import './styles/ui-switch-theme.css';
 import './styles/ui-tabs-theme.css';
+import './styles/ui-table-theme.css';
 import './styles/ui-toast-theme.css';
 import './styles/ui-tooltip-theme.css';
 import './styles/ui-tree-theme.css';
