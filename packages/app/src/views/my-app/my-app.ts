@@ -27,6 +27,8 @@ type DemoRoute = { id: string; path: string; title: string; component: unknown }
 
 @customElement({ name: 'my-app', template })
 export class MyApp {
+  menuOpen = true;
+
   static routes: DemoRoute[] = [
     { id: 'button', path: '', title: 'ui-button', component: ButtonView },
     { id: 'alert', path: 'alert', title: 'ui-alert', component: AlertView },

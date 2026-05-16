@@ -1,5 +1,12 @@
-<div class="app-layout">
-  <ui-drawer class="app-drawer" persistent open side="left" modal="false" label="Component navigation">
+<div class="app-layout" data-menu-open.attr="menuOpen ? '' : null">
+  <ui-drawer class="app-drawer" persistent open.bind="menuOpen" side="left" modal="false" label="Component navigation">
+    <div class="side-panel-header">
+      <button ui-icon-button aria-label="Hide menu" click.trigger="menuOpen = false">
+        <svg class="menu-toggle-icon" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+        </svg>
+      </button>
+    </div>
     <a class="brand" href="/" aria-label="Aurelia Headless UI home">
       <img class="brand-logo" src.bind="logoUrl" alt="Aurelia Headless UI logo" />
       <span class="brand-copy">
@@ -21,6 +28,11 @@
   </ui-drawer>
 
   <main class="content-panel">
+    <button class="menu-open-button" ui-icon-button outlined if.bind="!menuOpen" click.trigger="menuOpen = true" aria-label="Show menu">
+      <svg class="menu-toggle-icon" viewBox="0 0 16 16" aria-hidden="true">
+        <path d="M3 4h10M3 8h10M3 12h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+      </svg>
+    </button>
     <au-viewport></au-viewport>
   </main>
 </div>

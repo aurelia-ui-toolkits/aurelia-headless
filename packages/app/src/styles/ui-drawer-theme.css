@@ -24,7 +24,17 @@
 
 .ui-drawer__panel[data-persistent] {
   @apply pointer-events-auto sticky top-0 h-dvh opacity-100 shadow-none;
+  position: sticky;
+  bottom: auto;
+  left: auto;
+  right: auto;
+  overflow: hidden;
+  width: 100%;
   transform: none;
+}
+
+.ui-drawer__panel[data-persistent]:not([data-open]) {
+  @apply pointer-events-none opacity-0;
 }
 
 .ui-drawer__panel[data-side="right"] {
@@ -37,6 +47,9 @@
 }
 
 .ui-drawer__panel[data-side="right"][data-persistent] {
+  bottom: auto;
+  right: auto;
+  width: 100%;
   transform: none;
 }
 
@@ -50,6 +63,9 @@
 }
 
 .ui-drawer__panel[data-side="left"][data-persistent] {
+  bottom: auto;
+  left: auto;
+  width: 100%;
   transform: none;
 }
 

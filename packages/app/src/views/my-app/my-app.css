@@ -11,12 +11,26 @@ body {
 
 .app-layout {
   min-height: 100vh;
-  @apply grid grid-cols-[17rem_1fr];
+  @apply grid;
+  grid-template-columns: 0 1fr;
+  transition: grid-template-columns 180ms ease;
+}
+
+.app-layout[data-menu-open] {
+  grid-template-columns: 17rem 1fr;
 }
 
 .app-layout > .ui-drawer__panel[data-persistent] {
   @apply border-r border-card-border bg-white/85;
   backdrop-filter: blur(8px);
+}
+
+.side-panel-header {
+  @apply mb-3 flex justify-end;
+}
+
+.menu-toggle-icon {
+  @apply h-4 w-4;
 }
 
 .brand {
@@ -72,6 +86,10 @@ body {
 
 .content-panel {
   @apply p-8;
+}
+
+.menu-open-button {
+  @apply mb-5;
 }
 
 .demo-section {
