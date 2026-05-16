@@ -8,7 +8,7 @@
     "strict": true,
     "skipLibCheck": true,
     "paths": {
-      "@aurelia-headless/components": ["../components/src/index.ts"]
+      "aurelia-headless": ["../components/src/index.ts"]
     }
   },
   "include": ["src"]

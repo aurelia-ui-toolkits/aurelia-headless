@@ -1,5 +1,5 @@
 import Aurelia from 'aurelia';
-import { AureliaHeadlessConfiguration, UiValidationControllerFactory } from '@aurelia-headless/components';
+import { AureliaHeadlessConfiguration, UiValidationControllerFactory } from 'aurelia-headless';
 import { RouterConfiguration } from '@aurelia/router';
 import { SVGAnalyzer } from '@aurelia/runtime-html';
 import { DemoBlock } from './elements/demo-block/demo-block';

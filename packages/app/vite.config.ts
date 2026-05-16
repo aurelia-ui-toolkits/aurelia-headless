@@ -10,7 +10,7 @@ export default defineConfig({
   base: process.env.GITHUB_ACTIONS ? '/aurelia-headless/' : '/',
   resolve: {
     alias: [
-      { find: /^@aurelia-headless\/components$/, replacement: path.resolve(__dirname, '../components/src/index.ts') },
+      { find: /^aurelia-headless$/, replacement: path.resolve(__dirname, '../components/src/index.ts') },
     ]
   },
   server: {
