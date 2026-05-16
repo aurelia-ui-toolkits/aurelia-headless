@@ -1,0 +1,55 @@
+<demo-section title="ui-drawer">
+  <demo-block title="Right modal drawer">
+    <button ui-button primary ref="rightTrigger" click.trigger="rightOpen = true">Open filters</button>
+    <ui-drawer open.bind="rightOpen" trigger.bind="rightTrigger" labelled-by="filters-title">
+      <div class="drawer-demo-panel">
+        <div class="drawer-demo-header">
+          <h2 id="filters-title">Filters</h2>
+          <button ui-icon-button aria-label="Close filters" click.trigger="rightOpen = false">
+            <svg class="drawer-demo-icon" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            </svg>
+          </button>
+        </div>
+        <ui-select value.bind="selectedStatusId" selected-item.bind="selectedStatus" value-field="id" label-field="name" label="Status" placeholder="Select status">
+          <ui-list items.bind="statuses" selected.bind="selectedStatus" typeahead-field="name">
+            <ui-list-item repeat.for="status of statuses" value.bind="status">${status.name}</ui-list-item>
+          </ui-list>
+        </ui-select>
+        <ui-input value.bind="owner" label="Owner" placeholder="Search owner"></ui-input>
+        <button ui-button primary click.trigger="rightOpen = false">Apply filters</button>
+      </div>
+    </ui-drawer>
+  </demo-block>
+
+  <demo-block title="Left navigation drawer">
+    <button ui-button outlined ref="leftTrigger" click.trigger="leftOpen = true">Open navigation</button>
+    <ui-drawer open.bind="leftOpen" side="left" trigger.bind="leftTrigger" label="Navigation drawer">
+      <div class="drawer-demo-panel">
+        <h2>Navigation</h2>
+        <nav class="drawer-demo-nav">
+          <a href="#/button">Button</a>
+          <a href="#/tree">Tree</a>
+          <a href="#/toast">Toast</a>
+        </nav>
+      </div>
+    </ui-drawer>
+  </demo-block>
+
+  <demo-block title="Bottom non-modal drawer">
+    <button ui-button outlined ref="bottomTrigger" click.trigger="bottomOpen = true">Open details</button>
+    <ui-drawer open.bind="bottomOpen" side="bottom" modal="false" trigger.bind="bottomTrigger" label="Details drawer">
+      <div class="drawer-demo-panel">
+        <div class="drawer-demo-header">
+          <h2>Details</h2>
+          <button ui-icon-button aria-label="Close details" click.trigger="bottomOpen = false">
+            <svg class="drawer-demo-icon" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+            </svg>
+          </button>
+        </div>
+        <p>Non-modal drawer does not trap tab focus.</p>
+      </div>
+    </ui-drawer>
+  </demo-block>
+</demo-section>

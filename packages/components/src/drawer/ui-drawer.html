@@ -1,0 +1,21 @@
+<template class="ui-drawer" data-open.attr="open ? '' : null">
+  <div portal="target.bind: portalTarget; position.bind: portalPosition">
+    <div class="ui-drawer__backdrop"
+      if.bind="modal"
+      show.bind="open"
+      data-open.attr="open ? '' : null"></div>
+    <aside class="ui-drawer__panel"
+      ref="panelElement"
+      role="dialog"
+      tabindex="-1"
+      aria-modal.attr="modal ? 'true' : null"
+      aria-label.attr="label || null"
+      aria-labelledby.attr="labelledBy || null"
+      aria-describedby.attr="describedBy || null"
+      show.bind="open"
+      data-side.attr="side"
+      data-open.attr="open ? '' : null">
+      <au-slot></au-slot>
+    </aside>
+  </div>
+</template>

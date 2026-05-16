@@ -1,0 +1,29 @@
+@reference "./theme.css";
+
+.ui-drawer {
+  @apply contents;
+}
+
+.ui-drawer__backdrop {
+  @apply fixed inset-0 z-40 bg-black/40;
+}
+
+.ui-drawer__panel {
+  @apply fixed z-50 overflow-auto bg-white p-5 text-ink-700 shadow-2xl outline-none;
+}
+
+.ui-drawer__panel[data-side="right"] {
+  @apply bottom-0 right-0 top-0 w-[min(28rem,100vw)];
+}
+
+.ui-drawer__panel[data-side="left"] {
+  @apply bottom-0 left-0 top-0 w-[min(28rem,100vw)];
+}
+
+.ui-drawer__panel[data-side="top"] {
+  @apply left-0 right-0 top-0 max-h-[80dvh];
+}
+
+.ui-drawer__panel[data-side="bottom"] {
+  @apply bottom-0 left-0 right-0 max-h-[80dvh];
+}

@@ -1,0 +1,30 @@
+@reference "../../styles/theme.css";
+
+.drawer-demo-panel {
+  @apply grid gap-4;
+}
+
+.drawer-demo-header {
+  @apply flex items-center justify-between gap-3;
+}
+
+.drawer-demo-header h2,
+.drawer-demo-panel h2 {
+  @apply m-0 text-lg font-semibold text-ink-900;
+}
+
+.drawer-demo-nav {
+  @apply grid gap-2;
+}
+
+.drawer-demo-nav a {
+  @apply rounded-lg px-3 py-2 text-sm font-semibold text-ink-700 no-underline;
+}
+
+.drawer-demo-nav a:hover {
+  @apply bg-outline-hover text-ink-900;
+}
+
+.drawer-demo-icon {
+  @apply h-4 w-4;
+}

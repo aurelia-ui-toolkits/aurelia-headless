@@ -5,6 +5,7 @@ import { ButtonView } from '../button/button-view';
 import { CheckboxView } from '../checkbox/checkbox-view';
 import { ComboboxView } from '../combobox/combobox-view';
 import { DisclosureView } from '../disclosure/disclosure-view';
+import { DrawerView } from '../drawer/drawer-view';
 import { InputView } from '../input/input-view';
 import { ListView } from '../list/list-view';
 import { MenuView } from '../menu/menu-view';
@@ -34,6 +35,7 @@ export class MyApp {
     { id: 'checkbox', path: 'checkbox', title: 'ui-checkbox', component: CheckboxView },
     { id: 'combobox', path: 'combobox', title: 'ui-combobox', component: ComboboxView },
     { id: 'disclosure', path: 'disclosure', title: 'ui-disclosure', component: DisclosureView },
+    { id: 'drawer', path: 'drawer', title: 'ui-drawer', component: DrawerView },
     { id: 'input', path: 'input', title: 'ui-input', component: InputView },
     { id: 'list', path: 'list', title: 'ui-list', component: ListView },
     { id: 'menu', path: 'menu', title: 'ui-menu', component: MenuView },
