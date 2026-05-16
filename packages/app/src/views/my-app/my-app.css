@@ -94,19 +94,6 @@ body {
   @apply m-0 mb-3 text-xs font-bold uppercase tracking-wide text-ink-500;
 }
 
-.status-text {
-  @apply ml-3 text-ink-500;
-}
-
-.btn-toggle {
-  @apply ml-3 cursor-pointer rounded-[0.65rem] border border-card-border bg-white px-4 py-2 font-semibold text-ink-700;
-  transition: background-color 140ms ease;
-}
-
-.btn-toggle:hover {
-  @apply bg-card-muted;
-}
-
 @media (max-width: 760px) {
   .app-layout {
     @apply block;

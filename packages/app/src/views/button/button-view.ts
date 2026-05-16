@@ -1,5 +1,6 @@
 import { customElement } from 'aurelia';
 import template from './button-view.html?raw';
+import './button-view.css';
 
 @customElement({ name: 'button-view', template })
 export class ButtonView {

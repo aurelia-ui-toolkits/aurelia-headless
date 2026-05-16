@@ -1,0 +1,20 @@
+<template class="ui-icon-button"
+  role="button"
+  tabindex.bind="disabled ? -1 : 0"
+  aria-disabled.attr="disabled ? '' : null"
+  data-disabled.attr="disabled ? '' : null"
+  data-hover.attr="hover ? '' : null"
+  data-focus.attr="focus ? '' : null"
+  data-active.attr="active ? '' : null"
+  data-size.attr="size"
+  data-outlined.attr="outlined ? '' : null"
+  mouseenter.trigger="onMouseEnter()"
+  mouseleave.trigger="onMouseLeave()"
+  focusin.trigger="onFocusIn()"
+  focusout.trigger="onFocusOut()"
+  pointerdown.trigger="onPointerDown()"
+  pointerup.trigger="onPointerUp()"
+  pointerleave.trigger="onPointerLeave()"
+  click.trigger="onClick($event)">
+  <au-slot></au-slot>
+</template>

@@ -1,0 +1,22 @@
+@reference "../../styles/theme.css";
+
+.button-demo-row {
+  @apply flex flex-wrap items-center gap-3;
+}
+
+.button-demo-icon {
+  @apply block h-4 w-4;
+}
+
+.status-text {
+  @apply ml-3 text-ink-500;
+}
+
+.btn-toggle {
+  @apply ml-3 cursor-pointer rounded-[0.65rem] border border-card-border bg-white px-4 py-2 font-semibold text-ink-700;
+  transition: background-color 140ms ease;
+}
+
+.btn-toggle:hover {
+  @apply bg-card-muted;
+}

@@ -1,6 +1,7 @@
 import { AppTask, IAttrMapper, IContainer, NodeObserverLocator, Registration } from 'aurelia';
 import { UiAlert } from './alert/ui-alert';
 import { UiButton } from './button/ui-button';
+import { UiIconButton } from './button/ui-icon-button';
 import { UiCheckbox } from './checkbox/ui-checkbox';
 import { UiCombobox } from './combobox/ui-combobox';
 import { UiDisclosure } from './disclosure/ui-disclosure';
@@ -31,6 +32,7 @@ import { UiValidationControllerFactory } from './validation/ui-validation-contro
 
 export { UiButton };
 export { UiAlert };
+export { UiIconButton };
 export { UiCheckbox };
 export { UiCombobox };
 export { UiDisclosure };
@@ -105,6 +107,6 @@ export const AureliaHeadlessConfiguration = {
 
     }).register(container);
 
-    return container.register(UiAlert, UiButton, EnhanceUiButton, UiCheckbox, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSegment, UiSegmentedControl, UiSelect, EnhanceUiSelect, UiSwitch, UiTab, UiTabs, UiToastRegion, Registration.singleton(UiToastService, UiToastService), UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService), UiTree);
+    return container.register(UiAlert, UiButton, UiIconButton, EnhanceUiButton, UiCheckbox, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSegment, UiSegmentedControl, UiSelect, EnhanceUiSelect, UiSwitch, UiTab, UiTabs, UiToastRegion, Registration.singleton(UiToastService, UiToastService), UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService), UiTree);
   }
 };
