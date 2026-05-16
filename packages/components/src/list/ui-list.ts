@@ -23,7 +23,7 @@ export class UiList {
   typeaheadField: string | undefined;
 
   @bindable
-  disabledField: string | ((item: object) => boolean) = 'disabled';
+  disabledField: string | ((item: unknown) => boolean) = 'disabled';
 
   @bindable({ mode: 'twoWay' })
   selected: unknown;

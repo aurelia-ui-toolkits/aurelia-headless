@@ -1,5 +1,5 @@
 {
-  "name": "aurelia-headless",
+  "name": "@aurelia-headless/components",
   "version": "0.0.1",
   "description": "Headless UI components for Aurelia 2",
   "license": "MIT",

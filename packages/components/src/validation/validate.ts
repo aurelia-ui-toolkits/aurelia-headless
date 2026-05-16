@@ -1,5 +1,8 @@
 import { IValidationController } from '@aurelia/validation-html';
-import { AlertService } from '../alert/alert-service';
+
+interface AlertService {
+  error(message: string): Promise<void> | void;
+}
 
 export interface IWithValidationController {
   validationController: IValidationController;
