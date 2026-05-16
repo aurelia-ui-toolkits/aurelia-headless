@@ -27,6 +27,11 @@ export class UiTable {
 
   @bindable
   total: number = 0;
+  totalChanged(): void {
+    this.updateTotalPages();
+  }
+
+  totalPages = 1;
 
   @bindable
   storageKey: string | undefined;
@@ -41,8 +46,18 @@ export class UiTable {
   @bindable({ set: booleanAttr })
   resizable: boolean = true;
 
+  @bindable({ set: booleanAttr })
+  pagination: boolean = true;
+
+  @bindable
+  pageSizeOptions: number[] = [10, 25, 50];
+
+  @bindable
+  paginationText: string = 'Custom';
+
   attaching(): void {
     this.loadColumnSizes();
+    this.updateTotalPages();
   }
 
   registerColumn(column: UiTableColumn): void {
@@ -92,11 +107,23 @@ export class UiTable {
     this.syncColumnSortState();
   }
 
+  pageSizeChanged(): void {
+    this.updateTotalPages();
+  }
+
   nextPage(): void {
     const next = this.page + 1;
     if (next <= this.totalPages) {
       this.setPage(next);
     }
+  }
+
+  firstPage(): void {
+    this.setPage(1);
+  }
+
+  lastPage(): void {
+    this.setPage(this.totalPages);
   }
 
   previousPage(): void {
@@ -124,14 +151,25 @@ export class UiTable {
 
     this.pageSize = next;
     this.page = 1;
+    this.updateTotalPages();
     this.host.dispatchEvent(new CustomEvent('page-size-change', {
       bubbles: true,
       detail: this.pageSize
     }));
+    this.host.dispatchEvent(new CustomEvent('page-change', {
+      bubbles: true,
+      detail: this.page
+    }));
   }
 
-  get totalPages(): number {
-    return Math.max(1, Math.ceil(this.total / this.pageSize));
+  onPageSizeChange(event: Event): void {
+    const target = event.target as { value?: unknown } | null;
+    this.setPageSize(Number(target?.value));
+  }
+
+  private updateTotalPages(): void {
+    this.totalPages = Math.max(1, Math.ceil(this.total / this.pageSize));
+    this.page = Math.max(1, Math.min(this.totalPages, Number(this.page) || 1));
   }
 
   private syncColumnSortState(): void {

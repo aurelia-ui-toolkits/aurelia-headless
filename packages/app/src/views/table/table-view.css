@@ -24,11 +24,3 @@
 .table-demo-icon {
   @apply h-4 w-4;
 }
-
-.table-demo-pagination {
-  @apply mt-4 flex flex-wrap items-center gap-3 text-sm text-ink-500;
-}
-
-.table-demo-pagination ui-select {
-  @apply w-32;
-}

@@ -68,10 +68,12 @@ export class UiTableColumn implements EventListenerObject {
   applyWidth(width: number | undefined): void {
     if (width === undefined) {
       this.host.style.removeProperty('width');
+      this.host.style.removeProperty('min-width');
       return;
     }
 
     this.host.style.width = `${width}px`;
+    this.host.style.minWidth = `${width}px`;
   }
 
   syncSortState(): void {
@@ -104,6 +106,7 @@ export class UiTableColumn implements EventListenerObject {
     this.resizing = true;
     this.startX = event.clientX;
     this.startWidth = this.host.getBoundingClientRect().width;
+    this.resizeHandle?.setPointerCapture(event.pointerId);
     window.addEventListener('pointermove', this);
     window.addEventListener('pointerup', this);
   }
@@ -135,6 +138,7 @@ export class UiTableColumn implements EventListenerObject {
 
     this.resizeHandle = document.createElement('span');
     this.resizeHandle.className = 'ui-table-column__resize-handle';
+    this.resizeHandle.setAttribute('aria-hidden', 'true');
     this.resizeHandle.addEventListener('pointerdown', this);
     this.host.append(this.resizeHandle);
   }

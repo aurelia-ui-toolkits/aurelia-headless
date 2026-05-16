@@ -4,8 +4,11 @@
       page.bind="page"
       page-size.bind="pageSize"
       total.bind="total"
+      page-size-options.bind="pageSizeOptions"
       storage-key="projects-demo"
-      sort-change.trigger="onSortChange()">
+      sort-change.trigger="onSortChange($event)"
+      page-change.trigger="onPageChange($event)"
+      page-size-change.trigger="onPageSizeChange($event)">
       <table>
         <thead>
           <tr>
@@ -42,17 +45,5 @@
         </tbody>
       </table>
     </ui-table>
-
-    <div class="table-demo-pagination">
-      <button ui-button outlined disabled.bind="page === 1" click.trigger="setPage(page - 1)">Previous</button>
-      <span>Page ${page} of ${totalPages}</span>
-      <button ui-button outlined disabled.bind="page === totalPages" click.trigger="setPage(page + 1)">Next</button>
-      <ui-select value.bind="pageSize" selected-item.bind="pageSize" label="Rows" placeholder="Rows">
-        <ui-list items.bind="pageSizes" selected.bind="pageSize">
-          <ui-list-item repeat.for="size of pageSizes" value.bind="size">${size}</ui-list-item>
-        </ui-list>
-      </ui-select>
-      <button ui-button outlined click.trigger="setPageSize(pageSize)">Apply page size</button>
-    </div>
   </demo-block>
 </demo-section>

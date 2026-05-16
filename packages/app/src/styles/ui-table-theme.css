@@ -26,6 +26,10 @@
   @apply relative select-none;
 }
 
+.ui-table-column[sortable] {
+  @apply cursor-pointer;
+}
+
 .ui-table-column[aria-sort] {
   @apply text-primary-700;
 }
@@ -39,9 +43,54 @@
 }
 
 .ui-table-column__resize-handle {
-  @apply absolute bottom-0 right-0 top-0 w-2 cursor-col-resize touch-none;
+  @apply absolute bottom-0 right-0 top-0 z-10 w-3 cursor-col-resize touch-none;
 }
 
 .ui-table-column__resize-handle::after {
   @apply absolute bottom-2 right-0 top-2 w-px bg-card-border content-[''];
+}
+
+.ui-table__pagination {
+  @apply flex flex-wrap items-center gap-8 border-t border-card-border px-5 py-3 text-sm text-ink-900;
+}
+
+.ui-table__pagination-actions {
+  @apply ml-auto flex items-center gap-5;
+}
+
+.ui-table__pagination-actions .ui-icon-button {
+  @apply h-9 w-9 rounded-full text-black;
+}
+
+.ui-table__pagination-actions .ui-icon-button[data-disabled] {
+  @apply text-ink-500 opacity-45;
+}
+
+.ui-table__pagination-icon {
+  @apply h-6 w-6;
+}
+
+.ui-table__page-size {
+  @apply flex items-center gap-4;
+}
+
+.ui-table__page-size-label,
+.ui-table__pagination-summary {
+  @apply text-base text-ink-900;
+}
+
+.ui-table__page-size-select {
+  @apply w-[7.5rem];
+}
+
+.ui-table__page-size-select .ui-select {
+  @apply gap-0;
+}
+
+.ui-table__page-size-select .ui-select__control {
+  @apply rounded-md px-5;
+}
+
+.ui-table__page-size-select .ui-select__value {
+  @apply h-10 text-xl;
 }

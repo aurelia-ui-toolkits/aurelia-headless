@@ -17,12 +17,11 @@ export class TableView {
   page = 1;
   pageSize = 5;
   total = 0;
-  totalPages = 1;
   allVisibleSelected = false;
   someVisibleSelected = false;
   pageRows: ProjectRow[] = [];
 
-  readonly pageSizes = [5, 10, 20];
+  readonly pageSizeOptions = [5, 10, 20];
   readonly projects: ProjectRow[] = [
     { id: 'aurora', name: 'Aurora', status: 'Open', owner: 'Avery', selected: false },
     { id: 'borealis', name: 'Borealis', status: 'Closed', owner: 'Blake', selected: false },
@@ -42,18 +41,19 @@ export class TableView {
     this.refreshRows();
   }
 
-  onSortChange(): void {
+  onSortChange(event: CustomEvent<UiTableSort | undefined>): void {
+    this.sort = event.detail;
     this.page = 1;
     this.refreshRows();
   }
 
-  setPage(page: number): void {
-    this.page = Math.max(1, Math.min(this.totalPages, page));
+  onPageChange(event: CustomEvent<number>): void {
+    this.page = event.detail;
     this.refreshRows();
   }
 
-  setPageSize(pageSize: number): void {
-    this.pageSize = pageSize;
+  onPageSizeChange(event: CustomEvent<number>): void {
+    this.pageSize = event.detail;
     this.page = 1;
     this.refreshRows();
   }
@@ -83,7 +83,6 @@ export class TableView {
     }
 
     this.total = rows.length;
-    this.totalPages = Math.max(1, Math.ceil(this.total / this.pageSize));
     const start = (this.page - 1) * this.pageSize;
     this.pageRows = rows.slice(start, start + this.pageSize);
     this.updateSelectionState();
