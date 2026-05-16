@@ -106,7 +106,7 @@ export class UiDrawer implements EventListenerObject {
     }
 
     const target = event.target as Node | null;
-    if (!target || this.panelElement?.contains(target) || this.trigger?.contains(target)) {
+    if (!target || this.panelElement?.contains(target) || this.trigger?.contains(target) || this.isPortalledPopup(target)) {
       return;
     }
 
@@ -144,6 +144,10 @@ export class UiDrawer implements EventListenerObject {
 
     window.removeEventListener('pointerdown', this, true);
     window.removeEventListener('keydown', this, true);
+  }
+
+  private isPortalledPopup(target: Node): boolean {
+    return target instanceof HTMLElement && !!target.closest('.ui-popup__panel');
   }
 
   private focusPanel(): void {
