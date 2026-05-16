@@ -24,6 +24,9 @@ export class UiDrawer implements EventListenerObject {
   side: DrawerSide = 'right';
 
   @bindable({ set: booleanAttr })
+  persistent: boolean = false;
+
+  @bindable({ set: booleanAttr })
   modal: boolean = true;
 
   @bindable({ set: booleanAttr })
@@ -86,6 +89,10 @@ export class UiDrawer implements EventListenerObject {
   }
 
   private startOpenState(): void {
+    if (this.persistent) {
+      return;
+    }
+
     this.previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : undefined;
     this.setListeners(true);
     if (this.focusOnOpen) {
@@ -95,7 +102,7 @@ export class UiDrawer implements EventListenerObject {
 
   private stopOpenState(restore = true): void {
     this.setListeners(false);
-    if (restore && this.restoreFocus) {
+    if (!this.persistent && restore && this.restoreFocus) {
       this.restorePreviousFocus();
     }
   }

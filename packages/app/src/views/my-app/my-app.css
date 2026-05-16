@@ -14,8 +14,8 @@ body {
   @apply grid grid-cols-[17rem_1fr];
 }
 
-.side-panel {
-  @apply sticky top-0 h-screen border-r border-card-border bg-white/85 p-5;
+.app-layout > .ui-drawer__panel[data-persistent] {
+  @apply border-r border-card-border bg-white/85;
   backdrop-filter: blur(8px);
 }
 
@@ -99,7 +99,7 @@ body {
     @apply block;
   }
 
-  .side-panel {
+  .app-layout > .ui-drawer__panel[data-persistent] {
     @apply static h-auto border-b border-r-0;
   }
 

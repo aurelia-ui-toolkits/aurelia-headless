@@ -1,5 +1,5 @@
 <div class="app-layout">
-  <aside class="side-panel">
+  <ui-drawer class="app-drawer" persistent open side="left" modal="false" label="Component navigation">
     <a class="brand" href="/" aria-label="Aurelia Headless UI home">
       <img class="brand-logo" src.bind="logoUrl" alt="Aurelia Headless UI logo" />
       <span class="brand-copy">
@@ -18,7 +18,7 @@
         </ui-list-item>
       </ui-list>
     </nav>
-  </aside>
+  </ui-drawer>
 
   <main class="content-panel">
     <au-viewport></au-viewport>
