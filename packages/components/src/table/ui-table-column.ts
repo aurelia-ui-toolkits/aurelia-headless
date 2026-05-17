@@ -12,12 +12,6 @@ export class UiTableColumn implements EventListenerObject {
   private startWidth = 0;
   private resizing = false;
 
-  @bindable
-  id: string = '';
-  idChanged(): void {
-    this.syncSortState();
-  }
-
   @bindable({ set: booleanAttr })
   sortable: boolean = false;
 
@@ -28,36 +22,16 @@ export class UiTableColumn implements EventListenerObject {
   minWidth: number = 64;
 
   attaching(): void {
-    this.host.classList.add('ui-table-column');
-    this.host.addEventListener('click', this);
-    this.host.toggleAttribute('data-sortable', this.isSortable);
-    this.host.toggleAttribute('data-resizable', this.isResizable);
-    if (this.isResizable) {
-      this.ensureResizeHandle();
-    }
-    this.table.registerColumn(this);
+    this.applyWidth(this.table.getColumnWidth(this.host.id));
+    this.table.syncColumnSortStateFor(this.host);
   }
 
   detaching(): void {
-    this.host.removeEventListener('click', this);
-    this.resizeHandle?.removeEventListener('pointerdown', this);
     window.removeEventListener('pointermove', this);
     window.removeEventListener('pointerup', this);
-    this.resizeHandle?.remove();
-    this.table.unregisterColumn(this);
   }
 
   handleEvent(event: Event): void {
-    if (event.type === 'click') {
-      this.onClick(event as MouseEvent);
-      return;
-    }
-
-    if (event.type === 'pointerdown') {
-      this.onPointerDown(event as PointerEvent);
-      return;
-    }
-
     if (event.type === 'pointermove') {
       this.onPointerMove(event as PointerEvent);
       return;
@@ -80,7 +54,7 @@ export class UiTableColumn implements EventListenerObject {
   }
 
   syncSortState(): void {
-    const direction = this.table.getSortDirection(this.id);
+    const direction = this.table.getSortDirection(this.host.id);
     this.host.dataset.sort = direction ?? '';
     if (direction === 'asc') {
       this.host.setAttribute('aria-sort', 'ascending');
@@ -91,16 +65,16 @@ export class UiTableColumn implements EventListenerObject {
     }
   }
 
-  private onClick(event: MouseEvent): void {
-    if (!this.isSortable || this.resizing || this.resizeHandle?.contains(event.target as Node | null)) {
+  onClick(event: MouseEvent): void {
+    if (!this.sortable || this.resizing || this.resizeHandle?.contains(event.target as Node | null)) {
       return;
     }
 
-    this.table.toggleSort(this.id);
+    this.table.toggleSort(this.host.id);
   }
 
-  private onPointerDown(event: PointerEvent): void {
-    if (!this.isResizable) {
+  onPointerDown(event: PointerEvent): void {
+    if (!this.resizable) {
       return;
     }
 
@@ -120,7 +94,7 @@ export class UiTableColumn implements EventListenerObject {
     }
 
     const width = Math.max(Number(this.minWidth) || 64, this.startWidth + event.clientX - this.startX);
-    this.table.setColumnWidth(this.id, width);
+    this.table.setColumnWidth(this.host.id, width);
   }
 
   private onPointerUp(): void {
@@ -131,26 +105,6 @@ export class UiTableColumn implements EventListenerObject {
     this.resizing = false;
     window.removeEventListener('pointermove', this);
     window.removeEventListener('pointerup', this);
-    this.table.setColumnWidth(this.id, this.host.getBoundingClientRect().width, true);
-  }
-
-  private ensureResizeHandle(): void {
-    if (this.resizeHandle) {
-      return;
-    }
-
-    this.resizeHandle = document.createElement('span');
-    this.resizeHandle.className = 'ui-table-column__resize-handle';
-    this.resizeHandle.setAttribute('aria-hidden', 'true');
-    this.resizeHandle.addEventListener('pointerdown', this);
-    this.host.append(this.resizeHandle);
-  }
-
-  private get isSortable(): boolean {
-    return this.table.sortable && this.sortable && !!this.id;
-  }
-
-  private get isResizable(): boolean {
-    return this.table.resizable && this.resizable && !!this.id;
+    this.table.setColumnWidth(this.host.id, this.host.getBoundingClientRect().width, true);
   }
 }

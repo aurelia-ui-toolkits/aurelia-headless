@@ -1,3 +1,11 @@
-<template>
+<template class="ui-table-column"
+  data-sortable.attr="sortable ? '' : null"
+  data-resizable.attr="resizable ? '' : null"
+  click.trigger="onClick($event)">
   <au-slot></au-slot>
+  <span class="ui-table-column__resize-handle"
+    if.bind="resizable"
+    ref="resizeHandle"
+    aria-hidden="true"
+    pointerdown.trigger="onPointerDown($event)"></span>
 </template>

@@ -1,6 +1,5 @@
 import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
-import { UiTableColumn } from './ui-table-column';
 import template from './ui-table.html?raw';
 
 export type UiTableSortDirection = 'asc' | 'desc';
@@ -13,7 +12,6 @@ export interface UiTableSort {
 @customElement({ name: 'ui-table', template })
 export class UiTable {
   private readonly host = resolve(INode) as HTMLElement;
-  private readonly columns = new Set<UiTableColumn>();
   private columnSizes: Record<string, number> = {};
 
   @bindable({ mode: BindingMode.twoWay })
@@ -41,12 +39,6 @@ export class UiTable {
   }
 
   @bindable({ set: booleanAttr })
-  sortable: boolean = true;
-
-  @bindable({ set: booleanAttr })
-  resizable: boolean = true;
-
-  @bindable({ set: booleanAttr })
   pagination: boolean = true;
 
   @bindable
@@ -58,16 +50,6 @@ export class UiTable {
   attaching(): void {
     this.loadColumnSizes();
     this.updateTotalPages();
-  }
-
-  registerColumn(column: UiTableColumn): void {
-    this.columns.add(column);
-    column.applyWidth(this.columnSizes[column.id]);
-    column.syncSortState();
-  }
-
-  unregisterColumn(column: UiTableColumn): void {
-    this.columns.delete(column);
   }
 
   toggleSort(columnId: string): void {
@@ -92,10 +74,9 @@ export class UiTable {
 
   setColumnWidth(columnId: string, width: number, persist = false): void {
     this.columnSizes[columnId] = width;
-    for (const column of this.columns) {
-      if (column.id === columnId) {
-        column.applyWidth(width);
-      }
+    const column = this.host.querySelector<HTMLElement>(`#${columnId}`);
+    if (column) {
+      this.applyColumnWidth(column, width);
     }
 
     if (persist) {
@@ -173,15 +154,50 @@ export class UiTable {
   }
 
   private syncColumnSortState(): void {
-    for (const column of this.columns) {
-      column.syncSortState();
+    for (const column of this.host.querySelectorAll<HTMLElement>('.ui-table-column')) {
+      const direction = this.getSortDirection(column.id);
+      column.dataset.sort = direction ?? '';
+      if (direction === 'asc') {
+        column.setAttribute('aria-sort', 'ascending');
+      } else if (direction === 'desc') {
+        column.setAttribute('aria-sort', 'descending');
+      } else {
+        column.removeAttribute('aria-sort');
+      }
     }
   }
 
   private applyColumnSizes(): void {
-    for (const column of this.columns) {
-      column.applyWidth(this.columnSizes[column.id]);
+    for (const column of this.host.querySelectorAll<HTMLElement>('.ui-table-column')) {
+      this.applyColumnWidth(column, this.columnSizes[column.id]);
     }
+  }
+
+  getColumnWidth(columnId: string): number | undefined {
+    return this.columnSizes[columnId];
+  }
+
+  syncColumnSortStateFor(column: HTMLElement): void {
+    const direction = this.getSortDirection(column.id);
+    column.dataset.sort = direction ?? '';
+    if (direction === 'asc') {
+      column.setAttribute('aria-sort', 'ascending');
+    } else if (direction === 'desc') {
+      column.setAttribute('aria-sort', 'descending');
+    } else {
+      column.removeAttribute('aria-sort');
+    }
+  }
+
+  private applyColumnWidth(column: HTMLElement, width: number | undefined): void {
+    if (width === undefined) {
+      column.style.removeProperty('width');
+      column.style.removeProperty('min-width');
+      return;
+    }
+
+    column.style.width = `${width}px`;
+    column.style.minWidth = `${width}px`;
   }
 
   private loadColumnSizes(): void {
