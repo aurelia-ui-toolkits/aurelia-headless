@@ -1,8 +1,9 @@
-import { bindable, customAttribute, INode, resolve } from 'aurelia';
+import { bindable, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { UiTable } from './ui-table';
+import template from './ui-table-column.html?raw';
 
-@customAttribute({ name: 'ui-table-column', defaultProperty: 'id' })
+@customElement({ name: 'ui-table-column', template })
 export class UiTableColumn implements EventListenerObject {
   private readonly host = resolve(INode) as HTMLElement;
   private readonly table = resolve(UiTable);
@@ -18,25 +19,22 @@ export class UiTableColumn implements EventListenerObject {
   }
 
   @bindable({ set: booleanAttr })
-  sortable: boolean = true;
-  sortableChanged(): void {
-    this.syncInteractiveState();
-  }
+  sortable: boolean = false;
 
   @bindable({ set: booleanAttr })
-  resizable: boolean = true;
-  resizableChanged(): void {
-    this.syncInteractiveState();
-  }
+  resizable: boolean = false;
 
   @bindable
   minWidth: number = 64;
 
   attaching(): void {
-    this.id ||= this.host.getAttribute('ui-table-column') ?? '';
     this.host.classList.add('ui-table-column');
     this.host.addEventListener('click', this);
-    this.syncInteractiveState();
+    this.host.toggleAttribute('data-sortable', this.isSortable);
+    this.host.toggleAttribute('data-resizable', this.isResizable);
+    if (this.isResizable) {
+      this.ensureResizeHandle();
+    }
     this.table.registerColumn(this);
   }
 
@@ -146,18 +144,6 @@ export class UiTableColumn implements EventListenerObject {
     this.resizeHandle.setAttribute('aria-hidden', 'true');
     this.resizeHandle.addEventListener('pointerdown', this);
     this.host.append(this.resizeHandle);
-  }
-
-  private syncInteractiveState(): void {
-    this.host.toggleAttribute('data-sortable', this.isSortable);
-    this.host.toggleAttribute('data-resizable', this.isResizable);
-    if (this.isResizable) {
-      this.ensureResizeHandle();
-    } else {
-      this.resizeHandle?.removeEventListener('pointerdown', this);
-      this.resizeHandle?.remove();
-      this.resizeHandle = undefined;
-    }
   }
 
   private get isSortable(): boolean {
