@@ -23,11 +23,16 @@
 }
 
 .ui-table-column {
-  @apply relative select-none;
+  @apply relative select-none pr-8;
 }
 
-.ui-table-column[sortable] {
+.ui-table-column[data-sortable] {
   @apply cursor-pointer;
+}
+
+.ui-table-column[data-sortable]::after {
+  @apply absolute right-4 text-ink-500;
+  content: '↕';
 }
 
 .ui-table-column[aria-sort] {
@@ -35,19 +40,22 @@
 }
 
 .ui-table-column[aria-sort="ascending"]::after {
-  content: ' ↑';
+  @apply text-primary-700;
+  content: '↑';
 }
 
 .ui-table-column[aria-sort="descending"]::after {
-  content: ' ↓';
+  @apply text-primary-700;
+  content: '↓';
 }
 
 .ui-table-column__resize-handle {
-  @apply absolute bottom-0 right-0 top-0 z-10 w-3 cursor-col-resize touch-none;
+  @apply absolute bottom-0 right-0 top-0 z-10 w-4 cursor-col-resize touch-none;
+  background: linear-gradient(to right, transparent, color-mix(in srgb, var(--color-card-border) 40%, transparent));
 }
 
 .ui-table-column__resize-handle::after {
-  @apply absolute bottom-2 right-0 top-2 w-px bg-card-border content-[''];
+  @apply absolute bottom-2 right-1 top-2 w-px bg-ink-500 content-[''];
 }
 
 .ui-table__pagination {

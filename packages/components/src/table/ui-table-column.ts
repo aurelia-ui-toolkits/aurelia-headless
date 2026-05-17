@@ -18,20 +18,25 @@ export class UiTableColumn implements EventListenerObject {
   }
 
   @bindable({ set: booleanAttr })
-  sortable: boolean = false;
+  sortable: boolean = true;
+  sortableChanged(): void {
+    this.syncInteractiveState();
+  }
 
   @bindable({ set: booleanAttr })
-  resizable: boolean = false;
+  resizable: boolean = true;
+  resizableChanged(): void {
+    this.syncInteractiveState();
+  }
 
   @bindable
   minWidth: number = 64;
 
   attaching(): void {
+    this.id ||= this.host.getAttribute('ui-table-column') ?? '';
     this.host.classList.add('ui-table-column');
     this.host.addEventListener('click', this);
-    if (this.isResizable) {
-      this.ensureResizeHandle();
-    }
+    this.syncInteractiveState();
     this.table.registerColumn(this);
   }
 
@@ -141,6 +146,18 @@ export class UiTableColumn implements EventListenerObject {
     this.resizeHandle.setAttribute('aria-hidden', 'true');
     this.resizeHandle.addEventListener('pointerdown', this);
     this.host.append(this.resizeHandle);
+  }
+
+  private syncInteractiveState(): void {
+    this.host.toggleAttribute('data-sortable', this.isSortable);
+    this.host.toggleAttribute('data-resizable', this.isResizable);
+    if (this.isResizable) {
+      this.ensureResizeHandle();
+    } else {
+      this.resizeHandle?.removeEventListener('pointerdown', this);
+      this.resizeHandle?.remove();
+      this.resizeHandle = undefined;
+    }
   }
 
   private get isSortable(): boolean {
