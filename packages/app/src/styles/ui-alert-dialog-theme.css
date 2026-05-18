@@ -9,6 +9,7 @@ dialog:has(.prompt-dialog) {
   margin: 0;
   max-width: min(92vw, 32rem);
   transform: translate(-50%, -50%);
+  width: min(92vw, 32rem);
 }
 
 dialog:has(.ui-alert-modal)::backdrop,
@@ -41,6 +42,7 @@ dialog:has(.prompt-dialog)::backdrop {
 .ui-alert-modal {
   @apply grid gap-4 p-6;
   grid-template-columns: auto minmax(0, 1fr);
+  min-width: 0;
 }
 
 .ui-alert-modal__icon {
@@ -88,11 +90,12 @@ dialog:has(.prompt-dialog)::backdrop {
 
 .prompt-dialog {
   @apply grid gap-4 p-6;
-  width: min(92vw, 30rem);
+  min-width: 0;
 }
 
 .prompt-dialog__field {
   @apply grid gap-1.5;
+  min-width: 0;
 }
 
 .prompt-dialog__label {
@@ -102,6 +105,8 @@ dialog:has(.prompt-dialog)::backdrop {
 .prompt-dialog__control {
   @apply rounded-lg border px-3 py-2 text-sm outline-none;
   border-color: var(--color-card-border);
+  min-width: 0;
+  width: 100%;
 }
 
 .prompt-dialog__control:focus {
