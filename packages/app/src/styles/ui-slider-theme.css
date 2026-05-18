@@ -22,11 +22,15 @@ ui-slider,
 }
 
 .ui-slider__fill {
-  @apply block h-full rounded-full bg-primary-600;
+  @apply absolute h-full rounded-full bg-primary-600;
 }
 
 .ui-slider__native {
-  @apply relative z-10 h-10 w-full cursor-pointer appearance-none bg-transparent outline-none;
+  @apply absolute inset-0 z-10 h-10 w-full cursor-pointer appearance-none bg-transparent outline-none;
+}
+
+.ui-slider__native--end {
+  @apply z-20;
 }
 
 .ui-slider__native::-webkit-slider-runnable-track {

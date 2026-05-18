@@ -16,35 +16,52 @@ export class UiSlider {
   focus = false;
   active = false;
   inputEl!: HTMLInputElement;
+  endInputEl!: HTMLInputElement;
   fillStyle = 'width: 0%';
   normalizedValue = 0;
+  normalizedEndValue = 0;
   labelId = '';
   helperId = '';
   errorsId = '';
+  endId = '';
 
   @bindable({ mode: BindingMode.twoWay })
   value: number = 0;
   valueChanged(): void {
-    this.normalizeValue();
+    this.normalizeValues();
+    this.updateFillStyle();
+  }
+
+  @bindable({ mode: BindingMode.twoWay })
+  endValue: number = 100;
+  endValueChanged(): void {
+    this.normalizeValues();
     this.updateFillStyle();
   }
 
   @bindable
   min: number = 0;
   minChanged(): void {
-    this.normalizeValue();
+    this.normalizeValues();
     this.updateFillStyle();
   }
 
   @bindable
   max: number = 100;
   maxChanged(): void {
-    this.normalizeValue();
+    this.normalizeValues();
     this.updateFillStyle();
   }
 
   @bindable
   step: number = 1;
+
+  @bindable({ set: booleanAttr })
+  range = false;
+  rangeChanged(): void {
+    this.normalizeValues();
+    this.updateFillStyle();
+  }
 
   @bindable
   label: string | undefined;
@@ -78,7 +95,7 @@ export class UiSlider {
 
   binding(): void {
     this.updateIds();
-    this.normalizeValue();
+    this.normalizeValues();
     this.updateFillStyle();
   }
 
@@ -105,7 +122,13 @@ export class UiSlider {
       return;
     }
 
-    this.value = Number(event.target.value);
+    if (event.target === this.endInputEl) {
+      this.endValue = Number(event.target.value);
+    } else {
+      this.value = Number(event.target.value);
+    }
+    this.normalizeValues();
+    this.updateFillStyle();
     this.dispatchValueEvent('input');
   }
 
@@ -114,7 +137,13 @@ export class UiSlider {
       return;
     }
 
-    this.value = Number(event.target.value);
+    if (event.target === this.endInputEl) {
+      this.endValue = Number(event.target.value);
+    } else {
+      this.value = Number(event.target.value);
+    }
+    this.normalizeValues();
+    this.updateFillStyle();
     this.dispatchValueEvent('change');
   }
 
@@ -153,15 +182,26 @@ export class UiSlider {
     }
   }
 
-  private normalizeValue(): void {
+  private normalizeValues(): void {
     const min = Number(this.min);
     const max = Number(this.max);
     const low = Number.isFinite(min) ? min : 0;
     const high = Number.isFinite(max) && max > low ? max : low + 100;
     const next = Number(this.value);
+    const nextEnd = Number(this.endValue);
     this.normalizedValue = Math.max(low, Math.min(high, Number.isFinite(next) ? next : low));
+    this.normalizedEndValue = Math.max(low, Math.min(high, Number.isFinite(nextEnd) ? nextEnd : high));
+    if (this.range && this.normalizedValue > this.normalizedEndValue) {
+      this.normalizedValue = this.normalizedEndValue;
+    }
+    if (!this.range) {
+      this.normalizedEndValue = high;
+    }
     if (this.value !== this.normalizedValue) {
       this.value = this.normalizedValue;
+    }
+    if (this.endValue !== this.normalizedEndValue) {
+      this.endValue = this.normalizedEndValue;
     }
   }
 
@@ -169,14 +209,21 @@ export class UiSlider {
     const min = Number(this.min) || 0;
     const max = Number(this.max) || 100;
     const range = Math.max(1, max - min);
-    const percent = (this.normalizedValue - min) / range * 100;
-    this.fillStyle = `width: ${Math.max(0, Math.min(100, percent))}%`;
+    const startPercent = Math.max(0, Math.min(100, (this.normalizedValue - min) / range * 100));
+    const endPercent = Math.max(0, Math.min(100, (this.normalizedEndValue - min) / range * 100));
+    if (this.range) {
+      this.fillStyle = `left: ${startPercent}%; width: ${Math.max(0, endPercent - startPercent)}%`;
+      return;
+    }
+
+    this.fillStyle = `left: 0%; width: ${startPercent}%`;
   }
 
   private updateIds(): void {
     this.labelId = `${this.id}-label`;
     this.helperId = `${this.id}-helper`;
     this.errorsId = `${this.id}-errors`;
+    this.endId = `${this.id}-end`;
   }
 
   private dispatchValueEvent(type: 'input' | 'change'): void {
@@ -196,6 +243,7 @@ export class UiSlider {
 
 export interface IUiSliderElement extends IValidatedElement {
   value: number;
+  endValue: number;
 }
 
 function defineUiSliderElementApis(element: HTMLElement) {
@@ -220,6 +268,15 @@ function defineUiSliderElementApis(element: HTMLElement) {
       },
       set(this: IUiSliderElement, value: boolean) {
         CustomElement.for<UiSlider>(this).viewModel.disabled = value;
+      },
+      configurable: true
+    },
+    endValue: {
+      get(this: IUiSliderElement) {
+        return CustomElement.for<UiSlider>(this).viewModel.endValue;
+      },
+      set(this: IUiSliderElement, value: number) {
+        CustomElement.for<UiSlider>(this).viewModel.endValue = Number(value);
       },
       configurable: true
     },

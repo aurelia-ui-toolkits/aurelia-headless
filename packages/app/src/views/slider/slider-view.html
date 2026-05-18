@@ -10,6 +10,12 @@
     </ui-slider>
   </demo-block>
 
+  <demo-block title="Range slider">
+    <ui-slider range value.bind="priceMin" end-value.bind="priceMax" min="0" max="100" step="5" label="Price range">
+      <span au-slot="helper">Selected range: ${priceMin} to ${priceMax}</span>
+    </ui-slider>
+  </demo-block>
+
   <demo-block title="States">
     <ui-slider value.bind="brightness" min="0" max="100" label="Invalid slider" invalid helper-text="Invalid state changes the active color."></ui-slider>
     <ui-slider value.bind="disabledValue" min="0" max="100" label="Disabled slider" disabled helper-text="Disabled sliders are not interactive."></ui-slider>

@@ -3,7 +3,8 @@
   data-readonly.attr="readonly ? '' : null"
   data-invalid.attr="invalid || errors.size ? '' : null"
   data-focus.attr="focus ? '' : null"
-  data-active.attr="active ? '' : null">
+  data-active.attr="active ? '' : null"
+  data-range.attr="range ? '' : null">
   <label class="ui-slider__label" for.bind="id" id.bind="label ? labelId : null" show.bind="label">${label}</label>
 
   <div class="ui-slider__control">
@@ -22,6 +23,28 @@
       disabled.bind="disabled"
       required.bind="required"
       aria-labelledby.bind="label ? labelId : null"
+      aria-invalid.bind="invalid || errors.size ? 'true' : 'false'"
+      aria-describedby.bind="errors.size ? errorsId : (helperNodes.length ? helperId : null)"
+      input.trigger="onInput($event)"
+      change.trigger="onChange($event)"
+      focusin.trigger="onFocusIn()"
+      focusout.trigger="onFocusOut()"
+      pointerdown.trigger="onPointerDown($event)"
+      pointerup.trigger="onPointerUp()"
+      pointerleave.trigger="onPointerLeave()"
+      keydown.trigger="onKeyDown($event)">
+    <input ref="endInputEl"
+      if.bind="range"
+      class="ui-slider__native ui-slider__native--end"
+      id.bind="endId"
+      type="range"
+      name.attr="name ? name + '-end' : null"
+      min.bind="min"
+      max.bind="max"
+      step.bind="step"
+      value.bind="endValue"
+      disabled.bind="disabled"
+      aria-label.attr="label ? label + ' end' : 'Range end'"
       aria-invalid.bind="invalid || errors.size ? 'true' : 'false'"
       aria-describedby.bind="errors.size ? errorsId : (helperNodes.length ? helperId : null)"
       input.trigger="onInput($event)"
