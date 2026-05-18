@@ -13,6 +13,7 @@ import './styles/ui-alert-theme.css';
 import './styles/ui-badge-theme.css';
 import './styles/ui-button-theme.css';
 import './styles/ui-checkbox-theme.css';
+import './styles/ui-chip-theme.css';
 import './styles/ui-combobox-theme.css';
 import './styles/ui-disclosure-theme.css';
 import './styles/ui-drawer-theme.css';

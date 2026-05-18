@@ -1,0 +1,32 @@
+<template class="ui-chip"
+  role="button"
+  tabindex.bind="disabled ? -1 : 0"
+  aria-pressed.attr="selected ? 'true' : 'false'"
+  aria-disabled.attr="disabled ? 'true' : null"
+  data-tone.attr="tone"
+  data-selected.attr="selected ? '' : null"
+  data-disabled.attr="disabled ? '' : null"
+  data-removable.attr="removable ? '' : null"
+  data-hover.attr="hover ? '' : null"
+  data-focus.attr="focus ? '' : null"
+  data-active.attr="active ? '' : null"
+  click.trigger="onClick($event)"
+  keydown.trigger="onKeyDown($event)"
+  mouseenter.trigger="onMouseEnter()"
+  mouseleave.trigger="onMouseLeave()"
+  focusin.trigger="onFocusIn()"
+  focusout.trigger="onFocusOut()"
+  pointerdown.trigger="onPointerDown()"
+  pointerup.trigger="onPointerUp()"
+  pointerleave.trigger="onPointerLeave()">
+  <span class="ui-chip__content"><au-slot></au-slot></span>
+  <button class="ui-chip__remove"
+    if.bind="removable"
+    type="button"
+    tabindex="-1"
+    aria-label="Remove"
+    disabled.bind="disabled"
+    click.trigger="onRemoveClick($event)">
+    <span class="ui-chip__remove-icon" aria-hidden="true"></span>
+  </button>
+</template>

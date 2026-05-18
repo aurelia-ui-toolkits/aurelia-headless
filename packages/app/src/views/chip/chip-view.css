@@ -1,0 +1,9 @@
+@reference "../../styles/theme.css";
+
+.chip-demo-row {
+  @apply flex flex-wrap items-center gap-2;
+}
+
+.chip-demo-state {
+  @apply mt-3 text-sm text-ink-500;
+}

@@ -4,6 +4,7 @@ import { UiBadge } from './badge/ui-badge';
 import { UiButton } from './button/ui-button';
 import { UiIconButton } from './button/ui-icon-button';
 import { UiCheckbox } from './checkbox/ui-checkbox';
+import { UiChip } from './chip/ui-chip';
 import { UiCombobox } from './combobox/ui-combobox';
 import { UiDisclosure } from './disclosure/ui-disclosure';
 import { UiDrawer } from './drawer/ui-drawer';
@@ -42,6 +43,7 @@ export { UiAlert };
 export { UiBadge };
 export { UiIconButton };
 export { UiCheckbox };
+export { UiChip };
 export { UiCombobox };
 export { UiDisclosure };
 export { UiDrawer };
@@ -122,6 +124,6 @@ export const AureliaHeadlessConfiguration = {
 
     }).register(container);
 
-    return container.register(UiAlert, UiBadge, UiButton, UiIconButton, EnhanceUiButton, UiCheckbox, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiDrawer, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSegment, UiSegmentedControl, UiSelect, EnhanceUiSelect, UiSlider, UiSplitter, UiSwitch, UiTab, UiTabs, UiTable, UiTableColumn, EnhanceUiTable, UiToastRegion, Registration.singleton(UiToastService, UiToastService), UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService), UiTree);
+    return container.register(UiAlert, UiBadge, UiButton, UiIconButton, EnhanceUiButton, UiCheckbox, UiChip, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiDrawer, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSegment, UiSegmentedControl, UiSelect, EnhanceUiSelect, UiSlider, UiSplitter, UiSwitch, UiTab, UiTabs, UiTable, UiTableColumn, EnhanceUiTable, UiToastRegion, Registration.singleton(UiToastService, UiToastService), UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService), UiTree);
   }
 };

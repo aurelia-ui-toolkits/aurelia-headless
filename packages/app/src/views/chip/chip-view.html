@@ -1,0 +1,26 @@
+<demo-section title="ui-chip">
+  <demo-block title="Selectable chips">
+    <div class="chip-demo-row">
+      <ui-chip selected.bind="selectedFrontend" value="frontend">Frontend</ui-chip>
+      <ui-chip selected.bind="selectedBackend" value="backend">Backend</ui-chip>
+      <ui-chip selected.bind="selectedDesign" value="design">Design</ui-chip>
+    </div>
+    <p class="chip-demo-state">Frontend: ${selectedFrontend}, Backend: ${selectedBackend}, Design: ${selectedDesign}</p>
+  </demo-block>
+
+  <demo-block title="Removable chips">
+    <div class="chip-demo-row">
+      <ui-chip repeat.for="tag of tags" removable value.bind="tag.id" chip-remove.trigger="removeTag($event)">${tag.label}</ui-chip>
+    </div>
+  </demo-block>
+
+  <demo-block title="Tones and states">
+    <div class="chip-demo-row">
+      <ui-chip tone="primary" selected>Primary</ui-chip>
+      <ui-chip tone="success" selected>Success</ui-chip>
+      <ui-chip tone="warning">Warning</ui-chip>
+      <ui-chip tone="danger" removable>Danger</ui-chip>
+      <ui-chip disabled>Disabled</ui-chip>
+    </div>
+  </demo-block>
+</demo-section>

@@ -4,6 +4,7 @@ import { AlertView } from '../alert/alert-view';
 import { BadgeView } from '../badge/badge-view';
 import { ButtonView } from '../button/button-view';
 import { CheckboxView } from '../checkbox/checkbox-view';
+import { ChipView } from '../chip/chip-view';
 import { ComboboxView } from '../combobox/combobox-view';
 import { DisclosureView } from '../disclosure/disclosure-view';
 import { DrawerView } from '../drawer/drawer-view';
@@ -40,6 +41,7 @@ export class MyApp {
     { id: 'button-alt', path: 'button', title: 'ui-button', component: ButtonView },
     { id: 'switch', path: 'switch', title: 'ui-switch', component: SwitchView },
     { id: 'checkbox', path: 'checkbox', title: 'ui-checkbox', component: CheckboxView },
+    { id: 'chip', path: 'chip', title: 'ui-chip', component: ChipView },
     { id: 'combobox', path: 'combobox', title: 'ui-combobox', component: ComboboxView },
     { id: 'disclosure', path: 'disclosure', title: 'ui-disclosure', component: DisclosureView },
     { id: 'drawer', path: 'drawer', title: 'ui-drawer', component: DrawerView },
