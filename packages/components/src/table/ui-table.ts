@@ -2,13 +2,16 @@ import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import template from './ui-table.html?raw';
 
+type TableSort = { column: string; direction: 'asc' | 'desc' };
+type ColumnSort = { column: string; direction: 'asc' | 'desc' | undefined };
+
 @customElement({ name: 'ui-table', template })
 export class UiTable {
   private readonly host = resolve(INode) as HTMLElement;
   private columnSizes: Record<string, number> = {};
 
   @bindable({ mode: BindingMode.twoWay })
-  sort: { column: string; direction: 'asc' | 'desc' } | undefined;
+  sort: TableSort[] = [];
 
   @bindable({ mode: BindingMode.twoWay })
   page: number = 1;
@@ -23,6 +26,7 @@ export class UiTable {
   }
 
   totalPages = 1;
+  pageOptions: number[] = [1];
 
   @bindable
   storageKey: string | undefined;
@@ -55,6 +59,15 @@ export class UiTable {
     if (persist) {
       this.persistColumnSizes();
     }
+  }
+
+  onColumnSort(event: CustomEvent<ColumnSort>): void {
+    event.stopPropagation();
+    const next = this.sort.filter(sort => sort.column !== event.detail.column);
+    if (event.detail.direction) {
+      next.push({ column: event.detail.column, direction: event.detail.direction });
+    }
+    this.sort = next;
   }
 
   pageSizeChanged(): void {
@@ -106,8 +119,14 @@ export class UiTable {
     this.setPageSize(Number(target?.value));
   }
 
+  onPageChange(event: Event): void {
+    const target = event.target as { value?: unknown } | null;
+    this.setPage(Number(target?.value));
+  }
+
   private updateTotalPages(): void {
     this.totalPages = Math.max(1, Math.ceil(this.total / this.pageSize));
+    this.pageOptions = Array.from({ length: this.totalPages }, (_, index) => index + 1);
     this.page = Math.max(1, Math.min(this.totalPages, Number(this.page) || 1));
   }
 

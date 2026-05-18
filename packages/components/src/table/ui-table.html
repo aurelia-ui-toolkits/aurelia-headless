@@ -1,4 +1,4 @@
-<template class="ui-table">
+<template class="ui-table" column-sort.trigger="onColumnSort($event)">
   <au-slot></au-slot>
   <div class="ui-table__pagination" if.bind="pagination">
     <div class="ui-table__page-size">
@@ -9,6 +9,17 @@
         change.trigger="onPageSizeChange($event)">
         <ui-list items.bind="pageSizeOptions" selected.to-view="pageSize">
           <ui-list-item repeat.for="size of pageSizeOptions" value.bind="size">${size}</ui-list-item>
+        </ui-list>
+      </ui-select>
+    </div>
+    <div class="ui-table__page-size">
+      <span class="ui-table__page-size-label">Page</span>
+      <ui-select class="ui-table__page-select"
+        value.to-view="page"
+        selected-item.to-view="page"
+        change.trigger="onPageChange($event)">
+        <ui-list items.bind="pageOptions" selected.to-view="page">
+          <ui-list-item repeat.for="pageOption of pageOptions" value.bind="pageOption">${pageOption}</ui-list-item>
         </ui-list>
       </ui-select>
     </div>

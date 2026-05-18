@@ -20,7 +20,14 @@ type ProjectRow = {
 @customElement({ name: 'table-view', template })
 export class TableView {
   @observable
-  sort: TableSort | undefined;
+  sort: TableSort[] = [];
+  sortChanged(): void {
+    this.nameDirection = this.sort.find(sort => sort.column === 'name')?.direction;
+    this.statusDirection = this.sort.find(sort => sort.column === 'status')?.direction;
+    this.ownerDirection = this.sort.find(sort => sort.column === 'owner')?.direction;
+    this.page = 1;
+    this.refreshRows();
+  }
 
   nameDirection: SortDirection | undefined;
   statusDirection: SortDirection | undefined;
@@ -28,9 +35,16 @@ export class TableView {
 
   @observable
   page = 1;
+  pageChanged(): void {
+    this.refreshRows();
+  }
 
   @observable
   pageSize = 5;
+  pageSizeChanged(): void {
+    this.page = 1;
+    this.refreshRows();
+  }
 
   total = 0;
   allVisibleSelected = false;
@@ -57,23 +71,6 @@ export class TableView {
     this.refreshRows();
   }
 
-  sortChanged(): void {
-    this.nameDirection = this.sort?.column === 'name' ? this.sort.direction : undefined;
-    this.statusDirection = this.sort?.column === 'status' ? this.sort.direction : undefined;
-    this.ownerDirection = this.sort?.column === 'owner' ? this.sort.direction : undefined;
-    this.page = 1;
-    this.refreshRows();
-  }
-
-  pageChanged(): void {
-    this.refreshRows();
-  }
-
-  pageSizeChanged(): void {
-    this.page = 1;
-    this.refreshRows();
-  }
-
   toggleSelected(row: ProjectRow): void {
     row.selected = !row.selected;
     this.updateSelectionState();
@@ -89,12 +86,17 @@ export class TableView {
 
   private refreshRows(): void {
     const rows = [...this.projects];
-    if (this.sort) {
-      const { column, direction } = this.sort;
+    if (this.sort.length) {
       rows.sort((a, b) => {
-        const left = String(a[column as keyof ProjectRow] ?? '');
-        const right = String(b[column as keyof ProjectRow] ?? '');
-        return direction === 'asc' ? left.localeCompare(right) : right.localeCompare(left);
+        for (const { column, direction } of this.sort) {
+          const left = String(a[column as keyof ProjectRow] ?? '');
+          const right = String(b[column as keyof ProjectRow] ?? '');
+          const result = left.localeCompare(right);
+          if (result !== 0) {
+            return direction === 'asc' ? result : -result;
+          }
+        }
+        return 0;
       });
     }
 

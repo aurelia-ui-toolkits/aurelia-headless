@@ -73,15 +73,18 @@
   @apply flex shrink-0 items-center gap-4;
 }
 
-.ui-table__page-size-select {
+.ui-table__page-size-select,
+.ui-table__page-select {
   @apply w-24 shrink-0;
 }
 
-.ui-table__page-size-select .ui-select__value {
+.ui-table__page-size-select .ui-select__value,
+.ui-table__page-select .ui-select__value {
   @apply justify-end text-right tabular-nums;
 }
 
-.ui-table__page-size-select .ui-list-item__primary {
+.ui-table__page-size-select .ui-list-item__primary,
+.ui-table__page-select .ui-list-item__primary {
   @apply w-full text-right tabular-nums;
 }
 
