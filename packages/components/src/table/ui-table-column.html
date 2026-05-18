@@ -1,6 +1,8 @@
 <template class="ui-table-column"
   data-sortable.attr="sortable ? '' : null"
   data-resizable.attr="resizable ? '' : null"
+  data-sort.attr="direction || ''"
+  aria-sort.attr="direction ? (direction === 'asc' ? 'ascending' : 'descending') : null"
   click.trigger="onClick($event)">
   <au-slot></au-slot>
   <span class="ui-table-column__resize-handle"

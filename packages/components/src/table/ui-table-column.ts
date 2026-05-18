@@ -1,12 +1,12 @@
-import { bindable, customElement, INode, resolve } from 'aurelia';
+import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { UiTable } from './ui-table';
 import template from './ui-table-column.html?raw';
 
 @customElement({ name: 'ui-table-column', template })
 export class UiTableColumn implements EventListenerObject {
-  private readonly host = resolve(INode) as HTMLElement;
-  private readonly table = resolve(UiTable);
+  readonly host = resolve(INode) as HTMLElement;
+  readonly table = resolve(UiTable);
   private resizeHandle: HTMLElement | undefined;
   private startX = 0;
   private startWidth = 0;
@@ -21,9 +21,11 @@ export class UiTableColumn implements EventListenerObject {
   @bindable
   minWidth: number = 64;
 
+  @bindable({ mode: BindingMode.twoWay })
+  direction: 'asc' | 'desc' | undefined;
+
   attaching(): void {
     this.applyWidth(this.table.getColumnWidth(this.host.id));
-    this.table.syncColumnSortStateFor(this.host);
   }
 
   detaching(): void {
@@ -53,24 +55,23 @@ export class UiTableColumn implements EventListenerObject {
     this.host.style.minWidth = `${width}px`;
   }
 
-  syncSortState(): void {
-    const direction = this.table.getSortDirection(this.host.id);
-    this.host.dataset.sort = direction ?? '';
-    if (direction === 'asc') {
-      this.host.setAttribute('aria-sort', 'ascending');
-    } else if (direction === 'desc') {
-      this.host.setAttribute('aria-sort', 'descending');
-    } else {
-      this.host.removeAttribute('aria-sort');
-    }
-  }
-
   onClick(event: MouseEvent): void {
     if (!this.sortable || this.resizing || this.resizeHandle?.contains(event.target as Node | null)) {
       return;
     }
 
-    this.table.toggleSort(this.host.id);
+    if (!this.direction) {
+      this.direction = 'asc';
+    } else if (this.direction === 'asc') {
+      this.direction = 'desc';
+    } else {
+      this.direction = undefined;
+    }
+
+    this.host.dispatchEvent(new CustomEvent('sort-change', {
+      bubbles: true,
+      detail: this.direction ? { column: this.host.id, direction: this.direction } : undefined
+    }));
   }
 
   onPointerDown(event: PointerEvent): void {

@@ -1,7 +1,6 @@
 <demo-section title="ui-table">
   <demo-block title="Consumer-owned table">
-    <ui-table sort.bind="sort"
-      page.bind="page"
+    <ui-table page.bind="page"
       page-size.bind="pageSize"
       total.bind="total"
       page-size-options.bind="pageSizeOptions"
@@ -18,9 +17,9 @@
                 change.trigger="toggleVisibleSelection()"
                 aria-label="Select visible rows"></ui-checkbox>
             </th>
-            <th ui-table-column="name" sortable resizable>Name</th>
-            <th ui-table-column="status" sortable resizable>Status</th>
-            <th ui-table-column="owner" sortable resizable>Owner</th>
+            <th ui-table-column="name" sortable resizable direction.bind="nameDirection">Name</th>
+            <th ui-table-column="status" sortable resizable direction.bind="statusDirection">Status</th>
+            <th ui-table-column="owner" sortable resizable direction.bind="ownerDirection">Owner</th>
             <th>Actions</th>
           </tr>
         </thead>

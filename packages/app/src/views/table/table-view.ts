@@ -1,5 +1,5 @@
 import { customElement } from 'aurelia';
-import { UiTableSort } from 'aurelia-headless';
+import { UiTableSort, UiTableSortDirection } from 'aurelia-headless';
 import template from './table-view.html?raw';
 import './table-view.css';
 
@@ -14,6 +14,9 @@ type ProjectRow = {
 @customElement({ name: 'table-view', template })
 export class TableView {
   sort: UiTableSort | undefined;
+  nameDirection: UiTableSortDirection | undefined;
+  statusDirection: UiTableSortDirection | undefined;
+  ownerDirection: UiTableSortDirection | undefined;
   page = 1;
   pageSize = 5;
   total = 0;
@@ -43,6 +46,9 @@ export class TableView {
 
   onSortChange(event: CustomEvent<UiTableSort | undefined>): void {
     this.sort = event.detail;
+    this.nameDirection = this.sort?.column === 'name' ? this.sort.direction : undefined;
+    this.statusDirection = this.sort?.column === 'status' ? this.sort.direction : undefined;
+    this.ownerDirection = this.sort?.column === 'owner' ? this.sort.direction : undefined;
     this.page = 1;
     this.refreshRows();
   }
