@@ -85,11 +85,15 @@ body {
 }
 
 .content-panel {
-  @apply p-8;
+  @apply grid content-start gap-5 p-8;
 }
 
-.menu-open-button {
-  @apply mb-5;
+.app-top-bar {
+  @apply -mx-2;
+}
+
+.route-panel {
+  @apply min-w-0;
 }
 
 .demo-section {

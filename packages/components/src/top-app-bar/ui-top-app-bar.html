@@ -1,0 +1,24 @@
+<template class="ui-top-app-bar"
+  data-sticky.attr="sticky ? '' : null"
+  data-fixed.attr="fixed ? '' : null"
+  data-dense.attr="dense ? '' : null"
+  data-elevated.attr="elevated ? '' : null">
+  <header class="ui-top-app-bar__header">
+    <div class="ui-top-app-bar__navigation" if.bind="navigationNodes.length">
+      <au-slot name="navigation"></au-slot>
+    </div>
+
+    <div class="ui-top-app-bar__content">
+      <div class="ui-top-app-bar__breadcrumbs" if.bind="breadcrumbNodes.length">
+        <au-slot name="breadcrumbs"></au-slot>
+      </div>
+      <div class="ui-top-app-bar__title">
+        <au-slot></au-slot>
+      </div>
+    </div>
+
+    <div class="ui-top-app-bar__actions" if.bind="actionNodes.length">
+      <au-slot name="actions"></au-slot>
+    </div>
+  </header>
+</template>

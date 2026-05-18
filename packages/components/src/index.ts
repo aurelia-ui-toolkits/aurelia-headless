@@ -7,6 +7,7 @@ import { ExceptionsTracker } from './alert-service/exceptions-tracker';
 import { PromptDialog } from './alert-service/prompt-dialog/prompt-dialog';
 import { UiAlert } from './alert/ui-alert';
 import { UiBadge } from './badge/ui-badge';
+import { UiBreadcrumbs } from './breadcrumbs/ui-breadcrumbs';
 import { UiButton } from './button/ui-button';
 import { UiIconButton } from './button/ui-icon-button';
 import { UiCheckbox } from './checkbox/ui-checkbox';
@@ -36,6 +37,7 @@ import { UiToastRegion } from './toast/ui-toast-region';
 import { UiToastService } from './toast/ui-toast-service';
 import { UiTooltip } from './tooltip/ui-tooltip';
 import { UiTooltipService } from './tooltip/ui-tooltip-service';
+import { UiTopAppBar } from './top-app-bar/ui-top-app-bar';
 import { UiTree } from './tree/ui-tree';
 import { EnhanceUiButton } from './button/enhance-ui-button';
 import { EnhanceUiCombobox } from './combobox/enhance-ui-combobox';
@@ -50,6 +52,7 @@ export { AlertModal };
 export { AlertService };
 export { UiAlert };
 export { UiBadge };
+export { UiBreadcrumbs };
 export { UiIconButton };
 export { UiCheckbox };
 export { UiChip };
@@ -80,6 +83,7 @@ export { UiToastRegion };
 export { UiToastService };
 export { UiTooltip };
 export { UiTooltipService };
+export { UiTopAppBar };
 export { UiTree };
 export { ExceptionsTracker };
 export { PromptDialog };
@@ -88,6 +92,7 @@ export { usingProgress } from './alert-service/decorators/using-progress';
 export type { IWithAlertService } from './alert-service/decorators/using-progress';
 export type { IAlertModalPayload } from './alert-service/alert-modal/i-alert-modal-payload';
 export type { IPromptDialogData } from './alert-service/prompt-dialog/prompt-dialog';
+export type { UiBreadcrumbItem } from './breadcrumbs/ui-breadcrumbs';
 
 let registered = false; //
 
@@ -140,6 +145,6 @@ export const AureliaHeadlessConfiguration = {
 
     }).register(container);
 
-    return container.register(DialogConfigurationStandard, AlertModal, PromptDialog, Registration.singleton(AlertConfiguration, AlertConfiguration), Registration.singleton(AlertService, AlertService), Registration.singleton(ExceptionsTracker, ExceptionsTracker), UiAlert, UiBadge, UiButton, UiIconButton, EnhanceUiButton, UiCheckbox, UiChip, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiDrawer, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSegment, UiSegmentedControl, UiSelect, EnhanceUiSelect, UiSlider, UiSplitter, UiSwitch, UiTab, UiTabs, UiTable, UiTableColumn, EnhanceUiTable, UiToastRegion, Registration.singleton(UiToastService, UiToastService), UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService), UiTree);
+    return container.register(DialogConfigurationStandard, AlertModal, PromptDialog, Registration.singleton(AlertConfiguration, AlertConfiguration), Registration.singleton(AlertService, AlertService), Registration.singleton(ExceptionsTracker, ExceptionsTracker), UiAlert, UiBadge, UiBreadcrumbs, UiButton, UiIconButton, EnhanceUiButton, UiCheckbox, UiChip, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiDrawer, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSegment, UiSegmentedControl, UiSelect, EnhanceUiSelect, UiSlider, UiSplitter, UiSwitch, UiTab, UiTabs, UiTable, UiTableColumn, EnhanceUiTable, UiToastRegion, Registration.singleton(UiToastService, UiToastService), UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService), UiTopAppBar, UiTree);
   }
 };

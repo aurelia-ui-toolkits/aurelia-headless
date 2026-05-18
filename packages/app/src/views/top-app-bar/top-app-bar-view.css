@@ -1,0 +1,5 @@
+@reference "../../styles/theme.css";
+
+.top-app-bar-demo-icon {
+  @apply h-4 w-4;
+}

@@ -1,0 +1,10 @@
+<template class="ui-breadcrumbs">
+  <nav class="ui-breadcrumbs__nav" aria-label="Breadcrumb">
+    <ol class="ui-breadcrumbs__list">
+      <li class="ui-breadcrumbs__item" repeat.for="item of items" data-current.attr="item.current ? '' : null">
+        <a class="ui-breadcrumbs__link" if.bind="item.href && !item.current" href.bind="item.href">${item.label}</a>
+        <span class="ui-breadcrumbs__current" else aria-current.bind="item.current ? 'page' : null">${item.label}</span>
+      </li>
+    </ol>
+  </nav>
+</template>

@@ -12,6 +12,7 @@ import './styles/theme.css';
 import './styles/ui-alert-theme.css';
 import './styles/ui-alert-dialog-theme.css';
 import './styles/ui-badge-theme.css';
+import './styles/ui-breadcrumbs-theme.css';
 import './styles/ui-button-theme.css';
 import './styles/ui-checkbox-theme.css';
 import './styles/ui-chip-theme.css';
@@ -33,6 +34,7 @@ import './styles/ui-tabs-theme.css';
 import './styles/ui-table-theme.css';
 import './styles/ui-toast-theme.css';
 import './styles/ui-tooltip-theme.css';
+import './styles/ui-top-app-bar-theme.css';
 import './styles/ui-tree-theme.css';
 import { RegexRule, RequiredRule, ValidationConfiguration } from '@aurelia/validation';
 

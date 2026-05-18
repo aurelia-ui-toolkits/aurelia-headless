@@ -1,0 +1,26 @@
+<demo-section title="ui-top-app-bar">
+  <demo-block title="With breadcrumbs and actions">
+    <ui-top-app-bar elevated>
+      <button au-slot="navigation" ui-icon-button outlined aria-label="Open navigation">
+        <svg class="top-app-bar-demo-icon" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M3 4h10M3 8h10M3 12h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+        </svg>
+      </button>
+      <ui-breadcrumbs au-slot="breadcrumbs" items.bind="breadcrumbs"></ui-breadcrumbs>
+      Project settings
+      <button au-slot="actions" ui-button outlined>Preview</button>
+      <button au-slot="actions" ui-button primary>Save</button>
+    </ui-top-app-bar>
+  </demo-block>
+
+  <demo-block title="Dense">
+    <ui-top-app-bar dense>
+      <span>Compact page header</span>
+      <button au-slot="actions" ui-button outlined>Action</button>
+    </ui-top-app-bar>
+  </demo-block>
+
+  <demo-block title="Breadcrumbs">
+    <ui-breadcrumbs items.bind="breadcrumbs"></ui-breadcrumbs>
+  </demo-block>
+</demo-section>

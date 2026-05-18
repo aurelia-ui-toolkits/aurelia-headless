@@ -1,5 +1,6 @@
-import { customElement, resolve } from 'aurelia';
-import { ICurrentRoute, IRouter } from '@aurelia/router';
+import { customElement, IDisposable, resolve } from 'aurelia';
+import { ICurrentRoute, IRouter, IRouterEvents } from '@aurelia/router';
+import { UiBreadcrumbItem } from 'aurelia-headless';
 import { AlertView } from '../alert/alert-view';
 import { BadgeView } from '../badge/badge-view';
 import { ButtonView } from '../button/button-view';
@@ -23,6 +24,7 @@ import { TabsView } from '../tabs/tabs-view';
 import { TableView } from '../table/table-view';
 import { ToastView } from '../toast/toast-view';
 import { TooltipView } from '../tooltip/tooltip-view';
+import { TopAppBarView } from '../top-app-bar/top-app-bar-view';
 import { TreeView } from '../tree/tree-view';
 import logoUrl from '../../assets/aurelia-headless-logo.png';
 import template from './my-app.html?raw';
@@ -59,19 +61,40 @@ export class MyApp {
     { id: 'table', path: 'table', title: 'ui-table', component: TableView },
     { id: 'toast', path: 'toast', title: 'ui-toast', component: ToastView },
     { id: 'tooltip', path: 'tooltip', title: 'ui-tooltip', component: TooltipView },
+    { id: 'top-app-bar', path: 'top-app-bar', title: 'ui-top-app-bar', component: TopAppBarView },
     { id: 'tree', path: 'tree', title: 'ui-tree', component: TreeView }
   ];
 
   private readonly router = resolve(IRouter);
   private readonly currentRoute = resolve(ICurrentRoute);
+  private readonly routerEvents = resolve(IRouterEvents);
+  private routeSubscription: IDisposable | undefined;
 
   readonly menuItems = MyApp.routes.filter((route) => route.id !== 'button-alt');
   readonly logoUrl = logoUrl;
+  selectedMenuItem: DemoRoute = this.menuItems[0];
+  breadcrumbs: UiBreadcrumbItem[] = [];
 
-  get selectedMenuItem(): DemoRoute | undefined {
+  attached(): void {
+    this.updateRouteState();
+    this.routeSubscription = this.routerEvents.subscribe('au:router:navigation-end', () => {
+      this.updateRouteState();
+    });
+  }
+
+  detaching(): void {
+    this.routeSubscription?.dispose();
+    this.routeSubscription = undefined;
+  }
+
+  private updateRouteState(): void {
     const current = this.normalizePath(this.currentRoute.path ?? '');
-    return this.menuItems.find((item) => this.normalizePath(item.path) === current)
+    this.selectedMenuItem = this.menuItems.find((item) => this.normalizePath(item.path) === current)
       ?? this.menuItems[0];
+    this.breadcrumbs = [
+      { label: 'Components', href: '#/' },
+      { label: this.selectedMenuItem.title, current: true }
+    ];
   }
 
   navigate(path: string): void {
