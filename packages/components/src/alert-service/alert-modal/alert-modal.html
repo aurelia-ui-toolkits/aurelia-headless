@@ -5,8 +5,8 @@
     <p class="ui-alert-modal__message" if.bind="payload.message">${payload.message}</p>
     <div class="ui-alert-modal__html" if.bind="payload.html" innerhtml.bind="payload.html"></div>
     <div class="ui-alert-modal__actions">
-      <button class="ui-alert-modal__button" type="button" if.bind="payload.button1Text" click.trigger="close(payload.button1Action)">${payload.button1Text}</button>
-      <button class="ui-alert-modal__button ui-alert-modal__button--primary" type="button" if.bind="payload.button2Text" click.trigger="close(payload.button2Action)" autofocus>${payload.button2Text}</button>
+      <button ui-button outlined type="button" if.bind="payload.button1Text" click.trigger="close(payload.button1Action)">${payload.button1Text}</button>
+      <button ui-button primary type="button" if.bind="payload.button2Text" click.trigger="close(payload.button2Action)" autofocus>${payload.button2Text}</button>
     </div>
   </div>
 </template>

@@ -7,7 +7,7 @@
   </label>
   <div class="prompt-dialog__error" if.bind="invalid">This field is required.</div>
   <div class="prompt-dialog__actions">
-    <button class="prompt-dialog__button" type="button" if.bind="data.cancelText" click.trigger="cancel()">${data.cancelText}</button>
-    <button class="prompt-dialog__button prompt-dialog__button--primary" type="button" if.bind="data.okText" click.trigger="ok()">${data.okText}</button>
+    <button ui-button outlined type="button" if.bind="data.cancelText" click.trigger="cancel()">${data.cancelText}</button>
+    <button ui-button primary type="button" if.bind="data.okText" click.trigger="ok()">${data.okText}</button>
   </div>
 </template>

@@ -4,7 +4,10 @@ dialog:has(.ui-alert-modal),
 dialog:has(.prompt-dialog) {
   @apply rounded-2xl border bg-white p-0 text-ink-900 shadow-2xl backdrop:bg-black/40;
   border-color: var(--color-card-border);
+  inset: 50% auto auto 50%;
+  margin: 0;
   max-width: min(92vw, 32rem);
+  transform: translate(-50%, -50%);
 }
 
 .ui-alert-modal {
@@ -53,27 +56,6 @@ dialog:has(.prompt-dialog) {
 .ui-alert-modal__actions,
 .prompt-dialog__actions {
   @apply mt-4 flex justify-end gap-2;
-}
-
-.ui-alert-modal__button,
-.prompt-dialog__button {
-  @apply rounded-lg border px-3 py-2 text-sm font-medium text-ink-700 outline-none;
-  border-color: var(--color-card-border);
-}
-
-.ui-alert-modal__button:hover,
-.prompt-dialog__button:hover {
-  background: var(--color-card-muted);
-}
-
-.ui-alert-modal__button--primary,
-.prompt-dialog__button--primary {
-  @apply border-primary-600 bg-primary-600 text-white;
-}
-
-.ui-alert-modal__button--primary:hover,
-.prompt-dialog__button--primary:hover {
-  @apply bg-primary-700;
 }
 
 .prompt-dialog {
