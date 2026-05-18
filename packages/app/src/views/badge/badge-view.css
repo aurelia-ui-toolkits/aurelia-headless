@@ -1,0 +1,17 @@
+@reference "../../styles/theme.css";
+
+.badge-demo-row {
+  @apply flex flex-wrap items-center gap-2;
+}
+
+.badge-demo-card {
+  @apply flex flex-wrap items-center justify-between gap-4 rounded-xl border border-card-border bg-white p-4;
+}
+
+.badge-demo-card h3 {
+  @apply font-semibold text-ink-900;
+}
+
+.badge-demo-card p {
+  @apply text-sm text-ink-500;
+}

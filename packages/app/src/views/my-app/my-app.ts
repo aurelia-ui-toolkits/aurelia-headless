@@ -1,6 +1,7 @@
 import { customElement, resolve } from 'aurelia';
 import { ICurrentRoute, IRouter } from '@aurelia/router';
 import { AlertView } from '../alert/alert-view';
+import { BadgeView } from '../badge/badge-view';
 import { ButtonView } from '../button/button-view';
 import { CheckboxView } from '../checkbox/checkbox-view';
 import { ComboboxView } from '../combobox/combobox-view';
@@ -35,6 +36,7 @@ export class MyApp {
   static routes: DemoRoute[] = [
     { id: 'button', path: '', title: 'ui-button', component: ButtonView },
     { id: 'alert', path: 'alert', title: 'ui-alert', component: AlertView },
+    { id: 'badge', path: 'badge', title: 'ui-badge', component: BadgeView },
     { id: 'button-alt', path: 'button', title: 'ui-button', component: ButtonView },
     { id: 'switch', path: 'switch', title: 'ui-switch', component: SwitchView },
     { id: 'checkbox', path: 'checkbox', title: 'ui-checkbox', component: CheckboxView },
