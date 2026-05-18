@@ -33,6 +33,22 @@ ui-slider,
   @apply z-20;
 }
 
+.ui-slider[data-range] .ui-slider__native {
+  pointer-events: none;
+}
+
+.ui-slider[data-range] .ui-slider__native::-webkit-slider-thumb {
+  pointer-events: auto;
+}
+
+.ui-slider[data-range] .ui-slider__native::-moz-range-thumb {
+  pointer-events: auto;
+}
+
+.ui-slider[data-range] .ui-slider__native:focus {
+  @apply z-30;
+}
+
 .ui-slider__native::-webkit-slider-runnable-track {
   height: 0.5rem;
   background: transparent;
