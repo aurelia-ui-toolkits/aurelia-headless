@@ -1,0 +1,51 @@
+<demo-section title="ui-splitter">
+  <demo-block title="Horizontal splitter">
+    <div class="splitter-demo-shell splitter-demo-horizontal">
+      <aside class="splitter-demo-pane splitter-demo-sidebar">
+        <h3>Explorer</h3>
+        <p>Previous sibling is resized automatically.</p>
+        <p>Size: ${leftSize}px</p>
+      </aside>
+      <ui-splitter size.bind="leftSize" min="140" max="420" storage-key="demo-horizontal"></ui-splitter>
+      <main class="splitter-demo-pane splitter-demo-main">
+        <h3>Editor</h3>
+        <p>Drag the splitter or use arrow keys when focused.</p>
+      </main>
+    </div>
+  </demo-block>
+
+  <demo-block title="Vertical splitter">
+    <div class="splitter-demo-shell splitter-demo-vertical">
+      <section class="splitter-demo-pane splitter-demo-preview">
+        <h3>Preview</h3>
+        <p>Height: ${topSize}px</p>
+      </section>
+      <ui-splitter direction="vertical" size.bind="topSize" min="100" max="300" storage-key="demo-vertical"></ui-splitter>
+      <section class="splitter-demo-pane splitter-demo-console">
+        <h3>Console</h3>
+        <p>Vertical splitter resizes the previous sibling height.</p>
+      </section>
+    </div>
+  </demo-block>
+
+  <demo-block title="Nested splitters">
+    <div class="splitter-demo-shell splitter-demo-horizontal splitter-demo-nested">
+      <aside class="splitter-demo-pane splitter-demo-sidebar">
+        <h3>Files</h3>
+        <p>Nested layouts are regular HTML and CSS.</p>
+      </aside>
+      <ui-splitter size.bind="nestedSize" min="160" max="380"></ui-splitter>
+      <div class="splitter-demo-vertical splitter-demo-fill">
+        <section class="splitter-demo-pane splitter-demo-main">
+          <h3>Document</h3>
+          <p>Main work area.</p>
+        </section>
+        <ui-splitter direction="vertical" size="220" min="120" max="340"></ui-splitter>
+        <section class="splitter-demo-pane splitter-demo-console">
+          <h3>Problems</h3>
+          <p>Nested bottom pane.</p>
+        </section>
+      </div>
+    </div>
+  </demo-block>
+</demo-section>

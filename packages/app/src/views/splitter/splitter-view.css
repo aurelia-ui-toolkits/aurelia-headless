@@ -1,0 +1,49 @@
+@reference "../../styles/theme.css";
+
+.splitter-demo-shell {
+  @apply overflow-hidden rounded-xl border border-card-border bg-white;
+}
+
+.splitter-demo-horizontal {
+  @apply flex min-h-64;
+}
+
+.splitter-demo-vertical {
+  @apply flex h-96 flex-col;
+}
+
+.splitter-demo-nested {
+  @apply h-[28rem];
+}
+
+.splitter-demo-fill {
+  @apply min-w-0 flex-1;
+}
+
+.splitter-demo-pane {
+  @apply min-h-0 min-w-0 overflow-auto p-4;
+}
+
+.splitter-demo-pane h3 {
+  @apply mb-2 font-semibold text-ink-900;
+}
+
+.splitter-demo-pane p {
+  @apply text-sm text-ink-500;
+}
+
+.splitter-demo-sidebar {
+  @apply bg-card-muted;
+}
+
+.splitter-demo-main {
+  @apply flex-1;
+}
+
+.splitter-demo-preview {
+  @apply bg-outline-hover;
+}
+
+.splitter-demo-console {
+  @apply flex-1 bg-card-muted;
+}

@@ -1,0 +1,14 @@
+<template class="ui-splitter"
+  role="separator"
+  tabindex.bind="disabled ? -1 : 0"
+  aria-orientation.attr="direction"
+  aria-valuemin.attr="min"
+  aria-valuemax.attr="max"
+  aria-valuenow.attr="valueNow"
+  aria-disabled.attr="disabled ? 'true' : null"
+  data-direction.attr="direction"
+  data-disabled.attr="disabled ? '' : null"
+  pointerdown.trigger="onPointerDown($event)"
+  keydown.trigger="onKeyDown($event)">
+  <span class="ui-splitter__handle" aria-hidden="true"></span>
+</template>
