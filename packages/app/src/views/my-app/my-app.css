@@ -29,6 +29,10 @@ body {
   @apply h-4 w-4;
 }
 
+.github-icon {
+  @apply h-7 w-7;
+}
+
 .app-top-bar {
   @apply sticky top-0 z-30 block;
 }
