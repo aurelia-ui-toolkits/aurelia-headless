@@ -88,7 +88,7 @@ export class UiTable {
       const column = this.sortedColumns.get(sort.column);
       if (column) {
         column.direction = sort.direction;
-        column.sortOrder = index + 1;
+        column.sortOrder = this.sort.length > 1 ? index + 1 : undefined;
       }
     }
   }
