@@ -68,10 +68,7 @@ export class UiTableColumn implements EventListenerObject {
       this.direction = undefined;
     }
 
-    this.host.dispatchEvent(new CustomEvent('sort-change', {
-      bubbles: true,
-      detail: this.direction ? { column: this.host.id, direction: this.direction } : undefined
-    }));
+    this.table.sort = this.direction ? { column: this.host.id, direction: this.direction } : undefined;
   }
 
   onPointerDown(event: PointerEvent): void {

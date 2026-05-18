@@ -1,4 +1,4 @@
-import { customElement } from 'aurelia';
+import { customElement, observable } from 'aurelia';
 import template from './table-view.html?raw';
 import './table-view.css';
 
@@ -19,12 +19,19 @@ type ProjectRow = {
 
 @customElement({ name: 'table-view', template })
 export class TableView {
+  @observable
   sort: TableSort | undefined;
+
   nameDirection: SortDirection | undefined;
   statusDirection: SortDirection | undefined;
   ownerDirection: SortDirection | undefined;
+
+  @observable
   page = 1;
+
+  @observable
   pageSize = 5;
+
   total = 0;
   allVisibleSelected = false;
   someVisibleSelected = false;
@@ -50,8 +57,7 @@ export class TableView {
     this.refreshRows();
   }
 
-  onSortChange(event: CustomEvent<TableSort | undefined>): void {
-    this.sort = event.detail;
+  sortChanged(): void {
     this.nameDirection = this.sort?.column === 'name' ? this.sort.direction : undefined;
     this.statusDirection = this.sort?.column === 'status' ? this.sort.direction : undefined;
     this.ownerDirection = this.sort?.column === 'owner' ? this.sort.direction : undefined;
@@ -59,13 +65,11 @@ export class TableView {
     this.refreshRows();
   }
 
-  onPageChange(event: CustomEvent<number>): void {
-    this.page = event.detail;
+  pageChanged(): void {
     this.refreshRows();
   }
 
-  onPageSizeChange(event: CustomEvent<number>): void {
-    this.pageSize = event.detail;
+  pageSizeChanged(): void {
     this.page = 1;
     this.refreshRows();
   }

@@ -1,13 +1,11 @@
 <demo-section title="ui-table">
   <demo-block title="Consumer-owned table">
-    <ui-table page.bind="page"
+    <ui-table sort.bind="sort"
+      page.bind="page"
       page-size.bind="pageSize"
       total.bind="total"
       page-size-options.bind="pageSizeOptions"
-      storage-key="projects-demo"
-      sort-change.trigger="onSortChange($event)"
-      page-change.trigger="onPageChange($event)"
-      page-size-change.trigger="onPageSizeChange($event)">
+      storage-key="projects-demo">
       <table>
         <thead>
           <tr>

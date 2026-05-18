@@ -81,6 +81,10 @@
   @apply justify-end text-right tabular-nums;
 }
 
+.ui-table__page-size-select .ui-list-item__primary {
+  @apply w-full text-right tabular-nums;
+}
+
 .ui-table__page-size-label,
 .ui-table__pagination-summary {
   @apply whitespace-nowrap text-base text-ink-900;

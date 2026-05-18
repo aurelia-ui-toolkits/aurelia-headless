@@ -8,6 +8,9 @@ export class UiTable {
   private columnSizes: Record<string, number> = {};
 
   @bindable({ mode: BindingMode.twoWay })
+  sort: { column: string; direction: 'asc' | 'desc' } | undefined;
+
+  @bindable({ mode: BindingMode.twoWay })
   page: number = 1;
 
   @bindable({ mode: BindingMode.twoWay })
@@ -84,38 +87,18 @@ export class UiTable {
     }
 
     this.page = next;
-    this.host.dispatchEvent(new CustomEvent('page-change', {
-      bubbles: true,
-      detail: this.page
-    }));
   }
 
   setPageSize(pageSize: number): void {
     const next = Math.max(1, Number(pageSize) || 1);
     if (this.pageSize === next) {
       this.updateTotalPages();
-      this.host.dispatchEvent(new CustomEvent('page-size-change', {
-        bubbles: true,
-        detail: this.pageSize
-      }));
-      this.host.dispatchEvent(new CustomEvent('page-change', {
-        bubbles: true,
-        detail: this.page
-      }));
       return;
     }
 
     this.pageSize = next;
     this.page = 1;
     this.updateTotalPages();
-    this.host.dispatchEvent(new CustomEvent('page-size-change', {
-      bubbles: true,
-      detail: this.pageSize
-    }));
-    this.host.dispatchEvent(new CustomEvent('page-change', {
-      bubbles: true,
-      detail: this.page
-    }));
   }
 
   onPageSizeChange(event: Event): void {
