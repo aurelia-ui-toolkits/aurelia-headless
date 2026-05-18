@@ -10,7 +10,7 @@ body {
 }
 
 .app-layout {
-  min-height: 100vh;
+  min-height: calc(100vh - 5.5rem);
   @apply grid;
   grid-template-columns: 0 1fr;
   transition: grid-template-columns 180ms ease;
@@ -25,12 +25,24 @@ body {
   backdrop-filter: blur(8px);
 }
 
-.side-panel-header {
-  @apply mb-3 flex justify-end;
-}
-
 .menu-toggle-icon {
   @apply h-4 w-4;
+}
+
+.app-top-bar {
+  @apply sticky top-0 z-30 block;
+}
+
+.app-top-bar .ui-top-app-bar__header {
+  @apply min-h-14 rounded-none border-x-0 border-t-0 bg-white/90 px-6 py-2 shadow-none;
+}
+
+.app-top-bar .ui-top-app-bar__title {
+  @apply hidden;
+}
+
+.app-menu-button {
+  @apply text-primary-600;
 }
 
 .brand {
@@ -85,11 +97,7 @@ body {
 }
 
 .content-panel {
-  @apply grid content-start gap-5 p-8;
-}
-
-.app-top-bar {
-  @apply -mx-2;
+  @apply grid content-start gap-5 p-8 pt-5;
 }
 
 .route-panel {
@@ -127,5 +135,13 @@ body {
 
   .content-panel {
     @apply p-5;
+  }
+
+  .app-top-bar {
+    @apply p-0;
+  }
+
+  .app-top-bar .ui-top-app-bar__header {
+    @apply px-4;
   }
 }

@@ -1,12 +1,15 @@
+<ui-top-app-bar sticky class="app-top-bar">
+  <button au-slot="navigation" class="app-menu-button" ui-icon-button click.trigger="menuOpen = !menuOpen" aria-label="Toggle menu">
+    <svg class="menu-toggle-icon" viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M3 4h10M3 8h10M3 12h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+  <ui-breadcrumbs au-slot="breadcrumbs" items.bind="breadcrumbs"></ui-breadcrumbs>
+  <a au-slot="actions" ui-button outlined href="https://github.com/aurelia-ui-toolkits/aurelia-headless" target="_blank" rel="noreferrer">GitHub</a>
+</ui-top-app-bar>
+
 <div class="app-layout" data-menu-open.attr="menuOpen ? '' : null">
   <ui-drawer class="app-drawer" persistent open.bind="menuOpen" side="left" modal="false" label="Component navigation">
-    <div class="side-panel-header">
-      <button ui-icon-button aria-label="Hide menu" click.trigger="menuOpen = false">
-        <svg class="menu-toggle-icon" viewBox="0 0 16 16" aria-hidden="true">
-          <path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-        </svg>
-      </button>
-    </div>
     <a class="brand" href="/" aria-label="Aurelia Headless UI home">
       <img class="brand-logo" src.bind="logoUrl" alt="Aurelia Headless UI logo" />
       <span class="brand-copy">
@@ -28,16 +31,6 @@
   </ui-drawer>
 
   <main class="content-panel">
-    <ui-top-app-bar sticky elevated class="app-top-bar">
-      <button au-slot="navigation" ui-icon-button outlined if.bind="!menuOpen" click.trigger="menuOpen = true" aria-label="Show menu">
-        <svg class="menu-toggle-icon" viewBox="0 0 16 16" aria-hidden="true">
-          <path d="M3 4h10M3 8h10M3 12h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
-        </svg>
-      </button>
-      <ui-breadcrumbs au-slot="breadcrumbs" items.bind="breadcrumbs"></ui-breadcrumbs>
-      ${selectedMenuItem.title}
-      <a au-slot="actions" ui-button outlined href="https://github.com/aurelia-ui-toolkits/aurelia-headless" target="_blank" rel="noreferrer">GitHub</a>
-    </ui-top-app-bar>
     <div class="route-panel">
       <au-viewport></au-viewport>
     </div>

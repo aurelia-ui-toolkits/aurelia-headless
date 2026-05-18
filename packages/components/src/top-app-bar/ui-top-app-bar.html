@@ -4,12 +4,12 @@
   data-dense.attr="dense ? '' : null"
   data-elevated.attr="elevated ? '' : null">
   <header class="ui-top-app-bar__header">
-    <div class="ui-top-app-bar__navigation" if.bind="navigationNodes.length">
+    <div class="ui-top-app-bar__navigation">
       <au-slot name="navigation"></au-slot>
     </div>
 
     <div class="ui-top-app-bar__content">
-      <div class="ui-top-app-bar__breadcrumbs" if.bind="breadcrumbNodes.length">
+      <div class="ui-top-app-bar__breadcrumbs">
         <au-slot name="breadcrumbs"></au-slot>
       </div>
       <div class="ui-top-app-bar__title">
@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div class="ui-top-app-bar__actions" if.bind="actionNodes.length">
+    <div class="ui-top-app-bar__actions">
       <au-slot name="actions"></au-slot>
     </div>
   </header>
