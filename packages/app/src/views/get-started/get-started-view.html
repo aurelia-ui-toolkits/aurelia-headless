@@ -1,0 +1,30 @@
+<demo-section title="Get started">
+  <demo-block class="get-started-hero">
+    <div class="get-started-hero__copy">
+      <h2>Aurelia Headless UI</h2>
+      <p>Accessible, composable primitives for Aurelia 2 applications. Bring your own styling, keep the behavior.</p>
+    </div>
+    <div class="get-started-hero__actions">
+      <a ui-button primary href="#/button">Browse components</a>
+      <a ui-button outlined href="https://github.com/aurelia-ui-toolkits/aurelia-headless" target="_blank" rel="noreferrer">GitHub</a>
+    </div>
+  </demo-block>
+
+  <demo-block title="Install">
+    <pre class="get-started-code"><code>npm install aurelia-headless</code></pre>
+  </demo-block>
+
+  <demo-block title="Register">
+    <pre class="get-started-code"><code>import Aurelia from 'aurelia';
+import { AureliaHeadlessConfiguration } from 'aurelia-headless';
+
+Aurelia
+  .register(AureliaHeadlessConfiguration)
+  .app(MyApp)
+  .start();</code></pre>
+  </demo-block>
+
+  <demo-block title="Use a component">
+    <pre class="get-started-code"><code>&lt;button ui-button primary click.trigger="save()"&gt;Save&lt;/button&gt;</code></pre>
+  </demo-block>
+</demo-section>

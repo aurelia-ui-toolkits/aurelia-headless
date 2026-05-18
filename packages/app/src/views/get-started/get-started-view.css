@@ -1,0 +1,26 @@
+@reference "../../styles/theme.css";
+
+.get-started-hero {
+  @apply grid gap-5 rounded-2xl bg-white/80 p-6;
+}
+
+.get-started-hero__copy {
+  @apply grid gap-3;
+}
+
+.get-started-hero__copy h2 {
+  @apply m-0 text-4xl font-extrabold leading-tight text-ink-900;
+  letter-spacing: -0.04em;
+}
+
+.get-started-hero__copy p {
+  @apply m-0 text-lg leading-8 text-ink-500;
+}
+
+.get-started-hero__actions {
+  @apply flex flex-wrap gap-3;
+}
+
+.get-started-code {
+  @apply m-0 overflow-auto rounded-xl bg-ink-900 p-4 text-sm leading-6 text-white;
+}

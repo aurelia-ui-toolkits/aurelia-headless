@@ -9,6 +9,7 @@ import { ChipView } from '../chip/chip-view';
 import { ComboboxView } from '../combobox/combobox-view';
 import { DisclosureView } from '../disclosure/disclosure-view';
 import { DrawerView } from '../drawer/drawer-view';
+import { GetStartedView } from '../get-started/get-started-view';
 import { InputView } from '../input/input-view';
 import { ListView } from '../list/list-view';
 import { MenuView } from '../menu/menu-view';
@@ -37,10 +38,10 @@ export class MyApp {
   menuOpen = true;
 
   static routes: DemoRoute[] = [
-    { id: 'button', path: '', title: 'ui-button', component: ButtonView },
+    { id: 'get-started', path: '', title: 'Get started', component: GetStartedView },
     { id: 'alert', path: 'alert', title: 'ui-alert', component: AlertView },
     { id: 'badge', path: 'badge', title: 'ui-badge', component: BadgeView },
-    { id: 'button-alt', path: 'button', title: 'ui-button', component: ButtonView },
+    { id: 'button', path: 'button', title: 'ui-button', component: ButtonView },
     { id: 'switch', path: 'switch', title: 'ui-switch', component: SwitchView },
     { id: 'checkbox', path: 'checkbox', title: 'ui-checkbox', component: CheckboxView },
     { id: 'chip', path: 'chip', title: 'ui-chip', component: ChipView },
@@ -70,7 +71,7 @@ export class MyApp {
   private readonly routerEvents = resolve(IRouterEvents);
   private routeSubscription: IDisposable | undefined;
 
-  readonly menuItems = MyApp.routes.filter((route) => route.id !== 'button-alt');
+  readonly menuItems = MyApp.routes;
   readonly logoUrl = logoUrl;
   selectedMenuItem: DemoRoute = this.menuItems[0];
   breadcrumbs: UiBreadcrumbItem[] = [];
@@ -92,7 +93,7 @@ export class MyApp {
     this.selectedMenuItem = this.menuItems.find((item) => this.normalizePath(item.path) === current)
       ?? this.menuItems[0];
     this.breadcrumbs = [
-      { label: 'Components', href: '#/' },
+      { label: 'Home', href: '#/' },
       { label: this.selectedMenuItem.title, current: true }
     ];
   }
