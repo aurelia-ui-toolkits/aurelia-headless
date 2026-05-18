@@ -63,17 +63,11 @@ export class UiTableColumn implements EventListenerObject {
       return;
     }
 
-    if (!this.direction) {
-      this.direction = 'asc';
-    } else if (this.direction === 'asc') {
-      this.direction = 'desc';
-    } else {
-      this.direction = undefined;
-    }
+    const direction = !this.direction ? 'asc' : this.direction === 'asc' ? 'desc' : undefined;
 
     this.host.dispatchEvent(new CustomEvent('column-sort', {
       bubbles: true,
-      detail: { column: this.host.id, direction: this.direction, multiple: event.ctrlKey }
+      detail: { column: this.host.id, direction, multiple: event.ctrlKey }
     }));
   }
 

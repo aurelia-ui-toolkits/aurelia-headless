@@ -22,10 +22,22 @@ export class TableView {
   @observable
   sort: TableSort[] = [];
   sortChanged(): void {
+    this.nameDirection = this.sort.find(sort => sort.column === 'name')?.direction;
+    this.statusDirection = this.sort.find(sort => sort.column === 'status')?.direction;
+    this.ownerDirection = this.sort.find(sort => sort.column === 'owner')?.direction;
+    this.nameSortOrder = this.getSortOrder('name');
+    this.statusSortOrder = this.getSortOrder('status');
+    this.ownerSortOrder = this.getSortOrder('owner');
     this.page = 1;
     this.refreshRows();
   }
 
+  nameDirection: SortDirection | undefined;
+  statusDirection: SortDirection | undefined;
+  ownerDirection: SortDirection | undefined;
+  nameSortOrder: number | undefined;
+  statusSortOrder: number | undefined;
+  ownerSortOrder: number | undefined;
 
   @observable
   page = 1;
