@@ -1,7 +1,15 @@
 @reference "./theme.css";
 
 .ui-table {
-  @apply block overflow-x-auto rounded-xl border border-card-border bg-white;
+  @apply relative block overflow-x-auto rounded-xl border border-card-border bg-white;
+}
+
+.ui-table[data-disabled] {
+  @apply pointer-events-none opacity-70;
+}
+
+.ui-table__progress {
+  @apply absolute left-0 right-0 top-0 z-20;
 }
 
 .ui-table table {

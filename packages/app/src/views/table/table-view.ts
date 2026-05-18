@@ -22,6 +22,7 @@ export class TableView {
   @observable
   sort: TableSort[] = [];
   sortChanged(): void {
+    this.showProgress();
     this.page = 1;
     this.refreshRows();
   }
@@ -40,9 +41,12 @@ export class TableView {
   }
 
   total = 0;
+  tableLoading = false;
   allVisibleSelected = false;
   someVisibleSelected = false;
   pageRows: ProjectRow[] = [];
+
+  private loadingTimeout: ReturnType<typeof setTimeout> | undefined;
 
   readonly pageSizeOptions = [5, 10, 20];
   readonly projects: ProjectRow[] = [
@@ -62,6 +66,12 @@ export class TableView {
 
   binding(): void {
     this.refreshRows();
+  }
+
+  detaching(): void {
+    if (this.loadingTimeout) {
+      clearTimeout(this.loadingTimeout);
+    }
   }
 
   toggleSelected(row: ProjectRow): void {
@@ -103,6 +113,18 @@ export class TableView {
     const selectedCount = this.pageRows.filter(row => row.selected).length;
     this.allVisibleSelected = this.pageRows.length > 0 && selectedCount === this.pageRows.length;
     this.someVisibleSelected = selectedCount > 0 && selectedCount < this.pageRows.length;
+  }
+
+  private showProgress(): void {
+    this.tableLoading = true;
+    if (this.loadingTimeout) {
+      clearTimeout(this.loadingTimeout);
+    }
+
+    this.loadingTimeout = setTimeout(() => {
+      this.tableLoading = false;
+      this.loadingTimeout = undefined;
+    }, 2000);
   }
 
 }

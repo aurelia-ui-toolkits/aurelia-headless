@@ -43,6 +43,9 @@ export class UiTable {
   @bindable({ set: booleanAttr })
   pagination: boolean = true;
 
+  @bindable({ set: booleanAttr })
+  progress: boolean = false;
+
   @bindable
   pageSizeOptions: number[] = [10, 25, 50];
 

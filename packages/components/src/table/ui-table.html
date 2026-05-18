@@ -1,4 +1,10 @@
-<template class="ui-table" column-sort.trigger="onColumnSort($event)">
+<template class="ui-table"
+  column-sort.trigger="onColumnSort($event)"
+  aria-busy.attr="progress ? 'true' : null"
+  aria-disabled.attr="progress ? 'true' : null"
+  data-disabled.attr="progress ? '' : null"
+  data-progress.attr="progress ? '' : null">
+  <ui-progress class="ui-table__progress" if.bind="progress" label="Loading table"></ui-progress>
   <au-slot></au-slot>
   <div class="ui-table__pagination" if.bind="pagination">
     <div class="ui-table__page-size">
