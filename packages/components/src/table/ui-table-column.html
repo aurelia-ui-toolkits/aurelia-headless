@@ -5,6 +5,10 @@
   aria-sort.attr="direction ? (direction === 'asc' ? 'ascending' : 'descending') : null"
   click.trigger="onClick($event)">
   <au-slot></au-slot>
+  <span class="ui-table-column__sort-indicator" if.bind="direction" aria-hidden="true">
+    <span>${direction === 'asc' ? '↑' : '↓'}</span>
+    <span class="ui-table-column__sort-order" if.bind="sortOrder">${sortOrder}</span>
+  </span>
   <span class="ui-table-column__resize-handle"
     if.bind="resizable"
     ref="resizeHandle"

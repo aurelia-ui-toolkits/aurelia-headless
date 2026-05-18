@@ -24,6 +24,9 @@ export class UiTableColumn implements EventListenerObject {
   @bindable({ mode: BindingMode.twoWay })
   direction: 'asc' | 'desc' | undefined;
 
+  @bindable
+  sortOrder: number | undefined;
+
   attaching(): void {
     this.applyWidth(this.table.getColumnWidth(this.host.id));
   }
@@ -70,7 +73,7 @@ export class UiTableColumn implements EventListenerObject {
 
     this.host.dispatchEvent(new CustomEvent('column-sort', {
       bubbles: true,
-      detail: { column: this.host.id, direction: this.direction }
+      detail: { column: this.host.id, direction: this.direction, multiple: event.ctrlKey }
     }));
   }
 

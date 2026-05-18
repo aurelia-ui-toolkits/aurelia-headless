@@ -3,7 +3,7 @@ import { booleanAttr } from '../base/boolean-attr';
 import template from './ui-table.html?raw';
 
 type TableSort = { column: string; direction: 'asc' | 'desc' };
-type ColumnSort = { column: string; direction: 'asc' | 'desc' | undefined };
+type ColumnSort = { column: string; direction: 'asc' | 'desc' | undefined; multiple: boolean };
 
 @customElement({ name: 'ui-table', template })
 export class UiTable {
@@ -63,7 +63,7 @@ export class UiTable {
 
   onColumnSort(event: CustomEvent<ColumnSort>): void {
     event.stopPropagation();
-    const next = this.sort.filter(sort => sort.column !== event.detail.column);
+    const next = event.detail.multiple ? this.sort.filter(sort => sort.column !== event.detail.column) : [];
     if (event.detail.direction) {
       next.push({ column: event.detail.column, direction: event.detail.direction });
     }

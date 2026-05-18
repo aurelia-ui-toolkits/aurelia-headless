@@ -1,31 +1,24 @@
 <demo-section title="ui-table">
   <demo-block title="Consumer-owned table">
-    <ui-table sort.bind="sort"
-      page.bind="page"
-      page-size.bind="pageSize"
-      total.bind="total"
-      page-size-options.bind="pageSizeOptions"
-      storage-key="projects-demo">
+    <ui-table sort.bind="sort" page.bind="page" page-size.bind="pageSize" total.bind="total"
+      page-size-options.bind="pageSizeOptions" storage-key="projects-demo">
       <table>
         <thead>
           <tr>
             <th class="table-demo-select-cell">
-              <ui-checkbox checked.to-view="allVisibleSelected"
-                indeterminate.to-view="someVisibleSelected"
-                change.trigger="toggleVisibleSelection()"
-                aria-label="Select visible rows"></ui-checkbox>
+              <ui-checkbox checked.to-view="allVisibleSelected" indeterminate.to-view="someVisibleSelected"
+                change.trigger="toggleVisibleSelection()" aria-label="Select visible rows"></ui-checkbox>
             </th>
-            <th ui-table-column="name" sortable resizable direction.bind="nameDirection">Name</th>
-            <th ui-table-column="status" sortable resizable direction.bind="statusDirection">Status</th>
-            <th ui-table-column="owner" sortable resizable direction.bind="ownerDirection">Owner</th>
+            <th ui-table-column="name" sortable resizable>Name</th>
+            <th ui-table-column="status" sortable resizable>Status</th>
+            <th ui-table-column="owner" sortable resizable>Owner</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr repeat.for="project of pageRows" data-selected.attr="project.selected ? '' : null">
             <td class="table-demo-select-cell">
-              <ui-checkbox checked.to-view="project.selected"
-                change.trigger="toggleSelected(project)"
+              <ui-checkbox checked.to-view="project.selected" change.trigger="toggleSelected(project)"
                 aria-label="Select ${project.name}"></ui-checkbox>
             </td>
             <td>${project.name}</td>
@@ -34,7 +27,8 @@
             <td>
               <button ui-icon-button aria-label="Open ${project.name}">
                 <svg class="table-demo-icon" viewBox="0 0 16 16" aria-hidden="true">
-                  <path d="M3.5 8h.01M8 8h.01M12.5 8h.01" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"></path>
+                  <path d="M3.5 8h.01M8 8h.01M12.5 8h.01" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round"></path>
                 </svg>
               </button>
             </td>

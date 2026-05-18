@@ -34,14 +34,12 @@
   @apply text-primary-700;
 }
 
-.ui-table-column[aria-sort="ascending"]::after {
-  @apply absolute right-4 text-primary-700;
-  content: '↑';
+.ui-table-column__sort-indicator {
+  @apply absolute right-4 inline-flex items-center gap-1 text-primary-700;
 }
 
-.ui-table-column[aria-sort="descending"]::after {
-  @apply absolute right-4 text-primary-700;
-  content: '↓';
+.ui-table-column__sort-order {
+  @apply tabular-nums text-xs;
 }
 
 .ui-table-column__resize-handle {
