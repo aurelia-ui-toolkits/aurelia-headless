@@ -58,7 +58,6 @@ export { UiSwitch };
 export { UiTab };
 export { UiTabs };
 export { UiTable };
-export type { UiTableSort, UiTableSortDirection } from './table/ui-table';
 export { UiTableColumn };
 export { UiToastRegion };
 export { UiToastService };

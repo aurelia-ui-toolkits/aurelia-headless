@@ -65,16 +65,8 @@
   @apply ml-auto flex items-center gap-5;
 }
 
-.ui-table__pagination-actions .ui-icon-button {
-  @apply h-9 w-9 rounded-full text-black;
-}
-
-.ui-table__pagination-actions .ui-icon-button[data-disabled] {
-  @apply text-ink-500 opacity-45;
-}
-
 .ui-table__pagination-icon {
-  @apply h-6 w-6;
+  @apply h-4 w-4;
 }
 
 .ui-table__page-size {
@@ -84,20 +76,4 @@
 .ui-table__page-size-label,
 .ui-table__pagination-summary {
   @apply text-base text-ink-900;
-}
-
-.ui-table__page-size-select {
-  @apply w-[7.5rem];
-}
-
-.ui-table__page-size-select .ui-select {
-  @apply gap-0;
-}
-
-.ui-table__page-size-select .ui-select__control {
-  @apply rounded-md px-5;
-}
-
-.ui-table__page-size-select .ui-select__value {
-  @apply h-10 text-xl;
 }
