@@ -23,6 +23,7 @@ import './styles/ui-progress-theme.css';
 import './styles/ui-radio-theme.css';
 import './styles/ui-select-theme.css';
 import './styles/ui-segmented-control-theme.css';
+import './styles/ui-slider-theme.css';
 import './styles/ui-splitter-theme.css';
 import './styles/ui-switch-theme.css';
 import './styles/ui-tabs-theme.css';

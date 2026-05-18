@@ -17,6 +17,7 @@ import { UiRadioGroup } from './radio/ui-radio-group';
 import { UiSegment } from './segmented-control/ui-segment';
 import { UiSegmentedControl } from './segmented-control/ui-segmented-control';
 import { UiSelect } from './select/ui-select';
+import { UiSlider } from './slider/ui-slider';
 import { UiSplitter } from './splitter/ui-splitter';
 import { UiSwitch } from './switch/ui-switch';
 import { UiTab } from './tabs/ui-tab';
@@ -55,6 +56,7 @@ export { UiRadioGroup };
 export { UiSegment };
 export { UiSegmentedControl };
 export { UiSelect };
+export { UiSlider };
 export { UiSplitter };
 export { UiSwitch };
 export { UiTab };
@@ -113,9 +115,11 @@ export const AureliaHeadlessConfiguration = {
       nodeObserverLocator.useConfig('UI-COMBOBOX', 'value', { events: ['input', 'change'] });
       attrMapper.useTwoWay((el, property) => el.tagName === 'UI-RADIO-GROUP' ? property === 'value' : false);
       nodeObserverLocator.useConfig('UI-RADIO-GROUP', 'value', { events: ['input', 'change'] });
+      attrMapper.useTwoWay((el, property) => el.tagName === 'UI-SLIDER' ? property === 'value' : false);
+      nodeObserverLocator.useConfig('UI-SLIDER', 'value', { events: ['input', 'change'] });
 
     }).register(container);
 
-    return container.register(UiAlert, UiButton, UiIconButton, EnhanceUiButton, UiCheckbox, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiDrawer, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSegment, UiSegmentedControl, UiSelect, EnhanceUiSelect, UiSplitter, UiSwitch, UiTab, UiTabs, UiTable, UiTableColumn, EnhanceUiTable, UiToastRegion, Registration.singleton(UiToastService, UiToastService), UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService), UiTree);
+    return container.register(UiAlert, UiButton, UiIconButton, EnhanceUiButton, UiCheckbox, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiDrawer, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSegment, UiSegmentedControl, UiSelect, EnhanceUiSelect, UiSlider, UiSplitter, UiSwitch, UiTab, UiTabs, UiTable, UiTableColumn, EnhanceUiTable, UiToastRegion, Registration.singleton(UiToastService, UiToastService), UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService), UiTree);
   }
 };

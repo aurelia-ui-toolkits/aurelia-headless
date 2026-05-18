@@ -1,0 +1,18 @@
+<demo-section title="ui-slider">
+  <demo-block title="Basic slider">
+    <ui-slider value.bind="volume" min="0" max="100" step="5" label="Volume" helper-text="Use mouse, touch, or keyboard."></ui-slider>
+    <span class="slider-demo-value">Value: ${volume}</span>
+  </demo-block>
+
+  <demo-block title="Custom range">
+    <ui-slider value.bind="brightness" min="20" max="100" step="10" label="Brightness">
+      <span au-slot="helper">Current brightness is ${brightness}%.</span>
+    </ui-slider>
+  </demo-block>
+
+  <demo-block title="States">
+    <ui-slider value.bind="brightness" min="0" max="100" label="Invalid slider" invalid helper-text="Invalid state changes the active color."></ui-slider>
+    <ui-slider value.bind="disabledValue" min="0" max="100" label="Disabled slider" disabled helper-text="Disabled sliders are not interactive."></ui-slider>
+    <ui-slider value.bind="volume" min="0" max="100" label="Readonly slider" readonly helper-text="Readonly value can be focused but not changed."></ui-slider>
+  </demo-block>
+</demo-section>

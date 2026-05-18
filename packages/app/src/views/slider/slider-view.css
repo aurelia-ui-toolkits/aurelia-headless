@@ -1,0 +1,5 @@
+@reference "../../styles/theme.css";
+
+.slider-demo-value {
+  @apply mt-2 block text-sm font-medium text-ink-700;
+}

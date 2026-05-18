@@ -1,0 +1,46 @@
+<template class="ui-slider"
+  data-disabled.attr="disabled ? '' : null"
+  data-readonly.attr="readonly ? '' : null"
+  data-invalid.attr="invalid || errors.size ? '' : null"
+  data-focus.attr="focus ? '' : null"
+  data-active.attr="active ? '' : null">
+  <label class="ui-slider__label" for.bind="id" id.bind="label ? labelId : null" show.bind="label">${label}</label>
+
+  <div class="ui-slider__control">
+    <span class="ui-slider__track" aria-hidden="true">
+      <span class="ui-slider__fill" style.bind="fillStyle"></span>
+    </span>
+    <input ref="inputEl"
+      class="ui-slider__native"
+      id.bind="id"
+      type="range"
+      name.attr="name || null"
+      min.bind="min"
+      max.bind="max"
+      step.bind="step"
+      value.bind="value"
+      disabled.bind="disabled"
+      required.bind="required"
+      aria-labelledby.bind="label ? labelId : null"
+      aria-invalid.bind="invalid || errors.size ? 'true' : 'false'"
+      aria-describedby.bind="errors.size ? errorsId : (helperNodes.length ? helperId : null)"
+      input.trigger="onInput($event)"
+      change.trigger="onChange($event)"
+      focusin.trigger="onFocusIn()"
+      focusout.trigger="onFocusOut()"
+      pointerdown.trigger="onPointerDown($event)"
+      pointerup.trigger="onPointerUp()"
+      pointerleave.trigger="onPointerLeave()"
+      keydown.trigger="onKeyDown($event)">
+  </div>
+
+  <div class="ui-slider__subscript" show.bind="errors.size || helperText || helperNodes.length">
+    <div class="ui-slider__helper" id.bind="helperId" show.bind="!errors.size && (helperText || helperNodes.length)">
+      <au-slot name="helper">${helperText}</au-slot>
+    </div>
+
+    <div class="ui-slider__errors" id.bind="errorsId" show.bind="errors.size">
+      <div class="ui-slider__error" repeat.for="[error, _] of errors" if.bind="error.message">${error.message}</div>
+    </div>
+  </div>
+</template>
