@@ -93,6 +93,15 @@ export class UiTable {
   setPageSize(pageSize: number): void {
     const next = Math.max(1, Number(pageSize) || 1);
     if (this.pageSize === next) {
+      this.updateTotalPages();
+      this.host.dispatchEvent(new CustomEvent('page-size-change', {
+        bubbles: true,
+        detail: this.pageSize
+      }));
+      this.host.dispatchEvent(new CustomEvent('page-change', {
+        bubbles: true,
+        detail: this.page
+      }));
       return;
     }
 

@@ -4,10 +4,10 @@
     <div class="ui-table__page-size">
       <span class="ui-table__page-size-label">Rows per page</span>
       <ui-select class="ui-table__page-size-select"
-        value.bind="pageSize"
-        selected-item.bind="pageSize"
+        value.to-view="pageSize"
+        selected-item.to-view="pageSize"
         change.trigger="onPageSizeChange($event)">
-        <ui-list items.bind="pageSizeOptions" selected.bind="pageSize">
+        <ui-list items.bind="pageSizeOptions" selected.to-view="pageSize">
           <ui-list-item repeat.for="size of pageSizeOptions" value.bind="size">${size}</ui-list-item>
         </ui-list>
       </ui-select>

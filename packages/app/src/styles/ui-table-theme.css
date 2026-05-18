@@ -58,11 +58,11 @@
 }
 
 .ui-table__pagination {
-  @apply flex flex-wrap items-center gap-8 border-t border-card-border px-5 py-3 text-sm text-ink-900;
+  @apply flex flex-wrap items-center justify-end gap-6 border-t border-card-border px-5 py-1.5 text-sm text-ink-900;
 }
 
 .ui-table__pagination-actions {
-  @apply ml-auto flex items-center gap-5;
+  @apply flex items-center gap-1;
 }
 
 .ui-table__pagination-icon {
@@ -70,10 +70,18 @@
 }
 
 .ui-table__page-size {
-  @apply flex items-center gap-4;
+  @apply flex shrink-0 items-center gap-4;
+}
+
+.ui-table__page-size-select {
+  @apply w-24 shrink-0;
+}
+
+.ui-table__page-size-select .ui-select__value {
+  @apply justify-end text-right tabular-nums;
 }
 
 .ui-table__page-size-label,
 .ui-table__pagination-summary {
-  @apply text-base text-ink-900;
+  @apply whitespace-nowrap text-base text-ink-900;
 }
