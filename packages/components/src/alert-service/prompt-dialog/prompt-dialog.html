@@ -1,0 +1,13 @@
+<template class="prompt-dialog">
+  <h2 class="prompt-dialog__title" if.bind="data.title">${data.title}</h2>
+  <label class="prompt-dialog__field">
+    <span class="prompt-dialog__label" if.bind="data.label">${data.label}</span>
+    <textarea class="prompt-dialog__control" if.bind="data.textarea" value.bind="data.text" required.bind="data.required" autofocus></textarea>
+    <input class="prompt-dialog__control" else type="text" value.bind="data.text" required.bind="data.required" autofocus>
+  </label>
+  <div class="prompt-dialog__error" if.bind="invalid">This field is required.</div>
+  <div class="prompt-dialog__actions">
+    <button class="prompt-dialog__button" type="button" if.bind="data.cancelText" click.trigger="cancel()">${data.cancelText}</button>
+    <button class="prompt-dialog__button prompt-dialog__button--primary" type="button" if.bind="data.okText" click.trigger="ok()">${data.okText}</button>
+  </div>
+</template>

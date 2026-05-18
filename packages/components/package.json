@@ -25,6 +25,7 @@
     "build": "npm run build:ts && npm run build:other"
   },
   "dependencies": {
+    "@aurelia/dialog": "^2.0.0-rc.1",
     "aurelia": ">=2.0.0-rc.0",
     "tslib": "^2.8.1"
   }

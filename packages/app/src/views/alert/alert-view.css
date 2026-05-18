@@ -3,3 +3,11 @@
 .alert-demo-stack {
   @apply grid gap-3;
 }
+
+.alert-demo-actions {
+  @apply flex flex-wrap gap-2;
+}
+
+.alert-demo-result {
+  @apply mt-3 text-sm text-ink-500;
+}

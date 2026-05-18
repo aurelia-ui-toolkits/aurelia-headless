@@ -1,0 +1,12 @@
+<template class="ui-alert-modal" data-tone.attr="payload.tone ?? 'info'">
+  <div class="ui-alert-modal__icon" aria-hidden="true">${payload.icon}</div>
+  <div class="ui-alert-modal__body">
+    <h2 class="ui-alert-modal__title" if.bind="payload.caption">${payload.caption}</h2>
+    <p class="ui-alert-modal__message" if.bind="payload.message">${payload.message}</p>
+    <div class="ui-alert-modal__html" if.bind="payload.html" innerhtml.bind="payload.html"></div>
+    <div class="ui-alert-modal__actions">
+      <button class="ui-alert-modal__button" type="button" if.bind="payload.button1Text" click.trigger="close(payload.button1Action)">${payload.button1Text}</button>
+      <button class="ui-alert-modal__button ui-alert-modal__button--primary" type="button" if.bind="payload.button2Text" click.trigger="close(payload.button2Action)" autofocus>${payload.button2Text}</button>
+    </div>
+  </div>
+</template>

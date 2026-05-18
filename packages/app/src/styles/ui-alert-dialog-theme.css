@@ -1,0 +1,109 @@
+@reference "./theme.css";
+
+dialog:has(.ui-alert-modal),
+dialog:has(.prompt-dialog) {
+  @apply rounded-2xl border bg-white p-0 text-ink-900 shadow-2xl backdrop:bg-black/40;
+  border-color: var(--color-card-border);
+  max-width: min(92vw, 32rem);
+}
+
+.ui-alert-modal {
+  @apply grid gap-4 p-6;
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.ui-alert-modal__icon {
+  @apply grid h-10 w-10 place-items-center rounded-full text-base font-bold;
+}
+
+.ui-alert-modal[data-tone="info"] .ui-alert-modal__icon {
+  @apply text-primary-700;
+  background: #e9f0ff;
+}
+
+.ui-alert-modal[data-tone="success"] .ui-alert-modal__icon {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.ui-alert-modal[data-tone="warning"] .ui-alert-modal__icon {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.ui-alert-modal[data-tone="danger"] .ui-alert-modal__icon {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.ui-alert-modal__body {
+  @apply grid gap-2;
+}
+
+.ui-alert-modal__title,
+.prompt-dialog__title {
+  @apply m-0 text-lg font-semibold leading-7;
+}
+
+.ui-alert-modal__message,
+.ui-alert-modal__html {
+  @apply m-0 text-sm leading-6 text-ink-500;
+}
+
+.ui-alert-modal__actions,
+.prompt-dialog__actions {
+  @apply mt-4 flex justify-end gap-2;
+}
+
+.ui-alert-modal__button,
+.prompt-dialog__button {
+  @apply rounded-lg border px-3 py-2 text-sm font-medium text-ink-700 outline-none;
+  border-color: var(--color-card-border);
+}
+
+.ui-alert-modal__button:hover,
+.prompt-dialog__button:hover {
+  background: var(--color-card-muted);
+}
+
+.ui-alert-modal__button--primary,
+.prompt-dialog__button--primary {
+  @apply border-primary-600 bg-primary-600 text-white;
+}
+
+.ui-alert-modal__button--primary:hover,
+.prompt-dialog__button--primary:hover {
+  @apply bg-primary-700;
+}
+
+.prompt-dialog {
+  @apply grid gap-4 p-6;
+  width: min(92vw, 30rem);
+}
+
+.prompt-dialog__field {
+  @apply grid gap-1.5;
+}
+
+.prompt-dialog__label {
+  @apply text-sm font-medium text-ink-700;
+}
+
+.prompt-dialog__control {
+  @apply rounded-lg border px-3 py-2 text-sm outline-none;
+  border-color: var(--color-card-border);
+}
+
+.prompt-dialog__control:focus {
+  @apply ring-2;
+  border-color: var(--color-primary-600);
+  --tw-ring-color: color-mix(in srgb, var(--color-ring) 35%, transparent);
+}
+
+textarea.prompt-dialog__control {
+  @apply min-h-28 resize-y;
+}
+
+.prompt-dialog__error {
+  @apply -mt-2 text-sm text-red-700;
+}

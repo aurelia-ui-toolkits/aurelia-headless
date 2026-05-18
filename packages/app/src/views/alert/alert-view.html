@@ -15,4 +15,13 @@
     </ui-alert>
     <button ui-button if.bind="!warningOpen" click.trigger="warningOpen = true">Show alert</button>
   </demo-block>
+
+  <demo-block title="Alert service">
+    <div class="alert-demo-actions">
+      <button ui-button click.trigger="showAlert()">Open alert</button>
+      <button ui-button outlined click.trigger="showConfirm()">Open confirm</button>
+      <button ui-button outlined click.trigger="showPrompt()">Open prompt</button>
+    </div>
+    <p class="alert-demo-result">${lastResult}</p>
+  </demo-block>
 </demo-section>
