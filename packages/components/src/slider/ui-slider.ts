@@ -28,14 +28,14 @@ export class UiSlider {
   @bindable({ mode: BindingMode.twoWay })
   value: number = 0;
   valueChanged(): void {
-    this.normalizeValues();
+    this.normalizeValues('start');
     this.updateFillStyle();
   }
 
   @bindable({ mode: BindingMode.twoWay })
   endValue: number = 100;
   endValueChanged(): void {
-    this.normalizeValues();
+    this.normalizeValues('end');
     this.updateFillStyle();
   }
 
@@ -124,10 +124,11 @@ export class UiSlider {
 
     if (event.target === this.endInputEl) {
       this.endValue = Number(event.target.value);
+      this.normalizeValues('end');
     } else {
       this.value = Number(event.target.value);
+      this.normalizeValues('start');
     }
-    this.normalizeValues();
     this.updateFillStyle();
     this.dispatchValueEvent('input');
   }
@@ -139,10 +140,11 @@ export class UiSlider {
 
     if (event.target === this.endInputEl) {
       this.endValue = Number(event.target.value);
+      this.normalizeValues('end');
     } else {
       this.value = Number(event.target.value);
+      this.normalizeValues('start');
     }
-    this.normalizeValues();
     this.updateFillStyle();
     this.dispatchValueEvent('change');
   }
@@ -182,7 +184,7 @@ export class UiSlider {
     }
   }
 
-  private normalizeValues(): void {
+  private normalizeValues(changed?: 'start' | 'end'): void {
     const min = Number(this.min);
     const max = Number(this.max);
     const low = Number.isFinite(min) ? min : 0;
@@ -192,7 +194,11 @@ export class UiSlider {
     this.normalizedValue = Math.max(low, Math.min(high, Number.isFinite(next) ? next : low));
     this.normalizedEndValue = Math.max(low, Math.min(high, Number.isFinite(nextEnd) ? nextEnd : high));
     if (this.range && this.normalizedValue > this.normalizedEndValue) {
-      this.normalizedValue = this.normalizedEndValue;
+      if (changed === 'end') {
+        this.normalizedEndValue = this.normalizedValue;
+      } else {
+        this.normalizedValue = this.normalizedEndValue;
+      }
     }
     if (!this.range) {
       this.normalizedEndValue = high;
