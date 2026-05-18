@@ -72,7 +72,7 @@ export class UiSplitter implements EventListenerObject {
     event.preventDefault();
     this.dragging = true;
     this.startPosition = this.direction === 'horizontal' ? event.clientX : event.clientY;
-    this.startSize = this.readCurrentSize();
+    this.startSize = this.valueNow;
     this.host.setPointerCapture(event.pointerId);
     window.addEventListener('pointermove', this);
     window.addEventListener('pointerup', this);
@@ -159,25 +159,19 @@ export class UiSplitter implements EventListenerObject {
     }
 
     const size = `${this.size}px`;
+    this.targetElement.style.flexGrow = '0';
+    this.targetElement.style.flexShrink = '0';
     if (this.direction === 'horizontal') {
       this.targetElement.style.width = size;
+      this.targetElement.style.flexBasis = size;
       this.targetElement.style.height = '';
       return;
     }
 
     this.targetElement.style.height = size;
+    this.targetElement.style.flexBasis = size;
     this.targetElement.style.width = '';
   }
-
-  private readCurrentSize(): number {
-    if (!this.targetElement) {
-      return this.size;
-    }
-
-    const rect = this.targetElement.getBoundingClientRect();
-    return this.direction === 'horizontal' ? rect.width : rect.height;
-  }
-
   private updateValueNow(): void {
     this.valueNow = Math.max(this.minSize, Math.min(this.maxSize, Number(this.size) || this.minSize));
   }
