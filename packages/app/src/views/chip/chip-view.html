@@ -14,6 +14,20 @@
     </div>
   </demo-block>
 
+  <demo-block title="Combobox with chips">
+    <div class="chip-demo-picker">
+      <ui-combobox text.bind="tagQuery" items.bind="availableTagOptions" value.bind="selectedTagId" value-field="id" label-field="label" label="Add tag" placeholder="Search tags">
+        <ui-list au-slot items.bind="$host.filteredItems" selected.bind="$host.selectedOption" typeahead-field="label">
+          <ui-list-item repeat.for="tag of $host.items" value.bind="tag">${tag.label}</ui-list-item>
+        </ui-list>
+      </ui-combobox>
+      <button ui-button outlined disabled.bind="!selectedTagId" click.trigger="addSelectedTag()">Add</button>
+    </div>
+    <div class="chip-demo-row chip-demo-selected-tags">
+      <ui-chip repeat.for="tag of tags" removable value.bind="tag.id" chip-remove.trigger="removeTag($event)">${tag.label}</ui-chip>
+    </div>
+  </demo-block>
+
   <demo-block title="Tones and states">
     <div class="chip-demo-row">
       <ui-chip tone="primary" selected>Primary</ui-chip>

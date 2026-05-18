@@ -7,3 +7,11 @@
 .chip-demo-state {
   @apply mt-3 text-sm text-ink-500;
 }
+
+.chip-demo-picker {
+  @apply grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end;
+}
+
+.chip-demo-selected-tags {
+  @apply mt-3;
+}
