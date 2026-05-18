@@ -67,7 +67,7 @@ export class UiTableColumn implements EventListenerObject {
 
     this.host.dispatchEvent(new CustomEvent('column-sort', {
       bubbles: true,
-      detail: { column: this.host.id, direction, multiple: event.ctrlKey }
+      detail: { column: this.host.id, columnViewModel: this, direction, multiple: event.ctrlKey }
     }));
   }
 

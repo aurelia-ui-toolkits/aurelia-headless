@@ -1,17 +1,22 @@
 import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
+import type { UiTableColumn } from './ui-table-column';
 import template from './ui-table.html?raw';
 
 type TableSort = { column: string; direction: 'asc' | 'desc' };
-type ColumnSort = { column: string; direction: 'asc' | 'desc' | undefined; multiple: boolean };
+type ColumnSort = { column: string; columnViewModel: UiTableColumn; direction: 'asc' | 'desc' | undefined; multiple: boolean };
 
 @customElement({ name: 'ui-table', template })
 export class UiTable {
   private readonly host = resolve(INode) as HTMLElement;
   private columnSizes: Record<string, number> = {};
+  private readonly sortedColumns = new Map<string, UiTableColumn>();
 
   @bindable({ mode: BindingMode.twoWay })
   sort: TableSort[] = [];
+  sortChanged(): void {
+    this.updateColumnSortState();
+  }
 
   @bindable({ mode: BindingMode.twoWay })
   page: number = 1;
@@ -63,11 +68,29 @@ export class UiTable {
 
   onColumnSort(event: CustomEvent<ColumnSort>): void {
     event.stopPropagation();
+    this.sortedColumns.set(event.detail.column, event.detail.columnViewModel);
     const next = event.detail.multiple ? this.sort.filter(sort => sort.column !== event.detail.column) : [];
     if (event.detail.direction) {
       next.push({ column: event.detail.column, direction: event.detail.direction });
     }
     this.sort = next;
+    this.updateColumnSortState();
+  }
+
+  private updateColumnSortState(): void {
+    for (const column of this.sortedColumns.values()) {
+      column.direction = undefined;
+      column.sortOrder = undefined;
+    }
+
+    for (let index = 0; index < this.sort.length; index++) {
+      const sort = this.sort[index];
+      const column = this.sortedColumns.get(sort.column);
+      if (column) {
+        column.direction = sort.direction;
+        column.sortOrder = index + 1;
+      }
+    }
   }
 
   pageSizeChanged(): void {
