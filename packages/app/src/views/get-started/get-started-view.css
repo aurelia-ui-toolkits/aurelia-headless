@@ -31,8 +31,8 @@
 
 .get-started-code {
   @apply m-0 overflow-auto rounded-xl p-4 text-sm leading-6;
-  background: var(--color-inverse-bg);
-  color: var(--color-inverse-text);
+  background: var(--color-code-bg);
+  color: var(--color-code-text);
 }
 
 :root[data-theme="dark"] .get-started-code {

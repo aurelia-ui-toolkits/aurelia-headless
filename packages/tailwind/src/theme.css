@@ -28,6 +28,8 @@
   --color-danger-border: #ef4444;
   --color-inverse-bg: #0f172a;
   --color-inverse-text: #f8fafc;
+  --color-code-bg: #0f172a;
+  --color-code-text: #f8fafc;
 }
 
 :root {
@@ -62,4 +64,6 @@
   --color-danger-border: #ef4444;
   --color-inverse-bg: #f8fafc;
   --color-inverse-text: #0f172a;
+  --color-code-bg: #020617;
+  --color-code-text: #f8fafc;
 }
