@@ -53,7 +53,8 @@
 }
 
 .ui-alert__close:hover {
-  @apply bg-black/5 opacity-100;
+  @apply opacity-100;
+  background: var(--color-subtle-overlay);
 }
 
 .ui-alert__close-icon {

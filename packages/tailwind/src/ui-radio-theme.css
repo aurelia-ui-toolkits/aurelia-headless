@@ -73,5 +73,5 @@ ui-radio[data-selected] .ui-radio__indicator::after,
 }
 
 .ui-radio-group__errors {
-  @apply text-red-600;
+  color: var(--color-validation-text);
 }

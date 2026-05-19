@@ -2,7 +2,7 @@
 
 dialog:has(.ui-alert-modal),
 dialog:has(.prompt-dialog) {
-  @apply rounded-2xl border bg-card p-0 text-ink-900 shadow-2xl backdrop:bg-black/40;
+  @apply rounded-2xl border bg-card p-0 text-ink-900 shadow-2xl;
   animation: ui-alert-dialog-in 140ms ease-out;
   border-color: var(--color-card-border);
   inset: 50% auto auto 50%;
@@ -15,6 +15,7 @@ dialog:has(.prompt-dialog) {
 dialog:has(.ui-alert-modal)::backdrop,
 dialog:has(.prompt-dialog)::backdrop {
   animation: ui-alert-dialog-backdrop-in 140ms ease-out;
+  background: var(--color-backdrop);
 }
 
 @keyframes ui-alert-dialog-in {
@@ -112,7 +113,7 @@ dialog:has(.prompt-dialog)::backdrop {
 .prompt-dialog__control:focus {
   @apply ring-2;
   border-color: var(--color-primary-600);
-  --tw-ring-color: color-mix(in srgb, var(--color-ring) 35%, transparent);
+  --tw-ring-color: var(--color-ring-muted);
 }
 
 textarea.prompt-dialog__control {
@@ -120,5 +121,6 @@ textarea.prompt-dialog__control {
 }
 
 .prompt-dialog__error {
-  @apply -mt-2 text-sm text-red-700;
+  @apply -mt-2 text-sm;
+  color: var(--color-validation-strong-text);
 }

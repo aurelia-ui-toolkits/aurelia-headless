@@ -20,7 +20,8 @@
 }
 
 .ui-tree__item[data-selected] {
-  @apply bg-primary-600 text-white;
+  @apply bg-primary-600;
+  color: var(--color-on-primary);
 }
 
 .ui-tree__item[data-selected][data-active] {
@@ -36,11 +37,11 @@
 }
 
 .ui-tree__toggle:hover {
-  @apply bg-black/5;
+  background: var(--color-subtle-overlay);
 }
 
 .ui-tree__item[data-selected] .ui-tree__toggle {
-  @apply text-white/80;
+  color: var(--color-on-primary-muted);
 }
 
 .ui-tree__toggle[data-hidden] {

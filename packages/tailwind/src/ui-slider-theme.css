@@ -85,15 +85,15 @@ ui-slider,
 }
 
 .ui-slider[data-invalid] .ui-slider__fill {
-  @apply bg-red-600;
+  background: var(--color-validation-text);
 }
 
 .ui-slider[data-invalid] .ui-slider__native::-webkit-slider-thumb {
-  @apply border-red-600;
+  border-color: var(--color-validation-text);
 }
 
 .ui-slider[data-invalid] .ui-slider__native::-moz-range-thumb {
-  @apply border-red-600;
+  border-color: var(--color-validation-text);
 }
 
 .ui-slider[data-disabled] {
@@ -117,5 +117,5 @@ ui-slider,
 }
 
 .ui-slider__errors {
-  @apply text-red-600;
+  color: var(--color-validation-text);
 }

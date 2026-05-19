@@ -5,7 +5,8 @@
 }
 
 .ui-drawer__backdrop {
-  @apply pointer-events-none fixed inset-0 z-40 bg-black/40 opacity-0;
+  @apply pointer-events-none fixed inset-0 z-40 opacity-0;
+  background: var(--color-backdrop);
   transition: opacity 180ms ease;
 }
 

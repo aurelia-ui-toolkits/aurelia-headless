@@ -29,7 +29,7 @@ ui-combobox,
 }
 
 .ui-combobox[data-invalid] .ui-combobox__control {
-  @apply border-red-500;
+  border-color: var(--color-validation-border);
 }
 
 .ui-combobox[data-disabled] .ui-combobox__control {
@@ -118,5 +118,5 @@ ui-combobox,
 }
 
 .ui-combobox__errors {
-  @apply text-red-600;
+  color: var(--color-validation-text);
 }

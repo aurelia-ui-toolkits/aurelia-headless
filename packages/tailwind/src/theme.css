@@ -30,6 +30,17 @@
   --color-inverse-text: #f8fafc;
   --color-code-bg: #0f172a;
   --color-code-text: #f8fafc;
+  --color-on-primary: #ffffff;
+  --color-on-primary-muted: color-mix(in srgb, var(--color-on-primary) 80%, transparent);
+  --color-on-primary-overlay: color-mix(in srgb, var(--color-on-primary) 20%, transparent);
+  --color-backdrop: color-mix(in srgb, #000000 40%, transparent);
+  --color-subtle-overlay: color-mix(in srgb, #000000 5%, transparent);
+  --color-hover-overlay: color-mix(in srgb, #000000 10%, transparent);
+  --color-validation-border: #ef4444;
+  --color-validation-text: #dc2626;
+  --color-validation-strong-text: #b91c1c;
+  --color-resize-handle: color-mix(in srgb, var(--color-card-border) 40%, transparent);
+  --color-ring-muted: color-mix(in srgb, var(--color-ring) 35%, transparent);
 }
 
 :root {
@@ -66,4 +77,15 @@
   --color-inverse-text: #0f172a;
   --color-code-bg: #020617;
   --color-code-text: #f8fafc;
+  --color-on-primary: #0f172a;
+  --color-on-primary-muted: color-mix(in srgb, var(--color-on-primary) 70%, transparent);
+  --color-on-primary-overlay: color-mix(in srgb, var(--color-on-primary) 18%, transparent);
+  --color-backdrop: color-mix(in srgb, #000000 52%, transparent);
+  --color-subtle-overlay: color-mix(in srgb, #ffffff 6%, transparent);
+  --color-hover-overlay: color-mix(in srgb, #ffffff 10%, transparent);
+  --color-validation-border: #f87171;
+  --color-validation-text: #fca5a5;
+  --color-validation-strong-text: #fecaca;
+  --color-resize-handle: color-mix(in srgb, var(--color-card-border) 55%, transparent);
+  --color-ring-muted: color-mix(in srgb, var(--color-ring) 35%, transparent);
 }

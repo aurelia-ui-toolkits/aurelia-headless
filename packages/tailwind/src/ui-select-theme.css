@@ -29,7 +29,7 @@ ui-select,
 }
 
 .ui-select[data-invalid] .ui-select__control {
-  @apply border-red-500;
+  border-color: var(--color-validation-border);
 }
 
 .ui-select[data-disabled] .ui-select__control {
@@ -117,5 +117,5 @@ ui-select,
 }
 
 .ui-select__errors {
-  @apply text-red-600;
+  color: var(--color-validation-text);
 }

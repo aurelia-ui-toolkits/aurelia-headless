@@ -41,7 +41,8 @@
 }
 
 .ui-chip[data-selected] {
-  @apply border-primary-600 bg-primary-600 text-white;
+  @apply border-primary-600 bg-primary-600;
+  color: var(--color-on-primary);
 }
 
 .ui-chip[data-selected][data-tone="success"] {
@@ -68,11 +69,12 @@
 }
 
 .ui-chip__remove:hover {
-  @apply bg-black/10 opacity-100;
+  @apply opacity-100;
+  background: var(--color-hover-overlay);
 }
 
 .ui-chip[data-selected] .ui-chip__remove:hover {
-  @apply bg-white/20;
+  background: var(--color-on-primary-overlay);
 }
 
 .ui-chip__remove-icon {

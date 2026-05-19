@@ -29,7 +29,8 @@
 }
 
 .ui-button[data-primary] {
-  @apply bg-primary-600 text-white;
+  @apply bg-primary-600;
+  color: var(--color-on-primary);
 }
 
 .ui-button[data-primary][data-hover] {
