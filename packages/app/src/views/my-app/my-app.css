@@ -27,6 +27,7 @@ body {
 .app-layout > .ui-drawer__panel[data-persistent] {
   @apply border-r border-card-border bg-white/85;
   backdrop-filter: blur(8px);
+  z-index: 10;
 }
 
 :root[data-theme="dark"] .app-layout > .ui-drawer__panel[data-persistent] {
@@ -42,7 +43,7 @@ body {
 }
 
 .app-top-bar {
-  @apply sticky top-0 z-30 block;
+  @apply sticky top-0 z-[60] block;
 }
 
 .app-top-bar .ui-top-app-bar__header {

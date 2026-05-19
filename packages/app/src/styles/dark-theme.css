@@ -6,9 +6,6 @@
 :root[data-theme="dark"] .ui-drawer__panel,
 :root[data-theme="dark"] .ui-tree,
 :root[data-theme="dark"] .ui-popup__panel,
-:root[data-theme="dark"] .ui-input,
-:root[data-theme="dark"] .ui-select,
-:root[data-theme="dark"] .ui-combobox,
 :root[data-theme="dark"] .ui-radio,
 :root[data-theme="dark"] .ui-list,
 :root[data-theme="dark"] .ui-disclosure__panel,
@@ -16,6 +13,13 @@
 :root[data-theme="dark"] .get-started-hero {
   background: var(--color-card);
   color: var(--color-ink-700);
+}
+
+:root[data-theme="dark"] .ui-input__control,
+:root[data-theme="dark"] .ui-select__control,
+:root[data-theme="dark"] .ui-combobox__control {
+  background: transparent;
+  color: var(--color-ink-900);
 }
 
 :root[data-theme="dark"] .demo-block,
@@ -33,10 +37,32 @@
 :root[data-theme="dark"] .ui-input__control,
 :root[data-theme="dark"] .ui-select__control,
 :root[data-theme="dark"] .ui-combobox__control,
+:root[data-theme="dark"] .ui-select__value,
+:root[data-theme="dark"] .ui-combobox__native,
 :root[data-theme="dark"] input,
 :root[data-theme="dark"] textarea,
 :root[data-theme="dark"] select {
   color: var(--color-ink-900);
+}
+
+:root[data-theme="dark"] .ui-select__value[data-placeholder],
+:root[data-theme="dark"] .ui-combobox__native::placeholder,
+:root[data-theme="dark"] .ui-select__inset-label,
+:root[data-theme="dark"] .ui-combobox__inset-label,
+:root[data-theme="dark"] .ui-select__leading,
+:root[data-theme="dark"] .ui-select__trailing,
+:root[data-theme="dark"] .ui-combobox__leading,
+:root[data-theme="dark"] .ui-combobox__trailing {
+  color: var(--color-ink-500);
+}
+
+:root[data-theme="dark"] .ui-button:not([data-primary]):not([data-outlined]) {
+  background: var(--color-card-muted);
+  color: var(--color-ink-900);
+}
+
+:root[data-theme="dark"] .ui-button:not([data-primary]):not([data-outlined])[data-hover] {
+  background: var(--color-outline-hover);
 }
 
 :root[data-theme="dark"] .ui-alert[data-tone="info"] {
