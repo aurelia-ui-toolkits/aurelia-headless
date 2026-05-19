@@ -1,9 +1,25 @@
 {
   "name": "aurelia-headless-tailwind",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Tailwind CSS theme for aurelia-headless",
   "license": "MIT",
   "author": "Maxim Balaganskiy <m.balaganskiy@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aurelia-ui-toolkits/aurelia-headless.git",
+    "directory": "packages/tailwind"
+  },
+  "homepage": "https://aurelia-ui-toolkits.github.io/aurelia-headless/",
+  "bugs": {
+    "url": "https://github.com/aurelia-ui-toolkits/aurelia-headless/issues"
+  },
+  "keywords": [
+    "aurelia",
+    "aurelia2",
+    "headless",
+    "tailwindcss",
+    "theme"
+  ],
   "type": "module",
   "exports": {
     ".": "./src/index.css",
