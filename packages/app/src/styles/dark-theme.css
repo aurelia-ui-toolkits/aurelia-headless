@@ -5,13 +5,16 @@
 :root[data-theme="dark"] .ui-table,
 :root[data-theme="dark"] .ui-drawer__panel,
 :root[data-theme="dark"] .ui-tree,
-:root[data-theme="dark"] .ui-popup__panel,
 :root[data-theme="dark"] .ui-radio,
-:root[data-theme="dark"] .ui-list,
 :root[data-theme="dark"] .ui-disclosure__panel,
 :root[data-theme="dark"] .splitter-demo-shell,
 :root[data-theme="dark"] .get-started-hero {
   background: var(--color-card);
+  color: var(--color-ink-700);
+}
+
+:root[data-theme="dark"] .ui-popup__panel {
+  background: var(--color-card-muted);
   color: var(--color-ink-700);
 }
 
