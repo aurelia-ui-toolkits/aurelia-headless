@@ -1,0 +1,86 @@
+:root[data-theme="dark"] .ui-top-app-bar__header,
+:root[data-theme="dark"] .ui-alert-modal,
+:root[data-theme="dark"] .prompt-dialog,
+:root[data-theme="dark"] .ui-chip,
+:root[data-theme="dark"] .ui-table,
+:root[data-theme="dark"] .ui-drawer__panel,
+:root[data-theme="dark"] .ui-tree,
+:root[data-theme="dark"] .ui-popup__panel,
+:root[data-theme="dark"] .ui-input,
+:root[data-theme="dark"] .ui-select,
+:root[data-theme="dark"] .ui-combobox,
+:root[data-theme="dark"] .ui-radio,
+:root[data-theme="dark"] .ui-list,
+:root[data-theme="dark"] .ui-disclosure__panel,
+:root[data-theme="dark"] .splitter-demo-shell,
+:root[data-theme="dark"] .get-started-hero {
+  background: var(--color-card);
+  color: var(--color-ink-700);
+}
+
+:root[data-theme="dark"] .demo-block,
+:root[data-theme="dark"] .brand,
+:root[data-theme="dark"] .splitter-demo-sidebar,
+:root[data-theme="dark"] .splitter-demo-console,
+:root[data-theme="dark"] .splitter-demo-preview,
+:root[data-theme="dark"] .ui-tabs [data-selected],
+:root[data-theme="dark"] .ui-segmented-control [data-selected] {
+  background: var(--color-card-muted);
+}
+
+:root[data-theme="dark"] .ui-table th,
+:root[data-theme="dark"] .ui-table__pagination,
+:root[data-theme="dark"] .ui-input__control,
+:root[data-theme="dark"] .ui-select__control,
+:root[data-theme="dark"] .ui-combobox__control,
+:root[data-theme="dark"] input,
+:root[data-theme="dark"] textarea,
+:root[data-theme="dark"] select {
+  color: var(--color-ink-900);
+}
+
+:root[data-theme="dark"] .ui-alert[data-tone="info"] {
+  background: #13223a;
+  border-color: #31558d;
+  color: var(--color-ink-900);
+}
+
+:root[data-theme="dark"] .ui-alert[data-tone="success"] {
+  background: #0f2a1b;
+  border-color: #1f7a44;
+  color: #d9fbe7;
+}
+
+:root[data-theme="dark"] .ui-alert[data-tone="warning"] {
+  background: #30240b;
+  border-color: #a16207;
+  color: #fde68a;
+}
+
+:root[data-theme="dark"] .ui-alert[data-tone="danger"] {
+  background: #351515;
+  border-color: #991b1b;
+  color: #fecaca;
+}
+
+:root[data-theme="dark"] .ui-badge[data-tone="warning"],
+:root[data-theme="dark"] .ui-chip[data-tone="warning"] {
+  background: #30240b;
+  color: #fde68a;
+}
+
+:root[data-theme="dark"] .ui-badge[data-tone="danger"],
+:root[data-theme="dark"] .ui-chip[data-tone="danger"] {
+  background: #351515;
+  color: #fecaca;
+}
+
+:root[data-theme="dark"] .ui-slider__thumb,
+:root[data-theme="dark"] .ui-switch__thumb {
+  background: #f8fafc;
+}
+
+:root[data-theme="dark"] .ui-tooltip__panel {
+  background: #f8fafc;
+  color: #0f172a;
+}

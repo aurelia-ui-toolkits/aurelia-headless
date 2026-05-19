@@ -1,10 +1,12 @@
-import { bindable, BindingMode, customElement } from 'aurelia';
+import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
 import template from './ui-switch.html?raw';
 
 @customElement({ name: 'ui-switch', template })
 export class UiSwitch {
+  private readonly host = resolve(INode) as HTMLElement;
+
   @bindable({ mode: BindingMode.twoWay, set: booleanAttr })
   checked: boolean = false;
 
@@ -88,6 +90,8 @@ export class UiSwitch {
 
     this.changing = true;
     this.checked = !this.checked;
+    this.host.dispatchEvent(new Event('input', { bubbles: true }));
+    this.host.dispatchEvent(new Event('change', { bubbles: true }));
 
     if (this.changingFrame) {
       cancelAnimationFrame(this.changingFrame);

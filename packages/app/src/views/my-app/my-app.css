@@ -9,6 +9,10 @@ body {
   background: radial-gradient(circle at 20% 10%, #f3f7ff 0%, #eef2ff 35%, #f7fafc 100%);
 }
 
+:root[data-theme="dark"] body {
+  background: radial-gradient(circle at 20% 10%, #172033 0%, #0f172a 42%, #080c14 100%);
+}
+
 .app-layout {
   min-height: calc(100vh - 5.5rem);
   @apply grid;
@@ -23,6 +27,10 @@ body {
 .app-layout > .ui-drawer__panel[data-persistent] {
   @apply border-r border-card-border bg-white/85;
   backdrop-filter: blur(8px);
+}
+
+:root[data-theme="dark"] .app-layout > .ui-drawer__panel[data-persistent] {
+  background: color-mix(in srgb, var(--color-card) 88%, transparent);
 }
 
 .menu-toggle-icon {
@@ -41,6 +49,10 @@ body {
   @apply min-h-14 rounded-none border-x-0 border-t-0 bg-white/90 px-6 py-2 shadow-none;
 }
 
+:root[data-theme="dark"] .app-top-bar .ui-top-app-bar__header {
+  background: color-mix(in srgb, var(--color-card) 90%, transparent);
+}
+
 .app-top-bar .ui-top-app-bar__title {
   @apply hidden;
 }
@@ -51,6 +63,18 @@ body {
 
 .brand {
   @apply mb-6 grid grid-cols-[3.75rem_1fr] items-center gap-3 rounded-2xl border border-card-border bg-white/70 p-3 text-ink-900 no-underline shadow-sm;
+}
+
+:root[data-theme="dark"] .brand {
+  background: color-mix(in srgb, var(--color-card-muted) 78%, transparent);
+}
+
+.theme-toggle {
+  @apply flex items-center gap-2 rounded-lg px-2 py-1 text-xs font-bold text-ink-700;
+}
+
+.theme-toggle__label {
+  @apply hidden sm:inline;
 }
 
 .brand-logo {
@@ -122,6 +146,10 @@ body {
 
 .demo-block {
   @apply rounded-xl border border-black/10 bg-card p-4;
+}
+
+:root[data-theme="dark"] .demo-block {
+  border-color: var(--color-card-border);
 }
 
 .demo-block__header {

@@ -142,6 +142,8 @@ export const AureliaHeadlessConfiguration = {
       nodeObserverLocator.useConfig('UI-RADIO-GROUP', 'value', { events: ['input', 'change'] });
       attrMapper.useTwoWay((el, property) => el.tagName === 'UI-SLIDER' ? property === 'value' : false);
       nodeObserverLocator.useConfig('UI-SLIDER', 'value', { events: ['input', 'change'] });
+      attrMapper.useTwoWay((el, property) => el.tagName === 'UI-SWITCH' ? property === 'checked' : false);
+      nodeObserverLocator.useConfig('UI-SWITCH', 'checked', { events: ['input', 'change'] });
 
     }).register(container);
 

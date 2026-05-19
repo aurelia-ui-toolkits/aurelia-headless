@@ -36,6 +36,7 @@ import './styles/ui-toast-theme.css';
 import './styles/ui-tooltip-theme.css';
 import './styles/ui-top-app-bar-theme.css';
 import './styles/ui-tree-theme.css';
+import './styles/dark-theme.css';
 import { RegexRule, RequiredRule, ValidationConfiguration } from '@aurelia/validation';
 
 Aurelia

@@ -1,4 +1,4 @@
-import { customElement, IDisposable, resolve } from 'aurelia';
+import { customElement, IDisposable, observable, resolve } from 'aurelia';
 import { ICurrentRoute, IRouter, IRouterEvents } from '@aurelia/router';
 import { UiBreadcrumbItem } from 'aurelia-headless';
 import { AlertView } from '../alert/alert-view';
@@ -76,7 +76,20 @@ export class MyApp {
   selectedMenuItem: DemoRoute = this.menuItems[0];
   breadcrumbs: UiBreadcrumbItem[] = [];
 
+  @observable
+  darkTheme = false;
+  darkThemeChanged(): void {
+    this.applyTheme();
+    this.persistTheme();
+  }
+
+  constructor() {
+    this.darkTheme = this.loadTheme();
+    this.applyTheme();
+  }
+
   attached(): void {
+    this.applyTheme();
     this.updateRouteState();
     this.routeSubscription = this.routerEvents.subscribe('au:router:navigation-end', () => {
       this.updateRouteState();
@@ -100,6 +113,30 @@ export class MyApp {
 
   navigate(path: string): void {
     void this.router.load(path || '');
+  }
+
+  private persistTheme(): void {
+    try {
+      localStorage.setItem('aurelia-headless:theme', this.darkTheme ? 'dark' : 'light');
+    } catch {
+      // Ignore unavailable storage.
+    }
+  }
+
+  private applyTheme(): void {
+    document.documentElement.dataset.theme = this.darkTheme ? 'dark' : 'light';
+  }
+
+  private loadTheme(): boolean {
+    try {
+      const stored = localStorage.getItem('aurelia-headless:theme');
+      if (stored) {
+        return stored === 'dark';
+      }
+    } catch {
+      // Ignore unavailable storage.
+    }
+    return globalThis.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false;
   }
 
   private normalizePath(path: string): string {

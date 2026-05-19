@@ -15,3 +15,23 @@
   --color-outline-hover: #e9f0ff;
   --color-outline-active: #d9e6ff;
 }
+
+:root {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-ink-900: #f6f8ff;
+  --color-ink-700: #d7def0;
+  --color-ink-500: #9aa8c5;
+  --color-card: #111827;
+  --color-card-muted: #1d2738;
+  --color-card-border: #334155;
+  --color-primary-600: #6fa3ff;
+  --color-primary-700: #8bb6ff;
+  --color-primary-800: #a9c9ff;
+  --color-ring: #93c5fd;
+  --color-outline-hover: #1e3a5f;
+  --color-outline-active: #274b78;
+}
