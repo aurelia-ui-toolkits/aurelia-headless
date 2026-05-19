@@ -12,6 +12,10 @@ export class UiSplitter implements EventListenerObject {
   private startPosition = 0;
   private startSize = 0;
   private dragging = false;
+  private pointerMoved = false;
+  private expandedSize = 240;
+  private targetDisplay = '';
+  private targetOverflow = '';
 
   @bindable({ mode: BindingMode.twoWay })
   size: number = 240;
@@ -44,6 +48,9 @@ export class UiSplitter implements EventListenerObject {
     this.targetElement = this.host.previousElementSibling instanceof HTMLElement
       ? this.host.previousElementSibling
       : undefined;
+    this.targetDisplay = this.targetElement?.style.display ?? '';
+    this.targetOverflow = this.targetElement?.style.overflow ?? '';
+    this.expandedSize = this.size;
     this.loadSize();
     this.applySize();
     this.updateValueNow();
@@ -71,8 +78,9 @@ export class UiSplitter implements EventListenerObject {
 
     event.preventDefault();
     this.dragging = true;
+    this.pointerMoved = false;
     this.startPosition = this.direction === 'horizontal' ? event.clientX : event.clientY;
-    this.startSize = this.valueNow;
+    this.startSize = this.size;
     this.host.setPointerCapture(event.pointerId);
     window.addEventListener('pointermove', this);
     window.addEventListener('pointerup', this);
@@ -126,6 +134,7 @@ export class UiSplitter implements EventListenerObject {
     }
 
     const position = this.direction === 'horizontal' ? event.clientX : event.clientY;
+    this.pointerMoved ||= Math.abs(position - this.startPosition) > 3;
     this.setSize(this.startSize + position - this.startPosition);
   }
 
@@ -135,6 +144,10 @@ export class UiSplitter implements EventListenerObject {
     }
 
     this.stopDragging();
+    if (!this.pointerMoved) {
+      this.toggleCollapsed();
+      return;
+    }
     this.persistSize();
   }
 
@@ -146,6 +159,7 @@ export class UiSplitter implements EventListenerObject {
 
   private setSize(size: number, persist = false): void {
     this.size = Math.max(this.minSize, Math.min(this.maxSize, Number(size) || this.minSize));
+    this.expandedSize = this.size;
     this.applySize();
     this.updateValueNow();
     if (persist) {
@@ -153,14 +167,29 @@ export class UiSplitter implements EventListenerObject {
     }
   }
 
+  private toggleCollapsed(): void {
+    if (this.size <= 0) {
+      this.size = Math.max(this.minSize, Math.min(this.maxSize, this.expandedSize || this.minSize));
+    } else {
+      this.expandedSize = this.size;
+      this.size = 0;
+    }
+    this.applySize();
+    this.updateValueNow();
+    this.persistSize();
+  }
+
   private applySize(): void {
     if (!this.targetElement) {
       return;
     }
 
-    const size = `${this.size}px`;
+    const sizeValue = Math.max(0, Number(this.size) || 0);
+    const size = `${sizeValue}px`;
+    this.targetElement.style.display = sizeValue === 0 ? 'none' : this.targetDisplay;
     this.targetElement.style.flexGrow = '0';
     this.targetElement.style.flexShrink = '0';
+    this.targetElement.style.overflow = sizeValue === 0 ? 'hidden' : this.targetOverflow;
     if (this.direction === 'horizontal') {
       this.targetElement.style.width = size;
       this.targetElement.style.flexBasis = size;
@@ -173,7 +202,7 @@ export class UiSplitter implements EventListenerObject {
     this.targetElement.style.width = '';
   }
   private updateValueNow(): void {
-    this.valueNow = Math.max(this.minSize, Math.min(this.maxSize, Number(this.size) || this.minSize));
+    this.valueNow = Math.max(0, Math.min(this.maxSize, Number(this.size) || 0));
   }
 
   private loadSize(): void {
@@ -184,7 +213,10 @@ export class UiSplitter implements EventListenerObject {
     try {
       const value = localStorage.getItem(this.storageId);
       if (value !== null) {
-        this.size = Math.max(this.minSize, Math.min(this.maxSize, Number(value) || this.size));
+        this.size = Math.max(0, Math.min(this.maxSize, Number(value) || 0));
+        if (this.size > 0) {
+          this.expandedSize = this.size;
+        }
       }
     } catch {
       // Ignore unavailable storage.
