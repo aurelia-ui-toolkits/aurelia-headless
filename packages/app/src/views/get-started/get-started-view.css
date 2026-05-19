@@ -21,6 +21,14 @@
   @apply flex flex-wrap gap-3;
 }
 
+.get-started-note {
+  @apply m-0 mb-3 text-sm leading-6 text-ink-700;
+}
+
+.get-started-note code {
+  @apply rounded-md bg-card-muted px-1.5 py-0.5 text-xs font-bold text-ink-900;
+}
+
 .get-started-code {
   @apply m-0 overflow-auto rounded-xl p-4 text-sm leading-6;
   background: #0f172a;

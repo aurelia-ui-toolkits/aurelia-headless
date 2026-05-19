@@ -2,7 +2,7 @@
   <demo-block class="get-started-hero">
     <div class="get-started-hero__copy">
       <h2>Aurelia Headless UI</h2>
-      <p>Accessible, composable primitives for Aurelia 2 applications. Bring your own styling, keep the behavior.</p>
+      <p>Accessible, composable primitives for Aurelia 2 applications. Use the default theme to get moving, then replace it with your own CSS when you need a personalised design.</p>
     </div>
     <div class="get-started-hero__actions">
       <a ui-button primary href="#/button">Browse components</a>
@@ -11,17 +11,27 @@
   </demo-block>
 
   <demo-block title="Install">
-    <pre class="get-started-code"><code>npm install aurelia-headless</code></pre>
+    <pre class="get-started-code"><code>npm install aurelia-headless aurelia-headless-tailwind</code></pre>
   </demo-block>
 
   <demo-block title="Register">
     <pre class="get-started-code"><code>import Aurelia from 'aurelia';
 import { AureliaHeadlessConfiguration } from 'aurelia-headless';
+import 'aurelia-headless-tailwind';
 
 Aurelia
   .register(AureliaHeadlessConfiguration)
   .app(MyApp)
   .start();</code></pre>
+  </demo-block>
+
+  <demo-block title="Theme CSS">
+    <p class="get-started-note"><code>aurelia-headless-tailwind</code> is a sensible default theme, not a requirement. It is intended to be replaced by app-owned CSS for branded or product-specific themes.</p>
+    <pre class="get-started-code"><code>// Default theme for prototypes and quick starts
+import 'aurelia-headless-tailwind';
+
+// Later, replace it with your own CSS
+import './styles/my-product-theme.css';</code></pre>
   </demo-block>
 
   <demo-block title="Use a component">
