@@ -1,5 +1,5 @@
 {
-  "name": "aurelia-headless",
+  "name": "@aurelia-ui-toolkits/headless-workspace",
   "private": true,
   "workspaces": [
     "packages/*"

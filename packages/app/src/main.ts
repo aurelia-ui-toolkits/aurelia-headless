@@ -1,5 +1,5 @@
 import Aurelia from 'aurelia';
-import { AureliaHeadlessConfiguration, UiValidationControllerFactory } from 'aurelia-headless';
+import { AureliaHeadlessConfiguration, UiValidationControllerFactory } from '@aurelia-ui-toolkits/headless';
 import { RouterConfiguration } from '@aurelia/router';
 import { SVGAnalyzer } from '@aurelia/runtime-html';
 import { DemoBlock } from './elements/demo-block/demo-block';
@@ -9,7 +9,7 @@ import { MyApp } from './views/my-app/my-app';
 import { DefaultVirtualizationConfiguration } from '@aurelia/ui-virtualization';
 import { ValidationHtmlConfiguration } from '@aurelia/validation-html';
 
-import 'aurelia-headless-tailwind';
+import '@aurelia-ui-toolkits/headless-tailwind';
 import { RegexRule, RequiredRule, ValidationConfiguration } from '@aurelia/validation';
 
 Aurelia

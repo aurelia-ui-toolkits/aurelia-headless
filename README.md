@@ -4,13 +4,13 @@ Headless UI components for Aurelia 2, with an optional Tailwind CSS default them
 
 ## Packages
 
-- `aurelia-headless`: component primitives and services.
-- `aurelia-headless-tailwind`: default Tailwind CSS theme for the components.
+- `@aurelia-ui-toolkits/headless`: component primitives and services.
+- `@aurelia-ui-toolkits/headless-tailwind`: default Tailwind CSS theme for the components.
 
 ## Install
 
 ```shell
-npm install aurelia-headless aurelia-headless-tailwind
+npm install @aurelia-ui-toolkits/headless @aurelia-ui-toolkits/headless-tailwind
 ```
 
 Install peer dependencies if your app does not already include them:
@@ -23,8 +23,8 @@ npm install aurelia @aurelia/dialog tailwindcss
 
 ```ts
 import Aurelia from 'aurelia';
-import { AureliaHeadless } from 'aurelia-headless';
-import 'aurelia-headless-tailwind';
+import { AureliaHeadless } from '@aurelia-ui-toolkits/headless';
+import '@aurelia-ui-toolkits/headless-tailwind';
 import { MyApp } from './my-app';
 
 Aurelia
@@ -41,10 +41,10 @@ Aurelia
 
 ## Theme
 
-`aurelia-headless-tailwind` provides a default theme. Apps can override tokens by importing custom CSS after the package theme.
+`@aurelia-ui-toolkits/headless-tailwind` provides a default theme. Apps can override tokens by importing custom CSS after the package theme.
 
 ```css
-@import "aurelia-headless-tailwind";
+@import "@aurelia-ui-toolkits/headless-tailwind";
 
 :root {
   --color-primary-600: #2563eb;
@@ -52,7 +52,7 @@ Aurelia
 }
 ```
 
-The theme package also exposes individual CSS files, including `aurelia-headless-tailwind/theme.css`.
+The theme package also exposes individual CSS files, including `@aurelia-ui-toolkits/headless-tailwind/theme.css`.
 
 ## Demo
 

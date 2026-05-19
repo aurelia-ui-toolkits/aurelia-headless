@@ -1,4 +1,4 @@
-import { AlertService, IPromptDialogData } from 'aurelia-headless';
+import { AlertService, IPromptDialogData } from '@aurelia-ui-toolkits/headless';
 import { customElement, resolve } from 'aurelia';
 import template from './alert-view.html?raw';
 import './alert-view.css';

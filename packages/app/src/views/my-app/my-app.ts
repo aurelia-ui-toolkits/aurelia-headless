@@ -1,6 +1,6 @@
 import { customElement, IDisposable, observable, resolve } from 'aurelia';
 import { ICurrentRoute, IRouter, IRouterEvents } from '@aurelia/router';
-import { UiBreadcrumbItem } from 'aurelia-headless';
+import { UiBreadcrumbItem } from '@aurelia-ui-toolkits/headless';
 import { AlertView } from '../alert/alert-view';
 import { BadgeView } from '../badge/badge-view';
 import { ButtonView } from '../button/button-view';

@@ -3,7 +3,7 @@
   "compilerOptions": {
     "rootDir": "./packages",
     "paths": {
-      "aurelia-headless": ["./packages/components/src/index.ts"]
+      "@aurelia-ui-toolkits/headless": ["./packages/components/src/index.ts"]
     }
   }
 }

@@ -4,22 +4,22 @@ import './get-started-view.css';
 
 @customElement({ name: 'get-started-view', template })
 export class GetStartedView {
-  readonly installCode = 'npm install aurelia-headless aurelia-headless-tailwind';
+  readonly installCode = 'npm install @aurelia-ui-toolkits/headless @aurelia-ui-toolkits/headless-tailwind';
 
   readonly registerCode = `import Aurelia from 'aurelia';
-import { AureliaHeadlessConfiguration } from 'aurelia-headless';
-import 'aurelia-headless-tailwind';
+import { AureliaHeadlessConfiguration } from '@aurelia-ui-toolkits/headless';
+import '@aurelia-ui-toolkits/headless-tailwind';
 
 Aurelia
   .register(AureliaHeadlessConfiguration)
   .app(MyApp)
   .start();`;
 
-  readonly themeImportCode = `import 'aurelia-headless-tailwind';
+  readonly themeImportCode = `import '@aurelia-ui-toolkits/headless-tailwind';
 import './styles/brand-theme.css';`;
 
   readonly replaceThemeCode = `// Default theme for prototypes and quick starts
-import 'aurelia-headless-tailwind';
+import '@aurelia-ui-toolkits/headless-tailwind';
 
 // Later, replace it with your own CSS
 import './styles/my-product-theme.css';`;

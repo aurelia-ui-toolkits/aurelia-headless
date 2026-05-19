@@ -1,5 +1,5 @@
 import { customElement, resolve } from 'aurelia';
-import { UiToastService } from 'aurelia-headless';
+import { UiToastService } from '@aurelia-ui-toolkits/headless';
 import template from './toast-view.html?raw';
 import './toast-view.css';
 

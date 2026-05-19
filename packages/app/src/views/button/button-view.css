@@ -1,4 +1,4 @@
-@reference "aurelia-headless-tailwind/theme.css";
+@reference "@aurelia-ui-toolkits/headless-tailwind/theme.css";
 
 .button-demo-row {
   @apply flex flex-wrap items-center gap-3;

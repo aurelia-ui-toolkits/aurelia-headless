@@ -1,4 +1,4 @@
-@reference "aurelia-headless-tailwind/theme.css";
+@reference "@aurelia-ui-toolkits/headless-tailwind/theme.css";
 
 .tabs-panel {
   @apply mt-4 rounded-xl border border-card-border bg-transparent p-4 text-sm text-ink-700;

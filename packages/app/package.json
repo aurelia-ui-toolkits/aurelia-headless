@@ -1,5 +1,5 @@
 {
-  "name": "@aurelia-headless/app",
+  "name": "@aurelia-ui-toolkits/headless-app",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,8 +8,8 @@
   },
   "dependencies": {
     "aurelia": ">=2.0.0-rc.1",
-    "aurelia-headless": "*",
-    "aurelia-headless-tailwind": "*",
+    "@aurelia-ui-toolkits/headless": "*",
+    "@aurelia-ui-toolkits/headless-tailwind": "*",
     "shiki": "^4.0.2"
   }
 }

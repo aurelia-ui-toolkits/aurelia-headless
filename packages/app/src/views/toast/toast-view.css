@@ -1,4 +1,4 @@
-@reference "aurelia-headless-tailwind/theme.css";
+@reference "@aurelia-ui-toolkits/headless-tailwind/theme.css";
 
 .toast-demo-row {
   @apply flex flex-wrap gap-3;
