@@ -28,7 +28,7 @@
   bottom: auto;
   left: auto;
   right: auto;
-  overflow: hidden;
+  overflow: auto;
   width: 100%;
   transform: none;
 }

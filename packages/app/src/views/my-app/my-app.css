@@ -13,9 +13,13 @@ body {
   background: radial-gradient(circle at 20% 10%, #172033 0%, #0f172a 42%, #080c14 100%);
 }
 
+.app-shell {
+  @apply grid h-dvh overflow-hidden;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
 .app-layout {
-  min-height: calc(100vh - 5.5rem);
-  @apply grid;
+  @apply grid min-h-0 overflow-hidden;
   grid-template-columns: 0 1fr;
   transition: grid-template-columns 180ms ease;
 }
@@ -24,13 +28,17 @@ body {
   grid-template-columns: 17rem 1fr;
 }
 
-.app-layout > .ui-drawer__panel[data-persistent] {
+.app-layout .ui-drawer__panel[data-persistent] {
   @apply border-r border-card-border bg-white/85;
   backdrop-filter: blur(8px);
+  align-self: start;
+  height: 100%;
+  overflow: auto;
+  top: 0;
   z-index: 10;
 }
 
-:root[data-theme="dark"] .app-layout > .ui-drawer__panel[data-persistent] {
+:root[data-theme="dark"] .app-layout .ui-drawer__panel[data-persistent] {
   background: color-mix(in srgb, var(--color-card) 88%, transparent);
 }
 
@@ -126,7 +134,7 @@ body {
 }
 
 .content-panel {
-  @apply grid content-start gap-5 p-8 pt-5;
+  @apply grid min-h-0 content-start gap-5 overflow-auto p-8 pt-5;
 }
 
 .route-panel {
