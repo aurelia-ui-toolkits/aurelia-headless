@@ -1,4 +1,4 @@
-@reference "../../styles/theme.css";
+@reference "aurelia-headless-tailwind/theme.css";
 
 .drawer-demo-panel {
   @apply grid gap-4;

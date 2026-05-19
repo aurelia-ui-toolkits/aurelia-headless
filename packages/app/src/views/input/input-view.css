@@ -1,4 +1,4 @@
-@reference "../../styles/theme.css";
+@reference "aurelia-headless-tailwind/theme.css";
 
 .input-state {
   @apply text-xs text-ink-500;

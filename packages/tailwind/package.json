@@ -1,0 +1,20 @@
+{
+  "name": "aurelia-headless-tailwind",
+  "version": "0.0.1",
+  "description": "Tailwind CSS theme for aurelia-headless",
+  "license": "MIT",
+  "author": "Maxim Balaganskiy <m.balaganskiy@gmail.com>",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.css",
+    "./theme.css": "./src/theme.css",
+    "./dark-theme.css": "./src/dark-theme.css",
+    "./*.css": "./src/*.css"
+  },
+  "peerDependencies": {
+    "tailwindcss": ">=4.0.0"
+  },
+  "files": [
+    "src"
+  ]
+}

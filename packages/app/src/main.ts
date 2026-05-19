@@ -9,35 +9,7 @@ import { MyApp } from './views/my-app/my-app';
 import { DefaultVirtualizationConfiguration } from '@aurelia/ui-virtualization';
 import { ValidationHtmlConfiguration } from '@aurelia/validation-html';
 
-import './styles/theme.css';
-import './styles/ui-alert-theme.css';
-import './styles/ui-alert-dialog-theme.css';
-import './styles/ui-badge-theme.css';
-import './styles/ui-breadcrumbs-theme.css';
-import './styles/ui-button-theme.css';
-import './styles/ui-checkbox-theme.css';
-import './styles/ui-chip-theme.css';
-import './styles/ui-combobox-theme.css';
-import './styles/ui-disclosure-theme.css';
-import './styles/ui-drawer-theme.css';
-import './styles/ui-input-theme.css';
-import './styles/ui-list-theme.css';
-import './styles/ui-menu-theme.css';
-import './styles/ui-popup-theme.css';
-import './styles/ui-progress-theme.css';
-import './styles/ui-radio-theme.css';
-import './styles/ui-select-theme.css';
-import './styles/ui-segmented-control-theme.css';
-import './styles/ui-slider-theme.css';
-import './styles/ui-splitter-theme.css';
-import './styles/ui-switch-theme.css';
-import './styles/ui-tabs-theme.css';
-import './styles/ui-table-theme.css';
-import './styles/ui-toast-theme.css';
-import './styles/ui-tooltip-theme.css';
-import './styles/ui-top-app-bar-theme.css';
-import './styles/ui-tree-theme.css';
-import './styles/dark-theme.css';
+import 'aurelia-headless-tailwind';
 import { RegexRule, RequiredRule, ValidationConfiguration } from '@aurelia/validation';
 
 Aurelia

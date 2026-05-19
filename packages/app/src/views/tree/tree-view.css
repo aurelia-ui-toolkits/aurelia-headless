@@ -1,4 +1,4 @@
-@reference "../../styles/theme.css";
+@reference "aurelia-headless-tailwind/theme.css";
 
 .tree-demo-scroller {
   @apply max-h-80 overflow-y-auto rounded-xl;

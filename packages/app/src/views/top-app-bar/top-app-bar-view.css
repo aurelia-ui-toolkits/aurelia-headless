@@ -1,4 +1,4 @@
-@reference "../../styles/theme.css";
+@reference "aurelia-headless-tailwind/theme.css";
 
 .top-app-bar-demo-icon {
   @apply h-4 w-4;

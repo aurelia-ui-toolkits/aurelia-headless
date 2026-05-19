@@ -9,6 +9,7 @@
   "dependencies": {
     "aurelia": ">=2.0.0-rc.1",
     "aurelia-headless": "*",
+    "aurelia-headless-tailwind": "*",
     "shiki": "^4.0.2"
   }
 }

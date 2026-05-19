@@ -1,4 +1,4 @@
-@reference "../../styles/theme.css";
+@reference "aurelia-headless-tailwind/theme.css";
 
 .toast-demo-row {
   @apply flex flex-wrap gap-3;
