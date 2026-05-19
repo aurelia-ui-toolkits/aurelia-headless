@@ -19,7 +19,7 @@ ui-radio-group,
 
 ui-radio,
 .ui-radio {
-  @apply flex cursor-pointer items-center gap-3 rounded-xl border border-card-border bg-white px-3 py-2 text-sm text-ink-700 outline-none;
+  @apply flex cursor-pointer items-center gap-3 rounded-xl border border-card-border bg-card px-3 py-2 text-sm text-ink-700 outline-none;
   transition: border-color 140ms ease, background-color 140ms ease, box-shadow 140ms ease;
 }
 

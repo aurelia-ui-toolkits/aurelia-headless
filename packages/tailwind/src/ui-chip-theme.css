@@ -1,7 +1,7 @@
 @reference "./theme.css";
 
 .ui-chip {
-  @apply inline-flex cursor-pointer select-none items-center gap-1 rounded-full border border-card-border bg-white px-3 text-sm font-medium leading-normal text-ink-700 outline-none transition-colors;
+  @apply inline-flex cursor-pointer select-none items-center gap-1 rounded-full border border-card-border bg-card px-3 text-sm font-medium leading-normal text-ink-700 outline-none transition-colors;
 }
 
 .ui-chip[data-hover] {
@@ -26,18 +26,18 @@
 }
 
 .ui-chip[data-tone="success"] {
-  border-color: #22c55e;
-  color: #166534;
+  border-color: var(--color-success-border);
+  color: var(--color-success-text);
 }
 
 .ui-chip[data-tone="warning"] {
-  border-color: #f59e0b;
-  color: #92400e;
+  border-color: var(--color-warning-border);
+  color: var(--color-warning-text);
 }
 
 .ui-chip[data-tone="danger"] {
-  border-color: #ef4444;
-  color: #991b1b;
+  border-color: var(--color-danger-border);
+  color: var(--color-danger-text);
 }
 
 .ui-chip[data-selected] {
@@ -45,18 +45,18 @@
 }
 
 .ui-chip[data-selected][data-tone="success"] {
-  border-color: #16a34a;
-  background: #16a34a;
+  border-color: var(--color-success-border);
+  background: var(--color-success-border);
 }
 
 .ui-chip[data-selected][data-tone="warning"] {
-  border-color: #d97706;
-  background: #d97706;
+  border-color: var(--color-warning-border);
+  background: var(--color-warning-border);
 }
 
 .ui-chip[data-selected][data-tone="danger"] {
-  border-color: #dc2626;
-  background: #dc2626;
+  border-color: var(--color-danger-border);
+  background: var(--color-danger-border);
 }
 
 .ui-chip__content {

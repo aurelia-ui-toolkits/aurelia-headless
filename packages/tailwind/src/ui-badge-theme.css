@@ -17,18 +17,18 @@
 }
 
 .ui-badge[data-tone="success"] {
-  background: #dcfce7;
-  color: #052e16;
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
 }
 
 .ui-badge[data-tone="warning"] {
-  background: #fef3c7;
-  color: #451a03;
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
 }
 
 .ui-badge[data-tone="danger"] {
-  background: #fee2e2;
-  color: #450a0a;
+  background: var(--color-danger-bg);
+  color: var(--color-danger-text);
 }
 
 .ui-badge[data-outlined] {
@@ -44,16 +44,16 @@
 }
 
 .ui-badge[data-tone="success"][data-outlined] {
-  border-color: #22c55e;
-  color: #166534;
+  border-color: var(--color-success-border);
+  color: var(--color-success-text);
 }
 
 .ui-badge[data-tone="warning"][data-outlined] {
-  border-color: #f59e0b;
-  color: #92400e;
+  border-color: var(--color-warning-border);
+  color: var(--color-warning-text);
 }
 
 .ui-badge[data-tone="danger"][data-outlined] {
-  border-color: #ef4444;
-  color: #991b1b;
+  border-color: var(--color-danger-border);
+  color: var(--color-danger-text);
 }

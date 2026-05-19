@@ -5,27 +5,27 @@
 }
 
 .ui-alert[data-tone="info"] {
-  @apply text-ink-700;
-  border-color: color-mix(in srgb, var(--color-primary-600) 20%, transparent);
-  background: #eff5ff;
+  border-color: var(--color-info-border);
+  background: var(--color-info-bg);
+  color: var(--color-info-text);
 }
 
 .ui-alert[data-tone="success"] {
-  border-color: #bbf7d0;
-  background: #f0fdf4;
-  color: #052e16;
+  border-color: var(--color-success-border);
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
 }
 
 .ui-alert[data-tone="warning"] {
-  border-color: #fde68a;
-  background: #fffbeb;
-  color: #451a03;
+  border-color: var(--color-warning-border);
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
 }
 
 .ui-alert[data-tone="danger"] {
-  border-color: #fecaca;
-  background: #fef2f2;
-  color: #450a0a;
+  border-color: var(--color-danger-border);
+  background: var(--color-danger-bg);
+  color: var(--color-danger-text);
 }
 
 .ui-alert__icon {

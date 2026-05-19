@@ -10,7 +10,7 @@
 }
 
 .ui-switch__thumb {
-  @apply absolute bottom-0 left-0.5 top-0 my-auto h-5 w-5 rounded-full bg-white shadow-sm;
+  @apply absolute bottom-0 left-0.5 top-0 my-auto h-5 w-5 rounded-full bg-card shadow-sm;
   transition: transform 140ms ease;
 }
 

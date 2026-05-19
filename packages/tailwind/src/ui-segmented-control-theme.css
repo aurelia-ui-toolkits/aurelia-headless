@@ -13,7 +13,7 @@ ui-segment,
 
 ui-segment:hover,
 .ui-segment:hover {
-  @apply bg-white text-ink-900;
+  @apply bg-card text-ink-900;
 }
 
 ui-segment:focus-visible,
@@ -23,7 +23,7 @@ ui-segment:focus-visible,
 
 ui-segment[data-selected],
 .ui-segment[data-selected] {
-  @apply bg-white text-primary-700 shadow-sm;
+  @apply bg-card text-primary-700 shadow-sm;
 }
 
 ui-segment[data-disabled],

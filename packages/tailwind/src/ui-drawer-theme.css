@@ -14,7 +14,7 @@
 }
 
 .ui-drawer__panel {
-  @apply pointer-events-none fixed z-50 overflow-auto bg-white p-5 text-ink-700 opacity-0 shadow-2xl outline-none;
+  @apply pointer-events-none fixed z-50 overflow-auto bg-card p-5 text-ink-700 opacity-0 shadow-2xl outline-none;
   transition: opacity 180ms ease, transform 180ms ease;
 }
 

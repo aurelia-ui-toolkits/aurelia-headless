@@ -20,6 +20,14 @@
   @apply cursor-not-allowed opacity-50;
 }
 
+.ui-button:not([data-primary]):not([data-outlined]) {
+  @apply bg-card-muted text-ink-900;
+}
+
+.ui-button:not([data-primary]):not([data-outlined])[data-hover] {
+  @apply bg-outline-hover;
+}
+
 .ui-button[data-primary] {
   @apply bg-primary-600 text-white;
 }

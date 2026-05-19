@@ -1,7 +1,7 @@
 @reference "./theme.css";
 
 .ui-table {
-  @apply relative block overflow-x-auto rounded-xl border border-card-border bg-white;
+  @apply relative block overflow-x-auto rounded-xl border border-card-border bg-card;
 }
 
 .ui-table[data-disabled] {

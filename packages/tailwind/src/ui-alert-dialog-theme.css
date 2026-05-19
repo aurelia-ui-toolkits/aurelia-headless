@@ -2,7 +2,7 @@
 
 dialog:has(.ui-alert-modal),
 dialog:has(.prompt-dialog) {
-  @apply rounded-2xl border bg-white p-0 text-ink-900 shadow-2xl backdrop:bg-black/40;
+  @apply rounded-2xl border bg-card p-0 text-ink-900 shadow-2xl backdrop:bg-black/40;
   animation: ui-alert-dialog-in 140ms ease-out;
   border-color: var(--color-card-border);
   inset: 50% auto auto 50%;
@@ -50,23 +50,23 @@ dialog:has(.prompt-dialog)::backdrop {
 }
 
 .ui-alert-modal[data-tone="info"] .ui-alert-modal__icon {
-  @apply text-primary-700;
-  background: #e9f0ff;
+  background: var(--color-info-bg);
+  color: var(--color-info-text);
 }
 
 .ui-alert-modal[data-tone="success"] .ui-alert-modal__icon {
-  background: #dcfce7;
-  color: #166534;
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
 }
 
 .ui-alert-modal[data-tone="warning"] .ui-alert-modal__icon {
-  background: #fef3c7;
-  color: #92400e;
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
 }
 
 .ui-alert-modal[data-tone="danger"] .ui-alert-modal__icon {
-  background: #fee2e2;
-  color: #991b1b;
+  background: var(--color-danger-bg);
+  color: var(--color-danger-text);
 }
 
 .ui-alert-modal__body {

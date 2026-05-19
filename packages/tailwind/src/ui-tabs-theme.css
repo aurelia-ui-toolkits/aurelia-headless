@@ -13,7 +13,7 @@ ui-tab,
 
 ui-tab:hover,
 .ui-tab:hover {
-  @apply bg-white text-ink-900;
+  @apply bg-card text-ink-900;
 }
 
 ui-tab:focus-visible,
@@ -23,7 +23,7 @@ ui-tab:focus-visible,
 
 ui-tab[data-selected],
 .ui-tab[data-selected] {
-  @apply bg-white text-primary-700 shadow-sm;
+  @apply bg-card text-primary-700 shadow-sm;
 }
 
 ui-tab[data-disabled],
