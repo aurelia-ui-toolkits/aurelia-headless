@@ -34,6 +34,35 @@ import 'aurelia-headless-tailwind';
 import './styles/my-product-theme.css';</code></pre>
   </demo-block>
 
+  <demo-block title="Update default colours">
+    <p class="get-started-note">Override the default theme by loading your CSS after <code>aurelia-headless-tailwind</code>. Change the tokens first; component themes read from these variables.</p>
+    <pre class="get-started-code"><code>import 'aurelia-headless-tailwind';
+import './styles/brand-theme.css';</code></pre>
+    <pre class="get-started-code"><code>/* brand-theme.css */
+:root {
+  --color-primary-600: #7c3aed;
+  --color-primary-700: #6d28d9;
+  --color-primary-800: #5b21b6;
+  --color-ring: #c4b5fd;
+
+  --color-card: #ffffff;
+  --color-card-muted: #f6f2ff;
+  --color-card-border: #ddd6fe;
+}
+
+:root[data-theme="dark"] {
+  --color-primary-600: #a78bfa;
+  --color-primary-700: #c4b5fd;
+  --color-primary-800: #ddd6fe;
+  --color-ring: #8b5cf6;
+
+  --color-card: #171123;
+  --color-card-muted: #211834;
+  --color-card-border: #4c1d95;
+}</code></pre>
+    <p class="get-started-note">For tone colours, override semantic tokens such as <code>--color-success-bg</code>, <code>--color-warning-text</code>, and <code>--color-danger-border</code>.</p>
+  </demo-block>
+
   <demo-block title="Use a component">
     <pre class="get-started-code"><code>&lt;button ui-button primary click.trigger="save()"&gt;Save&lt;/button&gt;</code></pre>
   </demo-block>
