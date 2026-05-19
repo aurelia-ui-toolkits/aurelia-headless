@@ -28,7 +28,7 @@ jobs:
           node-version: 22
           cache: npm
 
-      - run: npm ci
+      - run: npm i
 
       - id: version
         shell: bash
@@ -73,7 +73,7 @@ jobs:
           cache: npm
           registry-url: https://registry.npmjs.org
 
-      - run: npm ci
+      - run: npm i
 
       - run: npm run build -w packages/components
 
