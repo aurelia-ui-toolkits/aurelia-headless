@@ -5,7 +5,7 @@
 }
 
 .badge-demo-card {
-  @apply flex flex-wrap items-center justify-between gap-4 rounded-xl border border-card-border bg-white p-4;
+  @apply flex flex-wrap items-center justify-between gap-4 rounded-xl border border-card-border bg-transparent p-4;
 }
 
 .badge-demo-card h3 {
