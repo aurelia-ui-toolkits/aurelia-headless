@@ -124,8 +124,45 @@ body {
   @apply rounded-xl border border-black/10 bg-card p-4;
 }
 
+.demo-block__header {
+  @apply mb-3 flex items-center justify-between gap-3;
+}
+
 .demo-title {
-  @apply m-0 mb-3 text-xs font-bold uppercase tracking-wide text-ink-500;
+  @apply m-0 text-xs font-bold uppercase tracking-wide text-ink-500;
+}
+
+.demo-source-actions {
+  @apply flex flex-wrap justify-end gap-1;
+}
+
+.demo-source-toggle {
+  @apply rounded-md px-2 py-1 text-xs font-bold text-primary-600 outline-none;
+}
+
+.demo-source-toggle:hover {
+  @apply bg-outline-hover;
+}
+
+.demo-source-toggle:focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+.demo-source-stack {
+  @apply mt-4 grid gap-3;
+}
+
+.demo-source-panel {
+  @apply grid gap-2;
+}
+
+.demo-source-label {
+  @apply text-xs font-bold uppercase tracking-wide text-ink-500;
+}
+
+.demo-source {
+  @apply m-0 max-h-96 overflow-auto rounded-xl bg-ink-900 p-4 text-sm leading-6 text-white;
 }
 
 @media (max-width: 760px) {

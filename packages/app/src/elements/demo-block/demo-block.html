@@ -1,4 +1,24 @@
 <template class="demo-block">
-  <h3 class="demo-title">${title}</h3>
+  <div class="demo-block__header">
+    <h3 class="demo-title">${title}</h3>
+    <div class="demo-source-actions">
+      <button class="demo-source-toggle" type="button" if.bind="sourceCode" click.trigger="toggleTemplateSource()">
+        ${templateSourceOpen ? 'Hide template' : 'Template'}
+      </button>
+      <button class="demo-source-toggle" type="button" if.bind="tsSourceCode" click.trigger="toggleTsSource()">
+        ${tsSourceOpen ? 'Hide TS' : 'TS'}
+      </button>
+    </div>
+  </div>
   <au-slot></au-slot>
+  <div class="demo-source-stack" if.bind="templateSourceOpen || tsSourceOpen">
+    <div class="demo-source-panel" if.bind="templateSourceOpen && sourceCode">
+      <div class="demo-source-label">Template</div>
+      <pre class="demo-source"><code>${sourceCode}</code></pre>
+    </div>
+    <div class="demo-source-panel" if.bind="tsSourceOpen && tsSourceCode">
+      <div class="demo-source-label">View model</div>
+      <pre class="demo-source"><code>${tsSourceCode}</code></pre>
+    </div>
+  </div>
 </template>
