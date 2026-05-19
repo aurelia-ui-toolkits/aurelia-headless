@@ -14,11 +14,11 @@
   <div class="demo-source-stack" if.bind="templateSourceOpen || tsSourceOpen">
     <div class="demo-source-panel" if.bind="templateSourceOpen && sourceCode">
       <div class="demo-source-label">Template</div>
-      <pre class="demo-source"><code>${sourceCode}</code></pre>
+      <demo-code code.bind="sourceCode" language="html"></demo-code>
     </div>
     <div class="demo-source-panel" if.bind="tsSourceOpen && tsSourceCode">
       <div class="demo-source-label">View model</div>
-      <pre class="demo-source"><code>${tsSourceCode}</code></pre>
+      <demo-code code.bind="tsSourceCode" language="ts"></demo-code>
     </div>
   </div>
 </template>
