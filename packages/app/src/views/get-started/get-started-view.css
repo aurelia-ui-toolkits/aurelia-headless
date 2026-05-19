@@ -1,7 +1,7 @@
 @reference "../../styles/theme.css";
 
 .get-started-hero {
-  @apply grid gap-5 rounded-2xl bg-white/80 p-6;
+  @apply grid gap-5 rounded-2xl border border-card-border bg-card p-6;
 }
 
 .get-started-hero__copy {
@@ -22,5 +22,12 @@
 }
 
 .get-started-code {
-  @apply m-0 overflow-auto rounded-xl bg-ink-900 p-4 text-sm leading-6 text-white;
+  @apply m-0 overflow-auto rounded-xl p-4 text-sm leading-6;
+  background: #0f172a;
+  color: #f8fafc;
+}
+
+:root[data-theme="dark"] .get-started-code {
+  background: #020617;
+  border: 1px solid var(--color-card-border);
 }
