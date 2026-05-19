@@ -1,5 +1,5 @@
 <demo-section title="Get started">
-  <demo-block class="get-started-hero">
+  <section class="get-started-hero">
     <div class="get-started-hero__copy">
       <h2>Aurelia Headless UI</h2>
       <p>Accessible, composable primitives for Aurelia 2 applications. Use the default theme to get moving, then replace it with your own CSS when you need a personalised design.</p>
@@ -8,62 +8,34 @@
       <a ui-button primary href="#/button">Browse components</a>
       <a ui-button outlined href="https://github.com/aurelia-ui-toolkits/aurelia-headless" target="_blank" rel="noreferrer">GitHub</a>
     </div>
-  </demo-block>
+  </section>
 
-  <demo-block title="Install">
-    <pre class="get-started-code"><code>npm install aurelia-headless aurelia-headless-tailwind</code></pre>
-  </demo-block>
+  <section class="get-started-block">
+    <h3 class="get-started-title">Install</h3>
+    <demo-code code.bind="installCode" language="shell"></demo-code>
+  </section>
 
-  <demo-block title="Register">
-    <pre class="get-started-code"><code>import Aurelia from 'aurelia';
-import { AureliaHeadlessConfiguration } from 'aurelia-headless';
-import 'aurelia-headless-tailwind';
+  <section class="get-started-block">
+    <h3 class="get-started-title">Register</h3>
+    <demo-code code.bind="registerCode" language="ts"></demo-code>
+  </section>
 
-Aurelia
-  .register(AureliaHeadlessConfiguration)
-  .app(MyApp)
-  .start();</code></pre>
-  </demo-block>
-
-  <demo-block title="Theme CSS">
+  <section class="get-started-block">
+    <h3 class="get-started-title">Theme CSS</h3>
     <p class="get-started-note"><code>aurelia-headless-tailwind</code> is a sensible default theme, not a requirement. It is intended to be replaced by app-owned CSS for branded or product-specific themes.</p>
-    <pre class="get-started-code"><code>// Default theme for prototypes and quick starts
-import 'aurelia-headless-tailwind';
+    <demo-code code.bind="replaceThemeCode" language="ts"></demo-code>
+  </section>
 
-// Later, replace it with your own CSS
-import './styles/my-product-theme.css';</code></pre>
-  </demo-block>
-
-  <demo-block title="Update default colours">
+  <section class="get-started-block">
+    <h3 class="get-started-title">Update default colours</h3>
     <p class="get-started-note">Override the default theme by loading your CSS after <code>aurelia-headless-tailwind</code>. Change the tokens first; component themes read from these variables.</p>
-    <pre class="get-started-code"><code>import 'aurelia-headless-tailwind';
-import './styles/brand-theme.css';</code></pre>
-    <pre class="get-started-code"><code>/* brand-theme.css */
-:root {
-  --color-primary-600: #7c3aed;
-  --color-primary-700: #6d28d9;
-  --color-primary-800: #5b21b6;
-  --color-ring: #c4b5fd;
-
-  --color-card: #ffffff;
-  --color-card-muted: #f6f2ff;
-  --color-card-border: #ddd6fe;
-}
-
-:root[data-theme="dark"] {
-  --color-primary-600: #a78bfa;
-  --color-primary-700: #c4b5fd;
-  --color-primary-800: #ddd6fe;
-  --color-ring: #8b5cf6;
-
-  --color-card: #171123;
-  --color-card-muted: #211834;
-  --color-card-border: #4c1d95;
-}</code></pre>
+    <demo-code code.bind="themeImportCode" language="ts"></demo-code>
+    <demo-code code.bind="brandThemeCode" language="css"></demo-code>
     <p class="get-started-note">For tone colours, override semantic tokens such as <code>--color-success-bg</code>, <code>--color-warning-text</code>, and <code>--color-danger-border</code>.</p>
-  </demo-block>
+  </section>
 
-  <demo-block title="Use a component">
-    <pre class="get-started-code"><code>&lt;button ui-button primary click.trigger="save()"&gt;Save&lt;/button&gt;</code></pre>
-  </demo-block>
+  <section class="get-started-block">
+    <h3 class="get-started-title">Use a component</h3>
+    <demo-code code.bind="componentCode" language="html"></demo-code>
+  </section>
 </demo-section>

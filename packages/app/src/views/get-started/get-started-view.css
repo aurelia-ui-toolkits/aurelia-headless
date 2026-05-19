@@ -4,6 +4,14 @@
   @apply grid gap-5 rounded-2xl border border-card-border bg-card p-6;
 }
 
+.get-started-block {
+  @apply grid gap-3 rounded-xl border border-card-border bg-card p-4;
+}
+
+.get-started-title {
+  @apply m-0 text-xs font-bold uppercase tracking-wide text-ink-500;
+}
+
 .get-started-hero__copy {
   @apply grid gap-3;
 }
@@ -27,14 +35,4 @@
 
 .get-started-note code {
   @apply rounded-md bg-card-muted px-1.5 py-0.5 text-xs font-bold text-ink-900;
-}
-
-.get-started-code {
-  @apply m-0 overflow-auto rounded-xl p-4 text-sm leading-6;
-  background: var(--color-code-bg);
-  color: var(--color-code-text);
-}
-
-:root[data-theme="dark"] .get-started-code {
-  border: 1px solid var(--color-card-border);
 }

@@ -1,11 +1,11 @@
 import { bindable, customElement, INode, resolve } from 'aurelia';
 import template from './demo-code.html?raw';
 
-type DemoCodeLanguage = 'html' | 'ts';
+type DemoCodeLanguage = 'css' | 'html' | 'shell' | 'ts';
 type DemoCodeTheme = 'github-light' | 'github-dark-default';
 type DemoCodeHighlighter = {
   codeToHtml(code: string, options: {
-    lang: 'html' | 'typescript';
+    lang: 'css' | 'html' | 'shellscript' | 'typescript';
     theme: DemoCodeTheme;
     transformers: Array<{
       pre(this: { addClassToHast(node: unknown, className: string): void }, node: unknown): void;
@@ -68,7 +68,7 @@ export class DemoCode {
 
     const shiki = await this.getHighlighter();
     const html = await shiki.codeToHtml(code, {
-      lang: this.language === 'ts' ? 'typescript' : 'html',
+      lang: this.getShikiLanguage(),
       theme,
       transformers: [{
         pre(node) {
@@ -97,7 +97,9 @@ export class DemoCode {
     ]);
     const createHighlighter = createBundledHighlighter({
       langs: {
+        css: () => import('@shikijs/langs/css'),
         html: () => import('@shikijs/langs/html'),
+        shellscript: () => import('@shikijs/langs/shellscript'),
         typescript: () => import('@shikijs/langs/typescript')
       },
       themes: {
@@ -107,5 +109,18 @@ export class DemoCode {
       engine: () => createJavaScriptRegexEngine()
     });
     return createSingletonShorthands(createHighlighter) as DemoCodeHighlighter;
+  }
+
+  private getShikiLanguage(): 'css' | 'html' | 'shellscript' | 'typescript' {
+    if (this.language === 'css') {
+      return 'css';
+    }
+    if (this.language === 'ts') {
+      return 'typescript';
+    }
+    if (this.language === 'shell') {
+      return 'shellscript';
+    }
+    return 'html';
   }
 }
