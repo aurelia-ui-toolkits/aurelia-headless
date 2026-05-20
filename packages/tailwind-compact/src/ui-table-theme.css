@@ -1,7 +1,7 @@
 @reference "./theme.css";
 
 .ui-table {
-  @apply relative block overflow-x-auto rounded-xl border border-card-border bg-card;
+  @apply relative block overflow-x-auto rounded-md border border-card-border bg-card;
 }
 
 .ui-table[data-disabled] {
@@ -13,13 +13,13 @@
 }
 
 .ui-table table {
-  @apply w-full border-collapse text-sm;
+  @apply w-full border-collapse text-xs;
   table-layout: fixed;
 }
 
 .ui-table th,
 .ui-table td {
-  @apply border-b border-card-border px-3 py-2 text-left align-middle;
+  @apply border-b border-card-border px-2 py-1 text-left align-middle;
 }
 
 .ui-table th {
@@ -31,7 +31,7 @@
 }
 
 .ui-table-column {
-  @apply relative select-none pr-8;
+  @apply relative select-none pr-6;
 }
 
 .ui-table-column[data-sortable] {
@@ -43,7 +43,7 @@
 }
 
 .ui-table-column__sort-indicator {
-  @apply absolute right-4 inline-flex items-center gap-1 text-primary-700;
+  @apply absolute right-2 inline-flex items-center gap-0.5 text-primary-700;
 }
 
 .ui-table-column__sort-order {
@@ -64,7 +64,7 @@
 }
 
 .ui-table__pagination {
-  @apply flex flex-wrap items-center justify-end gap-6 border-t border-card-border px-5 py-1.5 text-sm text-ink-900;
+  @apply flex flex-wrap items-center justify-end gap-3 border-t border-card-border px-3 py-1 text-xs text-ink-900;
 }
 
 .ui-table__pagination-actions {
@@ -76,7 +76,7 @@
 }
 
 .ui-table__page-size {
-  @apply flex shrink-0 items-center gap-4;
+  @apply flex shrink-0 items-center gap-2;
 }
 
 .ui-table__page-size-select,
@@ -96,5 +96,5 @@
 
 .ui-table__page-size-label,
 .ui-table__pagination-summary {
-  @apply whitespace-nowrap text-base text-ink-900;
+  @apply whitespace-nowrap text-xs text-ink-900;
 }

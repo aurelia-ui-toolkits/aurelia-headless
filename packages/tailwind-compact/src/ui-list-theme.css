@@ -1,13 +1,14 @@
 @reference "./theme.css";
 
 .ui-list {
-  @apply grid gap-1 rounded-xl border border-card-border bg-transparent p-1;
+  @apply grid gap-0 rounded-md border border-card-border bg-transparent p-0.5;
   align-content: start;
 }
 
 .ui-list-item {
-  @apply grid grid-cols-[auto_1fr_auto] items-center gap-0 rounded-md px-2 py-1.5 text-sm text-ink-700;
-  min-height: 2.5rem;
+  @apply grid grid-cols-[auto_1fr_auto] items-center gap-0 rounded-sm px-2 py-0 text-xs text-ink-700;
+  height: 2.15rem;
+  min-height: 2.15rem;
   transition: background-color 140ms ease;
 }
 
@@ -49,7 +50,7 @@
 
 .ui-list-item__content {
   @apply min-w-0 grid gap-0.5;
-  line-height: 1.2;
+  line-height: 1.05;
 }
 
 .ui-list-item__primary {
@@ -57,7 +58,7 @@
 }
 
 .ui-list-item__secondary {
-  @apply truncate text-xs leading-4 text-ink-500;
+  @apply truncate text-[0.68rem] leading-3 text-ink-500;
 }
 
 .ui-list-item[data-selected] .ui-list-item__secondary {

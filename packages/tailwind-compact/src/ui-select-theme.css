@@ -77,7 +77,7 @@ ui-select,
 }
 
 .ui-select__value {
-  @apply flex h-[1.9rem] min-w-0 w-full items-center truncate bg-transparent text-sm text-ink-900 outline-none;
+  @apply flex h-7 min-w-0 w-full items-center truncate bg-transparent text-xs text-ink-900 outline-none;
   grid-column: 2;
   grid-row: 1;
   z-index: 1;
@@ -92,8 +92,8 @@ ui-select,
 }
 
 .ui-select[data-inset] .ui-select__value {
-  height: 2.45rem;
-  padding-top: 0.85rem;
+  height: 2.15rem;
+  padding-top: 0.7rem;
   padding-bottom: 0.125rem;
 }
 
@@ -103,7 +103,7 @@ ui-select,
 
 .ui-select[data-inset][data-focus] .ui-select__inset-label,
 .ui-select[data-inset][data-has-value] .ui-select__inset-label {
-  transform: translateY(-0.65rem) scale(0.82);
+  transform: translateY(-0.5rem) scale(0.82);
   font-size: 0.7rem;
   color: var(--color-ink-700);
 }

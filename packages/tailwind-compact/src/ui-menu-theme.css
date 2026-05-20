@@ -6,7 +6,7 @@ ui-menu,
 }
 
 .ui-menu .ui-list {
-  @apply min-w-56;
+  @apply min-w-48;
 }
 
 .ui-popup__panel .ui-list {

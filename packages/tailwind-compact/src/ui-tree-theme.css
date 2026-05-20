@@ -1,12 +1,13 @@
 @reference "./theme.css";
 
 .ui-tree {
-  @apply grid rounded-xl border border-card-border bg-card p-1;
+  @apply grid rounded-md border border-card-border bg-card p-0.5;
 }
 
 .ui-tree__item {
-  @apply grid cursor-pointer grid-cols-[auto_1fr] items-center rounded-lg py-1.5 pr-2 text-sm text-ink-700 outline-none;
-  padding-left: calc(0.25rem + var(--ui-tree-depth) * 1.25rem);
+  @apply grid cursor-pointer grid-cols-[auto_1fr] items-center rounded-sm py-0.5 pr-2 text-xs text-ink-700 outline-none;
+  min-height: 1.75rem;
+  padding-left: calc(0.125rem + var(--ui-tree-depth) * 1rem);
   transition: background-color 140ms ease, color 140ms ease, box-shadow 140ms ease;
 }
 
@@ -33,7 +34,7 @@
 }
 
 .ui-tree__toggle {
-  @apply grid h-6 w-6 place-items-center rounded-md text-ink-500 outline-none;
+  @apply grid h-5 w-5 place-items-center rounded-sm text-ink-500 outline-none;
 }
 
 .ui-tree__toggle:hover {
