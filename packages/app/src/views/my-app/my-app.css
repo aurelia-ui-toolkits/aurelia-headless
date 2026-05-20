@@ -223,6 +223,11 @@ body {
     @apply mb-3;
   }
 
+  .ui-drawer__panel[data-side="left"]:not([data-persistent]) {
+    top: 3.5rem;
+    width: min(18rem, calc(100vw - 2rem));
+  }
+
   .content-panel {
     @apply min-h-0 overflow-visible p-5;
   }
