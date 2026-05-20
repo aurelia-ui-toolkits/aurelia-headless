@@ -32,7 +32,6 @@ import logoUrl from '../../assets/aurelia-headless-logo.png';
 type DemoRoute = { id: string; path: string; title: string; component: unknown };
 const mobileQuery = '(max-width: 760px)';
 type ThemePackage = 'default' | 'compact';
-type ThemePackageOption = { value: ThemePackage; label: string };
 
 export class MyApp {
   mobile = this.isMobile();
@@ -75,14 +74,9 @@ export class MyApp {
 
   readonly menuItems = MyApp.routes;
   readonly logoUrl = logoUrl;
-  readonly themePackageOptions: ThemePackageOption[] = [
-    { value: 'default', label: 'Default' },
-    { value: 'compact', label: 'Compact' }
-  ];
   selectedMenuItem: DemoRoute = this.menuItems[0];
   breadcrumbs: UiBreadcrumbItem[] = [];
   themePackage: ThemePackage = this.loadThemePackage();
-  selectedThemePackageOption: ThemePackageOption = this.themePackageOptions.find(option => option.value === this.themePackage) ?? this.themePackageOptions[0];
 
   @observable
   darkTheme = false;

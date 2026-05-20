@@ -1,7 +1,7 @@
 @reference "./theme.css";
 
 .ui-toast-region {
-  @apply pointer-events-none fixed right-4 top-4 z-50 grid w-[min(24rem,calc(100vw-2rem))] gap-3;
+  @apply pointer-events-none fixed right-4 top-4 z-[90] grid w-[min(24rem,calc(100vw-2rem))] gap-3;
 }
 
 .ui-toast-region__toast {

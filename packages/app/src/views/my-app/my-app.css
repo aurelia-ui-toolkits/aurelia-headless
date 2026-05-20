@@ -82,8 +82,8 @@ body {
   @apply flex items-center gap-2 rounded-lg px-2 py-1 text-xs font-bold text-ink-700;
 }
 
-.theme-package-select {
-  width: 8rem;
+.theme-package-control {
+  @apply hidden sm:inline-flex;
 }
 
 .theme-toggle__label {
