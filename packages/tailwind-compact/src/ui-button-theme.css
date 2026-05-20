@@ -3,7 +3,8 @@
 @reference "./theme.css";
 
 .ui-button {
-  @apply inline-block cursor-pointer select-none rounded-[0.65rem] border-2 border-transparent px-4 py-2 font-bold leading-none;
+  @apply inline-block cursor-pointer select-none rounded-md border border-transparent px-2.5 py-1 text-xs font-bold leading-none shadow-none;
+  min-height: 1.75rem;
   transition: background-color 140ms ease, transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
 }
 
@@ -54,22 +55,22 @@
 }
 
 .ui-icon-button {
-  @apply inline-grid cursor-pointer select-none place-items-center rounded-lg border border-transparent bg-transparent text-ink-700;
+  @apply inline-grid cursor-pointer select-none place-items-center rounded-md border border-transparent bg-transparent text-ink-700;
   line-height: 0;
   transition: background-color 140ms ease, transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease, color 140ms ease;
 }
 
 .ui-icon-button[data-size="small"] {
-  @apply h-8 w-8;
+  @apply h-7 w-7;
 }
 
 .ui-icon-button,
 .ui-icon-button[data-size="medium"] {
-  @apply h-9 w-9;
+  @apply h-8 w-8;
 }
 
 .ui-icon-button[data-size="large"] {
-  @apply h-11 w-11;
+  @apply h-9 w-9;
 }
 
 .ui-icon-button[data-hover] {

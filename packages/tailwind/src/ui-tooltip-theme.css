@@ -6,7 +6,7 @@
 
 .ui-popup__panel[data-role="tooltip"] {
   @apply rounded-lg border-0 px-2.5 py-1.5 text-xs font-medium shadow-lg;
-  background: var(--color-inverse-bg);
+  background-color: var(--color-inverse-bg);
   color: var(--color-inverse-text);
 }
 

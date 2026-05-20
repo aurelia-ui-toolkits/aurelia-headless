@@ -1,7 +1,7 @@
 @reference "./theme.css";
 
 .ui-alert {
-  @apply grid grid-cols-[auto_1fr_auto] gap-3 rounded-xl border px-4 py-3 text-sm shadow-sm;
+  @apply grid grid-cols-[auto_1fr_auto] gap-2 rounded-md border px-3 py-2 text-xs shadow-none;
 }
 
 .ui-alert[data-tone="info"] {
@@ -41,7 +41,7 @@
 }
 
 .ui-alert__message {
-  @apply leading-6;
+  @apply leading-5;
 }
 
 .ui-alert__actions {

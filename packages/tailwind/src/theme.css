@@ -45,6 +45,46 @@
 
 :root {
   color-scheme: light;
+  --font-sans: "Manrope", "Segoe UI", sans-serif;
+  --color-ink-900: #10213b;
+  --color-ink-700: #33415e;
+  --color-ink-500: #5a6985;
+  --color-card: #ffffff;
+  --color-card-muted: #f4f7fc;
+  --color-card-border: #c5cfdf;
+  --color-primary-600: #2f66cf;
+  --color-primary-700: #2856ac;
+  --color-primary-800: #1f468f;
+  --color-ring: #6fa3ff;
+  --color-outline-hover: #e9f0ff;
+  --color-outline-active: #d9e6ff;
+  --color-info-bg: #eff5ff;
+  --color-info-text: #10213b;
+  --color-info-border: color-mix(in srgb, var(--color-primary-600) 20%, transparent);
+  --color-success-bg: #dcfce7;
+  --color-success-text: #052e16;
+  --color-success-border: #22c55e;
+  --color-warning-bg: #fef3c7;
+  --color-warning-text: #451a03;
+  --color-warning-border: #f59e0b;
+  --color-danger-bg: #fee2e2;
+  --color-danger-text: #450a0a;
+  --color-danger-border: #ef4444;
+  --color-inverse-bg: #0f172a;
+  --color-inverse-text: #f8fafc;
+  --color-code-bg: #0f172a;
+  --color-code-text: #f8fafc;
+  --color-on-primary: #ffffff;
+  --color-on-primary-muted: color-mix(in srgb, var(--color-on-primary) 80%, transparent);
+  --color-on-primary-overlay: color-mix(in srgb, var(--color-on-primary) 20%, transparent);
+  --color-backdrop: color-mix(in srgb, #000000 40%, transparent);
+  --color-subtle-overlay: color-mix(in srgb, #000000 5%, transparent);
+  --color-hover-overlay: color-mix(in srgb, #000000 10%, transparent);
+  --color-validation-border: #ef4444;
+  --color-validation-text: #dc2626;
+  --color-validation-strong-text: #b91c1c;
+  --color-resize-handle: color-mix(in srgb, var(--color-card-border) 40%, transparent);
+  --color-ring-muted: color-mix(in srgb, var(--color-ring) 35%, transparent);
 }
 
 :root[data-theme="dark"] {
