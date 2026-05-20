@@ -3,7 +3,7 @@
 @reference "./theme.css";
 
 .ui-button {
-  @apply inline-block cursor-pointer select-none rounded-[0.65rem] border-2 border-transparent px-4 py-2 font-bold leading-none;
+  @apply inline-flex cursor-pointer select-none items-center justify-center rounded-[0.65rem] border-2 border-transparent px-4 py-2 align-middle font-bold leading-none no-underline;
   transition: background-color 140ms ease, transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
 }
 
