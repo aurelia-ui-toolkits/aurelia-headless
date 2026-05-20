@@ -1,10 +1,5 @@
-import { customElement } from 'aurelia';
-import template from './chip-view.html?raw';
-import './chip-view.css';
-
 type ChipTag = { id: string; label: string };
 
-@customElement({ name: 'chip-view', template })
 export class ChipView {
   selectedFrontend = true;
   selectedBackend = false;

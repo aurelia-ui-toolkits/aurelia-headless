@@ -211,16 +211,25 @@ body {
 }
 
 @media (max-width: 760px) {
-  .app-layout {
-    @apply block;
+  .app-shell {
+    @apply h-auto min-h-dvh overflow-visible;
   }
 
-  .app-layout > .ui-drawer__panel[data-persistent] {
-    @apply static h-auto border-b border-r-0;
+  .app-layout {
+    @apply block overflow-visible;
+  }
+
+  .brand {
+    @apply mb-3;
+  }
+
+  .ui-drawer__panel[data-side="left"]:not([data-persistent]) {
+    top: 3.5rem;
+    width: min(18rem, calc(100vw - 2rem));
   }
 
   .content-panel {
-    @apply p-5;
+    @apply min-h-0 overflow-visible p-5;
   }
 
   .app-top-bar {

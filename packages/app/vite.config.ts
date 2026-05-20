@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-// import aurelia from '@aurelia/vite-plugin';
+import aurelia from '@aurelia/vite-plugin';
 import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 import babel from '@rolldown/plugin-babel';
@@ -29,8 +29,8 @@ export default defineConfig({
     port: 9000,
   },
   plugins: [
+    aurelia({ useDev: true }),
     babel({ presets: [decoratorPreset({ version: '2023-11' })] }),
-    // aurelia({ useDev: true }),
     tailwindcss(),
   ]
 });

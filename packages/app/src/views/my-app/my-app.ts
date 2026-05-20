@@ -1,4 +1,4 @@
-import { customElement, IDisposable, observable, resolve } from 'aurelia';
+import { IDisposable, observable, resolve } from 'aurelia';
 import { ICurrentRoute, IRouter, IRouterEvents } from '@aurelia/router';
 import { UiBreadcrumbItem } from '@aurelia-ui-toolkits/headless';
 import { AlertView } from '../alert/alert-view';
@@ -28,14 +28,13 @@ import { TooltipView } from '../tooltip/tooltip-view';
 import { TopAppBarView } from '../top-app-bar/top-app-bar-view';
 import { TreeView } from '../tree/tree-view';
 import logoUrl from '../../assets/aurelia-headless-logo.png';
-import template from './my-app.html?raw';
-import './my-app.css';
 
 type DemoRoute = { id: string; path: string; title: string; component: unknown };
+const mobileQuery = '(max-width: 760px)';
 
-@customElement({ name: 'my-app', template })
 export class MyApp {
-  menuOpen = true;
+  mobile = this.isMobile();
+  menuOpen = !this.mobile;
 
   static routes: DemoRoute[] = [
     { id: 'get-started', path: '', title: 'Get started', component: GetStartedView },
@@ -70,6 +69,7 @@ export class MyApp {
   private readonly currentRoute = resolve(ICurrentRoute);
   private readonly routerEvents = resolve(IRouterEvents);
   private routeSubscription: IDisposable | undefined;
+  private mobileMedia: MediaQueryList | undefined;
 
   readonly menuItems = MyApp.routes;
   readonly logoUrl = logoUrl;
@@ -91,15 +91,24 @@ export class MyApp {
   attached(): void {
     this.applyTheme();
     this.updateRouteState();
+    this.mobileMedia = globalThis.matchMedia?.(mobileQuery);
+    this.mobileMedia?.addEventListener('change', this.onMobileChange);
     this.routeSubscription = this.routerEvents.subscribe('au:router:navigation-end', () => {
       this.updateRouteState();
     });
   }
 
   detaching(): void {
+    this.mobileMedia?.removeEventListener('change', this.onMobileChange);
+    this.mobileMedia = undefined;
     this.routeSubscription?.dispose();
     this.routeSubscription = undefined;
   }
+
+  private readonly onMobileChange = (event: MediaQueryListEvent): void => {
+    this.mobile = event.matches;
+    this.menuOpen = !this.mobile;
+  };
 
   private updateRouteState(): void {
     const current = this.normalizePath(this.currentRoute.path ?? '');
@@ -112,7 +121,14 @@ export class MyApp {
   }
 
   navigate(path: string): void {
+    if (this.mobile) {
+      this.menuOpen = false;
+    }
     void this.router.load(path || '');
+  }
+
+  private isMobile(): boolean {
+    return globalThis.matchMedia?.(mobileQuery).matches ?? false;
   }
 
   private persistTheme(): void {

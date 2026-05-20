@@ -1,9 +1,6 @@
 import { AlertService, IPromptDialogData } from '@aurelia-ui-toolkits/headless';
-import { customElement, resolve } from 'aurelia';
-import template from './alert-view.html?raw';
-import './alert-view.css';
+import { resolve } from 'aurelia';
 
-@customElement({ name: 'alert-view', template })
 export class AlertView {
   private readonly alertService = resolve(AlertService);
 

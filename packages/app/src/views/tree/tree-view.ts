@@ -1,7 +1,3 @@
-import { customElement } from 'aurelia';
-import template from './tree-view.html?raw';
-import './tree-view.css';
-
 type TreeNode = {
   id: string;
   name: string;
@@ -11,7 +7,6 @@ type TreeNode = {
   children?: TreeNode[];
 };
 
-@customElement({ name: 'tree-view', template })
 export class TreeView {
   selectedFile = 'components';
   lastAction = 'none';

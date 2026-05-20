@@ -1,10 +1,8 @@
-import { bindable, customElement, INode, resolve } from 'aurelia';
-import template from './demo-block.html?raw';
+import { bindable, INode, resolve } from 'aurelia';
 
 const viewTemplates = import.meta.glob('../../views/**/*.html', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
 const viewModels = import.meta.glob('../../views/**/*.ts', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
 
-@customElement({ name: 'demo-block', template })
 export class DemoBlock {
   private readonly host = resolve(INode) as HTMLElement;
 
