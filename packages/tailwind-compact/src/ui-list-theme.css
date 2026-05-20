@@ -6,10 +6,13 @@
 }
 
 .ui-list-item {
-  @apply grid grid-cols-[auto_1fr_auto] items-center gap-0 rounded-sm px-2 py-0 text-xs text-ink-700;
-  height: 2.35rem;
-  min-height: 2.35rem;
+  @apply grid grid-cols-[auto_1fr_auto] items-center gap-0 rounded-sm px-2 py-0.5 text-xs text-ink-700;
+  min-height: 1.85rem;
   transition: background-color 140ms ease;
+}
+
+.ui-list-item[data-secondary] {
+  min-height: 2.35rem;
 }
 
 .ui-list-item[data-active] {
