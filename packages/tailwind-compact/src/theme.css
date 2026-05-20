@@ -1,44 +1,44 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", "Arial", sans-serif;
-  --color-ink-900: #231f1a;
-  --color-ink-700: #4c453b;
-  --color-ink-500: #756c5f;
-  --color-card: #fffdf8;
-  --color-card-muted: #f2eee5;
-  --color-card-border: #cfc5b5;
-  --color-primary-600: #7c3aed;
-  --color-primary-700: #6d28d9;
-  --color-primary-800: #5b21b6;
-  --color-ring: #f59e0b;
-  --color-outline-hover: #ede7fb;
-  --color-outline-active: #ddd2f7;
-  --color-info-bg: #ede9fe;
-  --color-info-text: #2e1065;
-  --color-info-border: #8b5cf6;
+  --font-sans: "Inter", "Segoe UI", sans-serif;
+  --color-ink-900: #111827;
+  --color-ink-700: #374151;
+  --color-ink-500: #6b7280;
+  --color-card: #ffffff;
+  --color-card-muted: #f3f4f6;
+  --color-card-border: #d1d5db;
+  --color-primary-600: #0f766e;
+  --color-primary-700: #115e59;
+  --color-primary-800: #134e4a;
+  --color-ring: #5eead4;
+  --color-outline-hover: #ccfbf1;
+  --color-outline-active: #99f6e4;
+  --color-info-bg: #dbeafe;
+  --color-info-text: #1e3a8a;
+  --color-info-border: #60a5fa;
   --color-success-bg: #dcfce7;
-  --color-success-text: #052e16;
-  --color-success-border: #16a34a;
+  --color-success-text: #14532d;
+  --color-success-border: #22c55e;
   --color-warning-bg: #fef3c7;
-  --color-warning-text: #451a03;
-  --color-warning-border: #d97706;
+  --color-warning-text: #78350f;
+  --color-warning-border: #f59e0b;
   --color-danger-bg: #fee2e2;
-  --color-danger-text: #450a0a;
-  --color-danger-border: #dc2626;
-  --color-inverse-bg: #231f1a;
-  --color-inverse-text: #fffdf8;
-  --color-code-bg: #231f1a;
-  --color-code-text: #fff7ed;
+  --color-danger-text: #7f1d1d;
+  --color-danger-border: #ef4444;
+  --color-inverse-bg: #111827;
+  --color-inverse-text: #f9fafb;
+  --color-code-bg: #111827;
+  --color-code-text: #f9fafb;
   --color-on-primary: #ffffff;
   --color-on-primary-muted: color-mix(in srgb, var(--color-on-primary) 78%, transparent);
   --color-on-primary-overlay: color-mix(in srgb, var(--color-on-primary) 18%, transparent);
   --color-backdrop: color-mix(in srgb, #000000 42%, transparent);
   --color-subtle-overlay: color-mix(in srgb, #000000 5%, transparent);
   --color-hover-overlay: color-mix(in srgb, #000000 9%, transparent);
-  --color-validation-border: #dc2626;
-  --color-validation-text: #b91c1c;
-  --color-validation-strong-text: #991b1b;
+  --color-validation-border: #ef4444;
+  --color-validation-text: #dc2626;
+  --color-validation-strong-text: #b91c1c;
   --color-resize-handle: color-mix(in srgb, var(--color-card-border) 48%, transparent);
   --color-ring-muted: color-mix(in srgb, var(--color-ring) 38%, transparent);
 }
@@ -49,35 +49,35 @@
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --color-ink-900: #f7f0e6;
-  --color-ink-700: #ded4c4;
-  --color-ink-500: #a99c8b;
-  --color-card: #191611;
-  --color-card-muted: #242017;
-  --color-card-border: #514538;
-  --color-primary-600: #c084fc;
-  --color-primary-700: #d8b4fe;
-  --color-primary-800: #e9d5ff;
-  --color-ring: #fbbf24;
-  --color-outline-hover: #352747;
-  --color-outline-active: #44305f;
-  --color-info-bg: #2e2145;
-  --color-info-text: #e9d5ff;
-  --color-info-border: #7e57c2;
-  --color-success-bg: #0f2a1b;
+  --color-ink-900: #f9fafb;
+  --color-ink-700: #d1d5db;
+  --color-ink-500: #9ca3af;
+  --color-card: #111827;
+  --color-card-muted: #1f2937;
+  --color-card-border: #374151;
+  --color-primary-600: #2dd4bf;
+  --color-primary-700: #5eead4;
+  --color-primary-800: #99f6e4;
+  --color-ring: #2dd4bf;
+  --color-outline-hover: #164e46;
+  --color-outline-active: #0f766e;
+  --color-info-bg: #172554;
+  --color-info-text: #bfdbfe;
+  --color-info-border: #3b82f6;
+  --color-success-bg: #052e16;
   --color-success-text: #bbf7d0;
   --color-success-border: #22c55e;
-  --color-warning-bg: #30240b;
+  --color-warning-bg: #451a03;
   --color-warning-text: #fde68a;
   --color-warning-border: #f59e0b;
-  --color-danger-bg: #351515;
+  --color-danger-bg: #450a0a;
   --color-danger-text: #fecaca;
   --color-danger-border: #ef4444;
-  --color-inverse-bg: #fff7ed;
-  --color-inverse-text: #231f1a;
-  --color-code-bg: #100d0a;
-  --color-code-text: #fff7ed;
-  --color-on-primary: #241133;
+  --color-inverse-bg: #f9fafb;
+  --color-inverse-text: #111827;
+  --color-code-bg: #030712;
+  --color-code-text: #f9fafb;
+  --color-on-primary: #042f2e;
   --color-on-primary-muted: color-mix(in srgb, var(--color-on-primary) 70%, transparent);
   --color-on-primary-overlay: color-mix(in srgb, var(--color-on-primary) 18%, transparent);
   --color-backdrop: color-mix(in srgb, #000000 55%, transparent);
@@ -88,288 +88,4 @@
   --color-validation-strong-text: #fecaca;
   --color-resize-handle: color-mix(in srgb, var(--color-card-border) 55%, transparent);
   --color-ring-muted: color-mix(in srgb, var(--color-ring) 35%, transparent);
-}
-
-.ui-alert,
-.ui-badge,
-.ui-chip,
-.ui-tooltip,
-.ui-button,
-.ui-icon-button,
-.ui-checkbox,
-.ui-input,
-.ui-select,
-.ui-combobox,
-.ui-disclosure,
-.ui-drawer,
-.ui-list,
-.ui-menu,
-.ui-popup,
-.ui-progress,
-.ui-radio,
-.ui-radio-group,
-.ui-segmented-control,
-.ui-slider,
-.ui-splitter,
-.ui-switch,
-.ui-tabs,
-.ui-table,
-.ui-toast-region,
-.ui-top-app-bar,
-.ui-tree,
-dialog:has(.ui-alert-modal),
-dialog:has(.prompt-dialog) {
-  font-family: var(--font-sans);
-}
-
-.ui-button,
-.ui-icon-button {
-  min-height: 2rem;
-  border-radius: 0.45rem;
-  padding: 0.35rem 0.7rem;
-  border: 1px solid var(--color-card-border);
-  background: var(--color-card);
-  color: var(--color-ink-700);
-  font-size: 0.875rem;
-  font-weight: 700;
-  box-shadow: none;
-}
-
-.ui-icon-button {
-  width: 2rem;
-  padding: 0.35rem;
-}
-
-.ui-button:hover,
-.ui-icon-button:hover {
-  background: var(--color-outline-hover);
-  color: var(--color-ink-900);
-}
-
-.ui-button[data-primary],
-.ui-icon-button[data-primary] {
-  border-color: var(--color-primary-600);
-  background: var(--color-primary-600);
-  color: var(--color-on-primary);
-}
-
-.ui-input__control,
-.ui-select__control,
-.ui-combobox__control {
-  min-height: 2.25rem;
-  border: 1px solid var(--color-card-border);
-  border-radius: 0.45rem;
-  background: var(--color-card);
-  color: var(--color-ink-900);
-  padding: 0.4rem 0.65rem;
-  font-size: 0.9rem;
-}
-
-.ui-input__control:focus,
-.ui-select__control:focus,
-.ui-combobox__control:focus,
-.ui-button:focus-visible,
-.ui-icon-button:focus-visible,
-.ui-checkbox:focus-visible,
-.ui-radio:focus-visible,
-.ui-switch:focus-visible {
-  outline: 2px solid var(--color-ring);
-  outline-offset: 1px;
-}
-
-.ui-input[data-invalid] .ui-input__control,
-.ui-select[data-invalid] .ui-select__control,
-.ui-combobox[data-invalid] .ui-combobox__control {
-  border-color: var(--color-validation-border);
-}
-
-.ui-input__errors,
-.ui-select__errors,
-.ui-combobox__errors,
-.ui-radio-group__errors,
-.ui-slider__errors {
-  color: var(--color-validation-text);
-  font-size: 0.75rem;
-}
-
-.ui-checkbox,
-.ui-radio {
-  border: 1px solid var(--color-card-border);
-  border-radius: 0.35rem;
-  background: var(--color-card);
-}
-
-.ui-radio {
-  border-radius: 9999px;
-}
-
-.ui-checkbox[data-checked],
-.ui-checkbox[data-indeterminate],
-.ui-radio[data-checked] {
-  border-color: var(--color-primary-600);
-  background: var(--color-primary-600);
-  color: var(--color-on-primary);
-}
-
-.ui-list,
-.ui-tree,
-.ui-table,
-.ui-disclosure,
-.ui-segmented-control,
-.ui-tabs,
-.ui-splitter,
-.ui-progress,
-.ui-alert,
-.ui-top-app-bar__header,
-.ui-drawer__panel,
-.ui-popup__panel,
-.ui-menu__panel,
-.ui-select__popup,
-.ui-combobox__popup {
-  border: 1px solid var(--color-card-border);
-  border-radius: 0.55rem;
-  background: var(--color-card);
-  color: var(--color-ink-900);
-  box-shadow: none;
-}
-
-.ui-list-item,
-.ui-tree__item,
-.ui-menu__item,
-.ui-select__option,
-.ui-combobox__option,
-.ui-tab,
-.ui-segment {
-  border-radius: 0.35rem;
-  color: var(--color-ink-700);
-  font-size: 0.875rem;
-}
-
-.ui-list-item,
-.ui-tree__item,
-.ui-menu__item,
-.ui-select__option,
-.ui-combobox__option {
-  min-height: 2rem;
-  padding-block: 0.35rem;
-}
-
-.ui-list-item:hover,
-.ui-tree__item:hover,
-.ui-menu__item:hover,
-.ui-select__option:hover,
-.ui-combobox__option:hover,
-.ui-tab:hover,
-.ui-segment:hover {
-  background: var(--color-outline-hover);
-  color: var(--color-ink-900);
-}
-
-.ui-list-item[data-selected],
-.ui-tree__item[data-selected],
-.ui-select__option[data-selected],
-.ui-combobox__option[data-selected],
-.ui-tab[data-selected],
-.ui-segment[data-selected] {
-  background: var(--color-primary-600);
-  color: var(--color-on-primary);
-}
-
-.ui-badge,
-.ui-chip {
-  border: 1px solid var(--color-card-border);
-  border-radius: 9999px;
-  background: var(--color-card-muted);
-  color: var(--color-ink-700);
-  font-size: 0.75rem;
-  font-weight: 700;
-  min-height: 1.5rem;
-  padding: 0.15rem 0.5rem;
-}
-
-.ui-chip[data-selected] {
-  border-color: var(--color-primary-600);
-  background: var(--color-primary-600);
-  color: var(--color-on-primary);
-}
-
-.ui-alert[data-info] {
-  background: var(--color-info-bg);
-  border-color: var(--color-info-border);
-  color: var(--color-info-text);
-}
-
-.ui-alert[data-success] {
-  background: var(--color-success-bg);
-  border-color: var(--color-success-border);
-  color: var(--color-success-text);
-}
-
-.ui-alert[data-warning] {
-  background: var(--color-warning-bg);
-  border-color: var(--color-warning-border);
-  color: var(--color-warning-text);
-}
-
-.ui-alert[data-danger] {
-  background: var(--color-danger-bg);
-  border-color: var(--color-danger-border);
-  color: var(--color-danger-text);
-}
-
-.ui-tooltip__panel {
-  border-radius: 0.35rem;
-  background: var(--color-inverse-bg);
-  color: var(--color-inverse-text);
-  font-size: 0.75rem;
-  padding: 0.25rem 0.5rem;
-}
-
-.ui-drawer__backdrop,
-dialog:has(.ui-alert-modal)::backdrop,
-dialog:has(.prompt-dialog)::backdrop {
-  background: var(--color-backdrop);
-}
-
-.ui-table th,
-.ui-table td {
-  padding: 0.45rem 0.6rem;
-}
-
-.ui-table th {
-  background: var(--color-card-muted);
-  color: var(--color-ink-700);
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.ui-progress__track,
-.ui-slider__track,
-.ui-switch__track {
-  background: var(--color-card-muted);
-}
-
-.ui-progress__bar,
-.ui-slider__fill,
-.ui-switch[data-checked] .ui-switch__track {
-  background: var(--color-primary-600);
-}
-
-.ui-switch__thumb {
-  background: var(--color-card);
-  border: 1px solid var(--color-card-border);
-}
-
-.ui-toast-region {
-  gap: 0.5rem;
-}
-
-dialog:has(.ui-alert-modal),
-dialog:has(.prompt-dialog) {
-  border: 1px solid var(--color-card-border);
-  border-radius: 0.65rem;
-  background: var(--color-card);
-  color: var(--color-ink-900);
-  box-shadow: 0 18px 55px color-mix(in srgb, #000000 24%, transparent);
 }

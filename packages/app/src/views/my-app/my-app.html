@@ -8,10 +8,18 @@
       </svg>
     </button>
     <ui-breadcrumbs au-slot="breadcrumbs" items.bind="breadcrumbs"></ui-breadcrumbs>
-    <div au-slot="actions" class="theme-package-toggle" aria-label="Theme package">
-      <button ui-button outlined data-active.attr="themePackage === 'default' ? '' : null" click.trigger="selectThemePackage('default')">Default</button>
-      <button ui-button outlined data-active.attr="themePackage === 'compact' ? '' : null" click.trigger="selectThemePackage('compact')">Compact</button>
-    </div>
+    <ui-select au-slot="actions"
+      class="theme-package-select"
+      value.two-way="themePackage"
+      selected-item.two-way="selectedThemePackageOption"
+      value-field="value"
+      label-field="label"
+      aria-label="Theme package"
+      change.trigger="selectThemePackage(themePackage)">
+      <ui-list items.bind="themePackageOptions" selected.bind="selectedThemePackageOption" typeahead-field="label">
+        <ui-list-item repeat.for="option of themePackageOptions" value.bind="option">${option.label}</ui-list-item>
+      </ui-list>
+    </ui-select>
     <label au-slot="actions" class="theme-toggle">
       <span class="theme-toggle__label">Dark</span>
       <ui-switch checked.two-way="darkTheme" aria-label="Toggle dark theme"></ui-switch>

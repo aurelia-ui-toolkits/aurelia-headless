@@ -2,20 +2,59 @@
 
 .ui-button,
 .ui-icon-button {
-  @apply rounded-md px-3 py-1.5 text-sm shadow-none;
-  min-height: 2rem;
+  @apply rounded-md px-2.5 py-1 text-xs shadow-none;
+  min-height: 1.75rem;
 }
 
 .ui-icon-button {
-  @apply px-1.5;
-  width: 2rem;
+  @apply px-1;
+  width: 1.75rem;
+}
+
+.ui-input,
+.ui-select,
+.ui-combobox,
+.ui-radio-group,
+.ui-slider {
+  @apply gap-1;
+}
+
+.ui-input__label,
+.ui-select__label,
+.ui-combobox__label,
+.ui-radio-group__label,
+.ui-slider__label {
+  @apply text-xs;
 }
 
 .ui-input__control,
 .ui-select__control,
 .ui-combobox__control {
-  @apply rounded-md px-2 py-1.5 text-sm;
-  min-height: 2.25rem;
+  @apply rounded-md px-2 py-0 text-sm;
+  min-height: 1.9rem;
+}
+
+.ui-input__native,
+.ui-select__value,
+.ui-combobox__native {
+  @apply text-sm;
+  height: 1.9rem;
+}
+
+.ui-input[data-inset] .ui-input__native,
+.ui-select[data-inset] .ui-select__value,
+.ui-combobox[data-inset] .ui-combobox__native {
+  height: 2.35rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.125rem;
+}
+
+.ui-input__subscript,
+.ui-select__subscript,
+.ui-combobox__subscript,
+.ui-radio-group__subscript,
+.ui-slider__subscript {
+  @apply text-[0.7rem] leading-4;
 }
 
 .ui-list-item,
@@ -23,8 +62,8 @@
 .ui-menu__item,
 .ui-select__option,
 .ui-combobox__option {
-  @apply rounded-md py-1 text-sm;
-  min-height: 2rem;
+  @apply rounded-md py-0.5 text-xs;
+  min-height: 1.65rem;
 }
 
 .ui-list,
@@ -43,20 +82,55 @@
 .ui-combobox__popup,
 dialog:has(.ui-alert-modal),
 dialog:has(.prompt-dialog) {
-  @apply rounded-lg shadow-none;
+  @apply rounded-md shadow-none;
 }
 
 .ui-badge,
 .ui-chip {
-  @apply px-2 py-0.5 text-xs;
-  min-height: 1.5rem;
+  @apply px-1.5 py-0 text-[0.7rem];
+  min-height: 1.25rem;
 }
 
 .ui-table th,
 .ui-table td {
-  @apply px-2 py-1.5;
+  @apply px-2 py-1 text-xs;
 }
 
 .ui-tooltip__panel {
   @apply rounded-md px-2 py-1 text-xs;
+}
+
+.ui-alert {
+  @apply rounded-md px-3 py-2 text-xs;
+}
+
+.ui-alert__message {
+  @apply leading-5;
+}
+
+.ui-alert-modal {
+  @apply gap-3 p-4;
+}
+
+.ui-alert-modal__icon {
+  @apply h-8 w-8 text-sm;
+  border: 1px solid currentColor;
+}
+
+.ui-alert-modal__title,
+.prompt-dialog__title {
+  @apply text-base leading-6;
+}
+
+.ui-alert-modal__message,
+.ui-alert-modal__html {
+  @apply text-xs leading-5;
+}
+
+.prompt-dialog {
+  @apply gap-3 p-4;
+}
+
+.prompt-dialog__control {
+  @apply rounded-md px-2 py-1 text-sm;
 }
