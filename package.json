@@ -12,6 +12,7 @@
     "@aurelia/router": ">=2.0.0-rc.1",
     "@aurelia/validation": "^2.0.0-rc.1",
     "@aurelia/validation-html": ">=2.0.0-rc.1",
+    "@aurelia/vite-plugin": "^2.0.0-rc.1",
     "@babel/core": "^7.29.0",
     "@babel/plugin-proposal-decorators": "^7.29.0",
     "@rolldown/plugin-babel": "^0.2.3",

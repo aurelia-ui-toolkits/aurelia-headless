@@ -1,8 +1,3 @@
-import { customElement } from 'aurelia';
-import template from './drawer-view.html?raw';
-import './drawer-view.css';
-
-@customElement({ name: 'drawer-view', template })
 export class DrawerView {
   rightOpen = false;
   leftOpen = false;

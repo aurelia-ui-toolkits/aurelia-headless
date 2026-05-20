@@ -1,4 +1,4 @@
-import { customElement, IDisposable, observable, resolve } from 'aurelia';
+import { IDisposable, observable, resolve } from 'aurelia';
 import { ICurrentRoute, IRouter, IRouterEvents } from '@aurelia/router';
 import { UiBreadcrumbItem } from '@aurelia-ui-toolkits/headless';
 import { AlertView } from '../alert/alert-view';
@@ -28,12 +28,9 @@ import { TooltipView } from '../tooltip/tooltip-view';
 import { TopAppBarView } from '../top-app-bar/top-app-bar-view';
 import { TreeView } from '../tree/tree-view';
 import logoUrl from '../../assets/aurelia-headless-logo.png';
-import template from './my-app.html?raw';
-import './my-app.css';
 
 type DemoRoute = { id: string; path: string; title: string; component: unknown };
 
-@customElement({ name: 'my-app', template })
 export class MyApp {
   menuOpen = true;
 

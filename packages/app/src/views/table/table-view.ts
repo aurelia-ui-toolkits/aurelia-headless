@@ -1,6 +1,4 @@
-import { customElement, observable } from 'aurelia';
-import template from './table-view.html?raw';
-import './table-view.css';
+import { observable } from 'aurelia';
 
 type SortDirection = 'asc' | 'desc';
 
@@ -17,7 +15,6 @@ type ProjectRow = {
   selected: boolean;
 };
 
-@customElement({ name: 'table-view', template })
 export class TableView {
   @observable
   sort: TableSort[] = [];

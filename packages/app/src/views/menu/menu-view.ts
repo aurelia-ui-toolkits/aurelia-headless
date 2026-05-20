@@ -1,7 +1,3 @@
-import { customElement } from 'aurelia';
-import template from './menu-view.html?raw';
-import './menu-view.css';
-
 type MenuAction = {
   id: string;
   label: string;
@@ -9,7 +5,6 @@ type MenuAction = {
   disabled?: boolean;
 };
 
-@customElement({ name: 'menu-view', template })
 export class MenuView {
   open = false;
   anchor: Element | undefined;

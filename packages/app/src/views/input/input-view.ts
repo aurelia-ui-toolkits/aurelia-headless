@@ -1,11 +1,8 @@
-import { customElement, newInstanceForScope, resolve } from 'aurelia';
+import { newInstanceForScope, resolve } from 'aurelia';
 import { IError } from '@aurelia-ui-toolkits/headless';
-import template from './input-view.html?raw';
-import './input-view.css';
 import { IValidationController } from '@aurelia/validation-html';
 import { IValidationRules } from '@aurelia/validation';
 
-@customElement({ name: 'input-view', template })
 export class InputView {
   basicValue = '';
   searchValue = 'Project Aurora';

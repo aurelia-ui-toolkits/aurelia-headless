@@ -1,5 +1,4 @@
-import { bindable, customElement, INode, resolve } from 'aurelia';
-import template from './demo-code.html?raw';
+import { bindable, INode, resolve } from 'aurelia';
 
 type DemoCodeLanguage = 'css' | 'html' | 'shell' | 'ts';
 type DemoCodeTheme = 'github-light' | 'github-dark-default';
@@ -17,7 +16,6 @@ type DemoCodeHighlighter = {
 const highlighted = new Map<string, string>();
 let highlighter: Promise<DemoCodeHighlighter> | undefined;
 
-@customElement({ name: 'demo-code', template })
 export class DemoCode {
   private readonly host = resolve(INode) as HTMLElement;
   private observer: MutationObserver | undefined;

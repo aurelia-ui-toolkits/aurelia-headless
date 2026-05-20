@@ -1,8 +1,6 @@
-import { customElement, newInstanceForScope, resolve } from 'aurelia';
+import { newInstanceForScope, resolve } from 'aurelia';
 import { IValidationRules } from '@aurelia/validation';
 import { IValidationController } from '@aurelia/validation-html';
-import template from './combobox-view.html?raw';
-import './combobox-view.css';
 
 type Project = {
   id: string;
@@ -11,7 +9,6 @@ type Project = {
   disabled?: boolean;
 };
 
-@customElement({ name: 'combobox-view', template })
 export class ComboboxView {
   projectQuery = '';
   selectedProjectId: string | undefined;

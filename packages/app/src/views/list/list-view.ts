@@ -1,7 +1,3 @@
-import { customElement } from 'aurelia';
-import template from './list-view.html?raw';
-import './list-view.css';
-
 type ListDemoItem = {
   id: number;
   label: string;
@@ -11,7 +7,6 @@ type ListDemoItem = {
   disabled?: boolean;
 };
 
-@customElement({ name: 'list-view', template })
 export class ListView {
   selectedItem: ListDemoItem | undefined;
 
