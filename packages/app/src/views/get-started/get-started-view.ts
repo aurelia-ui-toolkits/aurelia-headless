@@ -13,11 +13,11 @@ Aurelia
   readonly themeImportCode = `import '@aurelia-ui-toolkits/headless-tailwind';
 import './styles/brand-theme.css';`;
 
-  readonly replaceThemeCode = `// Default theme for prototypes and quick starts
+  readonly replaceThemeCode = `// Default theme
 import '@aurelia-ui-toolkits/headless-tailwind';
 
-// Later, replace it with your own CSS
-import './styles/my-product-theme.css';`;
+// Or replace that import with the standalone compact theme
+// import '@aurelia-ui-toolkits/headless-tailwind-compact';`;
 
   readonly brandThemeCode = `/* brand-theme.css */
 :root {

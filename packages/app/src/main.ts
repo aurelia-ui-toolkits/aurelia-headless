@@ -9,8 +9,14 @@ import { MyApp } from './views/my-app/my-app';
 import { DefaultVirtualizationConfiguration } from '@aurelia/ui-virtualization';
 import { ValidationHtmlConfiguration } from '@aurelia/validation-html';
 
-import '@aurelia-ui-toolkits/headless-tailwind';
 import { RegexRule, RequiredRule, ValidationConfiguration } from '@aurelia/validation';
+
+const themePackage = localStorage.getItem('aurelia-headless:theme-package');
+if (themePackage === 'compact') {
+  await import('@aurelia-ui-toolkits/headless-tailwind-compact');
+} else {
+  await import('@aurelia-ui-toolkits/headless-tailwind');
+}
 
 Aurelia
   .register(

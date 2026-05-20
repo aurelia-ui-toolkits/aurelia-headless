@@ -1,0 +1,111 @@
+@reference "./theme.css";
+
+ui-input,
+.ui-input {
+  @apply block w-full;
+}
+
+.ui-input {
+  @apply grid gap-2 w-full;
+}
+
+.ui-input__label {
+  @apply text-sm font-semibold text-ink-900;
+}
+
+.ui-input__control {
+  @apply grid w-full grid-cols-[auto_1fr_auto] items-center gap-0 rounded-xl border border-card-border bg-transparent px-3;
+  position: relative;
+  transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
+}
+
+.ui-input[data-focus] .ui-input__control {
+  @apply border-primary-600;
+  box-shadow: 0 0 0 3px var(--color-ring);
+}
+
+.ui-input[data-active] .ui-input__control {
+  @apply border-primary-700;
+}
+
+.ui-input[data-invalid] .ui-input__control {
+  border-color: var(--color-validation-border);
+}
+
+.ui-input[data-disabled] .ui-input__control {
+  @apply cursor-not-allowed bg-card-muted opacity-60;
+}
+
+.ui-input__leading,
+.ui-input__trailing {
+  @apply text-sm text-ink-500;
+  grid-row: 1;
+}
+
+.ui-input__leading {
+  margin-right: 0.5rem;
+}
+
+.ui-input__trailing {
+  margin-left: 0.5rem;
+}
+
+.ui-input__inset-label {
+  @apply pointer-events-none text-sm text-ink-500;
+  align-self: center;
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: start;
+  z-index: 2;
+  transform-origin: left top;
+  transition: transform 140ms ease, font-size 140ms ease, color 140ms ease;
+}
+
+.ui-input__native {
+  @apply h-11 min-w-0 w-full bg-transparent text-sm text-ink-900 outline-none;
+  grid-column: 2;
+  grid-row: 1;
+  z-index: 1;
+}
+
+.ui-input:not([data-inset]) .ui-input__inset-label {
+  display: none;
+}
+
+.ui-input[data-inset] .ui-input__native {
+  height: 3.25rem;
+  padding-top: 1rem;
+  padding-bottom: 0.25rem;
+}
+
+.ui-input[data-inset] .ui-input__label {
+  display: none;
+}
+
+.ui-input[data-inset][data-focus] .ui-input__inset-label,
+.ui-input[data-inset][data-has-value] .ui-input__inset-label {
+  transform: translateY(-0.85rem) scale(0.75);
+  font-size: 0.75rem;
+  color: var(--color-ink-700);
+}
+
+.ui-input__native::placeholder {
+  @apply text-ink-500;
+}
+
+.ui-input__native:disabled {
+  @apply cursor-not-allowed;
+}
+
+.ui-input__subscript {
+  @apply text-xs leading-5;
+}
+
+.ui-input__helper {
+  @apply text-ink-500;
+}
+
+.ui-input__errors {
+  color: var(--color-validation-text);
+}
+

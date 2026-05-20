@@ -1,0 +1,100 @@
+@reference "./theme.css";
+
+.ui-table {
+  @apply relative block overflow-x-auto rounded-xl border border-card-border bg-card;
+}
+
+.ui-table[data-disabled] {
+  @apply pointer-events-none opacity-70;
+}
+
+.ui-table__progress {
+  @apply absolute left-0 right-0 top-0 z-20;
+}
+
+.ui-table table {
+  @apply w-full border-collapse text-sm;
+  table-layout: fixed;
+}
+
+.ui-table th,
+.ui-table td {
+  @apply border-b border-card-border px-3 py-2 text-left align-middle;
+}
+
+.ui-table th {
+  @apply bg-card-muted font-semibold text-ink-900;
+}
+
+.ui-table tbody tr[data-selected] {
+  @apply bg-outline-hover;
+}
+
+.ui-table-column {
+  @apply relative select-none pr-8;
+}
+
+.ui-table-column[data-sortable] {
+  @apply cursor-pointer;
+}
+
+.ui-table-column[aria-sort] {
+  @apply text-primary-700;
+}
+
+.ui-table-column__sort-indicator {
+  @apply absolute right-4 inline-flex items-center gap-1 text-primary-700;
+}
+
+.ui-table-column__sort-order {
+  @apply tabular-nums text-xs;
+}
+
+.ui-table-column__resize-handle {
+  @apply absolute bottom-0 right-0 top-0 z-10 w-4 cursor-col-resize touch-none opacity-0 transition-opacity;
+  background: linear-gradient(to right, transparent, var(--color-resize-handle));
+}
+
+.ui-table-column:hover .ui-table-column__resize-handle {
+  @apply opacity-100;
+}
+
+.ui-table-column__resize-handle::after {
+  @apply absolute bottom-2 right-1 top-2 w-px bg-ink-500 content-[''];
+}
+
+.ui-table__pagination {
+  @apply flex flex-wrap items-center justify-end gap-6 border-t border-card-border px-5 py-1.5 text-sm text-ink-900;
+}
+
+.ui-table__pagination-actions {
+  @apply flex items-center gap-1;
+}
+
+.ui-table__pagination-icon {
+  @apply h-4 w-4;
+}
+
+.ui-table__page-size {
+  @apply flex shrink-0 items-center gap-4;
+}
+
+.ui-table__page-size-select,
+.ui-table__page-select {
+  @apply w-24 shrink-0;
+}
+
+.ui-table__page-size-select .ui-select__value,
+.ui-table__page-select .ui-select__value {
+  @apply justify-end text-right tabular-nums;
+}
+
+.ui-table__page-size-select .ui-list-item__primary,
+.ui-table__page-select .ui-list-item__primary {
+  @apply w-full text-right tabular-nums;
+}
+
+.ui-table__page-size-label,
+.ui-table__pagination-summary {
+  @apply whitespace-nowrap text-base text-ink-900;
+}

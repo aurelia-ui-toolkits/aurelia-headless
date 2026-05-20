@@ -82,6 +82,18 @@ body {
   @apply flex items-center gap-2 rounded-lg px-2 py-1 text-xs font-bold text-ink-700;
 }
 
+.theme-package-toggle {
+  @apply flex items-center gap-1 rounded-lg border border-card-border bg-card-muted p-1;
+}
+
+.theme-package-toggle [ui-button] {
+  @apply min-h-8 px-2 py-1 text-xs;
+}
+
+.theme-package-toggle [data-active] {
+  @apply bg-primary-600 text-white;
+}
+
 .theme-toggle__label {
   @apply hidden sm:inline;
 }
@@ -238,5 +250,9 @@ body {
 
   .app-top-bar .ui-top-app-bar__header {
     @apply px-4;
+  }
+
+  .theme-package-toggle [ui-button] {
+    @apply px-1.5;
   }
 }

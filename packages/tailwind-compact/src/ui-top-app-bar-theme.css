@@ -1,0 +1,58 @@
+@reference "./theme.css";
+
+.ui-top-app-bar {
+  @apply block;
+}
+
+.ui-top-app-bar[data-sticky] {
+  @apply sticky top-0 z-20;
+}
+
+.ui-top-app-bar[data-fixed] {
+  @apply fixed left-0 right-0 top-0 z-30;
+}
+
+.ui-top-app-bar__header {
+  @apply grid min-h-16 grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-2xl border border-card-border bg-card px-4 py-3 shadow-sm;
+  backdrop-filter: blur(12px);
+}
+
+.ui-top-app-bar[data-dense] .ui-top-app-bar__header {
+  @apply min-h-12 rounded-xl px-3 py-2;
+}
+
+.ui-top-app-bar[data-elevated] .ui-top-app-bar__header {
+  @apply shadow-lg;
+}
+
+.ui-top-app-bar__navigation,
+.ui-top-app-bar__actions {
+  @apply flex items-center gap-2;
+}
+
+.ui-top-app-bar__content {
+  @apply grid min-w-0 gap-0.5;
+}
+
+.ui-top-app-bar__breadcrumbs {
+  @apply min-w-0;
+}
+
+.ui-top-app-bar__title {
+  @apply min-w-0 truncate text-lg font-extrabold leading-tight text-ink-900;
+  letter-spacing: -0.03em;
+}
+
+.ui-top-app-bar[data-dense] .ui-top-app-bar__title {
+  @apply text-base;
+}
+
+@media (max-width: 520px) {
+  .ui-top-app-bar__header {
+    @apply rounded-xl px-3;
+  }
+
+  .ui-top-app-bar__actions {
+    @apply hidden;
+  }
+}

@@ -6,6 +6,7 @@ Headless UI components for Aurelia 2, with an optional Tailwind CSS default them
 
 - `@aurelia-ui-toolkits/headless`: component primitives and services.
 - `@aurelia-ui-toolkits/headless-tailwind`: default Tailwind CSS theme for the components.
+- `@aurelia-ui-toolkits/headless-tailwind-compact`: standalone compact Tailwind CSS theme for the components.
 
 ## Install
 
@@ -42,6 +43,7 @@ Aurelia
 ## Theme
 
 `@aurelia-ui-toolkits/headless-tailwind` provides a default theme. Apps can override tokens by importing custom CSS after the package theme.
+Use `@aurelia-ui-toolkits/headless-tailwind-compact` instead when you want a denser standalone theme package.
 
 ```css
 @import "@aurelia-ui-toolkits/headless-tailwind";

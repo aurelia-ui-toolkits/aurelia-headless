@@ -1,0 +1,96 @@
+@reference "./theme.css";
+
+.ui-chip {
+  @apply inline-flex cursor-pointer select-none items-center gap-1 rounded-full border border-card-border bg-card px-3 text-sm font-medium leading-normal text-ink-700 outline-none transition-colors;
+}
+
+.ui-chip[data-hover] {
+  @apply bg-card-muted text-ink-900;
+}
+
+.ui-chip[data-focus] {
+  outline: 3px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+.ui-chip[data-active] {
+  transform: scale(0.98);
+}
+
+.ui-chip[data-disabled] {
+  @apply cursor-not-allowed opacity-50;
+}
+
+.ui-chip[data-tone="primary"] {
+  @apply border-primary-600 text-primary-600;
+}
+
+.ui-chip[data-tone="success"] {
+  border-color: var(--color-success-border);
+  color: var(--color-success-text);
+}
+
+.ui-chip[data-tone="warning"] {
+  border-color: var(--color-warning-border);
+  color: var(--color-warning-text);
+}
+
+.ui-chip[data-tone="danger"] {
+  border-color: var(--color-danger-border);
+  color: var(--color-danger-text);
+}
+
+.ui-chip[data-selected] {
+  @apply border-primary-600 bg-primary-600;
+  color: var(--color-on-primary);
+}
+
+.ui-chip[data-selected][data-tone="success"] {
+  border-color: var(--color-success-border);
+  background: var(--color-success-border);
+}
+
+.ui-chip[data-selected][data-tone="warning"] {
+  border-color: var(--color-warning-border);
+  background: var(--color-warning-border);
+}
+
+.ui-chip[data-selected][data-tone="danger"] {
+  border-color: var(--color-danger-border);
+  background: var(--color-danger-border);
+}
+
+.ui-chip__content {
+  display: contents;
+}
+
+.ui-chip__remove {
+  @apply -mr-1 inline-flex h-5 w-5 items-center justify-center rounded-full opacity-70 outline-none;
+}
+
+.ui-chip__remove:hover {
+  @apply opacity-100;
+  background: var(--color-hover-overlay);
+}
+
+.ui-chip[data-selected] .ui-chip__remove:hover {
+  background: var(--color-on-primary-overlay);
+}
+
+.ui-chip__remove-icon {
+  @apply relative block h-2.5 w-2.5;
+}
+
+.ui-chip__remove-icon::before,
+.ui-chip__remove-icon::after {
+  @apply absolute left-1/2 top-1/2 block h-0.5 w-2.5 rounded-full bg-current content-[''];
+  transform-origin: center;
+}
+
+.ui-chip__remove-icon::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.ui-chip__remove-icon::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}

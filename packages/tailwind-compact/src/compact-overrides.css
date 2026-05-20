@@ -1,0 +1,62 @@
+@reference "./theme.css";
+
+.ui-button,
+.ui-icon-button {
+  @apply rounded-md px-3 py-1.5 text-sm shadow-none;
+  min-height: 2rem;
+}
+
+.ui-icon-button {
+  @apply px-1.5;
+  width: 2rem;
+}
+
+.ui-input__control,
+.ui-select__control,
+.ui-combobox__control {
+  @apply rounded-md px-2 py-1.5 text-sm;
+  min-height: 2.25rem;
+}
+
+.ui-list-item,
+.ui-tree__item,
+.ui-menu__item,
+.ui-select__option,
+.ui-combobox__option {
+  @apply rounded-md py-1 text-sm;
+  min-height: 2rem;
+}
+
+.ui-list,
+.ui-tree,
+.ui-table,
+.ui-disclosure,
+.ui-segmented-control,
+.ui-tabs,
+.ui-splitter,
+.ui-alert,
+.ui-top-app-bar__header,
+.ui-drawer__panel,
+.ui-popup__panel,
+.ui-menu__panel,
+.ui-select__popup,
+.ui-combobox__popup,
+dialog:has(.ui-alert-modal),
+dialog:has(.prompt-dialog) {
+  @apply rounded-lg shadow-none;
+}
+
+.ui-badge,
+.ui-chip {
+  @apply px-2 py-0.5 text-xs;
+  min-height: 1.5rem;
+}
+
+.ui-table th,
+.ui-table td {
+  @apply px-2 py-1.5;
+}
+
+.ui-tooltip__panel {
+  @apply rounded-md px-2 py-1 text-xs;
+}

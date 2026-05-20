@@ -1,0 +1,63 @@
+@reference "./theme.css";
+
+.ui-list {
+  @apply grid gap-1 rounded-xl border border-card-border bg-transparent p-1;
+  align-content: start;
+}
+
+.ui-list-item {
+  @apply grid grid-cols-[auto_1fr_auto] items-center gap-0 rounded-lg px-3 py-2 text-sm text-ink-700;
+  transition: background-color 140ms ease;
+}
+
+.ui-list-item[data-active] {
+  @apply bg-outline-hover text-ink-900;
+}
+
+.ui-list-item[data-selected] {
+  @apply bg-primary-600;
+  color: var(--color-on-primary);
+}
+
+.ui-list-item[data-selected][data-active] {
+  @apply bg-primary-700;
+}
+
+.ui-list-item[data-disabled] {
+  @apply cursor-not-allowed opacity-50;
+}
+
+.ui-list-item__leading,
+.ui-list-item__trailing {
+  @apply text-ink-500;
+}
+
+.ui-list-item__leading {
+  margin-right: 0.75rem;
+}
+
+.ui-list-item__trailing {
+  justify-self: end;
+  margin-left: 0.75rem;
+}
+
+.ui-list-item[data-selected] .ui-list-item__leading,
+.ui-list-item[data-selected] .ui-list-item__trailing {
+  color: var(--color-on-primary-muted);
+}
+
+.ui-list-item__content {
+  @apply min-w-0 grid gap-0.5;
+}
+
+.ui-list-item__primary {
+  @apply truncate;
+}
+
+.ui-list-item__secondary {
+  @apply truncate text-xs text-ink-500;
+}
+
+.ui-list-item[data-selected] .ui-list-item__secondary {
+  color: var(--color-on-primary-muted);
+}
