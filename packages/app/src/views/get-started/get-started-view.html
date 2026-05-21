@@ -2,7 +2,7 @@
   <section class="get-started-hero">
     <div class="get-started-hero__copy">
       <h2>Aurelia Headless UI</h2>
-      <p>Accessible, composable primitives for Aurelia 2 applications. Use the default theme to get moving, then replace it with your own CSS when you need a personalised design.</p>
+      <p>Accessible, composable primitives for Aurelia 2 applications. Start with a ready-made theme, swap to compact with one import, or replace the CSS with your own design.</p>
     </div>
     <div class="get-started-hero__actions">
       <a ui-button primary href="#/button">Browse components</a>
@@ -13,6 +13,8 @@
   <section class="get-started-block">
     <h3 class="get-started-title">Install</h3>
     <demo-code code.bind="installCode" language="shell"></demo-code>
+    <p class="get-started-note">Install the compact package too when you want a denser alternative available in the same app.</p>
+    <demo-code code.bind="compactInstallCode" language="shell"></demo-code>
   </section>
 
   <section class="get-started-block">
@@ -21,9 +23,15 @@
   </section>
 
   <section class="get-started-block">
-    <h3 class="get-started-title">Theme CSS</h3>
-    <p class="get-started-note"><code>@aurelia-ui-toolkits/headless-tailwind</code> is a sensible default theme, not a requirement. It is intended to be replaced by app-owned CSS for branded or product-specific themes.</p>
+    <h3 class="get-started-title">Swap themes</h3>
+    <p class="get-started-note">Themes are plain CSS packages. The headless components stay the same; swap the package import to change the visual system. Try the Default/Compact segmented control in the top bar to reload this demo with the other theme package.</p>
     <demo-code code.bind="replaceThemeCode" language="ts"></demo-code>
+  </section>
+
+  <section class="get-started-block">
+    <h3 class="get-started-title">Build your own theme</h3>
+    <p class="get-started-note">Use the shipped theme as a starting point or import individual files. Keep <code>theme.css</code> for tokens, then replace component theme files as your design system grows.</p>
+    <demo-code code.bind="customThemeCode" language="css"></demo-code>
   </section>
 
   <section class="get-started-block">

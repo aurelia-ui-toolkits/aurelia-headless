@@ -1,0 +1,40 @@
+@reference "./theme.css";
+
+.ui-switch {
+  @apply relative inline-block h-5 w-9 cursor-pointer overflow-hidden rounded-full border border-card-border bg-card-muted align-middle;
+  transition: background-color 140ms ease, border-color 140ms ease;
+}
+
+.ui-switch[data-changing] {
+  transition-duration: 90ms;
+}
+
+.ui-switch__thumb {
+  @apply absolute bottom-0 left-0.5 top-0 my-auto h-3.5 w-3.5 rounded-full bg-card shadow-sm;
+  transition: transform 140ms ease;
+}
+
+.ui-switch[data-checked] {
+  @apply border-primary-600 bg-primary-600;
+}
+
+.ui-switch[data-checked] .ui-switch__thumb {
+  transform: translateX(1rem);
+}
+
+.ui-switch[data-focus] {
+  outline: 3px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+.ui-switch[data-active] .ui-switch__thumb {
+  transform: translateX(0.1rem);
+}
+
+.ui-switch[data-checked][data-active] .ui-switch__thumb {
+  transform: translateX(0.9rem);
+}
+
+.ui-switch[data-disabled] {
+  @apply cursor-not-allowed opacity-50;
+}

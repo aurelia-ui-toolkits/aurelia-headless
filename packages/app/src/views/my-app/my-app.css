@@ -82,6 +82,10 @@ body {
   @apply flex items-center gap-2 rounded-lg px-2 py-1 text-xs font-bold text-ink-700;
 }
 
+.theme-package-control {
+  @apply hidden sm:inline-flex;
+}
+
 .theme-toggle__label {
   @apply hidden sm:inline;
 }
@@ -238,5 +242,9 @@ body {
 
   .app-top-bar .ui-top-app-bar__header {
     @apply px-4;
+  }
+
+  .theme-package-select {
+    width: 7rem;
   }
 }

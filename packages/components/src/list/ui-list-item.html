@@ -4,7 +4,8 @@
   aria-disabled.attr="disabled ? '' : null"
   data-active.attr="parentList.activeItem === value ? '' : null"
   data-selected.attr="parentList.selected === value ? '' : null"
-  data-disabled.attr="disabled ? '' : null">
+  data-disabled.attr="disabled ? '' : null"
+  data-secondary.attr="secondaryNodes.length ? '' : null">
   <span class="ui-list-item__leading" show.bind="leadingNodes.length">
     <au-slot name="leading"></au-slot>
   </span>

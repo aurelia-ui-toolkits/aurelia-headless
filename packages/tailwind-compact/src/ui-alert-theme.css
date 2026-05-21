@@ -1,0 +1,76 @@
+@reference "./theme.css";
+
+.ui-alert {
+  @apply grid grid-cols-[auto_1fr_auto] gap-2 rounded-md border px-3 py-2 text-xs shadow-none;
+}
+
+.ui-alert[data-tone="info"] {
+  border-color: var(--color-info-border);
+  background: var(--color-info-bg);
+  color: var(--color-info-text);
+}
+
+.ui-alert[data-tone="success"] {
+  border-color: var(--color-success-border);
+  background: var(--color-success-bg);
+  color: var(--color-success-text);
+}
+
+.ui-alert[data-tone="warning"] {
+  border-color: var(--color-warning-border);
+  background: var(--color-warning-bg);
+  color: var(--color-warning-text);
+}
+
+.ui-alert[data-tone="danger"] {
+  border-color: var(--color-danger-border);
+  background: var(--color-danger-bg);
+  color: var(--color-danger-text);
+}
+
+.ui-alert__icon {
+  @apply h-2.5 w-2.5 self-center rounded-full bg-current;
+}
+
+.ui-alert__content {
+  @apply grid gap-1;
+}
+
+.ui-alert__title {
+  @apply font-semibold;
+}
+
+.ui-alert__message {
+  @apply leading-5;
+}
+
+.ui-alert__actions {
+  @apply mt-2 flex gap-2;
+}
+
+.ui-alert__close {
+  @apply -mr-1 -mt-1 grid h-7 w-7 place-items-center rounded-lg opacity-70 outline-none;
+}
+
+.ui-alert__close:hover {
+  @apply opacity-100;
+  background: var(--color-subtle-overlay);
+}
+
+.ui-alert__close-icon {
+  @apply relative block h-3 w-3;
+}
+
+.ui-alert__close-icon::before,
+.ui-alert__close-icon::after {
+  @apply absolute left-1/2 top-1/2 block h-0.5 w-3 rounded-full bg-current content-[''];
+  transform-origin: center;
+}
+
+.ui-alert__close-icon::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.ui-alert__close-icon::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}

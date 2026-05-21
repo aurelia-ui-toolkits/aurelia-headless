@@ -31,6 +31,7 @@ import logoUrl from '../../assets/aurelia-headless-logo.png';
 
 type DemoRoute = { id: string; path: string; title: string; component: unknown };
 const mobileQuery = '(max-width: 760px)';
+type ThemePackage = 'default' | 'compact';
 
 export class MyApp {
   mobile = this.isMobile();
@@ -75,6 +76,7 @@ export class MyApp {
   readonly logoUrl = logoUrl;
   selectedMenuItem: DemoRoute = this.menuItems[0];
   breadcrumbs: UiBreadcrumbItem[] = [];
+  themePackage: ThemePackage = this.loadThemePackage();
 
   @observable
   darkTheme = false;
@@ -127,6 +129,19 @@ export class MyApp {
     void this.router.load(path || '');
   }
 
+  selectThemePackage(themePackage: string): void {
+    if (themePackage !== 'default' && themePackage !== 'compact') {
+      return;
+    }
+
+    if (themePackage === this.loadThemePackage()) {
+      return;
+    }
+
+    localStorage.setItem('aurelia-headless:theme-package', themePackage);
+    location.reload();
+  }
+
   private isMobile(): boolean {
     return globalThis.matchMedia?.(mobileQuery).matches ?? false;
   }
@@ -153,6 +168,14 @@ export class MyApp {
       // Ignore unavailable storage.
     }
     return globalThis.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false;
+  }
+
+  private loadThemePackage(): ThemePackage {
+    try {
+      return localStorage.getItem('aurelia-headless:theme-package') === 'compact' ? 'compact' : 'default';
+    } catch {
+      return 'default';
+    }
   }
 
   private normalizePath(path: string): string {

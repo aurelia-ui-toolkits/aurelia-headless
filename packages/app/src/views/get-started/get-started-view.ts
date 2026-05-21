@@ -1,5 +1,6 @@
 export class GetStartedView {
   readonly installCode = 'npm install @aurelia-ui-toolkits/headless @aurelia-ui-toolkits/headless-tailwind';
+  readonly compactInstallCode = 'npm install @aurelia-ui-toolkits/headless-tailwind-compact';
 
   readonly registerCode = `import Aurelia from 'aurelia';
 import { AureliaHeadlessConfiguration } from '@aurelia-ui-toolkits/headless';
@@ -13,11 +14,22 @@ Aurelia
   readonly themeImportCode = `import '@aurelia-ui-toolkits/headless-tailwind';
 import './styles/brand-theme.css';`;
 
-  readonly replaceThemeCode = `// Default theme for prototypes and quick starts
+  readonly replaceThemeCode = `// Keep your component registration unchanged.
+// Swap only the theme import.
+
+// Default theme
 import '@aurelia-ui-toolkits/headless-tailwind';
 
-// Later, replace it with your own CSS
-import './styles/my-product-theme.css';`;
+// Compact theme
+// import '@aurelia-ui-toolkits/headless-tailwind-compact';`;
+
+  readonly customThemeCode = `/* app.css */
+@import "@aurelia-ui-toolkits/headless-tailwind/theme.css";
+@import "@aurelia-ui-toolkits/headless-tailwind/ui-button-theme.css";
+@import "@aurelia-ui-toolkits/headless-tailwind/ui-input-theme.css";
+
+/* Replace any component theme with your own CSS. */
+@import "./themes/my-list-theme.css";`;
 
   readonly brandThemeCode = `/* brand-theme.css */
 :root {

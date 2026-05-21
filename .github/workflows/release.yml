@@ -35,9 +35,10 @@ jobs:
         run: |
           components_version=$(node -p "require('./packages/components/package.json').version")
           tailwind_version=$(node -p "require('./packages/tailwind/package.json').version")
+          compact_version=$(node -p "require('./packages/tailwind-compact/package.json').version")
 
-          if [ "$components_version" != "$tailwind_version" ]; then
-            echo "Package versions differ: components=$components_version tailwind=$tailwind_version" >&2
+          if [ "$components_version" != "$tailwind_version" ] || [ "$components_version" != "$compact_version" ]; then
+            echo "Package versions differ: components=$components_version tailwind=$tailwind_version compact=$compact_version" >&2
             exit 1
           fi
 
@@ -50,6 +51,8 @@ jobs:
       - run: npm pack --dry-run -w packages/components
 
       - run: npm pack --dry-run -w packages/tailwind
+
+      - run: npm pack --dry-run -w packages/tailwind-compact
 
       - uses: actions/configure-pages@v5
 
@@ -92,6 +95,12 @@ jobs:
             echo "@aurelia-ui-toolkits/headless-tailwind@$version already exists; skipping publish."
           else
             npm publish -w packages/tailwind --provenance --access public
+          fi
+
+          if npm view "@aurelia-ui-toolkits/headless-tailwind-compact@$version" version >/dev/null 2>&1; then
+            echo "@aurelia-ui-toolkits/headless-tailwind-compact@$version already exists; skipping publish."
+          else
+            npm publish -w packages/tailwind-compact --provenance --access public
           fi
 
   deploy-pages:

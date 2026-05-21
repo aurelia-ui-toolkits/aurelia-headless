@@ -1,0 +1,48 @@
+@reference "./theme.css";
+
+.ui-checkbox {
+  @apply relative inline-grid h-4 w-4 cursor-pointer place-items-center rounded-sm border border-card-border bg-card align-middle;
+  transition: background-color 140ms ease, border-color 140ms ease, transform 140ms ease;
+}
+
+.ui-checkbox__control {
+  @apply absolute inset-0 m-0 h-full w-full cursor-pointer opacity-0;
+}
+
+.ui-checkbox[data-changing] {
+  transition-duration: 90ms;
+}
+
+.ui-checkbox[data-focus] {
+  outline: 3px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+.ui-checkbox[data-active] {
+  transform: scale(0.96);
+}
+
+.ui-checkbox[data-checked],
+.ui-checkbox[data-indeterminate] {
+  @apply border-primary-600 bg-primary-600;
+}
+
+.ui-checkbox__indicator {
+  @apply pointer-events-none hidden;
+}
+
+.ui-checkbox[data-checked] .ui-checkbox__indicator {
+  @apply block h-2 w-1 border-b-2 border-r-2;
+  border-color: var(--color-on-primary);
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+
+.ui-checkbox[data-indeterminate] .ui-checkbox__indicator {
+  @apply block h-0.5 w-2 rounded-sm;
+  background: var(--color-on-primary);
+  transform: none;
+}
+
+.ui-checkbox[data-disabled] {
+  @apply cursor-not-allowed opacity-50;
+}
