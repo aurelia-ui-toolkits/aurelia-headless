@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: 24
 
-      - run: npm ci
+      - run: npm install
 
       - id: version
         shell: bash
@@ -76,7 +76,7 @@ jobs:
 
       - run: node --version && npm --version
 
-      - run: npm ci
+      - run: npm install
 
       - run: npm run build -w packages/components
 
