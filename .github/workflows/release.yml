@@ -103,12 +103,6 @@ jobs:
             npm publish ./packages/tailwind-compact --access public
           fi
 
-          if npm view "@aurelia-ui-toolkits/headless-tailwind-compact@$version" version >/dev/null 2>&1; then
-            echo "@aurelia-ui-toolkits/headless-tailwind-compact@$version already exists; skipping publish."
-          else
-            npm publish -w packages/tailwind-compact --provenance --access public
-          fi
-
   deploy-pages:
     runs-on: ubuntu-latest
     needs: build
