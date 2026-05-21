@@ -25,10 +25,9 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: npm
+          node-version: 24
 
-      - run: npm i
+      - run: npm ci
 
       - id: version
         shell: bash
@@ -72,11 +71,12 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: npm
+          node-version: 24
           registry-url: https://registry.npmjs.org
 
-      - run: npm i
+      - run: node --version && npm --version
+
+      - run: npm ci
 
       - run: npm run build -w packages/components
 
@@ -88,19 +88,19 @@ jobs:
           if npm view "@aurelia-ui-toolkits/headless@$version" version >/dev/null 2>&1; then
             echo "@aurelia-ui-toolkits/headless@$version already exists; skipping publish."
           else
-            npm publish -w packages/components --provenance --access public
+            npm publish ./packages/components --access public
           fi
 
           if npm view "@aurelia-ui-toolkits/headless-tailwind@$version" version >/dev/null 2>&1; then
             echo "@aurelia-ui-toolkits/headless-tailwind@$version already exists; skipping publish."
           else
-            npm publish -w packages/tailwind --provenance --access public
+            npm publish ./packages/tailwind --access public
           fi
 
           if npm view "@aurelia-ui-toolkits/headless-tailwind-compact@$version" version >/dev/null 2>&1; then
             echo "@aurelia-ui-toolkits/headless-tailwind-compact@$version already exists; skipping publish."
           else
-            npm publish -w packages/tailwind-compact --provenance --access public
+            npm publish ./packages/tailwind-compact --access public
           fi
 
   deploy-pages:
