@@ -148,6 +148,11 @@ export class UiList {
     this.setLastActive();
   }
 
+  focusSelected(): void {
+    this.host.focus();
+    this.setSelectedActive();
+  }
+
   private getEffectiveItems(): unknown[] {
     if (this.items?.length) {
       return this.items;
@@ -213,7 +218,7 @@ export class UiList {
       return;
     }
 
-    this.scrollItemIntoView(firstItem);
+    this.scrollItemIntoView(firstItem, 'instant');
     this.activateItem(firstItem);
   }
 
@@ -224,8 +229,17 @@ export class UiList {
       return;
     }
 
-    this.scrollItemIntoView(lastItem);
+    this.scrollItemIntoView(lastItem, 'instant');
     this.activateItem(lastItem);
+  }
+
+  private setSelectedActive(): void {
+    if (this.selected === undefined) {
+      return;
+    }
+
+    this.scrollItemIntoView(this.selected, 'instant');
+    this.activateItem(this.selected);
   }
 
   private activateItem(item: unknown): void {
@@ -311,12 +325,12 @@ export class UiList {
     }
   }
 
-  private scrollItemIntoView(item: unknown): void {
+  scrollItemIntoView(item: unknown, behavior: ScrollBehavior = 'smooth'): void {
     const listItem = this.listItems.find(x => x.value === item);
     this.suppressMouseOver = true;
 
     if (listItem) {
-      listItem.element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+      listItem.element.scrollIntoView({ behavior, block: 'start', inline: 'nearest' });
     } else {
       const items = this.getEffectiveItems();
       const index = items.indexOf(item);

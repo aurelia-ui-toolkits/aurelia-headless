@@ -13,6 +13,9 @@ import { UiIconButton } from './button/ui-icon-button';
 import { UiCheckbox } from './checkbox/ui-checkbox';
 import { UiChip } from './chip/ui-chip';
 import { UiCombobox } from './combobox/ui-combobox';
+import { UiDatepicker } from './datepicker/ui-datepicker';
+import { UiDatepickerDialog } from './datepicker/ui-datepicker-dialog';
+import { UiDatepickerDialogConfiguration } from './datepicker/ui-datepicker-dialog-configuration';
 import { UiDisclosure } from './disclosure/ui-disclosure';
 import { UiDrawer } from './drawer/ui-drawer';
 import { IError, UiInput } from './input/ui-input';
@@ -57,6 +60,9 @@ export { UiIconButton };
 export { UiCheckbox };
 export { UiChip };
 export { UiCombobox };
+export { UiDatepicker };
+export { UiDatepickerDialog };
+export { UiDatepickerDialogConfiguration };
 export { UiDisclosure };
 export { UiDrawer };
 export { UiInput };
@@ -93,6 +99,8 @@ export type { IWithAlertService } from './alert-service/decorators/using-progres
 export type { IAlertModalPayload } from './alert-service/alert-modal/i-alert-modal-payload';
 export type { IPromptDialogData } from './alert-service/prompt-dialog/prompt-dialog';
 export type { UiBreadcrumbItem } from './breadcrumbs/ui-breadcrumbs';
+export type { UiDatepickerDialogData, UiDatepickerDialogDay } from './datepicker/ui-datepicker-dialog';
+export type { UiDatepickerI18n, UiDatepickerYearRange } from './datepicker/date-utils';
 
 let registered = false; //
 
@@ -138,6 +146,8 @@ export const AureliaHeadlessConfiguration = {
       nodeObserverLocator.useConfig('UI-SELECT', 'value', { events: ['input', 'change'] });
       attrMapper.useTwoWay((el, property) => el.hasAttribute('ui-combobox-element') ? property === 'value' : false);
       nodeObserverLocator.useConfig('UI-COMBOBOX', 'value', { events: ['input', 'change'] });
+      attrMapper.useTwoWay((el, property) => el.tagName === 'UI-DATEPICKER' ? property === 'value' : false);
+      nodeObserverLocator.useConfig('UI-DATEPICKER', 'value', { events: ['input', 'change'] });
       attrMapper.useTwoWay((el, property) => el.tagName === 'UI-RADIO-GROUP' ? property === 'value' : false);
       nodeObserverLocator.useConfig('UI-RADIO-GROUP', 'value', { events: ['input', 'change'] });
       attrMapper.useTwoWay((el, property) => el.tagName === 'UI-SLIDER' ? property === 'value' : false);
@@ -147,6 +157,6 @@ export const AureliaHeadlessConfiguration = {
 
     }).register(container);
 
-    return container.register(DialogConfigurationStandard, AlertModal, PromptDialog, Registration.singleton(AlertConfiguration, AlertConfiguration), Registration.singleton(AlertService, AlertService), Registration.singleton(ExceptionsTracker, ExceptionsTracker), UiAlert, UiBadge, UiBreadcrumbs, UiButton, UiIconButton, EnhanceUiButton, UiCheckbox, UiChip, UiCombobox, EnhanceUiCombobox, UiDisclosure, UiDrawer, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSegment, UiSegmentedControl, UiSelect, EnhanceUiSelect, UiSlider, UiSplitter, UiSwitch, UiTab, UiTabs, UiTable, UiTableColumn, EnhanceUiTable, UiToastRegion, Registration.singleton(UiToastService, UiToastService), UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService), UiTopAppBar, UiTree);
+    return container.register(DialogConfigurationStandard, AlertModal, PromptDialog, UiDatepickerDialog, Registration.singleton(AlertConfiguration, AlertConfiguration), Registration.singleton(AlertService, AlertService), Registration.singleton(ExceptionsTracker, ExceptionsTracker), Registration.singleton(UiDatepickerDialogConfiguration, UiDatepickerDialogConfiguration), UiAlert, UiBadge, UiBreadcrumbs, UiButton, UiIconButton, EnhanceUiButton, UiCheckbox, UiChip, UiCombobox, EnhanceUiCombobox, UiDatepicker, UiDisclosure, UiDrawer, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSegment, UiSegmentedControl, UiSelect, EnhanceUiSelect, UiSlider, UiSplitter, UiSwitch, UiTab, UiTabs, UiTable, UiTableColumn, EnhanceUiTable, UiToastRegion, Registration.singleton(UiToastService, UiToastService), UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService), UiTopAppBar, UiTree);
   }
 };

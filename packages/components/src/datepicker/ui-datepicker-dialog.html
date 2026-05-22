@@ -1,0 +1,61 @@
+<template class="ui-datepicker-dialog" data-time.attr="data.time ? '' : null">
+  <div class="ui-datepicker-dialog__header">
+    <span class="ui-datepicker-dialog__label">${data.label}</span>
+    <h2 class="ui-datepicker-dialog__title">${title}</h2>
+  </div>
+
+  <div class="ui-datepicker-dialog__body">
+    <div class="ui-datepicker-dialog__nav">
+      <ui-select class="ui-datepicker-dialog__month" value.two-way="visibleMonth" selected-item.two-way="selectedMonth"
+        value-field="value" label-field="label" portal-target.bind="portalTarget" aria-label="Month" change.trigger="monthChanged()">
+        <ui-list items.bind="months" selected.bind="selectedMonth" typeahead-field="label">
+          <ui-list-item repeat.for="month of months" value.bind="month" disabled.bind="month.disabled">${month.label}</ui-list-item>
+        </ui-list>
+      </ui-select>
+      <ui-select class="ui-datepicker-dialog__year" value.two-way="visibleYear" selected-item.two-way="selectedYear"
+        value-field="value" label-field="label" portal-target.bind="portalTarget" aria-label="Year" change.trigger="yearChanged()">
+        <ui-list items.bind="years" selected.bind="selectedYear" typeahead-field="label">
+          <ui-list-item repeat.for="year of years" value.bind="year">${year.label}</ui-list-item>
+        </ui-list>
+      </ui-select>
+      <button class="ui-datepicker-dialog__nav-button" ui-icon-button type="button" click.trigger="prev()" aria-label="Previous month">
+        <svg class="ui-datepicker-dialog__nav-icon" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+      <button class="ui-datepicker-dialog__nav-button" ui-icon-button type="button" click.trigger="next()" aria-label="Next month">
+        <svg class="ui-datepicker-dialog__nav-icon" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="ui-datepicker-dialog__calendar">
+      <span class="ui-datepicker-dialog__weekday" repeat.for="weekday of weekdays">${weekday}</span>
+      <button class="ui-datepicker-dialog__day"
+        repeat.for="day of days"
+        type="button"
+        disabled.bind="day.disabled"
+        data-outside.attr="day.outside ? '' : null"
+        data-selected.attr="day.selected ? '' : null"
+        data-today.attr="day.today ? '' : null"
+        click.trigger="selectDay(day)">${day.date ? day.label : ''}</button>
+    </div>
+
+    <div class="ui-datepicker-dialog__time" if.bind="data.time">
+      <label class="ui-datepicker-dialog__time-field">
+        <span>Hour</span>
+        <input type="number" min="0" max="23" value.bind="hour" change.trigger="timeChanged()">
+      </label>
+      <label class="ui-datepicker-dialog__time-field">
+        <span>Minute</span>
+        <input type="number" min="0" max="59" step.bind="minuteStep" value.bind="minute" change.trigger="timeChanged()">
+      </label>
+    </div>
+  </div>
+
+  <div class="ui-datepicker-dialog__actions">
+    <button ui-button outlined type="button" click.trigger="cancel()">${cancelText}</button>
+    <button ui-button primary type="button" click.trigger="ok()" autofocus>${okText}</button>
+  </div>
+</template>

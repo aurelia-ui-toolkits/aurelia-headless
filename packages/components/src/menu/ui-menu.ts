@@ -15,11 +15,6 @@ export class UiMenu {
 
   @bindable({ mode: BindingMode.twoWay, set: booleanAttr })
   open: boolean = false;
-  openChanged(newValue: boolean): void {
-    if (newValue && this.focusOnOpen) {
-      this.focus();
-    }
-  }
 
   @bindable
   anchor: Element | undefined;
@@ -82,7 +77,17 @@ export class UiMenu {
     }));
   }
 
-  focus(key: Keys.Home | Keys.End = Keys.Home): void {
+  onPopupOpened(): void {
+    this.element.dispatchEvent(new CustomEvent('menu-opened', { bubbles: true }));
+
+    if (!this.focusOnOpen) {
+      return;
+    }
+
+    setTimeout(() => this.focus(undefined), 0);
+  }
+
+  focus(key: Keys.Home | Keys.End | undefined): void {
     const list = this.popup.panelElement?.querySelector('ui-list') as HTMLElement | null;
     if (!list) {
       this.popup.focus();
@@ -90,10 +95,16 @@ export class UiMenu {
     }
 
     const listViewModel = CustomElement.for<UiList>(list).viewModel;
-    if (key === Keys.End) {
-      listViewModel.focusLast();
-    } else {
-      listViewModel.focusFirst();
+    switch (key) {
+      case Keys.End:
+        listViewModel.focusLast();
+        break;
+      case Keys.Home:
+        listViewModel.focusFirst();
+        break;
+      default:
+        listViewModel.focusSelected();
+        break;
     }
   }
 

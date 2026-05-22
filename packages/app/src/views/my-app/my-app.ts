@@ -7,6 +7,7 @@ import { ButtonView } from '../button/button-view';
 import { CheckboxView } from '../checkbox/checkbox-view';
 import { ChipView } from '../chip/chip-view';
 import { ComboboxView } from '../combobox/combobox-view';
+import { DatepickerView } from '../datepicker/datepicker-view';
 import { DisclosureView } from '../disclosure/disclosure-view';
 import { DrawerView } from '../drawer/drawer-view';
 import { GetStartedView } from '../get-started/get-started-view';
@@ -45,6 +46,7 @@ export class MyApp {
     { id: 'checkbox', path: 'checkbox', title: 'ui-checkbox', component: CheckboxView },
     { id: 'chip', path: 'chip', title: 'ui-chip', component: ChipView },
     { id: 'combobox', path: 'combobox', title: 'ui-combobox', component: ComboboxView },
+    { id: 'datepicker', path: 'datepicker', title: 'ui-datepicker', component: DatepickerView },
     { id: 'disclosure', path: 'disclosure', title: 'ui-disclosure', component: DisclosureView },
     { id: 'drawer', path: 'drawer', title: 'ui-drawer', component: DrawerView },
     { id: 'input', path: 'input', title: 'ui-input', component: InputView },

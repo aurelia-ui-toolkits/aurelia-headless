@@ -13,6 +13,7 @@
     match-anchor-width.bind="matchAnchorWidth"
     focus-on-open.bind="focusOnOpen"
     restore-focus.bind="restoreFocus"
+    popup-opened.trigger="onPopupOpened()"
     popup-tab-away.trigger="onPopupTabAway($event)"
     list-select.trigger="onListSelect($event)">
     <au-slot expose.bind="effectiveSlotHost"></au-slot>

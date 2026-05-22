@@ -2,6 +2,7 @@ import { bindable, BindingMode, computed, CustomElement, customElement, resolve,
 import { booleanAttr } from '../base/boolean-attr';
 import { IError, IValidatedElement } from '../base/i-validated-element';
 import { Keys } from '../base/keys';
+import { UiMenu } from '../menu/ui-menu';
 import template from './ui-select.html?raw';
 
 let nextSelectId = 0;
@@ -19,6 +20,7 @@ export class UiSelect {
   active: boolean = false;
   open: boolean = false;
   controlEl!: HTMLElement;
+  menu!: UiMenu;
 
   @bindable({ mode: BindingMode.twoWay })
   value: unknown;
@@ -58,6 +60,12 @@ export class UiSelect {
 
   @bindable({ set: booleanAttr })
   invalid: boolean = false;
+
+  @bindable
+  portalTarget: string | Element | null | undefined;
+
+  @bindable
+  portalPosition: InsertPosition = 'beforeend';
 
   @slotted({ slotName: 'helper' })
   helperNodes: readonly Node[] = [];
