@@ -84,10 +84,10 @@ export class UiMenu {
       return;
     }
 
-    this.focus();
+    setTimeout(() => this.focus(undefined), 0);
   }
 
-  focus(key: Keys.Home | Keys.End = Keys.Home): void {
+  focus(key: Keys.Home | Keys.End | undefined): void {
     const list = this.popup.panelElement?.querySelector('ui-list') as HTMLElement | null;
     if (!list) {
       this.popup.focus();
@@ -95,10 +95,16 @@ export class UiMenu {
     }
 
     const listViewModel = CustomElement.for<UiList>(list).viewModel;
-    if (key === Keys.End) {
-      listViewModel.focusLast();
-    } else {
-      listViewModel.focusFirst();
+    switch (key) {
+      case Keys.End:
+        listViewModel.focusLast();
+        break;
+      case Keys.Home:
+        listViewModel.focusFirst();
+        break;
+      default:
+        listViewModel.focusSelected();
+        break;
     }
   }
 

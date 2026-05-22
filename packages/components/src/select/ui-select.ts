@@ -170,10 +170,6 @@ export class UiSelect {
     this.focus = false;
   }
 
-  onMenuOpened(): void {
-    setTimeout(() => this.scrollSelectedItemIntoView(), 0);
-  }
-
   onFocusIn(): void {
     if (!this.disabled) {
       this.focus = true;
@@ -233,7 +229,7 @@ export class UiSelect {
     const listViewModel = CustomElement.for<UiList>(list).viewModel;
     const item = this.selectedItem ?? listViewModel.items.find(option => this.getItemValue(option) === this.value);
     if (item !== undefined) {
-      listViewModel.scrollItemIntoView(item);
+      listViewModel.scrollItemIntoView(item, 'instant');
     }
   }
 
