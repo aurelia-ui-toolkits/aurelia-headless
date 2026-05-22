@@ -2,7 +2,6 @@ import { bindable, BindingMode, computed, CustomElement, customElement, resolve,
 import { booleanAttr } from '../base/boolean-attr';
 import { IError, IValidatedElement } from '../base/i-validated-element';
 import { Keys } from '../base/keys';
-import { UiList } from '../list/ui-list';
 import { UiMenu } from '../menu/ui-menu';
 import template from './ui-select.html?raw';
 
