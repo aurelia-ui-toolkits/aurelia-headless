@@ -1,5 +1,5 @@
 import { IDialogController } from '@aurelia/dialog';
-import { customElement, resolve } from 'aurelia';
+import { customElement, INode, resolve } from 'aurelia';
 import { formatDate, getDaysInMonth, isSameDay, parseCanonical, startOfLocalDay, toCanonical, UiDatepickerI18n, UiDatepickerYearRange, withTime } from './date-utils';
 import { UiDatepickerDialogConfiguration } from './ui-datepicker-dialog-configuration';
 import template from './ui-datepicker-dialog.html?raw';
@@ -11,6 +11,12 @@ export interface UiDatepickerDialogDay {
   outside: boolean;
   selected: boolean;
   today: boolean;
+}
+
+interface UiDatepickerDialogOption<T> {
+  value: T;
+  label: string;
+  disabled?: boolean;
 }
 
 export interface UiDatepickerDialogData {
@@ -31,6 +37,7 @@ export interface UiDatepickerDialogData {
 
 @customElement({ name: 'ui-datepicker-dialog', template })
 export class UiDatepickerDialog {
+  private readonly element = resolve(INode) as HTMLElement;
   private readonly dialog = resolve(IDialogController);
   private readonly configuration = resolve(UiDatepickerDialogConfiguration);
 
@@ -38,12 +45,15 @@ export class UiDatepickerDialog {
   selectedDate: Date = new Date();
   visibleMonth: number = this.selectedDate.getMonth();
   visibleYear: number = this.selectedDate.getFullYear();
-  years: number[] = [];
-  months: { value: number; label: string; disabled: boolean }[] = [];
+  years: UiDatepickerDialogOption<number>[] = [];
+  months: UiDatepickerDialogOption<number>[] = [];
+  selectedYear: UiDatepickerDialogOption<number> | undefined;
+  selectedMonth: UiDatepickerDialogOption<number> | undefined;
   weekdays: string[] = [];
   days: UiDatepickerDialogDay[] = [];
   hour: number = 0;
   minute: number = 0;
+  portalTarget: Element | undefined;
 
   activate(data: UiDatepickerDialogData): void {
     const i18n = { ...this.configuration.i18n, ...data.i18n };
@@ -66,6 +76,10 @@ export class UiDatepickerDialog {
     this.buildCalendar();
   }
 
+  attached(): void {
+    this.portalTarget = this.element.closest('dialog') ?? undefined;
+  }
+
   get title(): string {
     return formatDate(this.selectedDate, this.data.dialogFormat ?? this.configuration.dialogFormat, this.data.i18n?.dateFnsLocale);
   }
@@ -84,12 +98,17 @@ export class UiDatepickerDialog {
 
   buildCalendar(): void {
     const yearRange = this.getYearRange();
-    this.years = Array.from({ length: yearRange.max - yearRange.min + 1 }, (_, i) => yearRange.min + i);
+    this.years = Array.from({ length: yearRange.max - yearRange.min + 1 }, (_, i) => {
+      const year = yearRange.min + i;
+      return { value: year, label: String(year) };
+    });
     this.months = Array.from({ length: 12 }, (_, i) => ({
       value: i,
       label: formatDate(new Date(2020, i, 1), 'LLLL', this.data.i18n?.dateFnsLocale),
       disabled: this.isMonthDisabled(this.visibleYear, i)
     }));
+    this.selectedMonth = this.months.find(month => month.value === this.visibleMonth);
+    this.selectedYear = this.years.find(year => year.value === this.visibleYear);
     this.weekdays = Array.from({ length: 7 }, (_, i) => {
       const day = 1 + ((this.data.firstDay ?? 0) + i) % 7;
       return formatDate(new Date(2020, 10, day), 'EEEEE', this.data.i18n?.dateFnsLocale);

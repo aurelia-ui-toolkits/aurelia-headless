@@ -43,11 +43,13 @@ ui-datepicker,
 }
 
 .ui-datepicker__leading {
+  grid-column: 1;
   margin-right: 0.5rem;
 }
 
 .ui-datepicker__trailing {
-  @apply inline-flex items-center justify-center;
+  @apply inline-flex items-center justify-center gap-1;
+  grid-column: 3;
   margin-left: 0.5rem;
 }
 
@@ -114,8 +116,54 @@ ui-datepicker,
   color: var(--color-validation-text);
 }
 
+dialog:has(.ui-datepicker-dialog) {
+  @apply rounded-2xl border bg-card p-0 text-ink-900 shadow-2xl;
+  animation: ui-datepicker-dialog-in 140ms ease-out;
+  border-color: var(--color-card-border);
+  inset: 0;
+  margin: auto;
+  max-width: min(92vw, 28rem);
+  width: min(92vw, 28rem);
+  overflow: visible;
+}
+
+dialog:has(.ui-datepicker-dialog)::backdrop {
+  animation: ui-datepicker-dialog-backdrop-in 140ms ease-out;
+  background: var(--color-backdrop);
+}
+
+@keyframes ui-datepicker-dialog-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ui-datepicker-dialog-backdrop-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 .ui-datepicker-dialog {
-  @apply grid w-[min(26rem,calc(100vw-2rem))] gap-4 rounded-2xl border border-card-border bg-card p-5 text-ink-900 shadow-xl;
+  @apply grid w-full gap-4 rounded-2xl bg-card p-5 text-ink-900;
+  overflow: visible;
+}
+
+.ui-datepicker-dialog__body,
+.ui-datepicker-dialog__nav {
+  overflow: visible;
+}
+
+dialog:has(.ui-datepicker-dialog) .ui-popup__panel {
+  @apply z-[100];
 }
 
 .ui-datepicker-dialog__header {
@@ -135,19 +183,24 @@ ui-datepicker,
 }
 
 .ui-datepicker-dialog__nav {
-  @apply grid grid-cols-[1fr_auto_auto_auto] items-center gap-2;
+  @apply grid grid-cols-[minmax(0,1fr)_6rem_auto_auto] items-center gap-2;
 }
 
-.ui-datepicker-dialog__month,
-.ui-datepicker-dialog__year,
 .ui-datepicker-dialog__time-field input {
   @apply rounded-lg border border-card-border bg-transparent px-3 py-2 text-sm font-semibold text-ink-900 outline-none;
 }
 
-.ui-datepicker-dialog__month:focus,
-.ui-datepicker-dialog__year:focus,
 .ui-datepicker-dialog__time-field input:focus {
   box-shadow: 0 0 0 3px var(--color-ring);
+}
+
+.ui-datepicker-dialog__month,
+.ui-datepicker-dialog__year {
+  @apply min-w-0;
+}
+
+.ui-datepicker-dialog__nav-icon {
+  @apply h-4 w-4;
 }
 
 .ui-datepicker-dialog__calendar {
@@ -196,5 +249,5 @@ ui-datepicker,
 }
 
 .ui-datepicker-dialog__actions {
-  @apply flex justify-end gap-2;
+  @apply flex justify-end gap-4;
 }

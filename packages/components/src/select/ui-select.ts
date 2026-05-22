@@ -59,6 +59,12 @@ export class UiSelect {
   @bindable({ set: booleanAttr })
   invalid: boolean = false;
 
+  @bindable
+  portalTarget: string | Element | null | undefined;
+
+  @bindable
+  portalPosition: InsertPosition = 'beforeend';
+
   @slotted({ slotName: 'helper' })
   helperNodes: readonly Node[] = [];
 

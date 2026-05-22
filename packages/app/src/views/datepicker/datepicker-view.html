@@ -1,33 +1,33 @@
 <demo-section title="ui-datepicker">
   <demo-block title="Date">
-    <ui-datepicker value.bind="dateValue" label="Start date" helper-text="Type digits only; the mask inserts separators.">
+    <ui-datepicker class="datepicker-demo-control" value.bind="dateValue" label="Start date" helper-text="Type digits only; the mask inserts separators.">
     </ui-datepicker>
     <span class="datepicker-state">Value: ${dateValue || 'empty'}</span>
   </demo-block>
 
   <demo-block title="Date with time">
-    <ui-datepicker value.bind="dateTimeValue" time label="Starts at" minute-step="15"
+    <ui-datepicker class="datepicker-demo-control" value.bind="dateTimeValue" time label="Starts at" minute-step="15"
       helper-text="The dialog keeps the date and time together.">
     </ui-datepicker>
     <span class="datepicker-state">Value: ${dateTimeValue || 'empty'}</span>
   </demo-block>
 
   <demo-block title="ISO display format">
-    <ui-datepicker value.bind="isoValue" label="ISO date" format="yyyy-MM-dd" inputmask-format="yyyy-mm-dd">
+    <ui-datepicker class="datepicker-demo-control" value.bind="isoValue" label="ISO date" format="yyyy-MM-dd" inputmask-format="yyyy-mm-dd">
     </ui-datepicker>
     <span class="datepicker-state">Value: ${isoValue || 'empty'}</span>
   </demo-block>
 
   <demo-block title="Min, max, and weekends disabled">
-    <ui-datepicker value.bind="constrainedValue" label="Work day" min="2026-05-01" max="2026-05-31" disable-weekends>
+    <ui-datepicker class="datepicker-demo-control" value.bind="constrainedValue" label="Work day" min="2026-05-01" max="2026-05-31" disable-weekends>
     </ui-datepicker>
     <span class="datepicker-state">Value: ${constrainedValue || 'empty'}</span>
   </demo-block>
 
   <demo-block title="Disabled and readonly">
     <div class="datepicker-stack">
-      <ui-datepicker value="2026-05-22" label="Disabled" disabled></ui-datepicker>
-      <ui-datepicker value="2026-05-22" label="Readonly" readonly></ui-datepicker>
+      <ui-datepicker class="datepicker-demo-control" value="2026-05-22" label="Disabled" disabled></ui-datepicker>
+      <ui-datepicker class="datepicker-demo-control" value="2026-05-22" label="Readonly" readonly></ui-datepicker>
     </div>
   </demo-block>
 </demo-section>

@@ -1,0 +1,13 @@
+@reference "@aurelia-ui-toolkits/headless-tailwind/theme.css";
+
+.datepicker-demo-control {
+  max-width: 18rem;
+}
+
+.datepicker-stack {
+  @apply grid gap-3;
+}
+
+.datepicker-state {
+  @apply text-xs text-ink-500;
+}
