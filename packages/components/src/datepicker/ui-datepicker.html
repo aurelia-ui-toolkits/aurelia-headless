@@ -1,0 +1,63 @@
+<template class="ui-datepicker"
+  data-disabled.attr="disabled ? '' : null"
+  data-invalid.attr="invalid || errors.size ? '' : null"
+  data-focus.attr="focus ? '' : null"
+  data-active.attr="active ? '' : null"
+  data-open.attr="open ? '' : null"
+  data-inset.attr="inset ? '' : null"
+  data-has-value.attr="hasValue ? '' : null"
+  data-time.attr="time ? '' : null">
+  <label class="ui-datepicker__label"
+    for.bind="id"
+    id.bind="!inset && label ? labelId : null"
+    show.bind="label && !inset">${label}</label>
+
+  <div class="ui-datepicker__control">
+    <span class="ui-datepicker__leading" show.bind="leadingNodes.length">
+      <au-slot name="leading"></au-slot>
+    </span>
+
+    <span class="ui-datepicker__inset-label"
+      id.bind="inset && label ? labelId : null"
+      show.bind="label && inset">${label}</span>
+
+    <input ref="inputEl"
+      class="ui-datepicker__native"
+      id.bind="id"
+      name.attr="name || null"
+      placeholder.attr="inset ? null : placeholderText || null"
+      disabled.bind="disabled"
+      readonly.bind="readonly"
+      required.bind="required"
+      inputmode="numeric"
+      aria-labelledby.bind="label ? labelId : null"
+      aria-invalid.bind="invalid || errors.size ? 'true' : 'false'"
+      aria-describedby.bind="errors.size ? errorsId : (helperNodes.length ? helperId : null)"
+      focusin.trigger="onFocusIn()"
+      focusout.trigger="onFocusOut()"
+      pointerdown.trigger="onPointerDown()"
+      pointerup.trigger="onPointerUp()"
+      pointerleave.trigger="onPointerLeave()">
+
+    <span class="ui-datepicker__trailing">
+      <au-slot name="trailing">
+        <button class="ui-datepicker__button" ui-icon-button type="button" tabindex="-1" disabled.bind="disabled || readonly"
+          aria-label="Open date picker" click.trigger="openDialog()">
+          <svg class="ui-datepicker__button-icon" viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M4 1v2M12 1v2M2.5 6h11M3 3h10a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </au-slot>
+    </span>
+  </div>
+
+  <div class="ui-datepicker__subscript" show.bind="errors.size || helperText || helperNodes.length">
+    <div class="ui-datepicker__helper" id.bind="helperId" show.bind="!errors.size && (helperText || helperNodes.length)">
+      <au-slot name="helper">${helperText}</au-slot>
+    </div>
+
+    <div class="ui-datepicker__errors" id.bind="errorsId" show.bind="errors.size">
+      <div class="ui-datepicker__error" repeat.for="[error, _] of errors" if.bind="error.message">${error.message}</div>
+    </div>
+  </div>
+</template>
