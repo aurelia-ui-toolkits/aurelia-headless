@@ -2,6 +2,8 @@ import { bindable, BindingMode, computed, CustomElement, customElement, resolve,
 import { booleanAttr } from '../base/boolean-attr';
 import { IError, IValidatedElement } from '../base/i-validated-element';
 import { Keys } from '../base/keys';
+import { UiList } from '../list/ui-list';
+import { UiMenu } from '../menu/ui-menu';
 import template from './ui-select.html?raw';
 
 let nextSelectId = 0;
@@ -19,6 +21,7 @@ export class UiSelect {
   active: boolean = false;
   open: boolean = false;
   controlEl!: HTMLElement;
+  menu!: UiMenu;
 
   @bindable({ mode: BindingMode.twoWay })
   value: unknown;
@@ -167,6 +170,10 @@ export class UiSelect {
     this.focus = false;
   }
 
+  onMenuOpened(): void {
+    setTimeout(() => this.scrollSelectedItemIntoView(), 0);
+  }
+
   onFocusIn(): void {
     if (!this.disabled) {
       this.focus = true;
@@ -215,6 +222,19 @@ export class UiSelect {
 
   private dispatchValueEvent(type: 'input' | 'change'): void {
     this.element.dispatchEvent(new Event(type, { bubbles: true }));
+  }
+
+  private scrollSelectedItemIntoView(): void {
+    const list = this.menu?.popup.panelElement?.querySelector('ui-list') as HTMLElement | null;
+    if (!list) {
+      return;
+    }
+
+    const listViewModel = CustomElement.for<UiList>(list).viewModel;
+    const item = this.selectedItem ?? listViewModel.items.find(option => this.getItemValue(option) === this.value);
+    if (item !== undefined) {
+      listViewModel.scrollItemIntoView(item);
+    }
   }
 
   private findError(error: IError): IError | undefined {

@@ -49,12 +49,14 @@
     </span>
   </div>
 
-  <ui-menu open.bind="open"
+  <ui-menu component.ref="menu"
+    open.bind="open"
     anchor.bind="controlEl"
     tab-reference.bind="controlEl"
     portal-target.bind="portalTarget"
     portal-position.bind="portalPosition"
     match-anchor-width
+    menu-opened.trigger="onMenuOpened()"
     menu-tab-away.trigger="onMenuTabAway()"
     menu-select.trigger="onMenuSelect($event)">
     <au-slot></au-slot>

@@ -311,12 +311,12 @@ export class UiList {
     }
   }
 
-  private scrollItemIntoView(item: unknown): void {
+  scrollItemIntoView(item: unknown): void {
     const listItem = this.listItems.find(x => x.value === item);
     this.suppressMouseOver = true;
 
     if (listItem) {
-      listItem.element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+      listItem.element.scrollIntoView({ behavior: 'auto', block: 'nearest', inline: 'nearest' });
     } else {
       const items = this.getEffectiveItems();
       const index = items.indexOf(item);

@@ -15,11 +15,6 @@ export class UiMenu {
 
   @bindable({ mode: BindingMode.twoWay, set: booleanAttr })
   open: boolean = false;
-  openChanged(newValue: boolean): void {
-    if (newValue && this.focusOnOpen) {
-      this.focus();
-    }
-  }
 
   @bindable
   anchor: Element | undefined;
@@ -80,6 +75,16 @@ export class UiMenu {
       bubbles: true,
       detail: event.detail
     }));
+  }
+
+  onPopupOpened(): void {
+    this.element.dispatchEvent(new CustomEvent('menu-opened', { bubbles: true }));
+
+    if (!this.focusOnOpen) {
+      return;
+    }
+
+    this.focus();
   }
 
   focus(key: Keys.Home | Keys.End = Keys.Home): void {

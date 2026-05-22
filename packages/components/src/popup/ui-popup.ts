@@ -17,6 +17,7 @@ export class UiPopup {
     if (newValue) {
       this.panelStyle = this.hiddenPanelStyle;
       this.startOpenState();
+      this.element.dispatchEvent(new CustomEvent('popup-opened', { bubbles: true }));
       return;
     }
 
