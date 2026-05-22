@@ -220,19 +220,6 @@ export class UiSelect {
     this.element.dispatchEvent(new Event(type, { bubbles: true }));
   }
 
-  private scrollSelectedItemIntoView(): void {
-    const list = this.menu?.popup.panelElement?.querySelector('ui-list') as HTMLElement | null;
-    if (!list) {
-      return;
-    }
-
-    const listViewModel = CustomElement.for<UiList>(list).viewModel;
-    const item = this.selectedItem ?? listViewModel.items.find(option => this.getItemValue(option) === this.value);
-    if (item !== undefined) {
-      listViewModel.scrollItemIntoView(item, 'instant');
-    }
-  }
-
   private findError(error: IError): IError | undefined {
     for (const existing of this.errors.keys()) {
       if (existing === error || existing.message === error.message) {
