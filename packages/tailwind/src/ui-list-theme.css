@@ -33,10 +33,12 @@
 }
 
 .ui-list-item__leading {
+  @apply col-start-1;
   margin-right: 0.75rem;
 }
 
 .ui-list-item__trailing {
+  @apply col-start-3;
   justify-self: end;
   margin-left: 0.75rem;
 }
@@ -47,7 +49,7 @@
 }
 
 .ui-list-item__content {
-  @apply min-w-0 grid gap-0.5;
+  @apply min-w-0 grid gap-0.5 col-start-2;
 }
 
 .ui-list-item__primary {
