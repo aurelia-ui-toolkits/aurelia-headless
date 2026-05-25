@@ -116,7 +116,7 @@ body {
 }
 
 .side-menu-list .ui-list-item {
-  @apply grid-cols-[1fr] gap-0 px-3 py-2 font-semibold text-ink-700;
+  @apply gap-0 px-3 py-2 font-semibold text-ink-700;
 }
 
 .side-menu-list .ui-list-item[data-active] {
