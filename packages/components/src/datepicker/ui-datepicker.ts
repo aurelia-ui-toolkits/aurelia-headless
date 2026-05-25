@@ -1,5 +1,5 @@
 import { DialogCloseResult, IDialogService } from '@aurelia/dialog';
-import { bindable, BindingMode, CustomElement, customElement, INode, queueTask, resolve, slotted } from 'aurelia';
+import { bindable, CustomElement, customElement, INode, queueTask, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { IError, IValidatedElement } from '../base/i-validated-element';
 import { formatDate, getCanonicalFormat, parseByFormat, parseCanonical } from './date-utils';
@@ -25,7 +25,6 @@ export class UiDatepicker {
   inputmaskValue: string | undefined;
   private _value: string | undefined;
 
-  @bindable({ mode: BindingMode.twoWay })
   get value(): string {
     if (this.inputEl) {
       if (this.inputmaskValue !== '' && this.inputmaskValue !== undefined) {
