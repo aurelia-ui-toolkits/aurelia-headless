@@ -26,6 +26,7 @@
       id.bind="id"
       name.attr="name || null"
       placeholder.attr="inset ? null : placeholderText || null"
+      inputmask="mask:datetime; options.bind: { inputFormat: effectiveInputmaskFormat }; is-value-masked: true; value.bind: inputmaskValue; incomplete-value.bind: incompleteValue"
       disabled.bind="disabled"
       readonly.bind="readonly"
       required.bind="required"

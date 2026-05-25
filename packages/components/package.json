@@ -45,8 +45,9 @@
     "aurelia": ">=2.0.0-rc.1"
   },
   "dependencies": {
+    "@types/inputmask": "^5.0.7",
     "date-fns": "^4.2.1",
-    "imask": "^7.6.1",
+    "inputmask": "^5.0.9",
     "tslib": "^2.8.1"
   }
 }

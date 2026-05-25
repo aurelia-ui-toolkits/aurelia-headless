@@ -1,6 +1,5 @@
 import { DialogCloseResult, IDialogService } from '@aurelia/dialog';
 import { bindable, BindingMode, CustomElement, customElement, INode, resolve, slotted } from 'aurelia';
-import IMask from 'imask';
 import type { Locale } from 'date-fns';
 import { booleanAttr } from '../base/boolean-attr';
 import { IError, IValidatedElement } from '../base/i-validated-element';
@@ -9,8 +8,6 @@ import { UiDatepickerDialog, UiDatepickerDialogData } from './ui-datepicker-dial
 import template from './ui-datepicker.html?raw';
 
 let nextDatepickerId = 0;
-
-type DateMask = { value: string; destroy(): void; on(event: string, callback: () => void): void };
 
 @customElement({ name: 'ui-datepicker', template })
 export class UiDatepicker {
@@ -26,7 +23,8 @@ export class UiDatepicker {
   active: boolean = false;
   open: boolean = false;
   inputEl!: HTMLInputElement;
-  private mask: DateMask | undefined;
+  inputmaskValue: string | undefined;
+  incompleteValue: string | undefined;
   private pendingValue: string | undefined;
   private syncingMask = false;
 
@@ -34,6 +32,10 @@ export class UiDatepicker {
   value: string | undefined;
   valueChanged(): void {
     this.syncInputFromValue();
+  }
+
+  inputmaskValueChanged(): void {
+    this.commitInput('input');
   }
 
   @bindable
@@ -62,8 +64,9 @@ export class UiDatepicker {
 
   @bindable
   inputmaskFormat: string | undefined;
-  inputmaskFormatChanged(): void {
-    this.recreateMask();
+
+  get effectiveInputmaskFormat(): string {
+    return this.inputmaskFormat ?? (this.time ? 'dd/mm/yyyy HH:MM' : 'dd/mm/yyyy');
   }
 
   @bindable
@@ -150,22 +153,12 @@ export class UiDatepicker {
     return this.format ?? (this.time ? 'dd/MM/yyyy HH:mm' : 'dd/MM/yyyy');
   }
 
-  get effectiveInputmaskFormat(): string {
-    return this.inputmaskFormat ?? (this.time ? 'dd/mm/yyyy HH:MM' : 'dd/mm/yyyy');
-  }
-
   get placeholderText(): string | undefined {
     return this.placeholder ?? this.effectiveFormat;
   }
 
   attached(): void {
-    this.createMask();
     this.syncInputFromValue();
-  }
-
-  detaching(): void {
-    this.mask?.destroy();
-    this.mask = undefined;
   }
 
   addError(error: IError): void {
@@ -246,24 +239,16 @@ export class UiDatepicker {
     if (!this.inputEl) {
       return;
     }
-    this.createMask();
     this.syncInputFromValue();
-  }
-
-  private createMask(): void {
-    this.mask?.destroy();
-    const mask = this.toImaskPattern(this.effectiveInputmaskFormat);
-    this.mask = IMask(this.inputEl, { mask, lazy: false, placeholderChar: '_' }) as unknown as DateMask;
-    this.mask.on('accept', () => this.commitInput('input'));
   }
 
   private commitInput(eventType: 'input' | 'change'): void {
     if (this.syncingMask) {
       return;
     }
-    const display = this.inputEl.value;
-    if (!display || display.includes('_')) {
-      if (!display || display.replace(/[_/\-. :T]/g, '') === '') {
+    const display = this.inputmaskValue;
+    if (!display) {
+      if (!this.incompleteValue) {
         this.setValue(undefined, eventType);
       }
       return;
@@ -296,20 +281,12 @@ export class UiDatepicker {
     const source = this.value ?? this.pendingValue;
     const date = parseCanonical(source, this.time);
     const display = date ? formatDate(date, this.effectiveFormat, this.locale) : '';
-    if (this.inputEl.value !== display) {
+    if (this.inputmaskValue !== display) {
       this.syncingMask = true;
-      if (this.mask) {
-        this.mask.value = display;
-      } else {
-        this.inputEl.value = display;
-      }
+      this.inputmaskValue = display;
       this.syncingMask = false;
     }
     this.pendingValue = undefined;
-  }
-
-  private toImaskPattern(inputFormat: string): string {
-    return inputFormat.replace(/[dmyhHMsS]/g, '0');
   }
 
   private findError(error: IError): IError | undefined {
