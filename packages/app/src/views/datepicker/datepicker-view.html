@@ -6,7 +6,7 @@
   </demo-block>
 
   <demo-block title="Date with time">
-    <ui-datepicker class="datepicker-demo-control" value.bind="dateTimeValue" time label="Starts at" minute-step="15"
+    <ui-datepicker class="datepicker-demo-control" value.bind="dateTimeValue" time label="Starts at" minute-step="15" format="dd/MM/yyyy HH:mm" inputmask-format="dd/mm/yyyy HH:MM"
       helper-text="The dialog keeps the date and time together.">
     </ui-datepicker>
     <span class="datepicker-state">Value: ${dateTimeValue || 'empty'}</span>
