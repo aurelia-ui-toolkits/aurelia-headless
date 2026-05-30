@@ -41,6 +41,7 @@
   --color-validation-strong-text: #b91c1c;
   --color-resize-handle: color-mix(in srgb, var(--color-card-border) 40%, transparent);
   --color-ring-muted: color-mix(in srgb, var(--color-ring) 35%, transparent);
+  --ui-field-padding-x: 0.75rem;
 }
 
 :root {
@@ -85,6 +86,7 @@
   --color-validation-strong-text: #b91c1c;
   --color-resize-handle: color-mix(in srgb, var(--color-card-border) 40%, transparent);
   --color-ring-muted: color-mix(in srgb, var(--color-ring) 35%, transparent);
+  --ui-field-padding-x: 0.75rem;
 }
 
 :root[data-theme="dark"] {

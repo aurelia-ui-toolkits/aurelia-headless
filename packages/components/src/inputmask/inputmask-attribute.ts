@@ -2,8 +2,8 @@ import Inputmask from 'inputmask';
 import { OptionsStore } from './options-store';
 import { BindingMode, bindable, customAttribute, resolve } from 'aurelia';
 
-@customAttribute({ name: 'inputmask', defaultProperty: 'mask' })
-export class InputmaskCustomAttribute {
+@customAttribute({ name: 'ui-inputmask', defaultProperty: 'mask' })
+export class UiInputmaskCustomAttribute {
   private element = resolve(Element);
   private optionsStore = resolve(OptionsStore);
 
@@ -22,7 +22,7 @@ export class InputmaskCustomAttribute {
       this.input.value = this.value || '';
       this.input.dispatchEvent(new CustomEvent('change'));
     }
-    this.element.dispatchEvent(new CustomEvent('inputmask-change', { bubbles: true }));
+    this.element.dispatchEvent(new CustomEvent('ui-inputmask-change', { bubbles: true }));
   }
 
   @bindable({ mode: BindingMode.twoWay })

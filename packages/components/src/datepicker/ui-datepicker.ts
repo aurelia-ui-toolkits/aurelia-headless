@@ -1,6 +1,7 @@
 import { DialogCloseResult, IDialogService } from '@aurelia/dialog';
 import { bindable, CustomElement, customElement, INode, queueTask, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
+import { UiFieldConfiguration } from '../field/ui-field-configuration';
 import { IError, IValidatedElement } from '../base/i-validated-element';
 import { formatDate, getCanonicalFormat, parseByFormat, parseCanonical } from './date-utils';
 import { UiDatepickerDialog, UiDatepickerDialogData } from './ui-datepicker-dialog';
@@ -10,6 +11,8 @@ let nextDatepickerId = 0;
 
 @customElement({ name: 'ui-datepicker', template })
 export class UiDatepicker {
+  private readonly configuration = resolve(UiFieldConfiguration);
+
   constructor() {
     defineUiDatepickerElementApis(this.element);
   }
@@ -18,6 +21,7 @@ export class UiDatepicker {
   private readonly dialogService = resolve(IDialogService);
 
   errors = new Map<IError, boolean>();
+  hover: boolean = false;
   focus: boolean = false;
   active: boolean = false;
   open: boolean = false;
@@ -47,7 +51,7 @@ export class UiDatepicker {
   label: string | undefined;
 
   @bindable({ set: booleanAttr })
-  inset: boolean = false;
+  inset: boolean = this.configuration.defaultInset;
 
   @bindable
   helperText: string | undefined;
@@ -161,6 +165,16 @@ export class UiDatepicker {
       return;
     }
     this.errors.delete(error);
+  }
+
+  onMouseEnter(): void {
+    if (!this.disabled) {
+      this.hover = true;
+    }
+  }
+
+  onMouseLeave(): void {
+    this.hover = false;
   }
 
   onFocusIn(): void {

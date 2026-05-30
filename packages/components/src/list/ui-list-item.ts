@@ -17,9 +17,16 @@ export class UiListItem {
   @slotted({ slotName: 'trailing' })
   trailingNodes: readonly Node[] = [];
 
+  get hasSecondary(): boolean {
+    return this.secondaryNodes.length > 0;
+  }
+
   @bindable
   value: object = this;
 
   @bindable({ set: booleanAttr })
   disabled: boolean = false;
+
+  @bindable({ set: booleanAttr })
+  nonSelectable: boolean = false;
 }

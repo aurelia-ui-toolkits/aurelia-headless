@@ -15,6 +15,9 @@ export class UiIconButton {
   @bindable({ set: booleanAttr })
   outlined: boolean = false;
 
+  @bindable({ set: booleanAttr })
+  danger: boolean = false;
+
   hover: boolean = false;
   focus: boolean = false;
   active: boolean = false;

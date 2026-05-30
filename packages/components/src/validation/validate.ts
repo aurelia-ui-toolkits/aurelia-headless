@@ -1,8 +1,5 @@
 import { IValidationController } from '@aurelia/validation-html';
-
-interface AlertService {
-  error(message: string): Promise<void> | void;
-}
+import { AlertService } from '../alert-service/alert-service';
 
 export interface IWithValidationController {
   validationController: IValidationController;
@@ -12,9 +9,9 @@ export interface IWithValidationController {
 /**
  * @param errorMessage Optional error message, not displayed if `null`
  */
-export function validate(errorMessage?: string | undefined | null) {
-  return function actualDecorator<This extends IWithValidationController, Args extends any[], Return>(originalMethod: (this: This, ...args: Args) => Return,
-    _: ClassMethodDecoratorContext<This, (this: This, ...args: Args) => Return>) {
+export function validate(errorMessage?: string | null) {
+  return function actualDecorator<This extends IWithValidationController, Args extends any[], Result>(originalMethod: (this: This, ...args: Args) => Promise<Result>,
+    _: ClassMethodDecoratorContext<This, (this: This, ...args: Args) => Promise<Result>>) {
     return async function replacementMethod(this: This, ...args: Args) {
       if (!this.alertService) {
         throw new Error('Did you forget to inject AlertService?');

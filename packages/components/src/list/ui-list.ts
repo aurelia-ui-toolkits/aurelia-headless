@@ -1,4 +1,4 @@
-import { bindable, children, customElement, INode, resolve } from 'aurelia';
+import { bindable, CustomElement, customElement, INode, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
 import { UiListItem } from './ui-list-item';
@@ -9,6 +9,12 @@ type ListOrientation = 'vertical' | 'horizontal';
 @customElement({ name: 'ui-list', template })
 export class UiList {
   private readonly host = resolve(INode) as HTMLElement;
+  private scrollerEl!: HTMLElement;
+  private listItems: UiListItem[] = [];
+  private listItemsChangedCallback: (() => void) | undefined;
+  activeItem: unknown;
+  private typeaheadBuffer = '';
+  private typeaheadTimer: ReturnType<typeof setTimeout> | undefined;
 
   @bindable
   items: any[] = [];
@@ -28,12 +34,10 @@ export class UiList {
   @bindable({ mode: 'twoWay' })
   selected: unknown;
 
-  @children({
-    query: 'ui-list-item',
-    map: (_node, viewModel) => viewModel
-  })
-  listItems: UiListItem[] = [];
-  listItemsChanged() {
+  @slotted('ui-list-item')
+  listItemElements: HTMLElement[] = [];
+  listItemElementsChanged() {
+    this.listItems = this.listItemElements.map(element => CustomElement.for<UiListItem>(element).viewModel);
     if (!this.items.length) {
       this.items = this.listItems.map(x => x.value);
     }
@@ -42,11 +46,6 @@ export class UiList {
       this.listItemsChangedCallback = undefined;
     }
   }
-
-  private listItemsChangedCallback: (() => void) | undefined;
-  activeItem: unknown;
-  private typeaheadBuffer = '';
-  private typeaheadTimer: ReturnType<typeof setTimeout> | undefined;
 
   detaching(): void {
     this.clearTypeahead();
@@ -110,12 +109,16 @@ export class UiList {
   }
 
   onClick(event: MouseEvent): void {
-    const item = this.resolveItemFromEvent(event.target);
-    if (item === undefined || item === null || this.isItemDisabled(item)) {
+    const element = this.resolveElementFromEvent(event.target);
+    if (!element) {
+      return;
+    }
+    const listItem = CustomElement.for<UiListItem>(element).viewModel;
+    if (listItem.disabled || listItem.nonSelectable) {
       return;
     }
 
-    this.selectItem(item);
+    this.selectItem(listItem.value);
   }
 
   private suppressMouseOver = false;
@@ -130,12 +133,20 @@ export class UiList {
     if (this.suppressMouseOver) {
       return;
     }
-    const item = this.resolveItemFromEvent(event.target);
-    if (item === undefined || item === null || this.isItemDisabled(item)) {
+    const element = this.resolveElementFromEvent(event.target);
+    if (!element) {
+      return;
+    }
+    const listItem = CustomElement.for<UiListItem>(element).viewModel;
+    if (listItem.disabled) {
       return;
     }
 
-    this.activateItem(item);
+    this.activateItem(listItem.value);
+  }
+
+  onMouseLeave(): void {
+    this.activeItem = undefined;
   }
 
   focusFirst(): void {
@@ -196,14 +207,16 @@ export class UiList {
   }
 
   private getNonDisabled(item: unknown, direction: 1 | -1, items = this.getEffectiveItems()): unknown {
-    if (!this.isItemDisabled(item)) {
+    const listItem = this.listItems.find(x => x.value === item);
+    if (!listItem?.disabled && !this.isItemDisabled(item)) {
       return item;
     }
     const startIndex = items.indexOf(item);
     for (let step = 1; step < items.length; step++) {
       const index = (startIndex + direction * step + items.length) % items.length;
       const next = items[index];
-      if (!this.isItemDisabled(next)) {
+      const nextListItem = this.listItems.find(x => x.value === next);
+      if (!nextListItem?.disabled && !this.isItemDisabled(next)) {
         return next;
       }
     }
@@ -248,7 +261,11 @@ export class UiList {
   }
 
   private selectActive(): void {
-    if (this.activeItem !== undefined && !this.isItemDisabled(this.activeItem)) {
+    if (this.activeItem !== undefined) {
+      const listItem = this.listItems.find(x => x.value === this.activeItem);
+      if (listItem && (listItem.disabled || listItem.nonSelectable)) {
+        return;
+      }
       this.selectItem(this.activeItem);
     }
   }
@@ -273,8 +290,12 @@ export class UiList {
     }));
   }
 
+  private resolveElementFromEvent(target: EventTarget | null) {
+    return target instanceof HTMLElement ? target.closest('ui-list-item') : null;
+  }
+
   private resolveItemFromEvent(target: EventTarget | null) {
-    const element = target instanceof HTMLElement ? target.closest('ui-list-item') : null;
+    const element = this.resolveElementFromEvent(target);
     if (!element) {
       return undefined;
     }
@@ -334,7 +355,8 @@ export class UiList {
     } else {
       const items = this.getEffectiveItems();
       const index = items.indexOf(item);
-      this.host.scrollTo({ top: this.host.scrollHeight / items.length * index });
+      const scroller = this.scrollerEl ?? this.host;
+      scroller.scrollTo({ top: scroller.scrollHeight / items.length * index });
       // this is a workaround to ensure the active item is scrolled into view after the items are rendered,
       // if CSS defines a gap between items the virtual-repeat spacer height might be incorrect
       // so we need to adjust the scroll after the list item gets rendered

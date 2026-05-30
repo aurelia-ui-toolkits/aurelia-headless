@@ -5,6 +5,7 @@ import template from './ui-tree.html?raw';
 
 type TreeField<T> = string | ((item: T) => unknown);
 type TreeSelectionMode = 'single' | 'none';
+type TreeTogglePosition = 'left' | 'right';
 
 export interface UiTreeRow {
   id: string;
@@ -82,6 +83,12 @@ export class UiTree {
   @bindable
   selectionMode: TreeSelectionMode = 'single';
 
+  @bindable
+  togglePosition: TreeTogglePosition = 'left';
+
+  @bindable({ set: booleanAttr })
+  toggleOnParentClick: boolean = false;
+
   @bindable({ set: booleanAttr })
   disabled: boolean = false;
 
@@ -94,6 +101,11 @@ export class UiTree {
 
   onRowClick(row: UiTreeRow): void {
     this.focusRow(row);
+    if (this.toggleOnParentClick && row.children.length) {
+      this.toggleRow(row);
+      return;
+    }
+
     this.selectRow(row);
   }
 

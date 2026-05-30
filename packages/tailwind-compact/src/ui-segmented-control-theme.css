@@ -5,32 +5,30 @@ ui-segmented-control,
   @apply inline-flex flex-wrap items-center gap-0.5 rounded-md border border-card-border bg-card-muted p-0.5;
 }
 
+.ui-segmented-control {
+  &[data-disabled] {
+    @apply opacity-60;
+  }
+}
+
 ui-segment,
 .ui-segment {
   @apply cursor-pointer rounded-sm px-2 py-1 text-xs font-semibold text-ink-500 outline-none;
   transition: background-color 140ms ease, color 140ms ease, box-shadow 140ms ease;
-}
 
-ui-segment:hover,
-.ui-segment:hover {
-  @apply bg-card text-ink-900;
-}
+  &:hover {
+    @apply bg-card text-ink-900;
+  }
 
-ui-segment:focus-visible,
-.ui-segment:focus-visible {
-  box-shadow: 0 0 0 3px var(--color-ring);
-}
+  &:focus-visible {
+    box-shadow: 0 0 0 3px var(--color-ring);
+  }
 
-ui-segment[data-selected],
-.ui-segment[data-selected] {
-  @apply bg-card text-primary-700 shadow-sm;
-}
+  &[data-selected] {
+    @apply bg-card text-primary-700 shadow-sm;
+  }
 
-ui-segment[data-disabled],
-.ui-segment[data-disabled] {
-  @apply pointer-events-none cursor-not-allowed opacity-45;
-}
-
-.ui-segmented-control[data-disabled] {
-  @apply opacity-60;
+  &[data-disabled] {
+    @apply pointer-events-none cursor-not-allowed opacity-45;
+  }
 }

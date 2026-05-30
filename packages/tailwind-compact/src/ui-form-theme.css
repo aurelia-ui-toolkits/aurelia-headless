@@ -1,0 +1,5 @@
+@reference "./theme.css";
+
+.ui-form {
+  @apply grid grid-cols-12 gap-x-6 gap-y-[15px] overflow-visible px-[5px] pt-[15px] pb-[5px];
+}

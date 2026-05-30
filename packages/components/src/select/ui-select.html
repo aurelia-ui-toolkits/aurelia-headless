@@ -1,11 +1,14 @@
 <template class="ui-select"
   data-disabled.attr="disabled ? '' : null"
   data-invalid.attr="invalid || errors.size ? '' : null"
+  data-hover.attr="hover ? '' : null"
   data-focus.attr="focus ? '' : null"
   data-active.attr="active ? '' : null"
   data-open.attr="open ? '' : null"
   data-inset.attr="inset ? '' : null"
-  data-has-value.attr="hasValue ? '' : null">
+  data-has-value.attr="hasValue ? '' : null"
+  mouseenter.trigger="onMouseEnter()"
+  mouseleave.trigger="onMouseLeave()">
   <label class="ui-select__label"
     for.bind="id"
     id.bind="!inset && label ? labelId : null"
@@ -56,9 +59,10 @@
     portal-target.bind="portalTarget"
     portal-position.bind="portalPosition"
     match-anchor-width
+    exposed-host.bind="slotHost"
     menu-tab-away.trigger="onMenuTabAway()"
     menu-select.trigger="onMenuSelect($event)">
-    <au-slot></au-slot>
+    <au-slot expose.bind="slotHost"></au-slot>
   </ui-menu>
 
   <div class="ui-select__subscript" show.bind="errors.size || helperText || helperNodes.length">

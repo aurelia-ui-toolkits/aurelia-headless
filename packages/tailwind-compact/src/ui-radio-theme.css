@@ -5,6 +5,42 @@ ui-radio-group,
   @apply grid gap-1;
 }
 
+.ui-radio-group {
+  &[data-focus] .ui-radio-group__control {
+    @apply rounded-md;
+  }
+}
+
+ui-radio,
+.ui-radio {
+  @apply flex cursor-pointer items-center gap-2 rounded-md border border-card-border bg-card px-2 py-1 text-xs text-ink-700 outline-none;
+  transition: border-color 140ms ease, background-color 140ms ease, box-shadow 140ms ease;
+
+  &:hover {
+    @apply border-primary-600 bg-outline-hover text-ink-900;
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 3px var(--color-ring);
+  }
+
+  &[data-selected] {
+    @apply border-primary-600 bg-outline-hover text-ink-900;
+
+    .ui-radio__indicator {
+      @apply border-primary-600;
+
+      &::after {
+        transform: scale(1);
+      }
+    }
+  }
+
+  &[data-disabled] {
+    @apply pointer-events-none cursor-not-allowed opacity-50;
+  }
+}
+
 .ui-radio-group__label {
   @apply text-xs font-semibold text-ink-900;
 }
@@ -13,55 +49,15 @@ ui-radio-group,
   @apply grid gap-1;
 }
 
-.ui-radio-group[data-focus] .ui-radio-group__control {
-  @apply rounded-md;
-}
-
-ui-radio,
-.ui-radio {
-  @apply flex cursor-pointer items-center gap-2 rounded-md border border-card-border bg-card px-2 py-1 text-xs text-ink-700 outline-none;
-  transition: border-color 140ms ease, background-color 140ms ease, box-shadow 140ms ease;
-}
-
-ui-radio:hover,
-.ui-radio:hover {
-  @apply border-primary-600 bg-outline-hover text-ink-900;
-}
-
-ui-radio:focus-visible,
-.ui-radio:focus-visible {
-  box-shadow: 0 0 0 3px var(--color-ring);
-}
-
-ui-radio[data-selected],
-.ui-radio[data-selected] {
-  @apply border-primary-600 bg-outline-hover text-ink-900;
-}
-
-ui-radio[data-disabled],
-.ui-radio[data-disabled] {
-  @apply pointer-events-none cursor-not-allowed opacity-50;
-}
-
 .ui-radio__indicator {
   @apply grid h-3.5 w-3.5 shrink-0 place-items-center rounded-full border border-ink-500;
-}
 
-.ui-radio__indicator::after {
-  @apply h-1.5 w-1.5 rounded-full bg-primary-600;
-  content: '';
-  transform: scale(0);
-  transition: transform 140ms ease;
-}
-
-ui-radio[data-selected] .ui-radio__indicator,
-.ui-radio[data-selected] .ui-radio__indicator {
-  @apply border-primary-600;
-}
-
-ui-radio[data-selected] .ui-radio__indicator::after,
-.ui-radio[data-selected] .ui-radio__indicator::after {
-  transform: scale(1);
+  &::after {
+    @apply h-1.5 w-1.5 rounded-full bg-primary-600;
+    content: '';
+    transform: scale(0);
+    transition: transform 140ms ease;
+  }
 }
 
 .ui-radio-group__subscript {

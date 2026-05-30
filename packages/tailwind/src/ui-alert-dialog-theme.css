@@ -1,7 +1,7 @@
 @reference "./theme.css";
 
 dialog:has(.ui-alert-modal),
-dialog:has(.prompt-dialog) {
+dialog:has(.ui-prompt-modal) {
   @apply rounded-2xl border bg-card p-0 text-ink-900 shadow-2xl;
   animation: ui-alert-dialog-in 140ms ease-out;
   border-color: var(--color-card-border);
@@ -10,12 +10,11 @@ dialog:has(.prompt-dialog) {
   max-width: min(92vw, 32rem);
   transform: translate(-50%, -50%);
   width: min(92vw, 32rem);
-}
 
-dialog:has(.ui-alert-modal)::backdrop,
-dialog:has(.prompt-dialog)::backdrop {
-  animation: ui-alert-dialog-backdrop-in 140ms ease-out;
-  background: var(--color-backdrop);
+  &::backdrop {
+    animation: ui-alert-dialog-backdrop-in 140ms ease-out;
+    background: var(--color-backdrop);
+  }
 }
 
 @keyframes ui-alert-dialog-in {
@@ -44,30 +43,30 @@ dialog:has(.prompt-dialog)::backdrop {
   @apply grid gap-4 p-6;
   grid-template-columns: auto minmax(0, 1fr);
   min-width: 0;
+
+  &[data-tone="info"] .ui-alert-modal__icon {
+    background: var(--color-info-bg);
+    color: var(--color-info-text);
+  }
+
+  &[data-tone="success"] .ui-alert-modal__icon {
+    background: var(--color-success-bg);
+    color: var(--color-success-text);
+  }
+
+  &[data-tone="warning"] .ui-alert-modal__icon {
+    background: var(--color-warning-bg);
+    color: var(--color-warning-text);
+  }
+
+  &[data-tone="danger"] .ui-alert-modal__icon {
+    background: var(--color-danger-bg);
+    color: var(--color-danger-text);
+  }
 }
 
 .ui-alert-modal__icon {
   @apply grid h-10 w-10 place-items-center rounded-full text-base font-bold;
-}
-
-.ui-alert-modal[data-tone="info"] .ui-alert-modal__icon {
-  background: var(--color-info-bg);
-  color: var(--color-info-text);
-}
-
-.ui-alert-modal[data-tone="success"] .ui-alert-modal__icon {
-  background: var(--color-success-bg);
-  color: var(--color-success-text);
-}
-
-.ui-alert-modal[data-tone="warning"] .ui-alert-modal__icon {
-  background: var(--color-warning-bg);
-  color: var(--color-warning-text);
-}
-
-.ui-alert-modal[data-tone="danger"] .ui-alert-modal__icon {
-  background: var(--color-danger-bg);
-  color: var(--color-danger-text);
 }
 
 .ui-alert-modal__body {
@@ -75,7 +74,7 @@ dialog:has(.prompt-dialog)::backdrop {
 }
 
 .ui-alert-modal__title,
-.prompt-dialog__title {
+.ui-prompt-modal__title {
   @apply m-0 text-lg font-semibold leading-7;
 }
 
@@ -85,42 +84,42 @@ dialog:has(.prompt-dialog)::backdrop {
 }
 
 .ui-alert-modal__actions,
-.prompt-dialog__actions {
+.ui-prompt-modal__actions {
   @apply mt-4 flex justify-end gap-2;
 }
 
-.prompt-dialog {
+.ui-prompt-modal {
   @apply grid gap-4 p-6;
   min-width: 0;
 }
 
-.prompt-dialog__field {
+.ui-prompt-modal__field {
   @apply grid gap-1.5;
   min-width: 0;
 }
 
-.prompt-dialog__label {
+.ui-prompt-modal__label {
   @apply text-sm font-medium text-ink-700;
 }
 
-.prompt-dialog__control {
+.ui-prompt-modal__control {
   @apply rounded-lg border px-3 py-2 text-sm outline-none;
   border-color: var(--color-card-border);
   min-width: 0;
   width: 100%;
+
+  &:focus {
+    @apply ring-2;
+    border-color: var(--color-primary-600);
+    --tw-ring-color: var(--color-ring-muted);
+  }
 }
 
-.prompt-dialog__control:focus {
-  @apply ring-2;
-  border-color: var(--color-primary-600);
-  --tw-ring-color: var(--color-ring-muted);
-}
-
-textarea.prompt-dialog__control {
+textarea.ui-prompt-modal__control {
   @apply min-h-28 resize-y;
 }
 
-.prompt-dialog__error {
+.ui-prompt-modal__error {
   @apply -mt-2 text-sm;
   color: var(--color-validation-strong-text);
 }

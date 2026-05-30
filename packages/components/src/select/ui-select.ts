@@ -2,6 +2,7 @@ import { bindable, BindingMode, computed, CustomElement, customElement, resolve,
 import { booleanAttr } from '../base/boolean-attr';
 import { IError, IValidatedElement } from '../base/i-validated-element';
 import { Keys } from '../base/keys';
+import { UiFieldConfiguration } from '../field/ui-field-configuration';
 import { UiMenu } from '../menu/ui-menu';
 import template from './ui-select.html?raw';
 
@@ -9,13 +10,17 @@ let nextSelectId = 0;
 
 @customElement({ name: 'ui-select', template })
 export class UiSelect {
+  private readonly configuration = resolve(UiFieldConfiguration);
+
   constructor() {
     defineUiSelectElementApis(this.element);
   }
 
   readonly element = resolve(Element) as HTMLElement;
+  readonly slotHost = this;
 
   errors = new Map<IError, boolean>();
+  hover: boolean = false;
   focus: boolean = false;
   active: boolean = false;
   open: boolean = false;
@@ -32,7 +37,7 @@ export class UiSelect {
   label: string | undefined;
 
   @bindable({ set: booleanAttr })
-  inset: boolean = false;
+  inset: boolean = this.configuration.defaultInset;
 
   @bindable
   helperText: string | undefined;
@@ -129,6 +134,16 @@ export class UiSelect {
     }
 
     this.errors.delete(error);
+  }
+
+  onMouseEnter(): void {
+    if (!this.disabled) {
+      this.hover = true;
+    }
+  }
+
+  onMouseLeave(): void {
+    this.hover = false;
   }
 
   onClick(): void {

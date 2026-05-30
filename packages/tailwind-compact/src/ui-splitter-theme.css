@@ -3,38 +3,40 @@
 .ui-splitter {
   @apply relative z-10 grid shrink-0 place-items-center bg-card-border transition-colors;
   touch-action: none;
-}
 
-.ui-splitter[data-direction="horizontal"] {
-  @apply w-2 cursor-col-resize;
-}
+  &[data-direction="horizontal"] {
+    @apply w-2 cursor-col-resize;
 
-.ui-splitter[data-direction="vertical"] {
-  @apply h-2 cursor-row-resize;
-}
+    .ui-splitter__handle {
+      @apply h-10 w-0.5;
+    }
+  }
 
-.ui-splitter[data-disabled] {
-  @apply cursor-not-allowed opacity-50;
-}
+  &[data-direction="vertical"] {
+    @apply h-2 cursor-row-resize;
 
-.ui-splitter:not([data-disabled]):hover,
-.ui-splitter:not([data-disabled]):focus-visible {
-  @apply bg-primary-600;
-}
+    .ui-splitter__handle {
+      @apply h-0.5 w-10;
+    }
+  }
 
-.ui-splitter:focus-visible {
-  outline: 3px solid var(--color-ring);
-  outline-offset: 0;
+  &[data-disabled] {
+    @apply cursor-not-allowed opacity-50;
+  }
+
+  &:not([data-disabled]) {
+    &:hover,
+    &:focus-visible {
+      @apply bg-primary-600;
+    }
+  }
+
+  &:focus-visible {
+    outline: 3px solid var(--color-ring);
+    outline-offset: 0;
+  }
 }
 
 .ui-splitter__handle {
   @apply block rounded-full bg-ink-500 opacity-50;
-}
-
-.ui-splitter[data-direction="horizontal"] .ui-splitter__handle {
-  @apply h-10 w-0.5;
-}
-
-.ui-splitter[data-direction="vertical"] .ui-splitter__handle {
-  @apply h-0.5 w-10;
 }

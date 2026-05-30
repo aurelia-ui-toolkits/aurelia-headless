@@ -1,0 +1,10 @@
+<template class="ui-validation-container"
+  data-invalid.attr="!valid ? '' : null">
+  <div class="ui-validation-container__content">
+    <au-slot></au-slot>
+  </div>
+
+  <div class="ui-validation-container__errors" show.bind="errorMessages.length">
+    <div class="ui-validation-container__error" repeat.for="message of errorMessages">${message}</div>
+  </div>
+</template>

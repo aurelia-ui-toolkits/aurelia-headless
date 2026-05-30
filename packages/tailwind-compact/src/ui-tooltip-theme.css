@@ -4,11 +4,13 @@
   @apply contents;
 }
 
-.ui-popup__panel[data-role="tooltip"] {
-  @apply rounded-md border px-2 py-1 text-xs font-medium shadow-none;
-  background-color: var(--color-inverse-bg);
-  border-color: var(--color-inverse-bg);
-  color: var(--color-inverse-text);
+.ui-popup__panel {
+  &[data-role="tooltip"] {
+    @apply rounded-md border px-2 py-1 text-xs font-medium shadow-none;
+    background-color: var(--color-inverse-bg);
+    border-color: var(--color-inverse-bg);
+    color: var(--color-inverse-text);
+  }
 }
 
 .ui-tooltip__content {

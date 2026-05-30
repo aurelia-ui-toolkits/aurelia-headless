@@ -1,6 +1,6 @@
 import { OptionsStore } from './options-store';
 import { IContainer } from 'aurelia';
-import { InputmaskCustomAttribute } from './inputmask-attribute';
+import { UiInputmaskCustomAttribute } from './inputmask-attribute';
 
 let registered = false;
 
@@ -10,7 +10,7 @@ export const InputmaskConfiguration = {
       return container;
     } else {
       registered = true;
-      return container.register(InputmaskCustomAttribute);
+      // return container.register(UiInputmaskCustomAttribute);
     }
   },
   customize(optionsProvider: (config: Record<string, unknown>) => void) {
@@ -24,4 +24,4 @@ export const InputmaskConfiguration = {
   }
 };
 
-export { InputmaskCustomAttribute } from './inputmask-attribute';
+export { UiInputmaskCustomAttribute } from './inputmask-attribute';

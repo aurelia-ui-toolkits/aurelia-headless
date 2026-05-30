@@ -1,7 +1,8 @@
 <template class="ui-datepicker" data-disabled.attr="disabled ? '' : null"
-  data-invalid.attr="invalid || errors.size ? '' : null" data-focus.attr="focus ? '' : null"
+  data-invalid.attr="invalid || errors.size ? '' : null" data-hover.attr="hover ? '' : null" data-focus.attr="focus ? '' : null"
   data-active.attr="active ? '' : null" data-open.attr="open ? '' : null" data-inset.attr="inset ? '' : null"
-  data-has-value.attr="hasValue ? '' : null" data-time.attr="time ? '' : null">
+  data-has-value.attr="hasValue ? '' : null" data-time.attr="time ? '' : null"
+  mouseenter.trigger="onMouseEnter()" mouseleave.trigger="onMouseLeave()">
   <label class="ui-datepicker__label" for.bind="id" id.bind="!inset && label ? labelId : null"
     show.bind="label && !inset">${label}</label>
 
@@ -18,7 +19,7 @@
       aria-labelledby.bind="label ? labelId : null" aria-invalid.bind="invalid || errors.size ? 'true' : 'false'"
       aria-describedby.bind="errors.size ? errorsId : (helperNodes.length ? helperId : null)"
       blur.trigger="handleBlur($event)" change.trigger="handleChange($event)" input.trigger="handleInput($event)"
-      inputmask="mask:datetime; options.bind: { inputFormat: inputmaskFormat }; is-value-masked: true; value.bind: inputmaskValue"
+      ui-inputmask="mask:datetime; options.bind: { inputFormat: inputmaskFormat }; is-value-masked: true; value.bind: inputmaskValue"
       focusin.trigger="onFocusIn()" pointerdown.trigger="onPointerDown()" pointerup.trigger="onPointerUp()"
       pointerleave.trigger="onPointerLeave()">
 

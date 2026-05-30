@@ -2,58 +2,58 @@
 
 .ui-badge {
   @apply inline-flex items-center rounded-md border border-transparent px-2 py-0.5 text-xs font-semibold leading-5;
-}
 
-.ui-badge[data-pill] {
-  @apply rounded-full px-2.5;
-}
+  &[data-pill] {
+    @apply rounded-full px-2.5;
+  }
 
-.ui-badge[data-tone="neutral"] {
-  @apply bg-card-muted text-ink-700;
-}
+  &[data-tone="neutral"] {
+    @apply bg-card-muted text-ink-700;
 
-.ui-badge[data-tone="primary"] {
-  @apply bg-outline-hover text-primary-700;
-}
+    &[data-outlined] {
+      @apply border-card-border text-ink-700;
+    }
+  }
 
-.ui-badge[data-tone="success"] {
-  background: var(--color-success-bg);
-  color: var(--color-success-text);
-}
+  &[data-tone="primary"] {
+    @apply bg-outline-hover text-primary-700;
 
-.ui-badge[data-tone="warning"] {
-  background: var(--color-warning-bg);
-  color: var(--color-warning-text);
-}
+    &[data-outlined] {
+      @apply border-primary-600 text-primary-600;
+    }
+  }
 
-.ui-badge[data-tone="danger"] {
-  background: var(--color-danger-bg);
-  color: var(--color-danger-text);
-}
+  &[data-tone="success"] {
+    background: var(--color-success-bg);
+    color: var(--color-success-text);
 
-.ui-badge[data-outlined] {
-  @apply bg-transparent;
-}
+    &[data-outlined] {
+      border-color: var(--color-success-border);
+      color: var(--color-success-text);
+    }
+  }
 
-.ui-badge[data-tone="neutral"][data-outlined] {
-  @apply border-card-border text-ink-700;
-}
+  &[data-tone="warning"] {
+    background: var(--color-warning-bg);
+    color: var(--color-warning-text);
 
-.ui-badge[data-tone="primary"][data-outlined] {
-  @apply border-primary-600 text-primary-600;
-}
+    &[data-outlined] {
+      border-color: var(--color-warning-border);
+      color: var(--color-warning-text);
+    }
+  }
 
-.ui-badge[data-tone="success"][data-outlined] {
-  border-color: var(--color-success-border);
-  color: var(--color-success-text);
-}
+  &[data-tone="danger"] {
+    background: var(--color-danger-bg);
+    color: var(--color-danger-text);
 
-.ui-badge[data-tone="warning"][data-outlined] {
-  border-color: var(--color-warning-border);
-  color: var(--color-warning-text);
-}
+    &[data-outlined] {
+      border-color: var(--color-danger-border);
+      color: var(--color-danger-text);
+    }
+  }
 
-.ui-badge[data-tone="danger"][data-outlined] {
-  border-color: var(--color-danger-border);
-  color: var(--color-danger-text);
+  &[data-outlined] {
+    @apply bg-transparent;
+  }
 }
