@@ -294,15 +294,6 @@ export class UiList {
     return target instanceof HTMLElement ? target.closest('ui-list-item') : null;
   }
 
-  private resolveItemFromEvent(target: EventTarget | null) {
-    const element = this.resolveElementFromEvent(target);
-    if (!element) {
-      return undefined;
-    }
-
-    return this.listItems.find((item) => item.element === element)?.value;
-  }
-
   private isTypeaheadKey(event: KeyboardEvent): boolean {
     return (event.key.length === 1 || event.key === ' ') && !event.altKey && !event.ctrlKey && !event.metaKey;
   }

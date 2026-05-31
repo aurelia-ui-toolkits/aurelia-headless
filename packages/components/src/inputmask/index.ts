@@ -10,7 +10,7 @@ export const InputmaskConfiguration = {
       return container;
     } else {
       registered = true;
-      // return container.register(UiInputmaskCustomAttribute);
+      return container.register(UiInputmaskCustomAttribute);
     }
   },
   customize(optionsProvider: (config: Record<string, unknown>) => void) {
