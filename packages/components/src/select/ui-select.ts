@@ -98,7 +98,7 @@ export class UiSelect {
     if (this.selectedItem !== undefined) {
       return this.getItemLabel(this.selectedItem);
     }
-    if (this.value !== undefined) {
+    if (!this.valueField && !this.labelField && this.value !== undefined) {
       return String(this.value);
     }
 
