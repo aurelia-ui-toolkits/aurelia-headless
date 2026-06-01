@@ -30,12 +30,24 @@ export class UiSelect {
 
   @bindable({ mode: BindingMode.twoWay })
   value: unknown;
+  valueChanged(): void {
+    this.syncSelectedItemFromValue();
+  }
 
   @bindable({ mode: BindingMode.twoWay })
   selectedItem: unknown;
 
+  @bindable
+  items: unknown[] = [];
+  itemsChanged(): void {
+    this.syncSelectedItemFromValue();
+  }
+
   @bindable({ set: booleanAttr })
   multiple: boolean = false;
+  multipleChanged(): void {
+    this.syncSelectedItemFromValue();
+  }
 
   @bindable
   label: string | undefined;
@@ -246,6 +258,25 @@ export class UiSelect {
     }
 
     return item === undefined || item === null ? '' : String(item);
+  }
+
+  private syncSelectedItemFromValue(): void {
+    if (!this.items.length) {
+      return;
+    }
+
+    if (this.multiple) {
+      const values = Array.isArray(this.value) ? this.value : [];
+      this.selectedItem = this.items.filter(item => values.includes(this.getItemValue(item)));
+      return;
+    }
+
+    if (this.value === undefined || this.value === null || this.value === '') {
+      this.selectedItem = undefined;
+      return;
+    }
+
+    this.selectedItem = this.items.find(item => this.getItemValue(item) === this.value);
   }
 
   private onMultipleMenuSelect(item: unknown): void {

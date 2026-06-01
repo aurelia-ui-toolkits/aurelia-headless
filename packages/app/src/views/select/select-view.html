@@ -1,14 +1,14 @@
 <demo-section title="ui-select">
-  <!-- <demo-block title="Custom slotted list">
-    <ui-select value.bind="selectedProjectId & validate"
-      selected-item.bind="selectedProject"
+  <demo-block title="Custom slotted list">
+    <ui-select items.bind="projects"
+      value.bind="selectedProjectId & validate"
       value-field="id"
       label-field="name"
       label="Project"
       helper-text="Choose project for deployment."
       placeholder="Select project">
-      <ui-list items.bind="projects" typeahead-field="name">
-        <ui-list-item repeat.for="project of projects" value.bind="project" disabled.bind="project.disabled">
+      <ui-list typeahead-field="name">
+        <ui-list-item repeat.for="project of $host.items" value.bind="project" disabled.bind="project.disabled">
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
         </ui-list-item>
@@ -18,8 +18,8 @@
   </demo-block>
 
   <demo-block title="Inset label with custom item layout">
-    <ui-select value.bind="selectedTeamId"
-      selected-item.bind="selectedTeam"
+    <ui-select items.bind="projects"
+      value.bind="selectedTeamId"
       value-field="id"
       label-field="name"
       inset
@@ -27,26 +27,26 @@
       helper-text="Disabled items remain unavailable."
       placeholder="Select team">
       <span au-slot="leading">#</span>
-      <ui-list items.bind="projects" typeahead-field="name">
-        <ui-list-item repeat.for="project of projects" value.bind="project" disabled.bind="project.disabled">
+      <ui-list typeahead-field="name">
+        <ui-list-item repeat.for="project of $host.items" value.bind="project" disabled.bind="project.disabled">
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
           <span au-slot="trailing">${project.id}</span>
         </ui-list-item>
       </ui-list>
     </ui-select>
-  </demo-block> -->
+  </demo-block>
 
   <demo-block title="Virtual-repeat list with initial value">
-    <ui-select value.bind="selectedVirtualProjectId"
-      selected-item.bind="selectedVirtualProject"
+    <ui-select items.bind="virtualProjects"
+      value.bind="selectedVirtualProjectId"
       value-field="id"
       label-field="name"
       label="Large project list"
       helper-text="Value starts as project-120; items load after a delay."
       placeholder="Select project">
-      <ui-list items.bind="virtualProjects" typeahead-field="name">
-        <ui-list-item virtual-repeat.for="project of virtualProjects" value.bind="project" disabled.bind="project.disabled">
+      <ui-list typeahead-field="name">
+        <ui-list-item virtual-repeat.for="project of $host.items" value.bind="project" disabled.bind="project.disabled">
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
           <span au-slot="trailing">${project.id}</span>
@@ -56,17 +56,17 @@
     <span class="select-state">Value: ${selectedVirtualProjectId || 'none'}</span>
   </demo-block>
 
-  <!-- <demo-block title="Multiple select with checkboxes">
-    <ui-select multiple
+  <demo-block title="Multiple select with checkboxes">
+    <ui-select items.bind="multiProjects"
+      multiple
       value.bind="selectedMultiProjectIds"
-      selected-item.bind="selectedMultiProjects"
       value-field="id"
       label-field="name"
       label="Projects"
       helper-text="Selected items stay open and display with semicolons."
       placeholder="Select projects">
-      <ui-list items.bind="multiProjects" multiple typeahead-field="name">
-        <ui-list-item repeat.for="project of multiProjects" value.bind="project" disabled.bind="project.disabled">
+      <ui-list typeahead-field="name">
+        <ui-list-item repeat.for="project of $host.items" value.bind="project" disabled.bind="project.disabled">
           <ui-checkbox au-slot="leading" checked.bind="$host.selected" tab-index="-1"></ui-checkbox>
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
@@ -74,5 +74,5 @@
       </ui-list>
     </ui-select>
     <span class="select-state">Value: ${selectedMultiProjectIds.join('; ') || 'none'}</span>
-  </demo-block> -->
+  </demo-block>
 </demo-section>

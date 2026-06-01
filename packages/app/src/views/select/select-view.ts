@@ -11,14 +11,10 @@ type Project = {
 
 export class SelectView {
   selectedProjectId: string | undefined;
-  selectedProject: Project | undefined;
   selectedTeamId: string | undefined;
-  selectedTeam: Project | undefined;
   selectedVirtualProjectId: string = 'project-120';
-  selectedVirtualProject: Project | undefined;
   virtualProjects: Project[] = [];
   selectedMultiProjectIds: string[] = ['aurora', 'nova'];
-  selectedMultiProjects: Project[] = [];
 
   public validationController: IValidationController = resolve(newInstanceForScope(IValidationController));
 
@@ -32,7 +28,6 @@ export class SelectView {
   readonly multiProjects: Project[] = this.projects.map(project => ({ ...project }));
 
   constructor() {
-    this.selectedMultiProjects = this.multiProjects.filter(project => this.selectedMultiProjectIds.includes(project.id));
     setTimeout(() => {
       this.virtualProjects = Array.from({ length: 200 }, (_, index) => ({
         id: `project-${index + 1}`,
@@ -40,7 +35,6 @@ export class SelectView {
         region: ['EU West', 'US East', 'AP South', 'US West'][index % 4],
         disabled: (index + 1) % 17 === 0
       }));
-      this.selectedVirtualProject = this.virtualProjects.find(project => project.id === this.selectedVirtualProjectId);
     }, 800);
     resolve(IValidationRules).on(SelectView).ensure(x => x.selectedProjectId).required();
   }

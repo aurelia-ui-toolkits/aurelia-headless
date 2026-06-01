@@ -10,18 +10,28 @@ export class EnhanceUiSelect {
     // automatically add selected binding so that the item is highlighted without the user having to add it manually
     for (const select of template.content?.querySelectorAll('label[as-element="ui-select"]') ?? []) {
       for (const list of select.querySelectorAll('ui-list')) {
-        if (list.closest('label[as-element="ui-select"]') === select && !hasSelectedBinding(list)) {
+        if (list.closest('label[as-element="ui-select"]') !== select) {
+          continue;
+        }
+
+        if (!hasBinding(list, 'selected')) {
           list.setAttribute('selected.bind', '$host.selectedItem');
+        }
+        if (!hasBinding(list, 'items')) {
+          list.setAttribute('items.bind', '$host.items');
+        }
+        if (!hasBinding(list, 'multiple')) {
+          list.setAttribute('multiple.bind', '$host.multiple');
         }
       }
     }
   }
 }
 
-function hasSelectedBinding(element: Element): boolean {
-  return element.hasAttribute('selected')
-    || element.hasAttribute('selected.bind')
-    || element.hasAttribute('selected.two-way')
-    || element.hasAttribute('selected.to-view')
-    || element.hasAttribute('selected.from-view');
+function hasBinding(element: Element, property: string): boolean {
+  return element.hasAttribute(property)
+    || element.hasAttribute(`${property}.bind`)
+    || element.hasAttribute(`${property}.two-way`)
+    || element.hasAttribute(`${property}.to-view`)
+    || element.hasAttribute(`${property}.from-view`);
 }
