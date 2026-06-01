@@ -37,7 +37,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build:ts": "tsc -p tsconfig.build.json",
-    "build:other": "copyfiles -u 1 src/**/*.html dist",
+    "build:other": "copyfiles -u 1 \"src/**/*.html\" dist",
     "build": "npm run build:ts && npm run build:other"
   },
   "peerDependencies": {
