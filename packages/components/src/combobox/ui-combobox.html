@@ -1,11 +1,14 @@
 <template class="ui-combobox"
   data-disabled.attr="disabled ? '' : null"
   data-invalid.attr="invalid || errors.size ? '' : null"
+  data-hover.attr="hover ? '' : null"
   data-focus.attr="focus ? '' : null"
   data-active.attr="active ? '' : null"
   data-open.attr="open ? '' : null"
   data-inset.attr="inset ? '' : null"
-  data-has-value.attr="hasValue ? '' : null">
+  data-has-value.attr="hasValue ? '' : null"
+  mouseenter.trigger="onMouseEnter()"
+  mouseleave.trigger="onMouseLeave()">
   <label class="ui-combobox__label"
     for.bind="id"
     id.bind="!inset && label ? labelId : null"

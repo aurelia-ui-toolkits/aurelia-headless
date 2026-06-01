@@ -10,6 +10,7 @@
 @import "./ui-datepicker-theme.css";
 @import "./ui-disclosure-theme.css";
 @import "./ui-drawer-theme.css";
+@import "./ui-form-theme.css";
 @import "./ui-input-theme.css";
 @import "./ui-list-theme.css";
 @import "./ui-menu-theme.css";
@@ -27,3 +28,4 @@
 @import "./ui-tooltip-theme.css";
 @import "./ui-top-app-bar-theme.css";
 @import "./ui-tree-theme.css";
+@import "./ui-validation-container-theme.css";

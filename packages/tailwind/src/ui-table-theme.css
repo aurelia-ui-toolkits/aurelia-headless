@@ -1,45 +1,53 @@
 @reference "./theme.css";
 
 .ui-table {
-  @apply relative block overflow-x-auto rounded-xl border border-card-border bg-card;
-}
+  @apply relative flex max-h-full flex-col overflow-hidden rounded-xl border border-card-border bg-card;
 
-.ui-table[data-disabled] {
-  @apply pointer-events-none opacity-70;
-}
+  &[data-disabled] {
+    @apply pointer-events-none opacity-70;
+  }
 
-.ui-table__progress {
-  @apply absolute left-0 right-0 top-0 z-20;
-}
+  & .ui-table__progress {
+    @apply absolute left-0 right-0 top-0 z-20;
+  }
 
-.ui-table table {
-  @apply w-full border-collapse text-sm;
-  table-layout: fixed;
-}
+  & .ui-table__body {
+    @apply min-h-0 flex-1 overflow-auto;
+  }
 
-.ui-table th,
-.ui-table td {
-  @apply border-b border-card-border px-3 py-2 text-left align-middle;
-}
+  & table {
+    @apply w-full border-collapse text-sm;
+    table-layout: fixed;
+  }
 
-.ui-table th {
-  @apply bg-card-muted font-semibold text-ink-900;
-}
+  & th,
+  & td {
+    @apply border-b border-card-border px-3 py-2 text-left align-middle;
+  }
 
-.ui-table tbody tr[data-selected] {
-  @apply bg-outline-hover;
+  & th {
+    @apply sticky top-0 z-10 bg-card-muted font-semibold text-ink-900;
+  }
+
+  & tbody tr[data-selected] {
+    @apply bg-outline-hover;
+  }
 }
 
 .ui-table-column {
   @apply relative select-none pr-8;
-}
 
-.ui-table-column[data-sortable] {
-  @apply cursor-pointer;
-}
+  &[data-sortable] {
+    @apply cursor-pointer;
+  }
 
-.ui-table-column[aria-sort] {
-  @apply text-primary-700;
+  &[aria-sort] {
+    @apply text-primary-700;
+  }
+
+  &:hover .ui-table-column__resize-handle {
+    @apply opacity-100;
+  }
 }
 
 .ui-table-column__sort-indicator {
@@ -53,18 +61,14 @@
 .ui-table-column__resize-handle {
   @apply absolute bottom-0 right-0 top-0 z-10 w-4 cursor-col-resize touch-none opacity-0 transition-opacity;
   background: linear-gradient(to right, transparent, var(--color-resize-handle));
-}
 
-.ui-table-column:hover .ui-table-column__resize-handle {
-  @apply opacity-100;
-}
-
-.ui-table-column__resize-handle::after {
-  @apply absolute bottom-2 right-1 top-2 w-px bg-ink-500 content-[''];
+  &::after {
+    @apply absolute bottom-2 right-1 top-2 w-px bg-ink-500 content-[''];
+  }
 }
 
 .ui-table__pagination {
-  @apply flex flex-wrap items-center justify-end gap-6 border-t border-card-border px-5 py-1.5 text-sm text-ink-900;
+  @apply flex flex-none flex-wrap items-center justify-end gap-6 border-t border-card-border px-5 py-1.5 text-sm text-ink-900;
 }
 
 .ui-table__pagination-actions {
@@ -82,16 +86,14 @@
 .ui-table__page-size-select,
 .ui-table__page-select {
   @apply w-24 shrink-0;
-}
 
-.ui-table__page-size-select .ui-select__value,
-.ui-table__page-select .ui-select__value {
-  @apply justify-end text-right tabular-nums;
-}
+  & .ui-select__value {
+    @apply justify-end text-right tabular-nums;
+  }
 
-.ui-table__page-size-select .ui-list-item__primary,
-.ui-table__page-select .ui-list-item__primary {
-  @apply w-full text-right tabular-nums;
+  & .ui-list-item__primary {
+    @apply w-full text-right tabular-nums;
+  }
 }
 
 .ui-table__page-size-label,

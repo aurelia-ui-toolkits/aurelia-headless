@@ -2,33 +2,33 @@
 
 .ui-disclosure {
   @apply grid gap-1;
+
+  &[data-open] .ui-disclosure__chevron {
+    transform: rotate(180deg);
+  }
 }
 
 .ui-disclosure__header {
   @apply flex w-full cursor-pointer select-none items-center justify-between rounded-md border border-card-border bg-transparent px-2 py-1 text-left text-sm font-semibold text-ink-900;
   transition: background-color 140ms ease, border-color 140ms ease;
-}
 
-.ui-disclosure__header[data-hover] {
-  @apply bg-card-muted;
-}
+  &[data-hover] {
+    @apply bg-card-muted;
+  }
 
-.ui-disclosure__header[data-focus] {
-  outline: 3px solid var(--color-ring);
-  outline-offset: 2px;
-}
+  &[data-focus] {
+    outline: 3px solid var(--color-ring);
+    outline-offset: 2px;
+  }
 
-.ui-disclosure__header[data-active] {
-  @apply bg-card-muted;
+  &[data-active] {
+    @apply bg-card-muted;
+  }
 }
 
 .ui-disclosure__chevron {
   @apply text-xs text-ink-500;
   transition: transform 160ms ease;
-}
-
-.ui-disclosure[data-open] .ui-disclosure__chevron {
-  transform: rotate(180deg);
 }
 
 .ui-disclosure__content {

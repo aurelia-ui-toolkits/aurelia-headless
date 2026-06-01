@@ -36,4 +36,43 @@
       </ui-list>
     </ui-select>
   </demo-block>
+
+  <demo-block title="Virtual-repeat list with initial value">
+    <ui-select value.bind="selectedVirtualProjectId"
+      selected-item.bind="selectedVirtualProject"
+      value-field="id"
+      label-field="name"
+      label="Large project list"
+      helper-text="Value starts as project-120; items load after a delay."
+      placeholder="Select project">
+      <ui-list items.bind="virtualProjects" selected.bind="selectedVirtualProject" typeahead-field="name">
+        <ui-list-item virtual-repeat.for="project of virtualProjects" value.bind="project" disabled.bind="project.disabled">
+          ${project.name}
+          <span au-slot="secondary">${project.region}</span>
+          <span au-slot="trailing">${project.id}</span>
+        </ui-list-item>
+      </ui-list>
+    </ui-select>
+    <span class="select-state">Value: ${selectedVirtualProjectId || 'none'}</span>
+  </demo-block>
+
+  <demo-block title="Multiple select with checkboxes">
+    <ui-select multiple
+      value.bind="selectedMultiProjectIds"
+      selected-item.bind="selectedMultiProjects"
+      value-field="id"
+      label-field="name"
+      label="Projects"
+      helper-text="Selected items stay open and display with semicolons."
+      placeholder="Select projects">
+      <ui-list items.bind="multiProjects" selected.bind="selectedMultiProjects" multiple typeahead-field="name">
+        <ui-list-item repeat.for="project of multiProjects" value.bind="project" disabled.bind="project.disabled">
+          <ui-checkbox au-slot="leading" checked.bind="$host.selected" tab-index="-1"></ui-checkbox>
+          ${project.name}
+          <span au-slot="secondary">${project.region}</span>
+        </ui-list-item>
+      </ui-list>
+    </ui-select>
+    <span class="select-state">Value: ${selectedMultiProjectIds.join('; ') || 'none'}</span>
+  </demo-block>
 </demo-section>

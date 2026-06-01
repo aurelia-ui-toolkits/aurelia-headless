@@ -7,6 +7,54 @@ ui-select,
 
 .ui-select {
   @apply grid gap-2 w-full;
+
+  &[data-focus] .ui-select__control {
+    @apply border-primary-600;
+    box-shadow: 0 0 0 3px var(--color-ring);
+  }
+
+  &[data-hover]:not([data-disabled]) .ui-select__control {
+    background: var(--color-subtle-overlay);
+  }
+
+  &[data-active] .ui-select__control {
+    @apply border-primary-700;
+  }
+
+  &[data-invalid] .ui-select__control {
+    border-color: var(--color-validation-border);
+  }
+
+  &[data-disabled] .ui-select__control {
+    @apply cursor-not-allowed bg-card-muted opacity-60;
+  }
+
+  &[data-open] .ui-select__chevron {
+    transform: translateY(2px) rotate(225deg);
+  }
+
+  &:not([data-inset]) .ui-select__inset-label {
+    display: none;
+  }
+
+  &[data-inset] {
+    & .ui-select__value {
+      height: 3.25rem;
+      padding-top: 1rem;
+      padding-bottom: 0.25rem;
+    }
+
+    & .ui-select__label {
+      display: none;
+    }
+
+    &[data-focus] .ui-select__inset-label,
+    &[data-has-value] .ui-select__inset-label {
+      transform: translateY(-0.85rem) scale(0.75);
+      font-size: 0.75rem;
+      color: var(--color-ink-700);
+    }
+  }
 }
 
 .ui-select__label {
@@ -14,26 +62,10 @@ ui-select,
 }
 
 .ui-select__control {
-  @apply grid w-full cursor-pointer grid-cols-[auto_1fr_auto] items-center gap-0 rounded-xl border border-card-border bg-transparent px-3;
+  @apply grid w-full cursor-pointer grid-cols-[auto_1fr_auto] items-center gap-0 rounded-xl border border-card-border bg-transparent;
   position: relative;
+  padding-inline: var(--ui-field-padding-x);
   transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
-}
-
-.ui-select[data-focus] .ui-select__control {
-  @apply border-primary-600;
-  box-shadow: 0 0 0 3px var(--color-ring);
-}
-
-.ui-select[data-active] .ui-select__control {
-  @apply border-primary-700;
-}
-
-.ui-select[data-invalid] .ui-select__control {
-  border-color: var(--color-validation-border);
-}
-
-.ui-select[data-disabled] .ui-select__control {
-  @apply cursor-not-allowed bg-card-muted opacity-60;
 }
 
 .ui-select__leading,
@@ -44,9 +76,6 @@ ui-select,
 
 .ui-select__leading {
   grid-column: 1;
-}
-
-.ui-select__leading {
   margin-right: 0.5rem;
 }
 
@@ -59,10 +88,6 @@ ui-select,
 .ui-select__chevron {
   @apply block h-2 w-2 border-b-2 border-r-2 border-ink-500;
   transform: translateY(-1px) rotate(45deg);
-}
-
-.ui-select[data-open] .ui-select__chevron {
-  transform: translateY(2px) rotate(225deg);
 }
 
 .ui-select__inset-label {
@@ -81,35 +106,15 @@ ui-select,
   grid-column: 2;
   grid-row: 1;
   z-index: 1;
-}
 
-.ui-select__value[data-placeholder] {
-  @apply text-ink-500;
-}
-
-.ui-select:not([data-inset]) .ui-select__inset-label {
-  display: none;
-}
-
-.ui-select[data-inset] .ui-select__value {
-  height: 3.25rem;
-  padding-top: 1rem;
-  padding-bottom: 0.25rem;
-}
-
-.ui-select[data-inset] .ui-select__label {
-  display: none;
-}
-
-.ui-select[data-inset][data-focus] .ui-select__inset-label,
-.ui-select[data-inset][data-has-value] .ui-select__inset-label {
-  transform: translateY(-0.85rem) scale(0.75);
-  font-size: 0.75rem;
-  color: var(--color-ink-700);
+  &[data-placeholder] {
+    @apply text-ink-500;
+  }
 }
 
 .ui-select__subscript {
   @apply text-xs leading-5;
+  padding-inline: var(--ui-field-padding-x);
 }
 
 .ui-select__helper {

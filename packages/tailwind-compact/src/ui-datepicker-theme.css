@@ -7,6 +7,50 @@ ui-datepicker,
 
 .ui-datepicker {
   @apply grid gap-1 w-full;
+
+  &[data-focus] .ui-datepicker__control {
+    @apply border-primary-600;
+    box-shadow: 0 0 0 3px var(--color-ring);
+  }
+
+  &[data-hover]:not([data-disabled]) .ui-datepicker__control {
+    background: var(--color-subtle-overlay);
+  }
+
+  &[data-active] .ui-datepicker__control {
+    @apply border-primary-700;
+  }
+
+  &[data-invalid] .ui-datepicker__control {
+    border-color: var(--color-validation-border);
+  }
+
+  &[data-disabled] .ui-datepicker__control {
+    @apply cursor-not-allowed bg-card-muted opacity-60;
+  }
+
+  &:not([data-inset]) .ui-datepicker__inset-label {
+    display: none;
+  }
+
+  &[data-inset] {
+    .ui-datepicker__native {
+      height: 2.15rem;
+      padding-top: 0.7rem;
+      padding-bottom: 0.125rem;
+    }
+
+    .ui-datepicker__label {
+      display: none;
+    }
+
+    &[data-focus] .ui-datepicker__inset-label,
+    &[data-has-value] .ui-datepicker__inset-label {
+      transform: translateY(-0.5rem) scale(0.82);
+      font-size: 0.7rem;
+      color: var(--color-ink-700);
+    }
+  }
 }
 
 .ui-datepicker__label {
@@ -14,26 +58,10 @@ ui-datepicker,
 }
 
 .ui-datepicker__control {
-  @apply grid w-full grid-cols-[auto_1fr_auto] items-center gap-0 rounded-md border border-card-border bg-transparent px-2;
+  @apply grid w-full grid-cols-[auto_1fr_auto] items-center gap-0 rounded-md border border-card-border bg-transparent;
   position: relative;
+  padding-inline: var(--ui-field-padding-x);
   transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
-}
-
-.ui-datepicker[data-focus] .ui-datepicker__control {
-  @apply border-primary-600;
-  box-shadow: 0 0 0 3px var(--color-ring);
-}
-
-.ui-datepicker[data-active] .ui-datepicker__control {
-  @apply border-primary-700;
-}
-
-.ui-datepicker[data-invalid] .ui-datepicker__control {
-  border-color: var(--color-validation-border);
-}
-
-.ui-datepicker[data-disabled] .ui-datepicker__control {
-  @apply cursor-not-allowed bg-card-muted opacity-60;
 }
 
 .ui-datepicker__leading,
@@ -73,39 +101,19 @@ ui-datepicker,
   grid-column: 2;
   grid-row: 1;
   z-index: 1;
-}
 
-.ui-datepicker:not([data-inset]) .ui-datepicker__inset-label {
-  display: none;
-}
+  &::placeholder {
+    @apply text-ink-500;
+  }
 
-.ui-datepicker[data-inset] .ui-datepicker__native {
-  height: 2.15rem;
-  padding-top: 0.7rem;
-  padding-bottom: 0.125rem;
-}
-
-.ui-datepicker[data-inset] .ui-datepicker__label {
-  display: none;
-}
-
-.ui-datepicker[data-inset][data-focus] .ui-datepicker__inset-label,
-.ui-datepicker[data-inset][data-has-value] .ui-datepicker__inset-label {
-  transform: translateY(-0.5rem) scale(0.82);
-  font-size: 0.7rem;
-  color: var(--color-ink-700);
-}
-
-.ui-datepicker__native::placeholder {
-  @apply text-ink-500;
-}
-
-.ui-datepicker__native:disabled {
-  @apply cursor-not-allowed;
+  &:disabled {
+    @apply cursor-not-allowed;
+  }
 }
 
 .ui-datepicker__subscript {
   @apply text-[0.7rem] leading-4;
+  padding-inline: var(--ui-field-padding-x);
 }
 
 .ui-datepicker__helper {
@@ -125,11 +133,15 @@ dialog:has(.ui-datepicker-dialog) {
   max-width: min(92vw, 24rem);
   width: min(92vw, 24rem);
   overflow: visible;
-}
 
-dialog:has(.ui-datepicker-dialog)::backdrop {
-  animation: ui-datepicker-dialog-backdrop-in 140ms ease-out;
-  background: var(--color-backdrop);
+  &::backdrop {
+    animation: ui-datepicker-dialog-backdrop-in 140ms ease-out;
+    background: var(--color-backdrop);
+  }
+
+  .ui-popup__panel {
+    @apply z-[100];
+  }
 }
 
 @keyframes ui-datepicker-dialog-in {
@@ -162,10 +174,6 @@ dialog:has(.ui-datepicker-dialog)::backdrop {
   overflow: visible;
 }
 
-dialog:has(.ui-datepicker-dialog) .ui-popup__panel {
-  @apply z-[100];
-}
-
 .ui-datepicker-dialog__header {
   @apply grid gap-0.5;
 }
@@ -186,12 +194,15 @@ dialog:has(.ui-datepicker-dialog) .ui-popup__panel {
   @apply grid grid-cols-[minmax(0,1fr)_4.75rem_auto_auto] items-center gap-1;
 }
 
-.ui-datepicker-dialog__time-field input {
-  @apply rounded-md border border-card-border bg-transparent px-2 py-1 text-xs font-semibold text-ink-900 outline-none;
-}
+.ui-datepicker-dialog__time-field {
+  input {
+    @apply rounded-md border border-card-border bg-transparent py-1 text-xs font-semibold text-ink-900 outline-none;
+    padding-inline: var(--ui-field-padding-x);
 
-.ui-datepicker-dialog__time-field input:focus {
-  box-shadow: 0 0 0 3px var(--color-ring);
+    &:focus {
+      box-shadow: 0 0 0 3px var(--color-ring);
+    }
+  }
 }
 
 .ui-datepicker-dialog__month,
@@ -213,31 +224,31 @@ dialog:has(.ui-datepicker-dialog) .ui-popup__panel {
 
 .ui-datepicker-dialog__day {
   @apply grid h-8 place-items-center rounded-full border border-transparent bg-transparent text-xs font-semibold text-ink-700 outline-none;
-}
 
-.ui-datepicker-dialog__day:hover:not(:disabled) {
-  @apply bg-outline-hover text-ink-900;
-}
+  &:hover:not(:disabled) {
+    @apply bg-outline-hover text-ink-900;
+  }
 
-.ui-datepicker-dialog__day:focus-visible {
-  box-shadow: 0 0 0 3px var(--color-ring);
-}
+  &:focus-visible {
+    box-shadow: 0 0 0 3px var(--color-ring);
+  }
 
-.ui-datepicker-dialog__day[data-today] {
-  @apply border-primary-600 text-primary-700;
-}
+  &[data-today] {
+    @apply border-primary-600 text-primary-700;
+  }
 
-.ui-datepicker-dialog__day[data-selected] {
-  @apply bg-primary-600;
-  color: var(--color-on-primary);
-}
+  &[data-selected] {
+    @apply bg-primary-600;
+    color: var(--color-on-primary);
+  }
 
-.ui-datepicker-dialog__day[data-outside] {
-  @apply text-ink-500;
-}
+  &[data-outside] {
+    @apply text-ink-500;
+  }
 
-.ui-datepicker-dialog__day:disabled {
-  @apply cursor-not-allowed opacity-35;
+  &:disabled {
+    @apply cursor-not-allowed opacity-35;
+  }
 }
 
 .ui-datepicker-dialog__time {

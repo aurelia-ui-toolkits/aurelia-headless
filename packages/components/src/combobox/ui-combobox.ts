@@ -2,6 +2,7 @@ import { bindable, BindingMode, CustomElement, customElement, resolve, slotted }
 import { booleanAttr } from '../base/boolean-attr';
 import { IError, IValidatedElement } from '../base/i-validated-element';
 import { Keys } from '../base/keys';
+import { UiFieldConfiguration } from '../field/ui-field-configuration';
 import { UiMenu } from '../menu/ui-menu';
 import template from './ui-combobox.html?raw';
 
@@ -10,6 +11,8 @@ type ComboboxOptions = unknown[] | ((filter: string | undefined, value: unknown)
 
 @customElement({ name: 'ui-combobox', template })
 export class UiCombobox {
+  private readonly configuration = resolve(UiFieldConfiguration);
+
   constructor() {
     defineUiComboboxElementApis(this.element);
   }
@@ -18,6 +21,7 @@ export class UiCombobox {
   readonly slotHost = this;
 
   errors = new Map<IError, boolean>();
+  hover: boolean = false;
   focus: boolean = false;
   active: boolean = false;
   controlEl!: HTMLElement;
@@ -57,7 +61,6 @@ export class UiCombobox {
 
   @bindable
   filterField: string | undefined;
-  filterFieldChanged(): void {}
 
   @bindable({ mode: BindingMode.twoWay, set: booleanAttr })
   open: boolean = false;
@@ -66,7 +69,7 @@ export class UiCombobox {
   label: string | undefined;
 
   @bindable({ set: booleanAttr })
-  inset: boolean = false;
+  inset: boolean = this.configuration.defaultInset;
 
   @bindable
   helperText: string | undefined;
@@ -177,6 +180,16 @@ export class UiCombobox {
     }
 
     this.errors.delete(error);
+  }
+
+  onMouseEnter(): void {
+    if (!this.disabled) {
+      this.hover = true;
+    }
+  }
+
+  onMouseLeave(): void {
+    this.hover = false;
   }
 
   async onInput(): Promise<void> {
@@ -341,16 +354,13 @@ export class UiCombobox {
       await this.loadOptions(false, this.value);
     } else {
       this.filteredItems = [];
+      this.selectedOption = undefined;
+      this.textValue = undefined;
     }
 
     if (this.filteredItems.length) {
       this.selectedOption = this.filteredItems[0];
       this.textValue = this.getItemLabel(this.filteredItems[0]);
-    } else if (this.value !== undefined) {
-      this.selectedOption = undefined;
-      this.textValue = undefined;
-    } else {
-      this.selectedOption = undefined;
     }
   }
 

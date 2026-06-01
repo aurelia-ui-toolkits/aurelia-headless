@@ -2,6 +2,7 @@ import { bindable, CustomElement, customElement, resolve, slotted } from 'aureli
 import { booleanAttr } from '../base/boolean-attr';
 import template from './ui-input.html?raw';
 import { IValidatedElement } from '../base/i-validated-element';
+import { UiFieldConfiguration } from '../field/ui-field-configuration';
 
 let nextInputId = 0;
 
@@ -11,11 +12,14 @@ export interface IError {
 
 @customElement({ name: 'ui-input', template })
 export class UiInput {
+  private readonly configuration = resolve(UiFieldConfiguration);
+
   constructor() {
     defineUiInputElementApis(resolve(Element) as HTMLElement);
   }
 
   errors = new Map<IError, boolean>();
+  hover: boolean = false;
   focus: boolean = false;
   active: boolean = false;
   inputEl!: HTMLInputElement;
@@ -24,7 +28,7 @@ export class UiInput {
   label: string | undefined;
 
   @bindable({ set: booleanAttr })
-  inset: boolean = false;
+  inset: boolean = this.configuration.defaultInset;
 
   @bindable
   helperText: string | undefined;
@@ -40,6 +44,12 @@ export class UiInput {
 
   @bindable
   placeholder: string | undefined;
+
+  @bindable
+  maxlength: number | undefined;
+
+  @bindable({ set: booleanAttr })
+  autofocus: boolean = false;
 
   @bindable
   autocomplete: AutoFill | undefined;
@@ -81,7 +91,6 @@ export class UiInput {
     }
   }
 
-
   get labelId(): string {
     return `${this.id}-label`;
   }
@@ -116,6 +125,16 @@ export class UiInput {
     }
 
     this.errors.delete(error);
+  }
+
+  onMouseEnter(): void {
+    if (!this.disabled) {
+      this.hover = true;
+    }
+  }
+
+  onMouseLeave(): void {
+    this.hover = false;
   }
 
   onFocusIn(): void {
@@ -155,6 +174,7 @@ export class UiInput {
 
 export interface IUiInputElement extends IValidatedElement {
   value: string;
+  maxLength: number | undefined;
 }
 
 function defineUiInputElementApis(element: HTMLElement) {
@@ -179,6 +199,15 @@ function defineUiInputElementApis(element: HTMLElement) {
       },
       set(this: IUiInputElement, value: boolean) {
         CustomElement.for<UiInput>(this).viewModel.disabled = value;
+      },
+      configurable: true
+    },
+    maxLength: {
+      get(this: IUiInputElement) {
+        return CustomElement.for<UiInput>(this).viewModel.maxlength;
+      },
+      set(this: IUiInputElement, value: number) {
+        CustomElement.for<UiInput>(this).viewModel.maxlength = value;
       },
       configurable: true
     },

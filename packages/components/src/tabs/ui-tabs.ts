@@ -2,6 +2,7 @@ import { bindable, BindingMode, children, customElement, INode, resolve } from '
 import { Keys } from '../base/keys';
 import { UiTab } from './ui-tab';
 import template from './ui-tabs.html?raw';
+import { booleanAttr } from '../base/boolean-attr';
 
 @customElement({ name: 'ui-tabs', template })
 export class UiTabs {
@@ -10,8 +11,11 @@ export class UiTabs {
   @bindable({ mode: BindingMode.twoWay })
   value: unknown;
 
+  @bindable({ mode: BindingMode.twoWay, set: booleanAttr })
+  externalValue: unknown;
+
   @children({
-    query: 'ui-tab',
+    query: '.ui-tab',
     map: (_node, viewModel) => viewModel
   })
   tabs: UiTab[] = [];
@@ -24,7 +28,7 @@ export class UiTabs {
   }
 
   select(value: unknown): void {
-    if (this.value === value) {
+    if (this.externalValue || this.value === value) {
       return;
     }
 

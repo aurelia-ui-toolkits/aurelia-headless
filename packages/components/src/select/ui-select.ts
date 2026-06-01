@@ -2,6 +2,8 @@ import { bindable, BindingMode, computed, CustomElement, customElement, resolve,
 import { booleanAttr } from '../base/boolean-attr';
 import { IError, IValidatedElement } from '../base/i-validated-element';
 import { Keys } from '../base/keys';
+import { UiFieldConfiguration } from '../field/ui-field-configuration';
+import { UiList } from '../list/ui-list';
 import { UiMenu } from '../menu/ui-menu';
 import template from './ui-select.html?raw';
 
@@ -9,13 +11,17 @@ let nextSelectId = 0;
 
 @customElement({ name: 'ui-select', template })
 export class UiSelect {
+  private readonly configuration = resolve(UiFieldConfiguration);
+
   constructor() {
     defineUiSelectElementApis(this.element);
   }
 
   readonly element = resolve(Element) as HTMLElement;
+  readonly slotHost = this;
 
   errors = new Map<IError, boolean>();
+  hover: boolean = false;
   focus: boolean = false;
   active: boolean = false;
   open: boolean = false;
@@ -28,11 +34,14 @@ export class UiSelect {
   @bindable({ mode: BindingMode.twoWay })
   selectedItem: unknown;
 
+  @bindable({ set: booleanAttr })
+  multiple: boolean = false;
+
   @bindable
   label: string | undefined;
 
   @bindable({ set: booleanAttr })
-  inset: boolean = false;
+  inset: boolean = this.configuration.defaultInset;
 
   @bindable
   helperText: string | undefined;
@@ -90,10 +99,15 @@ export class UiSelect {
 
   @computed({ flush: 'async' })
   get displayText(): string | undefined {
+    if (this.multiple && Array.isArray(this.selectedItem)) {
+      return this.selectedItem.length
+        ? this.selectedItem.map(item => this.getItemLabel(item)).join('; ')
+        : undefined;
+    }
     if (this.selectedItem !== undefined) {
       return this.getItemLabel(this.selectedItem);
     }
-    if (this.value !== undefined) {
+    if (!this.valueField && !this.labelField && this.value !== undefined) {
       return String(this.value);
     }
 
@@ -110,6 +124,10 @@ export class UiSelect {
   }
 
   get hasValue(): boolean {
+    if (Array.isArray(this.value)) {
+      return this.value.length > 0;
+    }
+
     return this.value !== undefined && this.value !== null && this.value !== '';
   }
 
@@ -129,6 +147,16 @@ export class UiSelect {
     }
 
     this.errors.delete(error);
+  }
+
+  onMouseEnter(): void {
+    if (!this.disabled) {
+      this.hover = true;
+    }
+  }
+
+  onMouseLeave(): void {
+    this.hover = false;
   }
 
   onClick(): void {
@@ -157,6 +185,11 @@ export class UiSelect {
   }
 
   onMenuSelect(event: CustomEvent): void {
+    if (this.multiple) {
+      this.onMultipleMenuSelect(event.detail);
+      return;
+    }
+
     this.selectedItem = event.detail;
     this.value = this.getItemValue(event.detail);
     this.open = false;
@@ -213,6 +246,35 @@ export class UiSelect {
     }
 
     return item === undefined || item === null ? '' : String(item);
+  }
+
+  private onMultipleMenuSelect(item: unknown): void {
+    let selectedItems = this.getMenuSelectedItems();
+
+    if (!selectedItems) {
+      selectedItems = Array.isArray(this.selectedItem) ? [...this.selectedItem] : [];
+      const index = selectedItems.indexOf(item);
+      if (index >= 0) {
+        selectedItems.splice(index, 1);
+      } else {
+        selectedItems.push(item);
+      }
+    }
+
+    this.selectedItem = selectedItems;
+    this.value = selectedItems.map(selected => this.getItemValue(selected));
+    this.dispatchValueEvent('input');
+    this.dispatchValueEvent('change');
+  }
+
+  private getMenuSelectedItems(): unknown[] | undefined {
+    const list = this.menu.popup.panelElement?.querySelector('ui-list');
+    if (!list) {
+      return undefined;
+    }
+
+    const selected = CustomElement.for<UiList>(list).viewModel.selected;
+    return Array.isArray(selected) ? [...selected] : undefined;
   }
 
   private dispatchValueEvent(type: 'input' | 'change'): void {

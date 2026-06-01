@@ -1,50 +1,79 @@
-import { DialogCloseResult, IDialogService } from '@aurelia/dialog';
-import { resolve } from 'aurelia';
+import { IDialogSettings, IDialogService } from '@aurelia/dialog';
+import { Constructable, resolve } from 'aurelia';
 import { AlertConfiguration } from './alert-configuration';
-import { AlertModal } from './alert-modal/alert-modal';
+import { UiAlertModal } from './alert-modal/alert-modal';
 import { IAlertModalPayload } from './alert-modal/i-alert-modal-payload';
 import { ExceptionsTracker } from './exceptions-tracker';
-import { IPromptDialogData, PromptDialog } from './prompt-dialog/prompt-dialog';
+import { IPromptDialogData, UiPromptDialog } from './prompt-dialog/prompt-dialog';
+import { Subject } from 'rxjs/internal/Subject';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { merge } from 'rxjs/internal/observable/merge';
+import { map } from 'rxjs/internal/operators/map';
+import { scan } from 'rxjs/internal/operators/scan';
+
+export interface IAlertDialogOptions<TModel = unknown, TComponent extends object = object> extends Omit<IDialogSettings, 'component' | 'model'> {
+  viewModel?: Constructable<TComponent>;
+  component?: IDialogSettings['component'];
+  model?: TModel;
+}
 
 export class AlertService {
   private readonly dialogService = resolve(IDialogService);
   private readonly exceptionsTracker = resolve(ExceptionsTracker);
   private readonly configuration = resolve(AlertConfiguration);
-  private progressDepth: number = 0;
 
-  showProgress(): void {
-    this.progressDepth++;
-    document.dispatchEvent(new CustomEvent('alert-service:progress', { detail: { busy: true } }));
+  increment$ = new Subject<void>();
+  decrement$ = new Subject<void>();
+  busy$ = new BehaviorSubject<boolean>(false);
+  busyAccumulator$ = merge(this.increment$.pipe(map(() => 1)), this.decrement$.pipe(map(() => -1)))
+    .pipe(
+      scan((acc, v) => acc += v, 0),
+      map(v => v > 0)
+    ).subscribe(this.busy$);
+  allowCancel$ = new Subject<boolean>();
+
+  showProgress() {
+    this.increment$.next();
   }
 
-  hideProgress(): void {
-    this.progressDepth = Math.max(0, this.progressDepth - 1);
-    document.dispatchEvent(new CustomEvent('alert-service:progress', { detail: { busy: this.progressDepth > 0 } }));
+  hideProgress() {
+    this.decrement$.next();
   }
 
-  async usingProgress<T, E = never>(action: () => Promise<T>, catchHandler?: (e: unknown) => Promise<E> | E): Promise<T | E> {
+  async usingProgress<T, E = never>(action: () => Promise<T>, catchHandler?: (e: Error & { nonCritical?: boolean }) => Promise<E> | E, allowCancel?: boolean): Promise<T | E> {
     try {
+      this.allowCancel$.next(allowCancel ?? false);
       this.showProgress();
       return await action();
     } catch (e) {
       if (catchHandler) {
-        return await catchHandler(e);
+        return await catchHandler(e as Error);
+      } else {
+        throw e;
       }
-      throw e;
     } finally {
       this.hideProgress();
     }
   }
 
+  async open<TOptions, TModel = any, TComponent extends object = any>(options: IDialogSettings<TOptions, TModel, TComponent>): Promise<string | undefined> {
+    try {
+      this.hideProgress();
+      const result = await (await this.dialogService.open(options)).dialog.closed;
+      return typeof result.value === 'string' ? result.value : result.status;
+    } finally {
+      this.showProgress();
+    }
+  }
+
   async showModal(model: Partial<IAlertModalPayload>): Promise<string | undefined> {
     const payload: IAlertModalPayload = { ...model };
-    const result = await this.dialogService.open({
-      component: () => this.configuration.defaultAlertModal || AlertModal,
+    return this.open({
+      component: () => this.configuration.defaultAlertModal || UiAlertModal,
       model: payload,
       rejectOnCancel: false,
       options: { modal: true, closedby: 'closerequest' }
-    }).whenClosed() as DialogCloseResult;
-    return typeof result.value === 'string' ? result.value : undefined;
+    });
   }
 
   async alert(message: string | Partial<IAlertModalPayload>): Promise<boolean> {
@@ -92,16 +121,16 @@ export class AlertService {
   async prompt(data: Partial<IPromptDialogData>): Promise<boolean> {
     data.okText ??= this.configuration.okText;
     data.cancelText ??= this.configuration.cancelText;
-    const result = await this.dialogService.open({
-      component: () => this.configuration.defaultPromptDialog || PromptDialog,
+    const result = await this.open({
+      component: () => this.configuration.defaultPromptDialog || UiPromptDialog,
       model: data,
       rejectOnCancel: false,
       options: { modal: true, closedby: 'closerequest' }
-    }).whenClosed() as DialogCloseResult;
-    if (result.status === 'ok' && typeof result.value === 'string') {
-      data.text = result.value;
+    });
+    if (result !== undefined && result !== 'cancel') {
+      data.text = result;
     }
-    return result.status === 'ok';
+    return result !== undefined && result !== 'cancel';
   }
 
   async error(message: string | Partial<IAlertModalPayload>): Promise<boolean> {

@@ -5,6 +5,9 @@
   keydown.trigger="onKeyDown($event)"
   click.trigger="onClick($event)"
   mousemove.trigger="onMouseMove()"
-  mouseover.trigger="onMouseOver($event)">
-  <au-slot></au-slot>
+  mouseover.trigger="onMouseOver($event)"
+  mouseleave.trigger="onMouseLeave()">
+  <div class="ui-list__scroller" ref="scrollerEl">
+    <au-slot></au-slot>
+  </div>
 </template>

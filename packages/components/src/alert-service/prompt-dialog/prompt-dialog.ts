@@ -12,8 +12,8 @@ export interface IPromptDialogData {
   cancelText?: string;
 }
 
-@customElement({ name: 'prompt-dialog', template })
-export class PromptDialog {
+@customElement({ name: 'ui-prompt-modal', template })
+export class UiPromptDialog {
   private readonly dialog = resolve(IDialogController);
 
   data: IPromptDialogData = {};

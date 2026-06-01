@@ -88,7 +88,7 @@ export class UiMenu {
   }
 
   focus(key: Keys.Home | Keys.End | undefined): void {
-    const list = this.popup.panelElement?.querySelector('ui-list') as HTMLElement | null;
+    const list = this.popup.panelElement?.querySelector('ui-list');
     if (!list) {
       this.popup.focus();
       return;

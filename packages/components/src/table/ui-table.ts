@@ -151,7 +151,9 @@ export class UiTable {
   }
 
   private updateTotalPages(): void {
-    this.totalPages = Math.max(1, Math.ceil(this.total / this.pageSize));
+    const total = Number(this.total) || 0;
+    const pageSize = Number(this.pageSize) || 1;
+    this.totalPages = Math.max(1, Math.ceil(total / pageSize) || 1);
     this.pageOptions = Array.from({ length: this.totalPages }, (_, index) => index + 1);
     this.page = Math.max(1, Math.min(this.totalPages, Number(this.page) || 1));
   }

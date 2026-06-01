@@ -1,10 +1,10 @@
 import { DialogConfigurationStandard } from '@aurelia/dialog';
 import { AppTask, IAttrMapper, IContainer, NodeObserverLocator, Registration } from 'aurelia';
 import { AlertConfiguration } from './alert-service/alert-configuration';
-import { AlertModal } from './alert-service/alert-modal/alert-modal';
+import { UiAlertModal } from './alert-service/alert-modal/alert-modal';
 import { AlertService } from './alert-service/alert-service';
 import { ExceptionsTracker } from './alert-service/exceptions-tracker';
-import { PromptDialog } from './alert-service/prompt-dialog/prompt-dialog';
+import { UiPromptDialog } from './alert-service/prompt-dialog/prompt-dialog';
 import { UiAlert } from './alert/ui-alert';
 import { UiBadge } from './badge/ui-badge';
 import { UiBreadcrumbs } from './breadcrumbs/ui-breadcrumbs';
@@ -18,8 +18,9 @@ import { UiDatepickerDialog } from './datepicker/ui-datepicker-dialog';
 import { UiDatepickerDialogConfiguration } from './datepicker/ui-datepicker-dialog-configuration';
 import { UiDisclosure } from './disclosure/ui-disclosure';
 import { UiDrawer } from './drawer/ui-drawer';
+import { UiFieldConfiguration } from './field/ui-field-configuration';
 import { IError, UiInput } from './input/ui-input';
-import { InputmaskConfiguration, InputmaskCustomAttribute } from './inputmask';
+import { InputmaskConfiguration, UiInputmaskCustomAttribute } from './inputmask';
 import { UiMenu } from './menu/ui-menu';
 import { UiList } from './list/ui-list';
 import { UiListItem } from './list/ui-list-item';
@@ -43,8 +44,10 @@ import { UiTooltip } from './tooltip/ui-tooltip';
 import { UiTooltipService } from './tooltip/ui-tooltip-service';
 import { UiTopAppBar } from './top-app-bar/ui-top-app-bar';
 import { UiTree } from './tree/ui-tree';
+import { UiValidationContainer } from './validation/ui-validation-container';
 import { EnhanceUiButton } from './button/enhance-ui-button';
 import { EnhanceUiCombobox } from './combobox/enhance-ui-combobox';
+import { UiForm } from './form/ui-form';
 import { EnhanceUiInput } from './input/enhance-ui-input';
 import { EnhanceUiSelect } from './select/enhance-ui-select';
 import { EnhanceUiTable } from './table/enhance-ui-table';
@@ -52,7 +55,7 @@ import { UiValidationControllerFactory } from './validation/ui-validation-contro
 
 export { UiButton };
 export { AlertConfiguration };
-export { AlertModal };
+export { UiAlertModal };
 export { AlertService };
 export { UiAlert };
 export { UiBadge };
@@ -66,10 +69,13 @@ export { UiDatepickerDialog };
 export { UiDatepickerDialogConfiguration };
 export { UiDisclosure };
 export { UiDrawer };
+export { UiFieldConfiguration };
+export { UiForm };
 export { UiInput };
-export { InputmaskConfiguration, InputmaskCustomAttribute };
+export { InputmaskConfiguration, UiInputmaskCustomAttribute };
 export { UiMenu };
 export { UiValidationControllerFactory };
+export { UiValidationContainer };
 export type { IError };
 export { UiList };
 export { UiListItem };
@@ -94,19 +100,31 @@ export { UiTooltipService };
 export { UiTopAppBar };
 export { UiTree };
 export { ExceptionsTracker };
-export { PromptDialog };
+export { UiPromptDialog as PromptDialog };
 export { confirmAction } from './alert-service/decorators/confirm-action';
 export { usingProgress } from './alert-service/decorators/using-progress';
 export type { IWithAlertService } from './alert-service/decorators/using-progress';
+export type { IAlertDialogOptions } from './alert-service/alert-service';
 export type { IAlertModalPayload } from './alert-service/alert-modal/i-alert-modal-payload';
 export type { IPromptDialogData } from './alert-service/prompt-dialog/prompt-dialog';
 export type { UiBreadcrumbItem } from './breadcrumbs/ui-breadcrumbs';
 export type { UiDatepickerDialogData, UiDatepickerDialogDay } from './datepicker/ui-datepicker-dialog';
 export type { UiDatepickerI18n, UiDatepickerYearRange } from './datepicker/date-utils';
+export { validate } from './validation/validate';
 
 let registered = false; //
+const fieldConfiguration = new UiFieldConfiguration();
 
 export const AureliaHeadlessConfiguration = {
+  customize(optionsProvider: (config: UiFieldConfiguration) => void) {
+    return {
+      register(container: IContainer): IContainer {
+        optionsProvider(fieldConfiguration);
+        return AureliaHeadlessConfiguration.register(container);
+      }
+    };
+  },
+
   register(container: IContainer): IContainer {
     if (registered) {
       return container;
@@ -115,32 +133,6 @@ export const AureliaHeadlessConfiguration = {
     AppTask.creating(IContainer, c => {
       const attrMapper = c.get(IAttrMapper);
       const nodeObserverLocator = c.get(NodeObserverLocator);
-
-      // attrMapper.useTwoWay((el, property) => el.tagName === 'MDC-CHECKBOX' ? property === 'checked' : false);
-      // nodeObserverLocator.useConfig('MDC-CHECKBOX', 'checked', { events: ['change'], type: CheckedObserver });
-
-      // attrMapper.useTwoWay((el, property) => el.tagName === 'MDC-CHIP' ? property === 'checked' : false);
-      // nodeObserverLocator.useConfig('MDC-CHIP', 'checked', { events: ['change'], type: CheckedObserver });
-
-      // attrMapper.useTwoWay((el, property) => el.tagName === 'MDC-RADIO' ? property === 'checked' : false);
-      // nodeObserverLocator.useConfig('MDC-RADIO', 'checked', { events: ['change'], type: CheckedObserver });
-
-      // attrMapper.useTwoWay((el, property) => el.hasAttribute('mdc-segmented-button-segment-element') ? property === 'checked' : false);
-      // nodeObserverLocator.useConfig('MDC-SEGMENTED-BUTTON-SEGMENT', 'checked', { events: [segmentedButtonEvents.SELECTED, 'unselected'], type: CheckedObserver });
-
-      // attrMapper.useTwoWay((el, property) => el.tagName === 'MDC-SELECT' ? property === 'value' : false);
-      // nodeObserverLocator.useConfig('MDC-SELECT', 'value', { events: [strings.CHANGE_EVENT], type: MdcSelectValueObserver });
-
-      // attrMapper.useTwoWay((el, property) => el.tagName === 'MDC-SLIDER' ? property === 'value' || property === 'valuestart' : false);
-      // nodeObserverLocator.useConfig({
-      //   'MDC-SLIDER': {
-      //     value: { events: [sliderEvents.CHANGE, sliderEvents.INPUT] },
-      //     valuestart: { events: [sliderEvents.CHANGE, sliderEvents.INPUT] }
-      //   }
-      // });
-
-      // attrMapper.useTwoWay((el, property) => el.hasAttribute('mdc-switch-element') ? property === 'selected' : false);
-      // nodeObserverLocator.useConfig('MDC-SWITCH', 'selected', { events: ['change'] });
 
       attrMapper.useTwoWay((el, property) => el.hasAttribute('ui-input-element') ? property === 'value' : false);
       nodeObserverLocator.useConfig('UI-INPUT', 'value', { events: ['input', 'change'] });
@@ -159,6 +151,6 @@ export const AureliaHeadlessConfiguration = {
 
     }).register(container);
 
-    return container.register(InputmaskConfiguration, DialogConfigurationStandard, AlertModal, PromptDialog, UiDatepickerDialog, Registration.singleton(AlertConfiguration, AlertConfiguration), Registration.singleton(AlertService, AlertService), Registration.singleton(ExceptionsTracker, ExceptionsTracker), Registration.singleton(UiDatepickerDialogConfiguration, UiDatepickerDialogConfiguration), UiAlert, UiBadge, UiBreadcrumbs, UiButton, UiIconButton, EnhanceUiButton, UiCheckbox, UiChip, UiCombobox, EnhanceUiCombobox, UiDatepicker, UiDisclosure, UiDrawer, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSegment, UiSegmentedControl, UiSelect, EnhanceUiSelect, UiSlider, UiSplitter, UiSwitch, UiTab, UiTabs, UiTable, UiTableColumn, EnhanceUiTable, UiToastRegion, Registration.singleton(UiToastService, UiToastService), UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService), UiTopAppBar, UiTree);
+    return container.register(InputmaskConfiguration, DialogConfigurationStandard, UiAlertModal, UiPromptDialog, UiDatepickerDialog, Registration.singleton(AlertConfiguration, AlertConfiguration), Registration.singleton(AlertService, AlertService), Registration.singleton(ExceptionsTracker, ExceptionsTracker), Registration.singleton(UiDatepickerDialogConfiguration, UiDatepickerDialogConfiguration), Registration.instance(UiFieldConfiguration, fieldConfiguration), UiAlert, UiBadge, UiBreadcrumbs, UiButton, UiIconButton, EnhanceUiButton, UiCheckbox, UiChip, UiCombobox, EnhanceUiCombobox, UiDatepicker, UiDisclosure, UiDrawer, UiForm, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSegment, UiSegmentedControl, UiSelect, EnhanceUiSelect, UiSlider, UiSplitter, UiSwitch, UiTab, UiTabs, UiTable, UiTableColumn, EnhanceUiTable, UiToastRegion, Registration.singleton(UiToastService, UiToastService), UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService), UiTopAppBar, UiTree, UiValidationContainer);
   }
 };

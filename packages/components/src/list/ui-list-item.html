@@ -3,21 +3,21 @@
   aria-selected.attr="selected ? 'true' : 'false'"
   aria-disabled.attr="disabled ? '' : null"
   data-active.attr="parentList.activeItem === value ? '' : null"
-  data-selected.attr="parentList.selected === value ? '' : null"
+  data-selected.attr="selected ? '' : null"
   data-disabled.attr="disabled ? '' : null"
-  data-secondary.attr="secondaryNodes.length ? '' : null">
+  data-secondary.attr="hasSecondary ? '' : null">
   <span class="ui-list-item__leading" show.bind="leadingNodes.length">
-    <au-slot name="leading"></au-slot>
+    <au-slot name="leading" expose.bind="slotHost"></au-slot>
   </span>
   <span class="ui-list-item__content">
     <span class="ui-list-item__primary">
-      <au-slot></au-slot>
+      <au-slot expose.bind="slotHost"></au-slot>
     </span>
-    <span class="ui-list-item__secondary" show.bind="secondaryNodes.length">
-      <au-slot name="secondary"></au-slot>
+    <span class="ui-list-item__secondary" show.bind="hasSecondary">
+      <au-slot name="secondary" expose.bind="slotHost"></au-slot>
     </span>
   </span>
   <span class="ui-list-item__trailing" show.bind="trailingNodes.length">
-    <au-slot name="trailing"></au-slot>
+    <au-slot name="trailing" expose.bind="slotHost"></au-slot>
   </span>
 </template>

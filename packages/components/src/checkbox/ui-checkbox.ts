@@ -38,8 +38,7 @@ export class UiCheckbox {
     this.toggle();
   }
 
-  onInputClick(event: MouseEvent): void {
-    event.stopPropagation();
+  onInputClick(): void {
   }
 
   onInputChange(event: Event): void {

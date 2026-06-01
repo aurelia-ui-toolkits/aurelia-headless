@@ -2,60 +2,75 @@
 
 .ui-tree {
   @apply grid rounded-xl border border-card-border bg-card p-1;
+
+  &[data-toggle-position="right"] {
+    & .ui-tree__item {
+      @apply grid-cols-[minmax(0,1fr)_auto] pl-2;
+    }
+
+    & .ui-tree__toggle {
+      @apply col-start-2 row-start-1;
+    }
+
+    & .ui-tree__content {
+      @apply col-start-1 row-start-1;
+      padding-left: calc(var(--ui-tree-depth) * 1.25rem);
+    }
+  }
 }
 
 .ui-tree__item {
   @apply grid cursor-pointer grid-cols-[auto_1fr] items-center rounded-lg py-1.5 pr-2 text-sm text-ink-700 outline-none;
   padding-left: calc(0.25rem + var(--ui-tree-depth) * 1.25rem);
   transition: background-color 140ms ease, color 140ms ease, box-shadow 140ms ease;
-}
 
-.ui-tree__item:hover,
-.ui-tree__item[data-active] {
-  @apply bg-outline-hover text-ink-900;
-}
+  &:hover,
+  &[data-active] {
+    @apply bg-outline-hover text-ink-900;
+  }
 
-.ui-tree__item:focus-visible {
-  box-shadow: 0 0 0 3px var(--color-ring);
-}
+  &:focus-visible {
+    box-shadow: 0 0 0 3px var(--color-ring);
+  }
 
-.ui-tree__item[data-selected] {
-  @apply bg-primary-600;
-  color: var(--color-on-primary);
-}
+  &[data-selected] {
+    @apply bg-primary-600;
+    color: var(--color-on-primary);
 
-.ui-tree__item[data-selected][data-active] {
-  @apply bg-primary-700;
-}
+    &[data-active] {
+      @apply bg-primary-700;
+    }
 
-.ui-tree__item[data-disabled] {
-  @apply cursor-not-allowed opacity-50;
+    & .ui-tree__toggle {
+      color: var(--color-on-primary-muted);
+    }
+  }
+
+  &[data-disabled] {
+    @apply cursor-not-allowed opacity-50;
+  }
+
+  &[data-expanded] .ui-tree__toggle-icon {
+    transform: rotate(45deg) translate(-1px, -1px);
+  }
 }
 
 .ui-tree__toggle {
   @apply grid h-6 w-6 place-items-center rounded-md text-ink-500 outline-none;
-}
 
-.ui-tree__toggle:hover {
-  background: var(--color-subtle-overlay);
-}
+  &:hover {
+    background: var(--color-subtle-overlay);
+  }
 
-.ui-tree__item[data-selected] .ui-tree__toggle {
-  color: var(--color-on-primary-muted);
-}
-
-.ui-tree__toggle[data-hidden] {
-  @apply invisible;
+  &[data-hidden] {
+    @apply invisible;
+  }
 }
 
 .ui-tree__toggle-icon {
   @apply block h-2 w-2 border-b-2 border-r-2 border-current;
   transform: rotate(-45deg);
   transition: transform 140ms ease;
-}
-
-.ui-tree__item[data-expanded] .ui-tree__toggle-icon {
-  transform: rotate(45deg) translate(-1px, -1px);
 }
 
 .ui-tree__content {

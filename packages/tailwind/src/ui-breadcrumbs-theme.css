@@ -6,23 +6,23 @@
 
 .ui-breadcrumbs__item {
   @apply flex min-w-0 items-center gap-1;
-}
 
-.ui-breadcrumbs__item + .ui-breadcrumbs__item::before {
-  @apply text-ink-500 content-['/'];
+  & + .ui-breadcrumbs__item::before {
+    @apply text-ink-500 content-['/'];
+  }
 }
 
 .ui-breadcrumbs__link {
   @apply min-w-0 truncate rounded-md px-1 text-ink-500 no-underline outline-none;
-}
 
-.ui-breadcrumbs__link:hover {
-  @apply text-primary-700;
-}
+  &:hover {
+    @apply text-primary-700;
+  }
 
-.ui-breadcrumbs__link:focus-visible {
-  outline: 2px solid var(--color-ring);
-  outline-offset: 2px;
+  &:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
 }
 
 .ui-breadcrumbs__current {

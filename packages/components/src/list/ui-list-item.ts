@@ -7,6 +7,7 @@ import { UiList } from './ui-list';
 export class UiListItem {
   readonly element = resolve(INode) as HTMLElement;
   readonly parentList = resolve(UiList);
+  readonly slotHost = this;
 
   @slotted({ slotName: 'leading' })
   leadingNodes: readonly Node[] = [];
@@ -17,9 +18,21 @@ export class UiListItem {
   @slotted({ slotName: 'trailing' })
   trailingNodes: readonly Node[] = [];
 
+  get hasSecondary(): boolean {
+    return this.secondaryNodes.length > 0;
+  }
+
   @bindable
   value: object = this;
+  valueChanged(): void {
+    this.selected = this.parentList.isItemSelected(this.value);
+  }
+
+  selected: boolean = false;
 
   @bindable({ set: booleanAttr })
   disabled: boolean = false;
+
+  @bindable({ set: booleanAttr })
+  nonSelectable: boolean = false;
 }
