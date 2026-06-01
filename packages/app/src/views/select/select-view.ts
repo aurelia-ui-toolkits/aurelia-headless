@@ -7,7 +7,6 @@ type Project = {
   name: string;
   region: string;
   disabled?: boolean;
-  selected?: boolean;
 };
 
 export class SelectView {
@@ -34,7 +33,6 @@ export class SelectView {
 
   constructor() {
     this.selectedMultiProjects = this.multiProjects.filter(project => this.selectedMultiProjectIds.includes(project.id));
-    this.selectedMultiProjects.forEach(project => project.selected = true);
     setTimeout(() => {
       this.virtualProjects = Array.from({ length: 200 }, (_, index) => ({
         id: `project-${index + 1}`,

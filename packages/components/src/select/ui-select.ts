@@ -58,9 +58,6 @@ export class UiSelect {
   @bindable
   labelField: string | undefined;
 
-  @bindable
-  selectedField: string | undefined;
-
   @bindable({ set: booleanAttr })
   disabled: boolean = false;
 
@@ -266,7 +263,6 @@ export class UiSelect {
 
     this.selectedItem = selectedItems;
     this.value = selectedItems.map(selected => this.getItemValue(selected));
-    this.setItemSelected(item, selectedItems.includes(item));
     this.dispatchValueEvent('input');
     this.dispatchValueEvent('change');
   }
@@ -279,12 +275,6 @@ export class UiSelect {
 
     const selected = CustomElement.for<UiList>(list).viewModel.selected;
     return Array.isArray(selected) ? [...selected] : undefined;
-  }
-
-  private setItemSelected(item: unknown, selected: boolean): void {
-    if (this.selectedField && item && typeof item === 'object') {
-      (item as Record<string, unknown>)[this.selectedField] = selected;
-    }
   }
 
   private dispatchValueEvent(type: 'input' | 'change'): void {

@@ -7,6 +7,7 @@ import { UiList } from './ui-list';
 export class UiListItem {
   readonly element = resolve(INode) as HTMLElement;
   readonly parentList = resolve(UiList);
+  readonly slotHost = this;
 
   @slotted({ slotName: 'leading' })
   leadingNodes: readonly Node[] = [];
