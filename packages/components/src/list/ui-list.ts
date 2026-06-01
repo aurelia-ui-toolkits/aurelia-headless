@@ -22,6 +22,9 @@ export class UiList {
   @bindable({ set: booleanAttr })
   loop: boolean = true;
 
+  @bindable({ set: booleanAttr })
+  multiple: boolean = false;
+
   @bindable
   orientation: ListOrientation = 'vertical';
 
@@ -106,6 +109,12 @@ export class UiList {
     }
 
     return false;
+  }
+
+  isItemSelected(item: unknown): boolean {
+    return Array.isArray(this.selected)
+      ? this.selected.includes(item)
+      : this.selected === item;
   }
 
   onClick(event: MouseEvent): void {
@@ -247,12 +256,13 @@ export class UiList {
   }
 
   private setSelectedActive(): void {
-    if (this.selected === undefined) {
+    const selected = Array.isArray(this.selected) ? this.selected[0] : this.selected;
+    if (selected === undefined) {
       return;
     }
 
-    this.scrollItemIntoView(this.selected, 'instant');
-    this.activateItem(this.selected);
+    this.scrollItemIntoView(selected, 'instant');
+    this.activateItem(selected);
   }
 
   private activateItem(item: unknown): void {
@@ -272,7 +282,18 @@ export class UiList {
 
   private selectItem(item: unknown): void {
     this.activateItem(item);
-    this.selected = item;
+    if (this.multiple) {
+      const selected = Array.isArray(this.selected) ? [...this.selected] : [];
+      const index = selected.indexOf(item);
+      if (index >= 0) {
+        selected.splice(index, 1);
+      } else {
+        selected.push(item);
+      }
+      this.selected = selected;
+    } else {
+      this.selected = item;
+    }
     this.emitSelection(item);
   }
 

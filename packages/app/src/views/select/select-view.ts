@@ -7,6 +7,7 @@ type Project = {
   name: string;
   region: string;
   disabled?: boolean;
+  selected?: boolean;
 };
 
 export class SelectView {
@@ -17,6 +18,8 @@ export class SelectView {
   selectedVirtualProjectId: string = 'project-120';
   selectedVirtualProject: Project | undefined;
   virtualProjects: Project[] = [];
+  selectedMultiProjectIds: string[] = ['aurora', 'nova'];
+  selectedMultiProjects: Project[] = [];
 
   public validationController: IValidationController = resolve(newInstanceForScope(IValidationController));
 
@@ -27,7 +30,11 @@ export class SelectView {
     { id: 'nova', name: 'Nova', region: 'US West' }
   ];
 
+  readonly multiProjects: Project[] = this.projects.map(project => ({ ...project }));
+
   constructor() {
+    this.selectedMultiProjects = this.multiProjects.filter(project => this.selectedMultiProjectIds.includes(project.id));
+    this.selectedMultiProjects.forEach(project => project.selected = true);
     setTimeout(() => {
       this.virtualProjects = Array.from({ length: 200 }, (_, index) => ({
         id: `project-${index + 1}`,

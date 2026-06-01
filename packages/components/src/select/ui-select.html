@@ -60,6 +60,7 @@
     portal-position.bind="portalPosition"
     match-anchor-width
     exposed-host.bind="slotHost"
+    close-on-select.bind="!multiple"
     menu-tab-away.trigger="onMenuTabAway()"
     menu-select.trigger="onMenuSelect($event)">
     <au-slot expose.bind="slotHost"></au-slot>

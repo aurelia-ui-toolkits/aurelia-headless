@@ -3,6 +3,7 @@ import { booleanAttr } from '../base/boolean-attr';
 import { IError, IValidatedElement } from '../base/i-validated-element';
 import { Keys } from '../base/keys';
 import { UiFieldConfiguration } from '../field/ui-field-configuration';
+import { UiList } from '../list/ui-list';
 import { UiMenu } from '../menu/ui-menu';
 import template from './ui-select.html?raw';
 
@@ -33,6 +34,9 @@ export class UiSelect {
   @bindable({ mode: BindingMode.twoWay })
   selectedItem: unknown;
 
+  @bindable({ set: booleanAttr })
+  multiple: boolean = false;
+
   @bindable
   label: string | undefined;
 
@@ -53,6 +57,9 @@ export class UiSelect {
 
   @bindable
   labelField: string | undefined;
+
+  @bindable
+  selectedField: string | undefined;
 
   @bindable({ set: booleanAttr })
   disabled: boolean = false;
@@ -95,6 +102,11 @@ export class UiSelect {
 
   @computed({ flush: 'async' })
   get displayText(): string | undefined {
+    if (this.multiple && Array.isArray(this.selectedItem)) {
+      return this.selectedItem.length
+        ? this.selectedItem.map(item => this.getItemLabel(item)).join('; ')
+        : undefined;
+    }
     if (this.selectedItem !== undefined) {
       return this.getItemLabel(this.selectedItem);
     }
@@ -115,6 +127,10 @@ export class UiSelect {
   }
 
   get hasValue(): boolean {
+    if (Array.isArray(this.value)) {
+      return this.value.length > 0;
+    }
+
     return this.value !== undefined && this.value !== null && this.value !== '';
   }
 
@@ -172,6 +188,11 @@ export class UiSelect {
   }
 
   onMenuSelect(event: CustomEvent): void {
+    if (this.multiple) {
+      this.onMultipleMenuSelect(event.detail);
+      return;
+    }
+
     this.selectedItem = event.detail;
     this.value = this.getItemValue(event.detail);
     this.open = false;
@@ -228,6 +249,42 @@ export class UiSelect {
     }
 
     return item === undefined || item === null ? '' : String(item);
+  }
+
+  private onMultipleMenuSelect(item: unknown): void {
+    let selectedItems = this.getMenuSelectedItems();
+
+    if (!selectedItems) {
+      selectedItems = Array.isArray(this.selectedItem) ? [...this.selectedItem] : [];
+      const index = selectedItems.indexOf(item);
+      if (index >= 0) {
+        selectedItems.splice(index, 1);
+      } else {
+        selectedItems.push(item);
+      }
+    }
+
+    this.selectedItem = selectedItems;
+    this.value = selectedItems.map(selected => this.getItemValue(selected));
+    this.setItemSelected(item, selectedItems.includes(item));
+    this.dispatchValueEvent('input');
+    this.dispatchValueEvent('change');
+  }
+
+  private getMenuSelectedItems(): unknown[] | undefined {
+    const list = this.menu.popup.panelElement?.querySelector('ui-list');
+    if (!list) {
+      return undefined;
+    }
+
+    const selected = CustomElement.for<UiList>(list).viewModel.selected;
+    return Array.isArray(selected) ? [...selected] : undefined;
+  }
+
+  private setItemSelected(item: unknown, selected: boolean): void {
+    if (this.selectedField && item && typeof item === 'object') {
+      (item as Record<string, unknown>)[this.selectedField] = selected;
+    }
   }
 
   private dispatchValueEvent(type: 'input' | 'change'): void {
