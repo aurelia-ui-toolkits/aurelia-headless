@@ -24,6 +24,9 @@ export class UiList {
 
   @bindable({ set: booleanAttr })
   multiple: boolean = false;
+  multipleChanged(): void {
+    this.syncListItemSelection();
+  }
 
   @bindable
   orientation: ListOrientation = 'vertical';
@@ -36,6 +39,9 @@ export class UiList {
 
   @bindable({ mode: 'twoWay' })
   selected: unknown;
+  selectedChanged(): void {
+    this.syncListItemSelection();
+  }
 
   @slotted('ui-list-item')
   listItemElements: HTMLElement[] = [];
@@ -44,6 +50,7 @@ export class UiList {
     if (!this.items.length) {
       this.items = this.listItems.map(x => x.value);
     }
+    this.syncListItemSelection();
     if (this.listItemsChangedCallback) {
       this.listItemsChangedCallback();
       this.listItemsChangedCallback = undefined;
@@ -115,6 +122,12 @@ export class UiList {
     return Array.isArray(this.selected)
       ? this.selected.includes(item)
       : this.selected === item;
+  }
+
+  syncListItemSelection(): void {
+    for (const item of this.listItems) {
+      item.selected = this.isItemSelected(item.value);
+    }
   }
 
   onClick(event: MouseEvent): void {
@@ -294,6 +307,7 @@ export class UiList {
     } else {
       this.selected = item;
     }
+    this.syncListItemSelection();
     this.emitSelection(item);
   }
 

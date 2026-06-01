@@ -23,6 +23,11 @@ export class UiListItem {
 
   @bindable
   value: object = this;
+  valueChanged(): void {
+    this.selected = this.parentList.isItemSelected(this.value);
+  }
+
+  selected: boolean = false;
 
   @bindable({ set: booleanAttr })
   disabled: boolean = false;

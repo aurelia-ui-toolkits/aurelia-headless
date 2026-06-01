@@ -1,9 +1,9 @@
 <template class="ui-list-item"
   role="option"
-  aria-selected.attr="parentList.isItemSelected(value) ? 'true' : 'false'"
+  aria-selected.attr="selected ? 'true' : 'false'"
   aria-disabled.attr="disabled ? '' : null"
   data-active.attr="parentList.activeItem === value ? '' : null"
-  data-selected.attr="parentList.isItemSelected(value) ? '' : null"
+  data-selected.attr="selected ? '' : null"
   data-disabled.attr="disabled ? '' : null"
   data-secondary.attr="hasSecondary ? '' : null">
   <span class="ui-list-item__leading" show.bind="leadingNodes.length">
