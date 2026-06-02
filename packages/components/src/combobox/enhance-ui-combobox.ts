@@ -1,4 +1,5 @@
 import { templateCompilerHooks } from 'aurelia';
+import { setBindingIfNotPresent } from '../base/set-binding-if-not-present';
 
 @templateCompilerHooks
 export class EnhanceUiCombobox {
@@ -7,21 +8,12 @@ export class EnhanceUiCombobox {
       .replaceAll('<ui-combobox ', '<label as-element="ui-combobox" ui-combobox-element ')
       .replaceAll('</ui-combobox>', '</label>');
 
-    for (const select of template.content?.querySelectorAll('label[as-element="ui-combobox"]') ?? []) {
-      for (const list of select.querySelectorAll('ui-list')) {
-        if (list.closest('label[as-element="ui-combobox"]') === select && !hasSelectedBinding(list)) {
-          list.setAttribute('selected.bind', '$host.selectedOption');
-        }
-      }
+    for (const list of template.content?.querySelectorAll('label[as-element="ui-combobox"] ui-list') ?? []) {
+      setBindingIfNotPresent(list, [
+        ['selected', '$host.selectedOption'],
+        ['items', '$host.filteredItems'],
+        ['typeahead-field', '$host.labelField']
+      ]);
     }
-
   }
-}
-
-function hasSelectedBinding(element: Element): boolean {
-  return element.hasAttribute('selected')
-    || element.hasAttribute('selected.bind')
-    || element.hasAttribute('selected.two-way')
-    || element.hasAttribute('selected.to-view')
-    || element.hasAttribute('selected.from-view');
 }

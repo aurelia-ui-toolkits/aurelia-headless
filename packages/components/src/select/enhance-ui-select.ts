@@ -1,4 +1,5 @@
 import { templateCompilerHooks } from 'aurelia';
+import { setBindingIfNotPresent } from '../base/set-binding-if-not-present';
 
 @templateCompilerHooks
 export class EnhanceUiSelect {
@@ -8,20 +9,13 @@ export class EnhanceUiSelect {
       .replaceAll('</ui-select>', '</label>');
 
     // automatically add selected binding so that the item is highlighted without the user having to add it manually
-    for (const select of template.content?.querySelectorAll('label[as-element="ui-select"]') ?? []) {
-      for (const list of select.querySelectorAll('ui-list')) {
-        if (list.closest('label[as-element="ui-select"]') === select && !hasSelectedBinding(list)) {
-          list.setAttribute('selected.bind', '$host.selectedItem');
-        }
-      }
+    for (const list of template.content?.querySelectorAll('label[as-element="ui-select"] ui-list') ?? []) {
+      setBindingIfNotPresent(list, [
+        ['selected', '$host.selectedItem'],
+        ['items', '$host.items'],
+        ['multiple', '$host.multiple'],
+        ['typeahead-field', '$host.labelField']
+      ]);
     }
   }
-}
-
-function hasSelectedBinding(element: Element): boolean {
-  return element.hasAttribute('selected')
-    || element.hasAttribute('selected.bind')
-    || element.hasAttribute('selected.two-way')
-    || element.hasAttribute('selected.to-view')
-    || element.hasAttribute('selected.from-view');
 }

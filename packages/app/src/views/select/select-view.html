@@ -1,14 +1,14 @@
 <demo-section title="ui-select">
   <demo-block title="Custom slotted list">
-    <ui-select value.bind="selectedProjectId & validate"
-      selected-item.bind="selectedProject"
+    <ui-select items.bind="projects"
+      value.bind="selectedProjectId & validate"
       value-field="id"
       label-field="name"
       label="Project"
       helper-text="Choose project for deployment."
       placeholder="Select project">
-      <ui-list items.bind="projects" selected.bind="selectedProject" typeahead-field="name">
-        <ui-list-item repeat.for="project of projects" value.bind="project" disabled.bind="project.disabled">
+      <ui-list>
+        <ui-list-item repeat.for="project of $host.items" value.bind="project" disabled.bind="project.disabled">
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
         </ui-list-item>
@@ -18,8 +18,8 @@
   </demo-block>
 
   <demo-block title="Inset label with custom item layout">
-    <ui-select value.bind="selectedTeamId"
-      selected-item.bind="selectedTeam"
+    <ui-select items.bind="projects"
+      value.bind="selectedTeamId"
       value-field="id"
       label-field="name"
       inset
@@ -27,8 +27,8 @@
       helper-text="Disabled items remain unavailable."
       placeholder="Select team">
       <span au-slot="leading">#</span>
-      <ui-list items.bind="projects" selected.bind="selectedTeam" typeahead-field="name">
-        <ui-list-item repeat.for="project of projects" value.bind="project" disabled.bind="project.disabled">
+      <ui-list>
+        <ui-list-item repeat.for="project of $host.items" value.bind="project" disabled.bind="project.disabled">
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
           <span au-slot="trailing">${project.id}</span>
@@ -38,15 +38,15 @@
   </demo-block>
 
   <demo-block title="Virtual-repeat list with initial value">
-    <ui-select value.bind="selectedVirtualProjectId"
-      selected-item.bind="selectedVirtualProject"
+    <ui-select items.bind="virtualProjects"
+      value.bind="selectedVirtualProjectId"
       value-field="id"
       label-field="name"
       label="Large project list"
       helper-text="Value starts as project-120; items load after a delay."
       placeholder="Select project">
-      <ui-list items.bind="virtualProjects" selected.bind="selectedVirtualProject" typeahead-field="name">
-        <ui-list-item virtual-repeat.for="project of virtualProjects" value.bind="project" disabled.bind="project.disabled">
+      <ui-list>
+        <ui-list-item virtual-repeat.for="project of $host.items" value.bind="project" disabled.bind="project.disabled">
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
           <span au-slot="trailing">${project.id}</span>
@@ -57,16 +57,16 @@
   </demo-block>
 
   <demo-block title="Multiple select with checkboxes">
-    <ui-select multiple
+    <ui-select items.bind="multiProjects"
+      multiple
       value.bind="selectedMultiProjectIds"
-      selected-item.bind="selectedMultiProjects"
       value-field="id"
       label-field="name"
       label="Projects"
       helper-text="Selected items stay open and display with semicolons."
       placeholder="Select projects">
-      <ui-list items.bind="multiProjects" selected.bind="selectedMultiProjects" multiple typeahead-field="name">
-        <ui-list-item repeat.for="project of multiProjects" value.bind="project" disabled.bind="project.disabled">
+      <ui-list>
+        <ui-list-item repeat.for="project of $host.items" value.bind="project" disabled.bind="project.disabled">
           <ui-checkbox au-slot="leading" checked.bind="$host.selected" tab-index="-1"></ui-checkbox>
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
@@ -74,5 +74,26 @@
       </ui-list>
     </ui-select>
     <span class="select-state">Value: ${selectedMultiProjectIds.join('; ') || 'none'}</span>
+  </demo-block>
+
+  <demo-block title="Raw values with label converter">
+    <ui-alert tone="warning" title="Prefer value-label items">
+      You MUST use <code>label-converter</code> when items are rendered with it, otherwise display values won't be rendered correctly.
+    </ui-alert>
+    <ui-select items.bind="roles"
+      multiple
+      value.bind="selectedRawRoles"
+      label-converter="roleLabel"
+      label="Roles"
+      helper-text="Display labels come from the roleLabel value converter."
+      placeholder="Select roles">
+      <ui-list>
+        <ui-list-item repeat.for="role of $host.items" value.bind="role">
+          <ui-checkbox au-slot="leading" checked.bind="$host.selected" tab-index="-1"></ui-checkbox>
+          ${role | roleLabel}
+        </ui-list-item>
+      </ui-list>
+    </ui-select>
+    <span class="select-state">Value: ${selectedRawRoles.join('; ') || 'none'}</span>
   </demo-block>
 </demo-section>

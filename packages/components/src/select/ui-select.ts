@@ -1,4 +1,4 @@
-import { bindable, BindingMode, computed, CustomElement, customElement, resolve, slotted } from 'aurelia';
+import { bindable, BindingMode, computed, CustomElement, customElement, IContainer, resolve, slotted, ValueConverter } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { IError, IValidatedElement } from '../base/i-validated-element';
 import { Keys } from '../base/keys';
@@ -8,10 +8,12 @@ import { UiMenu } from '../menu/ui-menu';
 import template from './ui-select.html?raw';
 
 let nextSelectId = 0;
+type ResolvedLabelConverter = { toView(value: unknown): unknown };
 
 @customElement({ name: 'ui-select', template })
 export class UiSelect {
   private readonly configuration = resolve(UiFieldConfiguration);
+  private readonly container = resolve(IContainer);
 
   constructor() {
     defineUiSelectElementApis(this.element);
@@ -27,15 +29,28 @@ export class UiSelect {
   open: boolean = false;
   controlEl!: HTMLElement;
   menu!: UiMenu;
+  private resolvedLabelConverter: ResolvedLabelConverter | undefined;
 
   @bindable({ mode: BindingMode.twoWay })
   value: unknown;
+  valueChanged(): void {
+    this.syncSelectedItemFromValue();
+  }
 
   @bindable({ mode: BindingMode.twoWay })
   selectedItem: unknown;
 
+  @bindable
+  items: unknown[] = [];
+  itemsChanged(): void {
+    this.syncSelectedItemFromValue();
+  }
+
   @bindable({ set: booleanAttr })
   multiple: boolean = false;
+  multipleChanged(): void {
+    this.syncSelectedItemFromValue();
+  }
 
   @bindable
   label: string | undefined;
@@ -57,6 +72,12 @@ export class UiSelect {
 
   @bindable
   labelField: string | undefined;
+
+  @bindable
+  labelConverter: string | undefined;
+  labelConverterChanged(): void {
+    this.resolveLabelConverter();
+  }
 
   @bindable({ set: booleanAttr })
   disabled: boolean = false;
@@ -85,6 +106,11 @@ export class UiSelect {
   @slotted({ slotName: 'trailing' })
   trailingNodes: readonly Node[] = [];
 
+  attached(): void {
+    this.resolveLabelConverter();
+    this.syncSelectedItemFromValue();
+  }
+
   get labelId(): string {
     return `${this.id}-label`;
   }
@@ -102,10 +128,14 @@ export class UiSelect {
     if (this.multiple && Array.isArray(this.selectedItem)) {
       return this.selectedItem.length
         ? this.selectedItem.map(item => this.getItemLabel(item)).join('; ')
-        : undefined;
+        : this.getValueDisplayText();
     }
     if (this.selectedItem !== undefined) {
       return this.getItemLabel(this.selectedItem);
+    }
+    const valueDisplayText = this.getValueDisplayText();
+    if (valueDisplayText !== undefined) {
+      return valueDisplayText;
     }
     if (!this.valueField && !this.labelField && this.value !== undefined) {
       return String(this.value);
@@ -245,7 +275,66 @@ export class UiSelect {
       return label === undefined || label === null ? '' : String(label);
     }
 
+    const convertedLabel = this.getConvertedLabel(this.getItemValue(item));
+    if (convertedLabel !== undefined) {
+      return convertedLabel;
+    }
+
     return item === undefined || item === null ? '' : String(item);
+  }
+
+  private getValueDisplayText(): string | undefined {
+    if (!this.labelConverter) {
+      return undefined;
+    }
+
+    if (this.multiple && Array.isArray(this.value)) {
+      const labels = this.value.map(value => this.getConvertedLabel(value) ?? String(value));
+      return labels.length ? labels.join('; ') : undefined;
+    }
+
+    return this.getConvertedLabel(this.value);
+  }
+
+  private getConvertedLabel(value: unknown): string | undefined {
+    if (!this.resolvedLabelConverter || value === undefined || value === null) {
+      return undefined;
+    }
+
+    const label = this.resolvedLabelConverter.toView(value);
+    return label === undefined || label === null ? '' : String(label);
+  }
+
+  private resolveLabelConverter(): void {
+    if (!this.labelConverter) {
+      this.resolvedLabelConverter = undefined;
+      return;
+    }
+
+    try {
+      this.resolvedLabelConverter = ValueConverter.get(this.container, this.labelConverter) as ResolvedLabelConverter;
+    } catch {
+      this.resolvedLabelConverter = undefined;
+    }
+  }
+
+  private syncSelectedItemFromValue(): void {
+    if (!this.items.length) {
+      return;
+    }
+
+    if (this.multiple) {
+      const values = Array.isArray(this.value) ? this.value : [];
+      this.selectedItem = this.items.filter(item => values.includes(this.getItemValue(item)));
+      return;
+    }
+
+    if (this.value === undefined || this.value === null || this.value === '') {
+      this.selectedItem = undefined;
+      return;
+    }
+
+    this.selectedItem = this.items.find(item => this.getItemValue(item) === this.value);
   }
 
   private onMultipleMenuSelect(item: unknown): void {
