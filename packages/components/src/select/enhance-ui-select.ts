@@ -1,4 +1,5 @@
 import { templateCompilerHooks } from 'aurelia';
+import { hasBinding } from '../base/has-binding';
 
 @templateCompilerHooks
 export class EnhanceUiSelect {
@@ -23,15 +24,10 @@ export class EnhanceUiSelect {
         if (!hasBinding(list, 'multiple')) {
           list.setAttribute('multiple.bind', '$host.multiple');
         }
+        if (!hasBinding(list, 'typeahead-field')) {
+          list.setAttribute('typeahead-field.bind', '$host.labelField');
+        }
       }
     }
   }
-}
-
-function hasBinding(element: Element, property: string): boolean {
-  return element.hasAttribute(property)
-    || element.hasAttribute(`${property}.bind`)
-    || element.hasAttribute(`${property}.two-way`)
-    || element.hasAttribute(`${property}.to-view`)
-    || element.hasAttribute(`${property}.from-view`);
 }

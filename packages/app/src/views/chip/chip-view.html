@@ -17,7 +17,7 @@
   <demo-block title="Combobox with chips">
     <div class="chip-demo-picker">
       <ui-combobox text.bind="tagQuery" items.bind="availableTagOptions" value.bind="selectedTagId" value-field="id" label-field="label" label="Add tag" placeholder="Search tags">
-        <ui-list au-slot items.bind="$host.filteredItems" selected.bind="$host.selectedOption" typeahead-field="label">
+        <ui-list items.bind="$host.filteredItems" selected.bind="$host.selectedOption" typeahead-field="label">
           <ui-list-item repeat.for="tag of $host.items" value.bind="tag">${tag.label}</ui-list-item>
         </ui-list>
       </ui-combobox>

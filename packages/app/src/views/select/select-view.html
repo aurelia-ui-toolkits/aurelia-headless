@@ -7,7 +7,7 @@
       label="Project"
       helper-text="Choose project for deployment."
       placeholder="Select project">
-      <ui-list typeahead-field="name">
+      <ui-list>
         <ui-list-item repeat.for="project of $host.items" value.bind="project" disabled.bind="project.disabled">
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
@@ -27,7 +27,7 @@
       helper-text="Disabled items remain unavailable."
       placeholder="Select team">
       <span au-slot="leading">#</span>
-      <ui-list typeahead-field="name">
+      <ui-list>
         <ui-list-item repeat.for="project of $host.items" value.bind="project" disabled.bind="project.disabled">
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
@@ -45,7 +45,7 @@
       label="Large project list"
       helper-text="Value starts as project-120; items load after a delay."
       placeholder="Select project">
-      <ui-list typeahead-field="name">
+      <ui-list>
         <ui-list-item virtual-repeat.for="project of $host.items" value.bind="project" disabled.bind="project.disabled">
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
@@ -65,7 +65,7 @@
       label="Projects"
       helper-text="Selected items stay open and display with semicolons."
       placeholder="Select projects">
-      <ui-list typeahead-field="name">
+      <ui-list>
         <ui-list-item repeat.for="project of $host.items" value.bind="project" disabled.bind="project.disabled">
           <ui-checkbox au-slot="leading" checked.bind="$host.selected" tab-index="-1"></ui-checkbox>
           ${project.name}

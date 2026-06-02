@@ -1,4 +1,5 @@
 import { templateCompilerHooks } from 'aurelia';
+import { hasBinding } from '../base/has-binding';
 
 @templateCompilerHooks
 export class EnhanceUiCombobox {
@@ -9,19 +10,20 @@ export class EnhanceUiCombobox {
 
     for (const select of template.content?.querySelectorAll('label[as-element="ui-combobox"]') ?? []) {
       for (const list of select.querySelectorAll('ui-list')) {
-        if (list.closest('label[as-element="ui-combobox"]') === select && !hasSelectedBinding(list)) {
+        if (list.closest('label[as-element="ui-combobox"]') !== select) {
+          continue;
+        }
+
+        if (!hasBinding(list, 'selected')) {
           list.setAttribute('selected.bind', '$host.selectedOption');
+        }
+        if (!hasBinding(list, 'items')) {
+          list.setAttribute('items.bind', '$host.filteredItems');
+        }
+        if (!hasBinding(list, 'typeahead-field')) {
+          list.setAttribute('typeahead-field.bind', '$host.labelField');
         }
       }
     }
-
   }
-}
-
-function hasSelectedBinding(element: Element): boolean {
-  return element.hasAttribute('selected')
-    || element.hasAttribute('selected.bind')
-    || element.hasAttribute('selected.two-way')
-    || element.hasAttribute('selected.to-view')
-    || element.hasAttribute('selected.from-view');
 }
