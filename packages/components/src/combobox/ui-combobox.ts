@@ -87,10 +87,13 @@ export class UiCombobox {
   autocomplete: AutoFill | undefined;
 
   @bindable
-  valueField: string | undefined;
+  valueField: string | ((item: unknown) => unknown) | undefined;
 
   @bindable
-  labelField: string | undefined;
+  labelField: string | ((item: unknown) => unknown) | undefined;
+
+  @bindable
+  portalTarget: string | Element | null | undefined;
 
   @bindable({ set: booleanAttr })
   disabled: boolean = false;
@@ -284,6 +287,9 @@ export class UiCombobox {
   }
 
   private getItemValue(item: unknown): unknown {
+    if (this.valueField instanceof Function) {
+      return this.valueField(item);
+    }
     if (this.valueField && item && typeof item === 'object') {
       return (item as Record<string, unknown>)[this.valueField];
     }
@@ -292,6 +298,10 @@ export class UiCombobox {
 
   private getItemLabel(item: unknown): string {
     const labelField = this.labelField ?? this.filterField;
+    if (labelField instanceof Function) {
+      const label = labelField(item);
+      return label === undefined || label === null ? '' : String(label);
+    }
     if (labelField && item && typeof item === 'object') {
       const label = (item as Record<string, unknown>)[labelField];
       return label === undefined || label === null ? '' : String(label);

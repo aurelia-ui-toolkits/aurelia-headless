@@ -3,7 +3,7 @@ import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
 import template from './ui-popup.html?raw';
 
-type PopupPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
+type PopupPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end' | 'right-start' | 'right-end' | 'left-start' | 'left-end';
 
 @customElement({ name: 'ui-popup', template })
 export class UiPopup {
@@ -366,6 +366,30 @@ export class UiPopup {
     this.observedPanelScrollHeight = this.panelElement.scrollHeight;
     const viewportPadding = 8;
     const alignEnd = this.placement.endsWith('end');
+    if (this.placement.startsWith('right') || this.placement.startsWith('left')) {
+      const preferRight = this.placement.startsWith('right');
+      const fallbackRight = anchorRect.right + this.offset;
+      const availableRight = Math.max(0, window.innerWidth - fallbackRight - viewportPadding);
+      const availableLeft = Math.max(0, anchorRect.left - this.offset - viewportPadding);
+      const placeRight = preferRight
+        ? panelRect.width <= availableRight || availableRight >= availableLeft
+        : panelRect.width > availableLeft && availableRight > availableLeft;
+      const availableWidth = placeRight ? availableRight : availableLeft;
+      const panelWidth = Math.min(panelRect.width, availableWidth);
+
+      let left = placeRight ? fallbackRight : anchorRect.left - this.offset - panelWidth;
+      left = Math.max(viewportPadding, Math.min(left, window.innerWidth - panelWidth - viewportPadding));
+
+      let top = alignEnd ? anchorRect.bottom - panelRect.height : anchorRect.top;
+      top = Math.max(viewportPadding, Math.min(top, window.innerHeight - panelRect.height - viewportPadding));
+
+      const maxWidth = `max-width: ${availableWidth}px;`;
+      const maxHeight = `max-height: calc(100vh - ${viewportPadding * 2}px); --ui-popup-available-height: calc(100vh - ${viewportPadding * 2}px);`;
+      const minWidth = this.matchAnchorWidth ? `min-width: min(${anchorRect.width}px, calc(100vw - ${viewportPadding * 2}px));` : '';
+      this.panelStyle = `position: fixed; top: ${top}px; left: ${left}px; ${maxWidth} ${maxHeight} ${minWidth}`;
+      return;
+    }
+
     const preferTop = this.placement.startsWith('top');
     const fallbackBottom = anchorRect.bottom + this.offset;
     const availableTop = Math.max(0, anchorRect.top - this.offset - viewportPadding);

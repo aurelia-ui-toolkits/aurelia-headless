@@ -5,7 +5,7 @@ import { UiList } from '../list/ui-list';
 import { UiPopup } from '../popup/ui-popup';
 import template from './ui-menu.html?raw';
 
-type MenuPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
+type MenuPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end' | 'right-start' | 'right-end' | 'left-start' | 'left-end';
 
 @customElement({ name: 'ui-menu', template })
 export class UiMenu {
