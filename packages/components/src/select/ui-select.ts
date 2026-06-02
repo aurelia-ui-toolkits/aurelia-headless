@@ -97,6 +97,10 @@ export class UiSelect {
   @slotted({ slotName: 'trailing' })
   trailingNodes: readonly Node[] = [];
 
+  attached(): void {
+    this.syncSelectedItemFromValue();
+  }
+
   get labelId(): string {
     return `${this.id}-label`;
   }
