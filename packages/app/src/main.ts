@@ -8,6 +8,7 @@ import { DemoSection } from './elements/demo-section/demo-section';
 import { MyApp } from './views/my-app/my-app';
 import { DefaultVirtualizationConfiguration } from '@aurelia/ui-virtualization';
 import { ValidationHtmlConfiguration } from '@aurelia/validation-html';
+import { RoleLabelValueConverter } from './value-converters/role-label';
 
 import { RegexRule, RequiredRule, ValidationConfiguration } from '@aurelia/validation';
 
@@ -30,6 +31,7 @@ Aurelia
     ValidationHtmlConfiguration.customize(o => {
       o.ValidationControllerFactoryType = UiValidationControllerFactory;
     }),
-    DefaultVirtualizationConfiguration, AureliaHeadlessConfiguration, SVGAnalyzer, DemoBlock, DemoCode, DemoSection)
+    DefaultVirtualizationConfiguration, AureliaHeadlessConfiguration, SVGAnalyzer, DemoBlock, DemoCode, DemoSection,
+    RoleLabelValueConverter)
   .app(MyApp)
   .start();

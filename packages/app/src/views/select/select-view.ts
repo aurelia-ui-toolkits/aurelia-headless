@@ -15,6 +15,7 @@ export class SelectView {
   selectedVirtualProjectId: string = 'project-120';
   virtualProjects: Project[] = [];
   selectedMultiProjectIds: string[] = ['aurora', 'nova'];
+  selectedRawRoles: string[] = ['admin', 'auditor'];
 
   public validationController: IValidationController = resolve(newInstanceForScope(IValidationController));
 
@@ -26,6 +27,7 @@ export class SelectView {
   ];
 
   readonly multiProjects: Project[] = this.projects.map(project => ({ ...project }));
+  readonly roles: string[] = ['admin', 'user', 'auditor', 'owner'];
 
   constructor() {
     setTimeout(() => {

@@ -75,4 +75,25 @@
     </ui-select>
     <span class="select-state">Value: ${selectedMultiProjectIds.join('; ') || 'none'}</span>
   </demo-block>
+
+  <demo-block title="Raw values with label converter">
+    <ui-alert tone="warning" title="Prefer value-label items">
+      You MUST use <code>label-converter</code> when items are rendered with it, otherwise display values won't be rendered correctly.
+    </ui-alert>
+    <ui-select items.bind="roles"
+      multiple
+      value.bind="selectedRawRoles"
+      label-converter="roleLabel"
+      label="Roles"
+      helper-text="Display labels come from the roleLabel value converter."
+      placeholder="Select roles">
+      <ui-list>
+        <ui-list-item repeat.for="role of $host.items" value.bind="role">
+          <ui-checkbox au-slot="leading" checked.bind="$host.selected" tab-index="-1"></ui-checkbox>
+          ${role | roleLabel}
+        </ui-list-item>
+      </ui-list>
+    </ui-select>
+    <span class="select-state">Value: ${selectedRawRoles.join('; ') || 'none'}</span>
+  </demo-block>
 </demo-section>
