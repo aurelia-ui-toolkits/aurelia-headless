@@ -170,11 +170,11 @@ export class UiDatepickerDialog {
     this.buildCalendar();
   }
 
-  cancel(): Promise<unknown> {
+  async cancel() {
     return this.dialog.cancel();
   }
 
-  ok(): Promise<unknown> {
+  async ok() {
     return this.dialog.ok(toCanonical(this.selectedDate, !!this.data.time));
   }
 
