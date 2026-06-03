@@ -30,6 +30,15 @@ export class UiSplitter implements EventListenerObject {
     this.applySize();
   }
 
+  /** Which sibling the splitter resizes: the one before it (default) or after it. */
+  @bindable
+  target: 'previous' | 'next' = 'previous';
+
+  /** +1 when sizing the previous sibling, -1 when sizing the next (pointer/key deltas are mirrored). */
+  private get sign(): number {
+    return this.target === 'next' ? -1 : 1;
+  }
+
   @bindable
   min: number = 80;
 
@@ -45,9 +54,8 @@ export class UiSplitter implements EventListenerObject {
   valueNow = 240;
 
   attaching(): void {
-    this.targetElement = this.host.previousElementSibling instanceof HTMLElement
-      ? this.host.previousElementSibling
-      : undefined;
+    const sibling = this.target === 'next' ? this.host.nextElementSibling : this.host.previousElementSibling;
+    this.targetElement = sibling instanceof HTMLElement ? sibling : undefined;
     this.targetDisplay = this.targetElement?.style.display ?? '';
     this.targetOverflow = this.targetElement?.style.overflow ?? '';
     this.expandedSize = this.size;
@@ -95,23 +103,23 @@ export class UiSplitter implements EventListenerObject {
     if (this.direction === 'horizontal') {
       if (event.key === Keys.ArrowLeft) {
         event.preventDefault();
-        this.setSize(this.size - largeStep, true);
+        this.setSize(this.size - this.sign * largeStep, true);
         return;
       }
       if (event.key === Keys.ArrowRight) {
         event.preventDefault();
-        this.setSize(this.size + largeStep, true);
+        this.setSize(this.size + this.sign * largeStep, true);
         return;
       }
     } else {
       if (event.key === Keys.ArrowUp) {
         event.preventDefault();
-        this.setSize(this.size - largeStep, true);
+        this.setSize(this.size - this.sign * largeStep, true);
         return;
       }
       if (event.key === Keys.ArrowDown) {
         event.preventDefault();
-        this.setSize(this.size + largeStep, true);
+        this.setSize(this.size + this.sign * largeStep, true);
         return;
       }
     }
@@ -135,7 +143,7 @@ export class UiSplitter implements EventListenerObject {
 
     const position = this.direction === 'horizontal' ? event.clientX : event.clientY;
     this.pointerMoved ||= Math.abs(position - this.startPosition) > 3;
-    this.setSize(this.startSize + position - this.startPosition);
+    this.setSize(this.startSize + this.sign * (position - this.startPosition));
   }
 
   private onPointerUp(): void {
