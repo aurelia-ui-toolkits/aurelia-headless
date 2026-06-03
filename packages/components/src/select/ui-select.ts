@@ -74,7 +74,7 @@ export class UiSelect {
   labelField: string | undefined;
 
   @bindable
-  labelConverter: string | undefined;
+  labelConverter: string | ((value: unknown) => unknown) | undefined;
   labelConverterChanged(): void {
     this.resolveLabelConverter();
   }
@@ -311,15 +311,20 @@ export class UiSelect {
       return;
     }
 
+    if(this.labelConverter instanceof Function) {
+      this.resolvedLabelConverter = { toView: this.labelConverter };
+      return;
+    }
+
     try {
-      this.resolvedLabelConverter = ValueConverter.get(this.container, this.labelConverter) as ResolvedLabelConverter;
+      this.resolvedLabelConverter = ValueConverter.get(this.container, this.labelConverter);
     } catch {
       this.resolvedLabelConverter = undefined;
     }
   }
 
   private syncSelectedItemFromValue(): void {
-    if (!this.items.length) {
+    if (!this.items?.length) {
       return;
     }
 

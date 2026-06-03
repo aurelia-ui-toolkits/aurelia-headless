@@ -111,6 +111,7 @@ export type { UiBreadcrumbItem } from './breadcrumbs/ui-breadcrumbs';
 export type { UiDatepickerDialogData, UiDatepickerDialogDay } from './datepicker/ui-datepicker-dialog';
 export type { UiDatepickerI18n, UiDatepickerYearRange } from './datepicker/date-utils';
 export { validate } from './validation/validate';
+export { booleanAttr } from './base/boolean-attr';
 
 let registered = false; //
 const fieldConfiguration = new UiFieldConfiguration();
