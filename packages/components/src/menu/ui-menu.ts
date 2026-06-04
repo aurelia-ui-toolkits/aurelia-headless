@@ -70,6 +70,13 @@ export class UiMenu {
     }
   }
 
+  onListAction(): void {
+    // Non-selectable (action) item activated — close like a selection would, unless opted out.
+    if (this.closeOnSelect) {
+      this.open = false;
+    }
+  }
+
   onPopupTabAway(event: CustomEvent): void {
     this.element.dispatchEvent(new CustomEvent('menu-tab-away', {
       bubbles: true,

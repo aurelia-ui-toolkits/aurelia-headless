@@ -87,6 +87,19 @@ export class UiPopup {
     return this.exposedHost ?? this.slotHost;
   }
 
+  /**
+   * Resolved portal target. A modal `<dialog>` renders in the browser top layer, so anything
+   * portaled to `<body>` would be hidden beneath it. When the popup lives inside a `<dialog>`
+   * and no explicit element target is given, portal into that dialog (same top layer) instead.
+   */
+  get effectivePortalTarget(): string | Element | null | undefined {
+    if (this.portalTarget != null && this.portalTarget !== 'body') {
+      return this.portalTarget;
+    }
+    const dialog = this.element.closest('dialog');
+    return dialog ?? this.portalTarget;
+  }
+
   attaching(): void {
     this.anchor?.addEventListener('pointerdown', this.onAnchorPointerDownCapture, true);
     if (this.open) {
@@ -193,6 +206,11 @@ export class UiPopup {
       bubbles: true,
       detail: (event as CustomEvent).detail
     }));
+  }
+
+  onListAction(event: Event): void {
+    event.stopPropagation();
+    this.element.dispatchEvent(new CustomEvent('list-action', { bubbles: true }));
   }
 
   focus(): void {

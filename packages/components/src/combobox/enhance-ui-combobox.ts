@@ -8,12 +8,26 @@ export class EnhanceUiCombobox {
       .replaceAll('<ui-combobox ', '<label as-element="ui-combobox" ui-combobox-element ')
       .replaceAll('</ui-combobox>', '</label>');
 
-    for (const list of template.content?.querySelectorAll('label[as-element="ui-combobox"] ui-list') ?? []) {
+    this.enhanceLists(template.content);
+  }
+
+  // Recurses into nested <template> content (e.g. comboboxes inside if.bind/repeat.for), which
+  // querySelectorAll does not traverse on its own.
+  private enhanceLists(root: DocumentFragment | undefined) {
+    if (!root) {
+      return;
+    }
+
+    for (const list of root.querySelectorAll('label[as-element="ui-combobox"] ui-list')) {
       setBindingIfNotPresent(list, [
         ['selected', '$host.selectedOption'],
         ['items', '$host.filteredItems'],
         ['typeahead-field', '$host.labelField']
       ]);
+    }
+
+    for (const nested of root.querySelectorAll('template')) {
+      this.enhanceLists(nested.content);
     }
   }
 }

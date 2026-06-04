@@ -22,7 +22,7 @@ export class UiTable {
   page: number = 1;
 
   @bindable({ mode: BindingMode.twoWay })
-  pageSize: number = 10;
+  pageSize: number | string = 10;
 
   @bindable
   total: number = 0;
@@ -47,10 +47,10 @@ export class UiTable {
   progress: boolean = false;
 
   @bindable
-  pageSizeOptions: number[] = [10, 25, 50];
+  pageSizeOptions: (number | string)[] = [10, 25, 50];
 
   @bindable
-  paginationText: string = 'Custom';
+  paginationText: string;
 
   attaching(): void {
     this.loadColumnSizes();
@@ -141,8 +141,14 @@ export class UiTable {
   }
 
   onPageSizeChange(event: Event): void {
-    const target = event.target as { value?: unknown } | null;
-    this.setPageSize(Number(target?.value));
+    const value = (event.target as { value?: unknown } | null)?.value;
+    const numeric = Number(value);
+    if (value === '' || value === null || value === undefined || isNaN(numeric)) {
+      // Non-numeric option (e.g. "Customise") — pass through so the consumer can handle it.
+      this.pageSize = value as number | string;
+      return;
+    }
+    this.setPageSize(numeric);
   }
 
   onPageChange(event: Event): void {

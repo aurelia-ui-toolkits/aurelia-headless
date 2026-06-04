@@ -36,7 +36,7 @@ export class UiTree {
   @bindable
   items: unknown[] = [];
   itemsChanged(): void {
-    this.rebuildRows();
+    this.rebuildRows(true);
   }
 
   @bindable({ mode: BindingMode.twoWay })

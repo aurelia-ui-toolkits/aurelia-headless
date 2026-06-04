@@ -62,7 +62,7 @@ ui-combobox,
 }
 
 .ui-combobox__control {
-  @apply grid w-full grid-cols-[auto_1fr_auto] items-center gap-0 rounded-xl border border-card-border bg-transparent;
+  @apply grid w-full grid-cols-[auto_1fr_auto] items-center gap-0 rounded-xl border border-card-border bg-transparent outline-none;
   position: relative;
   padding-inline: var(--ui-field-padding-x);
   transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;

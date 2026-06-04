@@ -97,6 +97,10 @@ export class UiSelect {
   @bindable
   portalPosition: InsertPosition = 'beforeend';
 
+  /** When false (default) the dropdown matches the control width; when true it sizes to its content. */
+  @bindable({ set: booleanAttr })
+  naturalWidth: boolean = false;
+
   @slotted({ slotName: 'helper' })
   helperNodes: readonly Node[] = [];
 

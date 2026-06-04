@@ -35,4 +35,8 @@ export class UiListItem {
 
   @bindable({ set: booleanAttr })
   nonSelectable: boolean = false;
+
+  /** When set, the secondary slot renders above the primary slot as a small overline label. */
+  @bindable({ set: booleanAttr })
+  reverse: boolean = false;
 }
