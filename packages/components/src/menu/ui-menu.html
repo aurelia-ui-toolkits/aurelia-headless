@@ -15,7 +15,8 @@
     restore-focus.bind="restoreFocus"
     popup-opened.trigger="onPopupOpened()"
     popup-tab-away.trigger="onPopupTabAway($event)"
-    list-select.trigger="onListSelect($event)">
+    list-select.trigger="onListSelect($event)"
+    list-action.trigger="onListAction()">
     <au-slot expose.bind="effectiveSlotHost"></au-slot>
   </ui-popup>
 </template>

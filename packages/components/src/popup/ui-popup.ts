@@ -3,7 +3,7 @@ import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
 import template from './ui-popup.html?raw';
 
-type PopupPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
+type PopupPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end' | 'right-start' | 'right-end' | 'left-start' | 'left-end';
 
 @customElement({ name: 'ui-popup', template })
 export class UiPopup {
@@ -85,6 +85,19 @@ export class UiPopup {
 
   get effectiveSlotHost(): unknown {
     return this.exposedHost ?? this.slotHost;
+  }
+
+  /**
+   * Resolved portal target. A modal `<dialog>` renders in the browser top layer, so anything
+   * portaled to `<body>` would be hidden beneath it. When the popup lives inside a `<dialog>`
+   * and no explicit element target is given, portal into that dialog (same top layer) instead.
+   */
+  get effectivePortalTarget(): string | Element | null | undefined {
+    if (this.portalTarget != null && this.portalTarget !== 'body') {
+      return this.portalTarget;
+    }
+    const dialog = this.element.closest('dialog');
+    return dialog ?? this.portalTarget;
   }
 
   attaching(): void {
@@ -193,6 +206,11 @@ export class UiPopup {
       bubbles: true,
       detail: (event as CustomEvent).detail
     }));
+  }
+
+  onListAction(event: Event): void {
+    event.stopPropagation();
+    this.element.dispatchEvent(new CustomEvent('list-action', { bubbles: true }));
   }
 
   focus(): void {
@@ -366,6 +384,30 @@ export class UiPopup {
     this.observedPanelScrollHeight = this.panelElement.scrollHeight;
     const viewportPadding = 8;
     const alignEnd = this.placement.endsWith('end');
+    if (this.placement.startsWith('right') || this.placement.startsWith('left')) {
+      const preferRight = this.placement.startsWith('right');
+      const fallbackRight = anchorRect.right + this.offset;
+      const availableRight = Math.max(0, window.innerWidth - fallbackRight - viewportPadding);
+      const availableLeft = Math.max(0, anchorRect.left - this.offset - viewportPadding);
+      const placeRight = preferRight
+        ? panelRect.width <= availableRight || availableRight >= availableLeft
+        : panelRect.width > availableLeft && availableRight > availableLeft;
+      const availableWidth = placeRight ? availableRight : availableLeft;
+      const panelWidth = Math.min(panelRect.width, availableWidth);
+
+      let left = placeRight ? fallbackRight : anchorRect.left - this.offset - panelWidth;
+      left = Math.max(viewportPadding, Math.min(left, window.innerWidth - panelWidth - viewportPadding));
+
+      let top = alignEnd ? anchorRect.bottom - panelRect.height : anchorRect.top;
+      top = Math.max(viewportPadding, Math.min(top, window.innerHeight - panelRect.height - viewportPadding));
+
+      const maxWidth = `max-width: ${availableWidth}px;`;
+      const maxHeight = `max-height: calc(100vh - ${viewportPadding * 2}px); --ui-popup-available-height: calc(100vh - ${viewportPadding * 2}px);`;
+      const minWidth = this.matchAnchorWidth ? `min-width: min(${anchorRect.width}px, calc(100vw - ${viewportPadding * 2}px));` : '';
+      this.panelStyle = `position: fixed; top: ${top}px; left: ${left}px; ${maxWidth} ${maxHeight} ${minWidth}`;
+      return;
+    }
+
     const preferTop = this.placement.startsWith('top');
     const fallbackBottom = anchorRect.bottom + this.offset;
     const availableTop = Math.max(0, anchorRect.top - this.offset - viewportPadding);

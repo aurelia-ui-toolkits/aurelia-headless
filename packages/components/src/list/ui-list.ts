@@ -16,8 +16,33 @@ export class UiList {
   private typeaheadBuffer = '';
   private typeaheadTimer: ReturnType<typeof setTimeout> | undefined;
 
+  /** Sentinel default; if `items` still references this, no consumer/enhancer binding supplied items. */
+  private readonly defaultItems: any[] = [];
+
   @bindable
-  items: any[] = [];
+  items: any[] = this.defaultItems;
+  itemsChanged(): void {
+    // Ignore our own slot-derived assignment; any other (consumer/enhancer) binding means the
+    // items are externally owned and must never be overwritten by slot derivation.
+    if (this.derivingItems) {
+      return;
+    }
+    this.itemsExternallyProvided = true;
+    this.slotDerivedItems = false;
+  }
+
+  /** True while we are assigning `items` ourselves from the slotted list-items. */
+  private derivingItems = false;
+  /** True once a consumer/enhancer binding has supplied `items`. */
+  private itemsExternallyProvided = false;
+
+  bound(): void {
+    // itemsChanged does not fire for the initial bound value, so detect an external items binding
+    // here: if `items` no longer references the sentinel default, a binding replaced it.
+    if (this.items !== this.defaultItems) {
+      this.itemsExternallyProvided = true;
+    }
+  }
 
   @bindable({ set: booleanAttr })
   loop: boolean = true;
@@ -43,12 +68,21 @@ export class UiList {
     this.syncListItemSelection();
   }
 
+  /** True while `items` is derived from the slotted list-items (not provided by the consumer). */
+  private slotDerivedItems = false;
+
   @slotted('ui-list-item')
   listItemElements: HTMLElement[] = [];
   listItemElementsChanged() {
     this.listItems = this.listItemElements.map(element => CustomElement.for<UiListItem>(element).viewModel);
-    if (!this.items.length) {
+    // Keep derived items in sync when the rendered set changes (e.g. items with if.bind),
+    // but never overwrite a consumer/enhancer-provided `items` binding (which would otherwise
+    // fight that binding and, with extra static items, grow the list every cycle).
+    if (!this.itemsExternallyProvided && (!this.items.length || this.slotDerivedItems)) {
+      this.derivingItems = true;
       this.items = this.listItems.map(x => x.value);
+      this.derivingItems = false;
+      this.slotDerivedItems = true;
     }
     this.syncListItemSelection();
     if (this.listItemsChangedCallback) {
@@ -136,7 +170,12 @@ export class UiList {
       return;
     }
     const listItem = CustomElement.for<UiListItem>(element).viewModel;
-    if (listItem.disabled || listItem.nonSelectable) {
+    if (listItem.disabled) {
+      return;
+    }
+    if (listItem.nonSelectable) {
+      // Non-selectable items are actions: signal activation (used to close menus) without selecting.
+      this.host.dispatchEvent(new CustomEvent('list-action', { bubbles: true }));
       return;
     }
 
@@ -284,13 +323,19 @@ export class UiList {
   }
 
   private selectActive(): void {
-    if (this.activeItem !== undefined) {
-      const listItem = this.listItems.find(x => x.value === this.activeItem);
-      if (listItem && (listItem.disabled || listItem.nonSelectable)) {
-        return;
-      }
-      this.selectItem(this.activeItem);
+    if (this.activeItem === undefined) {
+      return;
     }
+    const listItem = this.listItems.find(x => x.value === this.activeItem);
+    if (listItem?.disabled) {
+      return;
+    }
+    if (listItem?.nonSelectable) {
+      // Activate the action item as a click would: runs its click handler and emits list-action (closes menus).
+      listItem.element.click();
+      return;
+    }
+    this.selectItem(this.activeItem);
   }
 
   private selectItem(item: unknown): void {

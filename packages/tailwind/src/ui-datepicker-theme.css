@@ -6,7 +6,7 @@ ui-datepicker,
 }
 
 .ui-datepicker {
-  @apply grid gap-2 w-full;
+  @apply grid w-full;
 
   &[data-focus] .ui-datepicker__control {
     @apply border-primary-600;
@@ -35,8 +35,8 @@ ui-datepicker,
 
   &[data-inset] {
     & .ui-datepicker__native {
-      height: 3.25rem;
-      padding-top: 1rem;
+      height: 2.75rem;
+      padding-top: 0.75rem;
       padding-bottom: 0.25rem;
     }
 
@@ -46,7 +46,7 @@ ui-datepicker,
 
     &[data-focus] .ui-datepicker__inset-label,
     &[data-has-value] .ui-datepicker__inset-label {
-      transform: translateY(-0.85rem) scale(0.75);
+      transform: translateY(-0.5rem) scale(0.75);
       font-size: 0.75rem;
       color: var(--color-ink-700);
     }

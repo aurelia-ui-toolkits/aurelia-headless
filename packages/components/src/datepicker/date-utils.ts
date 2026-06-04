@@ -2,7 +2,9 @@ import { format, isValid, parse } from 'date-fns';
 import type { Locale } from 'date-fns';
 
 export const DATE_VALUE_FORMAT = 'yyyy-MM-dd';
-export const DATETIME_VALUE_FORMAT = "yyyy-MM-dd'T'HH:mm";
+export const DATETIME_VALUE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+// Accepted on input: ISO datetimes with or without seconds.
+const DATETIME_PARSE_FORMATS = ["yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd'T'HH:mm"];
 
 export interface DateParts {
   year: number;
@@ -36,7 +38,16 @@ export function parseByFormat(value: string | undefined, formatString: string, l
 }
 
 export function parseCanonical(value: string | undefined, time: boolean): Date | undefined {
-  return parseByFormat(value, getCanonicalFormat(time));
+  if (!time) {
+    return parseByFormat(value, DATE_VALUE_FORMAT);
+  }
+  for (const formatString of DATETIME_PARSE_FORMATS) {
+    const date = parseByFormat(value, formatString);
+    if (date) {
+      return date;
+    }
+  }
+  return undefined;
 }
 
 export function formatDate(date: Date, formatString: string, locale?: Locale): string {

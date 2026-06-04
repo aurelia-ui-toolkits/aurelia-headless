@@ -138,7 +138,9 @@ export class UiDatepicker {
   }
 
   get hasValue(): boolean {
-    return !!this.inputEl?.value;
+    // inputEl.value carries the mask placeholder ("dd/mm/yyyy …") even when empty, so rely on the
+    // real masked value plus any digits the user has actually typed.
+    return !!this.inputmaskValue || !!this.inputEl?.inputmask?.unmaskedvalue();
   }
 
   get placeholderText(): string | undefined {

@@ -35,8 +35,8 @@ ui-input,
 
   &[data-inset] {
     & .ui-input__native {
-      height: 48px;
-      padding-top: 0.875rem;
+      height: 2.75rem;
+      padding-top: 0.75rem;
       padding-bottom: 0.25rem;
     }
 
@@ -46,7 +46,7 @@ ui-input,
 
     &[data-focus] .ui-input__inset-label,
     &[data-has-value] .ui-input__inset-label {
-      transform: translateY(-0.75rem) scale(0.75);
+      transform: translateY(-0.5rem) scale(0.75);
       font-size: 0.75rem;
       color: var(--color-ink-700);
     }
@@ -71,10 +71,14 @@ ui-input,
 }
 
 .ui-input__leading {
+  @apply inline-flex items-center justify-center gap-1;
+  grid-column: 1;
   margin-right: 0.5rem;
 }
 
 .ui-input__trailing {
+  @apply inline-flex items-center justify-center gap-1;
+  grid-column: 3;
   margin-left: 0.5rem;
 }
 

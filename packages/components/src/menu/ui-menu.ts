@@ -5,7 +5,7 @@ import { UiList } from '../list/ui-list';
 import { UiPopup } from '../popup/ui-popup';
 import template from './ui-menu.html?raw';
 
-type MenuPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
+type MenuPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end' | 'right-start' | 'right-end' | 'left-start' | 'left-end';
 
 @customElement({ name: 'ui-menu', template })
 export class UiMenu {
@@ -65,6 +65,13 @@ export class UiMenu {
       detail: (event as CustomEvent).detail
     }));
 
+    if (this.closeOnSelect) {
+      this.open = false;
+    }
+  }
+
+  onListAction(): void {
+    // Non-selectable (action) item activated — close like a selection would, unless opted out.
     if (this.closeOnSelect) {
       this.open = false;
     }

@@ -1,11 +1,12 @@
 <template class="ui-popup" data-open.attr="open ? '' : null">
-  <div portal="target.bind: portalTarget; position.bind: portalPosition">
+  <div portal="target.bind: effectivePortalTarget; position.bind: portalPosition">
     <div class="ui-popup__panel"
       ref="panelElement"
       id.bind="panelId"
       role.bind="panelRole"
       tabindex="-1"
       list-select.trigger="onListSelect($event)"
+      list-action.trigger="onListAction($event)"
       show.bind="open"
       style.bind="panelStyle"
       data-role.attr="panelRole"

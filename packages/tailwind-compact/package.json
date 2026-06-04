@@ -1,6 +1,6 @@
 {
   "name": "@aurelia-ui-toolkits/headless-tailwind-compact",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Compact Tailwind CSS theme for @aurelia-ui-toolkits/headless",
   "license": "MIT",
   "author": "Maxim Balaganskiy <m.balaganskiy@gmail.com>",
