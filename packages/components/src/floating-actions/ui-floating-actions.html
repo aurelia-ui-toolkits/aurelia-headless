@@ -1,0 +1,15 @@
+<template class="ui-floating-actions" data-expanded.attr="expanded ? '' : null"
+  mouseenter.trigger="onMouseEnter()" mouseleave.trigger="onMouseLeave()">
+  <div class="ui-floating-actions__items" data-expanded.attr="expanded ? '' : null" click.trigger="open = false">
+    <au-slot></au-slot>
+  </div>
+
+  <ui-icon-button class="ui-floating-actions__trigger" if.bind="!expanded"
+    click.trigger="toggle()" title="More actions">
+    <svg class="ui-floating-actions__trigger-icon" viewBox="0 0 16 16" aria-hidden="true">
+      <circle cx="3" cy="8" r="1.5"></circle>
+      <circle cx="8" cy="8" r="1.5"></circle>
+      <circle cx="13" cy="8" r="1.5"></circle>
+    </svg>
+  </ui-icon-button>
+</template>

@@ -21,17 +21,22 @@
   }
 
   &[data-selected] {
-    @apply bg-primary-600;
-    color: var(--color-on-primary);
+    background: var(--color-selected);
+    color: var(--color-on-selected);
 
     &[data-active] {
-      @apply bg-primary-700;
+      background: var(--color-selected-hover);
     }
 
     & .ui-list-item__leading,
     & .ui-list-item__trailing,
     & .ui-list-item__secondary {
-      color: var(--color-on-primary-muted);
+      color: color-mix(in srgb, var(--color-on-selected) 75%, transparent);
+    }
+
+    /* action icon buttons set their own colour, so force them to read on the selected bg */
+    & .ui-icon-button {
+      color: var(--color-on-selected);
     }
   }
 

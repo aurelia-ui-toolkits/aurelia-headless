@@ -1,0 +1,13 @@
+@reference "@aurelia-ui-toolkits/headless-tailwind/theme.css";
+
+.floating-actions-demo-row {
+  @apply flex flex-wrap items-center gap-4;
+}
+
+.floating-actions-demo-icon {
+  @apply block h-4 w-4;
+}
+
+.floating-actions-demo-status {
+  @apply text-sm text-ink-500;
+}

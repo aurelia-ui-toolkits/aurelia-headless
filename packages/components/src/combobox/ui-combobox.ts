@@ -196,6 +196,9 @@ export class UiCombobox {
   }
 
   async onInput(): Promise<void> {
+    if (this.disabled || this.readonly) {
+      return;
+    }
     this.text = this.inputEl.value;
     this.selectedOption = undefined;
     this.setValue(undefined);
@@ -255,9 +258,11 @@ export class UiCombobox {
       return;
     }
 
-    if (!this.disabled) {
+    if (!this.disabled && !this.readonly) {
       this.focus = true;
       await this.loadOptions(true, this.value);
+    } else if (!this.disabled) {
+      this.focus = true;
     }
   }
 

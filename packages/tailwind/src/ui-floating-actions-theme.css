@@ -1,0 +1,28 @@
+@reference "./theme.css";
+
+.ui-floating-actions {
+  @apply relative inline-grid place-items-start rounded-lg border border-card-border bg-card p-1 align-top shadow-md;
+}
+
+.ui-floating-actions__items {
+  @apply flex flex-col items-center gap-1;
+}
+
+.ui-floating-actions:has(.ui-floating-actions__trigger) .ui-floating-actions__items {
+  @apply pointer-events-none col-start-1 row-start-1 z-10 max-h-0 place-self-start overflow-hidden opacity-0 transition-all duration-150 ease-out;
+  visibility: hidden;
+}
+
+.ui-floating-actions[data-expanded] .ui-floating-actions__items {
+  @apply pointer-events-auto max-h-96 opacity-100;
+  visibility: visible;
+}
+
+.ui-floating-actions__trigger {
+  @apply col-start-1 row-start-1 place-self-start transition-opacity duration-100 ease-out;
+}
+
+.ui-floating-actions__trigger-icon {
+  @apply h-5 w-5;
+  fill: currentColor;
+}

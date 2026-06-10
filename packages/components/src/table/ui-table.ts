@@ -50,7 +50,7 @@ export class UiTable {
   pageSizeOptions: (number | string)[] = [10, 25, 50];
 
   @bindable
-  paginationText?: string;
+  paginationText: string | undefined;
 
   attaching(): void {
     this.loadColumnSizes();
