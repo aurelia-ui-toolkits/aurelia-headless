@@ -242,8 +242,11 @@ export class UiDatepicker {
     }).whenClosed() as DialogCloseResult;
     this.open = false;
     if (result.status === 'ok' && typeof result.value === 'string') {
+      const previousValue = this.value;
       this.value = result.value;
-      this.element.dispatchEvent(new CustomEvent('change', { bubbles: true }));
+      if (this.value !== previousValue) {
+        this.element.dispatchEvent(new CustomEvent('change', { bubbles: true }));
+      }
     }
     this.inputEl.focus();
   }
@@ -265,6 +268,7 @@ export class UiDatepicker {
     }
     return undefined;
   }
+
 }
 
 export interface IUiDatepickerElement extends IValidatedElement {

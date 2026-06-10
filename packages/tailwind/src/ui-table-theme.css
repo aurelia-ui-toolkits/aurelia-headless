@@ -36,6 +36,22 @@
   & tbody tr[data-selected] {
     @apply bg-outline-hover;
   }
+
+  /* Action buttons inside cells are compact so they don't inflate row height. */
+  & th .ui-icon-button,
+  & td .ui-icon-button {
+    @apply h-7 w-7;
+    margin-block: -0.25rem;
+
+    & .material-icons {
+      font-size: 1.125rem;
+    }
+  }
+
+  & th .ui-button,
+  & td .ui-button {
+    @apply px-2.5 py-1 text-xs;
+  }
 }
 
 .ui-table-column {

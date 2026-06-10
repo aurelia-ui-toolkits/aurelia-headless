@@ -51,6 +51,37 @@
       @apply bg-outline-active;
     }
   }
+
+  /* Solid danger (filled). Extra :not() keeps it above the default/primary fills. */
+  &[data-danger]:not([data-outlined]) {
+    border-color: transparent;
+    background: var(--color-danger-border);
+    color: #fff;
+
+    &[data-hover] {
+      background: color-mix(in srgb, var(--color-danger-border) 88%, black);
+    }
+
+    &[data-active] {
+      background: color-mix(in srgb, var(--color-danger-border) 78%, black);
+    }
+  }
+
+  /* Outlined danger. */
+  &[data-outlined][data-danger] {
+    border-color: var(--color-danger-border);
+    background: transparent;
+    color: var(--color-danger-border);
+
+    &[data-hover] {
+      background: var(--color-danger-bg);
+      color: var(--color-danger-text);
+    }
+
+    &[data-active] {
+      background: var(--color-danger-bg);
+    }
+  }
 }
 
 .ui-icon-button {

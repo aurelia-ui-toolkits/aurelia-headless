@@ -3,6 +3,10 @@
 .ui-tree {
   @apply grid rounded-xl border border-card-border bg-card p-1;
 
+  &:focus {
+    outline: none;
+  }
+
   &[data-toggle-position="right"] {
     & .ui-tree__item {
       @apply grid-cols-[minmax(0,1fr)_auto] pl-2;
@@ -34,15 +38,15 @@
   }
 
   &[data-selected] {
-    @apply bg-primary-600;
-    color: var(--color-on-primary);
+    background: var(--color-selected);
+    color: var(--color-on-selected);
 
     &[data-active] {
-      @apply bg-primary-700;
+      background: var(--color-selected-hover);
     }
 
     & .ui-tree__toggle {
-      color: var(--color-on-primary-muted);
+      color: color-mix(in srgb, var(--color-on-selected) 75%, transparent);
     }
   }
 

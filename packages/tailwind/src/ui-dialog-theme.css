@@ -1,0 +1,31 @@
+@reference "./theme.css";
+
+/*
+ * Generic chrome + centering for every native modal <dialog>.
+ *
+ * All app dialogs are opened through @aurelia/dialog's standard renderer, which
+ * appends a native <dialog> and calls showModal(). Tailwind's reset clears the
+ * UA margin that normally centers a modal dialog, so without this a dialog that
+ * doesn't ship its own rule (e.g. lookup dialogs) lands in the top-left corner.
+ *
+ * This is the baseline: centered, card chrome, dimmed backdrop. Dialogs that need
+ * a specific size or look override it with a higher-specificity `dialog:has(.x)`
+ * rule (see ui-alert-dialog-theme.css / ui-datepicker-theme.css and per-view CSS).
+ */
+dialog {
+  @apply rounded-2xl border bg-card p-0 text-ink-900 shadow-2xl;
+  inset: 0;
+  margin: auto;
+  max-width: min(95vw, 40rem);
+  border-color: var(--color-card-border);
+  overflow: visible;
+
+  &::backdrop {
+    background: var(--color-backdrop);
+  }
+
+  /* Dropdowns/menus portal into the nearest <dialog> (top layer); keep them above content. */
+  & .ui-popup__panel {
+    z-index: 100;
+  }
+}

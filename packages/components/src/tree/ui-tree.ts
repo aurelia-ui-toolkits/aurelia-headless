@@ -19,7 +19,7 @@ export interface UiTreeRow {
   disabled: boolean;
   posInSet: number;
   setSize: number;
-  element: HTMLElement | undefined;
+  element?: HTMLElement;
   slotHost: UiTreeRowSlotHost;
 }
 
@@ -167,6 +167,14 @@ export class UiTree {
     }
   }
 
+  onFocusIn(event: FocusEvent): void {
+    if (event.target !== this.host || this.activeValue !== undefined) {
+      return;
+    }
+
+    this.activeValue = this.enabledRows[0]?.value;
+  }
+
   private rebuildRows(applyInitialExpanded = false): void {
     if (applyInitialExpanded) {
       this.expandedValues.clear();
@@ -175,8 +183,8 @@ export class UiTree {
     const roots = Array.isArray(this.items) ? this.items : [];
     const rows = this.buildRows(roots, 0, undefined, '0', applyInitialExpanded);
     this.visibleRows = this.flattenVisibleRows(rows);
-    if (this.activeValue === undefined) {
-      this.activeValue = this.value ?? this.visibleRows.find(row => !row.disabled)?.value;
+    if (this.activeValue === undefined && this.value !== undefined) {
+      this.activeValue = this.value;
     }
   }
 
@@ -200,7 +208,6 @@ export class UiTree {
         disabled: this.getBooleanFieldValue(item, this.disabledField),
         posInSet: index + 1,
         setSize: items.length,
-        element: undefined,
         slotHost: undefined as unknown as UiTreeRowSlotHost
       } satisfies UiTreeRow;
       row.slotHost = { item, row };

@@ -4,6 +4,8 @@
   aria-disabled.attr="disabled ? '' : null"
   data-disabled.attr="disabled ? '' : null"
   data-toggle-position.attr="togglePosition"
+  tabindex.bind="disabled ? null : 0"
+  focusin.trigger="onFocusIn($event)"
   keydown.trigger="onKeyDown($event)">
   <div class="ui-tree__item"
     repeat.for="row of visibleRows"
