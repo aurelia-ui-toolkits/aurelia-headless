@@ -10,6 +10,7 @@ import { ComboboxView } from '../combobox/combobox-view';
 import { DatepickerView } from '../datepicker/datepicker-view';
 import { DisclosureView } from '../disclosure/disclosure-view';
 import { DrawerView } from '../drawer/drawer-view';
+import { FloatingActionsView } from '../floating-actions/floating-actions-view';
 import { GetStartedView } from '../get-started/get-started-view';
 import { InputView } from '../input/input-view';
 import { ListView } from '../list/list-view';
@@ -49,6 +50,7 @@ export class MyApp {
     { id: 'datepicker', path: 'datepicker', title: 'datepicker', component: DatepickerView },
     { id: 'disclosure', path: 'disclosure', title: 'disclosure', component: DisclosureView },
     { id: 'drawer', path: 'drawer', title: 'drawer', component: DrawerView },
+    { id: 'floating-actions', path: 'floating-actions', title: 'floating-actions', component: FloatingActionsView },
     { id: 'input', path: 'input', title: 'input', component: InputView },
     { id: 'list', path: 'list', title: 'list', component: ListView },
     { id: 'menu', path: 'menu', title: 'menu', component: MenuView },
