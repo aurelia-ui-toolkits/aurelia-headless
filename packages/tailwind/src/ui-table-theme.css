@@ -1,7 +1,7 @@
 @reference "./theme.css";
 
 .ui-table {
-  @apply relative flex max-h-full flex-col overflow-hidden rounded-xl border border-card-border bg-card;
+  @apply relative flex max-h-full flex-col overflow-hidden rounded-xl border border-card-border bg-transparent;
 
   &[data-disabled] {
     @apply pointer-events-none opacity-70;
@@ -40,17 +40,22 @@
   /* Action buttons inside cells are compact so they don't inflate row height. */
   & th .ui-icon-button,
   & td .ui-icon-button {
-    @apply h-7 w-7;
+    @apply h-7 w-7 align-middle;
     margin-block: -0.25rem;
+  }
 
-    & .material-icons {
-      font-size: 1.125rem;
-    }
+  /* Text cells truncate (overflow: hidden), which would clip an action button's focus ring;
+     let cells that hold buttons overflow so the ring paints in full. */
+  & th:has(.ui-icon-button),
+  & td:has(.ui-icon-button),
+  & th:has(.ui-button),
+  & td:has(.ui-button) {
+    overflow: visible;
   }
 
   & th .ui-button,
   & td .ui-button {
-    @apply px-2.5 py-1 text-xs;
+    @apply px-2.5 py-1 text-xs align-middle;
   }
 }
 

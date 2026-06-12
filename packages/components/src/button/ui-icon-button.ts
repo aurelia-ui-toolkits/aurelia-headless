@@ -3,9 +3,13 @@ import { booleanAttr } from '../base/boolean-attr';
 import template from './ui-icon-button.html?raw';
 
 type IconButtonSize = 'small' | 'medium' | 'large';
+type ButtonType = 'button' | 'submit' | 'reset';
 
 @customElement({ name: 'ui-icon-button', template })
 export class UiIconButton {
+  @bindable
+  type: ButtonType = 'button';
+
   @bindable({ set: booleanAttr })
   disabled: boolean = false;
 

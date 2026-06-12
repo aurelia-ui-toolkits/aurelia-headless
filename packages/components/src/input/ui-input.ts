@@ -22,10 +22,16 @@ export class UiInput {
   hover: boolean = false;
   focus: boolean = false;
   active: boolean = false;
-  inputEl!: HTMLInputElement;
+  inputEl!: HTMLInputElement | HTMLTextAreaElement;
 
   @bindable
   label: string | undefined;
+
+  @bindable({ set: booleanAttr })
+  textarea: boolean = false;
+
+  @bindable
+  rows: number | undefined;
 
   @bindable({ set: booleanAttr })
   inset: boolean = this.configuration.defaultInset;

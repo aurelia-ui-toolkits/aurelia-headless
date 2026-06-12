@@ -1,0 +1,59 @@
+import { UiMenu } from './ui-menu';
+import { bindable, customAttribute, queueTask, resolve } from 'aurelia';
+
+/** Opens the bound headless ui-menu at the pointer position on right-click. */
+@customAttribute('ui-context-menu')
+export class UiContextMenuCustomAttribute implements EventListenerObject {
+  private element = resolve(Element);
+  private menuAnchor: HTMLDivElement | undefined;
+
+  @bindable()
+  value: UiMenu | undefined;
+
+  attached() {
+    this.element.addEventListener('contextmenu', this);
+    this.menuAnchor = document.querySelector<HTMLDivElement>('div.ui-context-menu-anchor') ?? undefined;
+    if (!this.menuAnchor) {
+      this.menuAnchor = document.createElement('div');
+      this.menuAnchor.classList.add('ui-context-menu-anchor');
+      this.menuAnchor.style.position = 'fixed';
+      document.body.appendChild(this.menuAnchor);
+    }
+  }
+
+  detaching() {
+    this.element.removeEventListener('contextmenu', this);
+  }
+
+  handleEvent(e: Event) {
+    if (e.type !== 'contextmenu' || !(e instanceof PointerEvent)) {
+      return;
+    }
+
+    this.openMenu(e);
+    e.preventDefault();
+    return true;
+  }
+
+  private openMenu(e: PointerEvent) {
+    const menu = this.value;
+    const menuAnchor = this.menuAnchor;
+    if (!menu || !menuAnchor) {
+      return;
+    }
+
+    menuAnchor.style.left = `${e.clientX}px`;
+    menuAnchor.style.top = `${e.clientY}px`;
+    menu.anchor = menuAnchor;
+    if (menu.open) {
+      // Re-anchor by closing then reopening on the next tick.
+      menu.open = false;
+      queueTask(() => {
+        menu.anchor = menuAnchor;
+        menu.open = true;
+      });
+    } else {
+      menu.open = true;
+    }
+  }
+}

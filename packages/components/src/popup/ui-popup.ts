@@ -93,7 +93,7 @@ export class UiPopup {
    * and no explicit element target is given, portal into that dialog (same top layer) instead.
    */
   get effectivePortalTarget(): string | Element | null | undefined {
-    if (this.portalTarget != null && this.portalTarget !== 'body') {
+    if (this.portalTarget && this.portalTarget !== 'body') {
       return this.portalTarget;
     }
     const dialog = this.element.closest('dialog');

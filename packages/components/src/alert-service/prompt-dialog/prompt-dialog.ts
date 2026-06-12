@@ -23,7 +23,7 @@ export class UiPromptDialog {
     this.data = data;
   }
 
-  cancel(): Promise<unknown> {
+  async cancel(): Promise<unknown> {
     return this.dialog.cancel();
   }
 

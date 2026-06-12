@@ -39,8 +39,8 @@ ui-combobox,
 
   &[data-inset] {
     & .ui-combobox__native {
-      height: 3.25rem;
-      padding-top: 1rem;
+      height: 2.75rem;
+      padding-top: 0.75rem;
       padding-bottom: 0.25rem;
     }
 
@@ -50,7 +50,7 @@ ui-combobox,
 
     &[data-focus] .ui-combobox__inset-label,
     &[data-has-value] .ui-combobox__inset-label {
-      transform: translateY(-0.85rem) scale(0.75);
+      transform: translateY(-0.5rem) scale(0.75);
       font-size: 0.75rem;
       color: var(--color-ink-700);
     }

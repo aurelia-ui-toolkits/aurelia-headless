@@ -1,13 +1,11 @@
 <template class="ui-prompt-modal">
   <h2 class="ui-prompt-modal__title" if.bind="data.title">${data.title}</h2>
-  <label class="ui-prompt-modal__field">
-    <span class="ui-prompt-modal__label" if.bind="data.label">${data.label}</span>
-    <textarea class="ui-prompt-modal__control" if.bind="data.textarea" value.bind="data.text" required.bind="data.required" autofocus></textarea>
-    <input class="ui-prompt-modal__control" else type="text" value.bind="data.text" required.bind="data.required" autofocus>
-  </label>
+  <ui-input label.bind="data.label" textarea.bind="data.textarea" value.bind="data.text" required.bind="data.required"
+    invalid.bind="invalid" autofocus></ui-input>
   <div class="ui-prompt-modal__error" if.bind="invalid">This field is required.</div>
   <div class="ui-prompt-modal__actions">
-    <button ui-button outlined type="button" if.bind="data.cancelText" click.trigger="cancel()">${data.cancelText}</button>
+    <button ui-button outlined type="button" if.bind="data.cancelText"
+      click.trigger="cancel()">${data.cancelText}</button>
     <button ui-button primary type="button" if.bind="data.okText" click.trigger="ok()">${data.okText}</button>
   </div>
 </template>

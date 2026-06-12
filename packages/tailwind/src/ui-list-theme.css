@@ -1,7 +1,7 @@
 @reference "./theme.css";
 
 .ui-list {
-  @apply block overflow-hidden rounded-xl border border-card-border bg-transparent p-1 outline-none;
+  @apply block overflow-hidden rounded-xl border border-card-border bg-transparent p-1 outline-none select-none;
 
   & .ui-list__scroller {
     @apply grid h-full min-h-0 max-h-[inherit] gap-1 overflow-auto content-start;
@@ -14,6 +14,12 @@
 
   &[data-secondary] {
     min-height: 3.25rem;
+  }
+
+  /* In single-line items, cap the action icon button box to the text line height so it neither
+     grows the row nor sits off-centre; widen the hit target horizontally only. */
+  &:not([data-secondary]) .ui-icon-button {
+    @apply h-5 w-7;
   }
 
   &[data-active] {
@@ -34,8 +40,9 @@
       color: color-mix(in srgb, var(--color-on-selected) 75%, transparent);
     }
 
-    /* action icon buttons set their own colour, so force them to read on the selected bg */
-    & .ui-icon-button {
+    /* action icon buttons set their own colour, so force them to read on the selected bg,
+       except danger buttons which must keep their red colour */
+    & .ui-icon-button:not([data-danger]) {
       color: var(--color-on-selected);
     }
   }
@@ -47,7 +54,7 @@
 
 .ui-list-item__leading,
 .ui-list-item__trailing {
-  @apply text-ink-500;
+  @apply flex items-center text-ink-500;
 }
 
 .ui-list-item__leading {
