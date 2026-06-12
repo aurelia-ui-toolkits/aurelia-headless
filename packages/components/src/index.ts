@@ -19,6 +19,8 @@ import { UiDatepickerDialogConfiguration } from './datepicker/ui-datepicker-dial
 import { UiDisclosure } from './disclosure/ui-disclosure';
 import { UiFloatingActions } from './floating-actions/ui-floating-actions';
 import { UiFocusTrap } from './focus-trap/ui-focus-trap';
+import { UiSizeCustomAttribute } from './base/ui-size';
+import { UiContextMenuCustomAttribute } from './menu/ui-context-menu';
 import { UiDrawer } from './drawer/ui-drawer';
 import { UiFieldConfiguration } from './field/ui-field-configuration';
 import { IError, UiInput } from './input/ui-input';
@@ -72,6 +74,9 @@ export { UiDatepickerDialogConfiguration };
 export { UiDisclosure };
 export { UiFloatingActions };
 export { UiFocusTrap };
+export { UiSizeCustomAttribute };
+export type { Size } from './base/ui-size';
+export { UiContextMenuCustomAttribute };
 export { UiDrawer };
 export { UiFieldConfiguration };
 export { UiForm };
@@ -156,6 +161,6 @@ export const AureliaHeadlessConfiguration = {
 
     }).register(container);
 
-    return container.register(InputmaskConfiguration, DialogConfigurationStandard, UiAlertModal, UiPromptDialog, UiDatepickerDialog, Registration.singleton(AlertConfiguration, AlertConfiguration), Registration.singleton(AlertService, AlertService), Registration.singleton(ExceptionsTracker, ExceptionsTracker), Registration.singleton(UiDatepickerDialogConfiguration, UiDatepickerDialogConfiguration), Registration.instance(UiFieldConfiguration, fieldConfiguration), UiAlert, UiBadge, UiBreadcrumbs, UiButton, UiIconButton, EnhanceUiButton, UiCheckbox, UiChip, UiCombobox, EnhanceUiCombobox, UiDatepicker, UiDisclosure, UiFloatingActions, UiFocusTrap, UiDrawer, UiForm, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSegment, UiSegmentedControl, UiSelect, EnhanceUiSelect, UiSlider, UiSplitter, UiSwitch, UiTab, UiTabs, UiTable, UiTableColumn, EnhanceUiTable, UiToastRegion, Registration.singleton(UiToastService, UiToastService), UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService), UiTopAppBar, UiTree, UiValidationContainer);
+    return container.register(InputmaskConfiguration, DialogConfigurationStandard, UiAlertModal, UiPromptDialog, UiDatepickerDialog, Registration.singleton(AlertConfiguration, AlertConfiguration), Registration.singleton(AlertService, AlertService), Registration.singleton(ExceptionsTracker, ExceptionsTracker), Registration.singleton(UiDatepickerDialogConfiguration, UiDatepickerDialogConfiguration), Registration.instance(UiFieldConfiguration, fieldConfiguration), UiAlert, UiBadge, UiBreadcrumbs, UiButton, UiIconButton, EnhanceUiButton, UiCheckbox, UiChip, UiCombobox, EnhanceUiCombobox, UiDatepicker, UiDisclosure, UiFloatingActions, UiFocusTrap, UiSizeCustomAttribute, UiContextMenuCustomAttribute, UiDrawer, UiForm, UiInput, EnhanceUiInput, UiList, UiListItem, UiMenu, UiPopup, UiProgress, UiRadio, UiRadioGroup, UiSegment, UiSegmentedControl, UiSelect, EnhanceUiSelect, UiSlider, UiSplitter, UiSwitch, UiTab, UiTabs, UiTable, UiTableColumn, EnhanceUiTable, UiToastRegion, Registration.singleton(UiToastService, UiToastService), UiTooltip, Registration.singleton(UiTooltipService, UiTooltipService), UiTopAppBar, UiTree, UiValidationContainer);
   }
 };

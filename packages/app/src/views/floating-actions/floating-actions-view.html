@@ -1,26 +1,28 @@
 <demo-section title="ui-floating-actions">
   <demo-block title="Expandable actions">
     <div class="floating-actions-demo-row">
-      <ui-floating-actions>
-        <button ui-icon-button title="Edit" aria-label="Edit" click.trigger="recordAction('Edit')">
-          <svg class="floating-actions-demo-icon" viewBox="0 0 16 16" aria-hidden="true">
-            <path d="M3 11.5V13h1.5L12 5.5 10.5 4 3 11.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
-            <path d="M9.5 5 11 6.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-          </svg>
-        </button>
-        <button ui-icon-button title="Duplicate" aria-label="Duplicate" click.trigger="recordAction('Duplicate')">
-          <svg class="floating-actions-demo-icon" viewBox="0 0 16 16" aria-hidden="true">
-            <rect x="5" y="3" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
-            <path d="M3 6v6.5A1.5 1.5 0 0 0 4.5 14H11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-          </svg>
-        </button>
-        <button ui-icon-button title="Archive" aria-label="Archive" click.trigger="recordAction('Archive')">
-          <svg class="floating-actions-demo-icon" viewBox="0 0 16 16" aria-hidden="true">
-            <path d="M3 5h10M4 5v7.5A1.5 1.5 0 0 0 5.5 14h5A1.5 1.5 0 0 0 12 12.5V5M6.5 8h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
-            <path d="M4.5 2.5h7L13 5H3l1.5-2.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
-          </svg>
-        </button>
-      </ui-floating-actions>
+      <div class="floating-actions-demo-stage">
+        <ui-floating-actions class="floating-actions-demo-stack">
+          <button ui-icon-button title="Edit" aria-label="Edit" click.trigger="recordAction('Edit')">
+            <svg class="floating-actions-demo-icon" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M3 11.5V13h1.5L12 5.5 10.5 4 3 11.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+              <path d="M9.5 5 11 6.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+            </svg>
+          </button>
+          <button ui-icon-button title="Duplicate" aria-label="Duplicate" click.trigger="recordAction('Duplicate')">
+            <svg class="floating-actions-demo-icon" viewBox="0 0 16 16" aria-hidden="true">
+              <rect x="5" y="3" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"></rect>
+              <path d="M3 6v6.5A1.5 1.5 0 0 0 4.5 14H11" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+            </svg>
+          </button>
+          <button ui-icon-button title="Archive" aria-label="Archive" click.trigger="recordAction('Archive')">
+            <svg class="floating-actions-demo-icon" viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M3 5h10M4 5v7.5A1.5 1.5 0 0 0 5.5 14h5A1.5 1.5 0 0 0 12 12.5V5M6.5 8h3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+              <path d="M4.5 2.5h7L13 5H3l1.5-2.5Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+        </ui-floating-actions>
+      </div>
       <span class="floating-actions-demo-status">${actionLog}</span>
     </div>
   </demo-block>

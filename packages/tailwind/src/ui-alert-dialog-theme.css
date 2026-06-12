@@ -93,32 +93,6 @@ dialog:has(.ui-prompt-modal) {
   min-width: 0;
 }
 
-.ui-prompt-modal__field {
-  @apply grid gap-1.5;
-  min-width: 0;
-}
-
-.ui-prompt-modal__label {
-  @apply text-sm font-medium text-ink-700;
-}
-
-.ui-prompt-modal__control {
-  @apply rounded-lg border px-3 py-2 text-sm outline-none;
-  border-color: var(--color-card-border);
-  min-width: 0;
-  width: 100%;
-
-  &:focus {
-    @apply ring-2;
-    border-color: var(--color-primary-600);
-    --tw-ring-color: var(--color-ring-muted);
-  }
-}
-
-textarea.ui-prompt-modal__control {
-  @apply min-h-28 resize-y;
-}
-
 .ui-prompt-modal__error {
   @apply -mt-2 text-sm;
   color: var(--color-validation-strong-text);

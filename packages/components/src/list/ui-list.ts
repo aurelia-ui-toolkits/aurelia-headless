@@ -13,6 +13,8 @@ export class UiList {
   private listItems: UiListItem[] = [];
   private listItemsChangedCallback: (() => void) | undefined;
   activeItem: unknown;
+  /** Anchor item for shift-range selection in multiple mode. */
+  private selectionAnchor: unknown;
   private typeaheadBuffer = '';
   private typeaheadTimer: ReturnType<typeof setTimeout> | undefined;
 
@@ -101,6 +103,13 @@ export class UiList {
       return;
     }
 
+    if (this.multiple && (event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'a') {
+      event.preventDefault();
+      this.selected = values.filter(v => !this.isItemDisabled(v));
+      this.syncListItemSelection();
+      return;
+    }
+
     if (this.isNextKey(event.key)) {
       event.preventDefault();
       this.move(1);
@@ -179,7 +188,7 @@ export class UiList {
       return;
     }
 
-    this.selectItem(listItem.value);
+    this.selectItem(listItem.value, event);
   }
 
   private suppressMouseOver = false;
@@ -226,11 +235,25 @@ export class UiList {
   }
 
   private getEffectiveItems(): unknown[] {
-    if (this.items?.length) {
+    if (!this.items?.length) {
+      return this.listItems.map(item => item.value);
+    }
+
+    // `items` holds the bound option values; static list-items (e.g. a null/placeholder option)
+    // are rendered but absent from it. Merge those rendered values so they stay navigable,
+    // keeping DOM order and appending any bound items not currently rendered (virtual-repeat).
+    const rendered = this.listItems.map(item => item.value);
+    if (rendered.every(value => this.items.includes(value))) {
       return this.items;
     }
 
-    return this.listItems.map(item => item.value);
+    const merged = [...rendered];
+    for (const value of this.items) {
+      if (!merged.includes(value)) {
+        merged.push(value);
+      }
+    }
+    return merged;
   }
 
   private isNextKey(key: string): boolean {
@@ -251,7 +274,7 @@ export class UiList {
 
   private move(direction: 1 | -1): void {
     const items = this.getEffectiveItems();
-    const currentIndex = this.activeItem ? items.indexOf(this.activeItem) : -1;
+    const currentIndex = this.activeItem !== undefined ? items.indexOf(this.activeItem) : -1;
     let nextIndex = currentIndex + direction;
 
     if (this.loop) {
@@ -338,9 +361,39 @@ export class UiList {
     this.selectItem(this.activeItem);
   }
 
-  private selectItem(item: unknown): void {
+  private selectItem(item: unknown, event?: MouseEvent): void {
     this.activateItem(item);
     if (this.multiple) {
+      this.selectMultiple(item, event);
+    } else {
+      this.selected = item;
+      this.selectionAnchor = item;
+    }
+    this.syncListItemSelection();
+    this.emitSelection(item);
+  }
+
+  /**
+   * Multi-selection semantics matching the legacy MDC SelectionHandler:
+   * - plain click selects only the clicked item (clears any previous selection);
+   * - shift+click selects the range between the anchor and the clicked item;
+   * - ctrl/cmd+click toggles the clicked item in/out of the selection.
+   */
+  private selectMultiple(item: unknown, event?: MouseEvent): void {
+    const items = this.getEffectiveItems();
+
+    if (event?.shiftKey) {
+      const anchor = this.selectionAnchor ?? (Array.isArray(this.selected) ? this.selected[0] : undefined);
+      const anchorIndex = anchor !== undefined ? items.indexOf(anchor) : 0;
+      const index = items.indexOf(item);
+      const range: unknown[] = [];
+      for (let i = Math.min(anchorIndex, index); i <= Math.max(anchorIndex, index); i++) {
+        if (!this.isItemDisabled(items[i])) {
+          range.push(items[i]);
+        }
+      }
+      this.selected = range;
+    } else if (event && (event.ctrlKey || event.metaKey)) {
       const selected = Array.isArray(this.selected) ? [...this.selected] : [];
       const index = selected.indexOf(item);
       if (index >= 0) {
@@ -349,11 +402,11 @@ export class UiList {
         selected.push(item);
       }
       this.selected = selected;
+      this.selectionAnchor = item;
     } else {
-      this.selected = item;
+      this.selected = [item];
+      this.selectionAnchor = item;
     }
-    this.syncListItemSelection();
-    this.emitSelection(item);
   }
 
   private emitActivate(item: unknown): void {
@@ -387,7 +440,7 @@ export class UiList {
     }, 800);
 
     const items = this.getEffectiveItems();
-    const startIndex = this.activeItem ? items.indexOf(this.activeItem) : 0;
+    const startIndex = this.activeItem !== undefined ? items.indexOf(this.activeItem) : 0;
 
     for (let step = 0; step < items.length; step++) {
       const index = (startIndex + step) % items.length;

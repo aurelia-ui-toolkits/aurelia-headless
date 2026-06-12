@@ -3,3 +3,16 @@
 .menu-state {
   @apply mt-2 block text-sm text-ink-500;
 }
+
+.context-menu-target {
+  @apply flex min-h-32 max-w-xl flex-col justify-center gap-2 rounded-xl border border-dashed border-card-border bg-card-muted p-6 text-ink-700 outline-none;
+}
+
+.context-menu-target:focus-visible {
+  outline: 3px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+.context-menu-target span {
+  @apply text-sm text-ink-500;
+}

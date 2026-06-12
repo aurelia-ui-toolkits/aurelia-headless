@@ -18,4 +18,24 @@
 
     <span class="menu-state">Selected: ${selectedAction?.label || 'none'}</span>
   </demo-block>
+
+  <demo-block title="Context menu custom attribute">
+    <ui-menu component.ref="contextMenu"
+      close-on-select
+      menu-select.trigger="onContextMenuSelect($event)">
+      <ui-list items.bind="contextActions" selected.bind="selectedContextAction" typeahead-field="label">
+        <ui-list-item repeat.for="item of contextActions" value.bind="item">
+          ${item.label}
+          <span au-slot="trailing">${item.hint}</span>
+        </ui-list-item>
+      </ui-list>
+    </ui-menu>
+
+    <div class="context-menu-target" ui-context-menu.bind="contextMenu" tabindex="0">
+      <strong>Right-click this panel</strong>
+      <span>UiContextMenuCustomAttribute anchors the menu at the pointer position.</span>
+    </div>
+
+    <span class="menu-state">Context action: ${selectedContextAction?.label || 'none'}</span>
+  </demo-block>
 </demo-section>

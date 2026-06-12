@@ -1,7 +1,7 @@
 @reference "./theme.css";
 
 .ui-tree {
-  @apply grid rounded-xl border border-card-border bg-card p-1;
+  @apply grid rounded-xl border border-card-border bg-transparent p-1;
 
   &:focus {
     outline: none;

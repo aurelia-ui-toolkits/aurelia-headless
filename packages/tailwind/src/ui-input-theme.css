@@ -50,6 +50,26 @@ ui-input,
       font-size: 0.75rem;
       color: var(--color-ink-700);
     }
+
+    /* Textarea is multi-line: the inset label must sit at the top (not vertically centred),
+       resting on the first text line and floating up to the top edge from there. */
+    &[data-textarea] {
+      & .ui-input__native {
+        height: auto;
+      }
+
+      & .ui-input__inset-label {
+        align-self: start;
+        transform: translateY(0.75rem);
+      }
+
+      /* Override the centred single-line float (translateY(-0.5rem)) which would land above the box.
+         0.25rem matches where the single-line inset label floats to (its centred base shifted up 0.5rem). */
+      &[data-focus] .ui-input__inset-label,
+      &[data-has-value] .ui-input__inset-label {
+        transform: translateY(0.25rem) scale(0.75);
+      }
+    }
   }
 }
 
@@ -106,6 +126,13 @@ ui-input,
   &:disabled {
     @apply cursor-not-allowed;
   }
+}
+
+textarea.ui-input__native {
+  @apply min-h-24 resize-y;
+  height: auto;
+  padding-block: 0.625rem;
+  line-height: 1.25rem;
 }
 
 .ui-input__subscript {
