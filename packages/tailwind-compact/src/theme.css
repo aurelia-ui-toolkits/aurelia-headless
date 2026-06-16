@@ -42,6 +42,11 @@
   --color-resize-handle: color-mix(in srgb, var(--color-card-border) 48%, transparent);
   --color-ring-muted: color-mix(in srgb, var(--color-ring) 38%, transparent);
   --ui-field-padding-x: 0.5rem;
+  --ui-field-gap: 0.25rem;
+  --ui-field-control-height: 1.75rem;
+  --ui-field-inset-control-height: 2.15rem;
+  --ui-field-label-font-size: 0.75rem;
+  --ui-field-label-line-height: 1rem;
 }
 
 :root {
@@ -87,6 +92,11 @@
   --color-resize-handle: color-mix(in srgb, var(--color-card-border) 48%, transparent);
   --color-ring-muted: color-mix(in srgb, var(--color-ring) 38%, transparent);
   --ui-field-padding-x: 0.5rem;
+  --ui-field-gap: 0.25rem;
+  --ui-field-control-height: 1.75rem;
+  --ui-field-inset-control-height: 2.15rem;
+  --ui-field-label-font-size: 0.75rem;
+  --ui-field-label-line-height: 1rem;
 }
 
 :root[data-theme="dark"] {

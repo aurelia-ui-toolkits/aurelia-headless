@@ -1,0 +1,93 @@
+<demo-section title="ui-form">
+  <demo-block title="Responsive grid form">
+    <ui-form>
+      <ui-input class="form-field form-field--half"
+        value.bind="workspaceName"
+        label="Workspace name"
+        helper-text="Displayed in the workspace switcher."
+        placeholder="Production workspace">
+      </ui-input>
+
+      <ui-input class="form-field form-field--half"
+        value.bind="ownerEmail"
+        type="email"
+        label="Owner email"
+        helper-text="Used for approval notifications."
+        placeholder="owner@example.com">
+      </ui-input>
+
+      <ui-select class="form-field form-field--half"
+        items.bind="teams"
+        value.bind="teamId"
+        value-field="id"
+        label-field="name"
+        label="Team"
+        helper-text="Choose the team responsible for changes."
+        placeholder="Select team">
+        <ui-list>
+          <ui-list-item repeat.for="team of $host.items" value.bind="team">
+            ${team.name}
+          </ui-list-item>
+        </ui-list>
+      </ui-select>
+
+      <div class="form-field form-field--half form-check-field">
+        <span class="form-check-field__label">Notifications</span>
+        <div class="form-check-row">
+          <ui-checkbox id="notify-team" checked.bind="notifyTeam"></ui-checkbox>
+          <label for="notify-team">Notify team after save</label>
+        </div>
+      </div>
+
+      <ui-input class="form-field form-field--full"
+        value.bind="summary"
+        textarea
+        rows="4"
+        label="Summary"
+        helper-text="Describe what this workspace is used for."
+        placeholder="Add details">
+      </ui-input>
+
+      <div class="form-field form-field--full form-actions">
+        <button ui-button primary click.trigger="saveProfile()">Save profile</button>
+        <button ui-button outlined click.trigger="resetProfile()">Reset</button>
+        <span class="form-state">${saveMessage}</span>
+      </div>
+    </ui-form>
+  </demo-block>
+
+  <demo-block title="Inset form controls">
+    <ui-form>
+      <ui-input class="form-field form-field--third"
+        value.bind="workspaceName"
+        inset
+        label="Workspace"
+        placeholder="Workspace">
+      </ui-input>
+
+      <ui-input class="form-field form-field--third"
+        value.bind="ownerEmail"
+        inset
+        type="email"
+        label="Email"
+        placeholder="Email">
+        <span au-slot="leading">@</span>
+      </ui-input>
+
+      <ui-select class="form-field form-field--third"
+        items.bind="teams"
+        value.bind="teamId"
+        value-field="id"
+        label-field="name"
+        inset
+        label="Team"
+        placeholder="Team">
+        <ui-list>
+          <ui-list-item repeat.for="team of $host.items" value.bind="team">
+            ${team.name}
+          </ui-list-item>
+        </ui-list>
+      </ui-select>
+    </ui-form>
+  </demo-block>
+</demo-section>

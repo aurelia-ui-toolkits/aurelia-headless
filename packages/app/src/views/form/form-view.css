@@ -1,0 +1,43 @@
+@reference "@aurelia-ui-toolkits/headless-tailwind/theme.css";
+
+.form-field {
+  @apply col-span-12;
+}
+
+.form-field--third {
+  @apply md:col-span-4;
+}
+
+.form-field--half {
+  @apply md:col-span-6;
+}
+
+.form-field--full {
+  @apply col-span-12;
+}
+
+.form-check-field {
+  @apply grid;
+  row-gap: var(--ui-field-gap);
+}
+
+.form-check-field__label {
+  @apply font-semibold text-ink-900;
+  font-size: var(--ui-field-label-font-size);
+  line-height: var(--ui-field-label-line-height);
+}
+
+.form-check-row {
+  @apply flex items-center gap-3 font-medium text-ink-700;
+  min-height: var(--ui-field-control-height);
+  font-size: var(--ui-field-label-font-size);
+  padding-inline: var(--ui-field-padding-x);
+}
+
+.form-actions {
+  @apply flex flex-wrap items-center gap-3;
+}
+
+.form-state {
+  @apply text-sm text-ink-500;
+}

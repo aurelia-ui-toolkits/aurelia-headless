@@ -6,7 +6,8 @@ ui-select,
 }
 
 .ui-select {
-  @apply grid gap-1 w-full;
+  @apply grid w-full;
+  row-gap: var(--ui-field-gap);
 
   &[data-focus] .ui-select__control {
     @apply border-primary-600;
@@ -39,7 +40,7 @@ ui-select,
 
   &[data-inset] {
     .ui-select__value {
-      height: 2.15rem;
+      height: var(--ui-field-inset-control-height);
       padding-top: 0.7rem;
       padding-bottom: 0.125rem;
     }
@@ -58,7 +59,9 @@ ui-select,
 }
 
 .ui-select__label {
-  @apply text-xs font-semibold text-ink-900;
+  @apply font-semibold text-ink-900;
+  font-size: var(--ui-field-label-font-size);
+  line-height: var(--ui-field-label-line-height);
 }
 
 .ui-select__control {
@@ -105,9 +108,10 @@ ui-select,
 }
 
 .ui-select__value {
-  @apply flex h-7 min-w-0 w-full items-center truncate bg-transparent text-xs text-ink-900 outline-none;
+  @apply flex min-w-0 w-full items-center truncate bg-transparent text-xs text-ink-900 outline-none;
   grid-column: 2;
   grid-row: 1;
+  height: var(--ui-field-control-height);
   z-index: 1;
 
   &[data-placeholder] {

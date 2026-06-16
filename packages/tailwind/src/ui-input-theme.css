@@ -7,6 +7,7 @@ ui-input,
 
 .ui-input {
   @apply grid w-full;
+  row-gap: var(--ui-field-gap);
 
   &[data-focus] .ui-input__control {
     @apply border-primary-600;
@@ -35,7 +36,7 @@ ui-input,
 
   &[data-inset] {
     & .ui-input__native {
-      height: 2.75rem;
+      height: var(--ui-field-inset-control-height);
       padding-top: 0.75rem;
       padding-bottom: 0.25rem;
     }
@@ -74,7 +75,9 @@ ui-input,
 }
 
 .ui-input__label {
-  @apply text-sm font-semibold text-ink-900;
+  @apply font-semibold text-ink-900;
+  font-size: var(--ui-field-label-font-size);
+  line-height: var(--ui-field-label-line-height);
 }
 
 .ui-input__control {
@@ -114,9 +117,10 @@ ui-input,
 }
 
 .ui-input__native {
-  @apply h-11 min-w-0 w-full bg-transparent text-sm text-ink-900 outline-none;
+  @apply min-w-0 w-full bg-transparent text-sm text-ink-900 outline-none;
   grid-column: 2;
   grid-row: 1;
+  height: var(--ui-field-control-height);
   z-index: 1;
 
   &::placeholder {
@@ -147,4 +151,3 @@ textarea.ui-input__native {
 .ui-input__errors {
   color: var(--color-validation-text);
 }
-
