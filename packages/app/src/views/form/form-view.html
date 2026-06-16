@@ -1,14 +1,14 @@
 <demo-section title="ui-form">
   <demo-block title="Responsive grid form">
     <ui-form>
-      <ui-input class="form-field form-field--half"
+      <ui-input class="col-span-12 md:col-span-6"
         value.bind="workspaceName"
         label="Workspace name"
         helper-text="Displayed in the workspace switcher."
         placeholder="Production workspace">
       </ui-input>
 
-      <ui-input class="form-field form-field--half"
+      <ui-input class="col-span-12 md:col-span-6"
         value.bind="ownerEmail"
         type="email"
         label="Owner email"
@@ -16,7 +16,7 @@
         placeholder="owner@example.com">
       </ui-input>
 
-      <ui-select class="form-field form-field--half"
+      <ui-select class="col-span-12 md:col-span-6"
         items.bind="teams"
         value.bind="teamId"
         value-field="id"
@@ -31,15 +31,15 @@
         </ui-list>
       </ui-select>
 
-      <div class="form-field form-field--half form-check-field">
-        <span class="form-check-field__label">Notifications</span>
-        <div class="form-check-row">
+      <div class="form-check-field col-span-12 grid md:col-span-6">
+        <span class="form-check-field__label font-semibold text-ink-900">Notifications</span>
+        <div class="form-check-row flex items-center font-medium text-ink-700">
           <ui-checkbox id="notify-team" checked.bind="notifyTeam"></ui-checkbox>
           <label for="notify-team">Notify team after save</label>
         </div>
       </div>
 
-      <ui-input class="form-field form-field--full"
+      <ui-input class="col-span-12"
         value.bind="summary"
         textarea
         rows="4"
@@ -48,24 +48,24 @@
         placeholder="Add details">
       </ui-input>
 
-      <div class="form-field form-field--full form-actions">
+      <div class="form-actions col-span-12 flex flex-wrap items-center">
         <button ui-button primary click.trigger="saveProfile()">Save profile</button>
         <button ui-button outlined click.trigger="resetProfile()">Reset</button>
-        <span class="form-state">${saveMessage}</span>
+        <span class="form-state text-ink-500">${saveMessage}</span>
       </div>
     </ui-form>
   </demo-block>
 
   <demo-block title="Inset form controls">
     <ui-form>
-      <ui-input class="form-field form-field--third"
+      <ui-input class="col-span-12 md:col-span-4"
         value.bind="workspaceName"
         inset
         label="Workspace"
         placeholder="Workspace">
       </ui-input>
 
-      <ui-input class="form-field form-field--third"
+      <ui-input class="col-span-12 md:col-span-4"
         value.bind="ownerEmail"
         inset
         type="email"
@@ -74,7 +74,7 @@
         <span au-slot="leading">@</span>
       </ui-input>
 
-      <ui-select class="form-field form-field--third"
+      <ui-select class="col-span-12 md:col-span-4"
         items.bind="teams"
         value.bind="teamId"
         value-field="id"
