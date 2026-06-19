@@ -94,14 +94,19 @@ export class UiMenu {
     setTimeout(() => this.focus(undefined), 0);
   }
 
+  /** The slotted ui-list view-model, if the popup is rendered. */
+  get list(): UiList | undefined {
+    const el = this.popup?.panelElement?.querySelector('ui-list');
+    return el ? CustomElement.for<UiList>(el).viewModel : undefined;
+  }
+
   focus(key: Keys.Home | Keys.End | undefined): void {
-    const list = this.popup.panelElement?.querySelector('ui-list');
-    if (!list) {
+    const listViewModel = this.list;
+    if (!listViewModel) {
       this.popup.focus();
       return;
     }
 
-    const listViewModel = CustomElement.for<UiList>(list).viewModel;
     switch (key) {
       case Keys.End:
         listViewModel.focusLast();

@@ -91,7 +91,14 @@ export class UiInput {
   }
   set value(value: string) {
     if (this.inputEl) {
-      this.inputEl.value = value;
+      // Skip redundant assignments. The native input is bound value.two-way, so every
+      // 'input' event writes the current value straight back here. With an inputmask
+      // attached, that programmatic re-assignment makes inputmask re-process the buffer
+      // and drop an unstable trailing radix (e.g. "5." -> "5"), which otherwise forces
+      // the user to type the decimal separator twice before it sticks.
+      if (this.inputEl.value !== value) {
+        this.inputEl.value = value;
+      }
     } else {
       this.initialValue = value;
     }

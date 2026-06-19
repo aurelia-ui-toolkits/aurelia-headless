@@ -68,7 +68,7 @@
     <au-slot expose.bind="slotHost"></au-slot>
   </ui-menu>
 
-  <div class="ui-combobox__subscript" show.bind="errors.size || helperText || helperNodes.length">
+  <div class="ui-combobox__subscript">
     <div class="ui-combobox__helper" id.bind="helperId" show.bind="!errors.size && (helperText || helperNodes.length)">
       <au-slot name="helper">${helperText}</au-slot>
     </div>

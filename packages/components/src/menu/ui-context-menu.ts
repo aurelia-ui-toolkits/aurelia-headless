@@ -10,6 +10,11 @@ export class UiContextMenuCustomAttribute implements EventListenerObject {
   @bindable()
   value: UiMenu | undefined;
 
+  /** Optional CSS selector; when set, the menu only opens if the right-clicked
+   *  target is within an element matching the selector (e.g. limit to "thead"). */
+  @bindable()
+  filter: string | undefined;
+
   attached() {
     this.element.addEventListener('contextmenu', this);
     this.menuAnchor = document.querySelector<HTMLDivElement>('div.ui-context-menu-anchor') ?? undefined;
@@ -28,6 +33,13 @@ export class UiContextMenuCustomAttribute implements EventListenerObject {
   handleEvent(e: Event) {
     if (e.type !== 'contextmenu' || !(e instanceof PointerEvent)) {
       return;
+    }
+
+    if (this.filter) {
+      const match = (e.target as Element | null)?.closest(this.filter);
+      if (!match || !this.element.contains(match)) {
+        return;
+      }
     }
 
     this.openMenu(e);

@@ -1,10 +1,17 @@
-import { bindable, BindingMode, customElement } from 'aurelia';
+import { bindable, BindingMode, CustomElement, customElement, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
+import { IError, IValidatedElement } from '../base/i-validated-element';
 import template from './ui-checkbox.html?raw';
+
+let nextCheckboxId = 0;
 
 @customElement({ name: 'ui-checkbox', template })
 export class UiCheckbox {
+  constructor() {
+    defineUiCheckboxElementApis(resolve(Element) as HTMLElement);
+  }
+
   @bindable({ mode: BindingMode.twoWay, set: booleanAttr })
   checked: boolean = false;
 
@@ -14,12 +21,28 @@ export class UiCheckbox {
   @bindable({ mode: BindingMode.twoWay, set: booleanAttr })
   indeterminate: boolean = false;
 
+  @bindable({ set: booleanAttr })
+  invalid: boolean = false;
+
   @bindable
-  id: string = '';
+  id: string = `ui-checkbox-${++nextCheckboxId}`;
+
+  @bindable
+  label: string | undefined;
+
+  @bindable
+  helperText: string | undefined;
 
   @bindable
   tabIndex: number = 0;
 
+  @slotted({ slotName: 'helper' })
+  helperNodes: readonly Node[] = [];
+
+  @slotted()
+  labelNodes: readonly Node[] = [];
+
+  errors = new Map<IError, boolean>();
   hover: boolean = false;
   focus: boolean = false;
   active: boolean = false;
@@ -28,6 +51,58 @@ export class UiCheckbox {
   controlEl!: HTMLInputElement;
 
   private changingFrame: number | undefined;
+
+  get hasLabel(): boolean {
+    return !!this.label || this.labelNodes.length > 0;
+  }
+
+  get hasField(): boolean {
+    return this.hasLabel || !!this.helperText || this.helperNodes.length > 0 || this.errors.size > 0;
+  }
+
+  get hasSubscript(): boolean {
+    return this.hasField;
+  }
+
+  get labelId(): string {
+    return `${this.id}-label`;
+  }
+
+  get helperId(): string {
+    return `${this.id}-helper`;
+  }
+
+  get errorsId(): string {
+    return `${this.id}-errors`;
+  }
+
+  addError(error: IError): void {
+    if (this.findError(error)) {
+      return;
+    }
+
+    this.errors.set(error, true);
+  }
+
+  removeError(error: IError): void {
+    const existing = this.findError(error);
+    if (existing) {
+      this.errors.delete(existing);
+      return;
+    }
+
+    this.errors.delete(error);
+  }
+
+  private findError(error: IError): IError | undefined {
+    for (const existing of this.errors.keys()) {
+      if (existing === error || existing.message === error.message) {
+        return existing;
+      }
+    }
+
+    return undefined;
+  }
 
   onClick(event: MouseEvent): void {
     if (event.target instanceof HTMLInputElement) {
@@ -184,4 +259,49 @@ export class UiCheckbox {
     this.controlEl.indeterminate = this.indeterminate;
     this.controlEl.dispatchEvent(new Event(type, { bubbles: true }));
   }
+}
+
+export interface IUiCheckboxElement extends IValidatedElement {
+  checked: boolean;
+  disabled: boolean;
+}
+
+function defineUiCheckboxElementApis(element: HTMLElement) {
+  Object.defineProperties(element, {
+    tagName: {
+      get() {
+        return 'UI-CHECKBOX';
+      }
+    },
+    checked: {
+      get(this: IUiCheckboxElement) {
+        return CustomElement.for<UiCheckbox>(this).viewModel.checked;
+      },
+      set(this: IUiCheckboxElement, value: boolean) {
+        CustomElement.for<UiCheckbox>(this).viewModel.checked = value;
+      },
+      configurable: true
+    },
+    disabled: {
+      get(this: IUiCheckboxElement) {
+        return CustomElement.for<UiCheckbox>(this).viewModel.disabled;
+      },
+      set(this: IUiCheckboxElement, value: boolean) {
+        CustomElement.for<UiCheckbox>(this).viewModel.disabled = value;
+      },
+      configurable: true
+    },
+    addError: {
+      value(this: IUiCheckboxElement, error: IError) {
+        CustomElement.for<UiCheckbox>(this).viewModel.addError(error);
+      },
+      configurable: true
+    },
+    removeError: {
+      value(this: IUiCheckboxElement, error: IError) {
+        CustomElement.for<UiCheckbox>(this).viewModel.removeError(error);
+      },
+      configurable: true
+    }
+  });
 }

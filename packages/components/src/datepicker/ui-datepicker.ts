@@ -116,6 +116,9 @@ export class UiDatepicker {
   @bindable({ set: booleanAttr })
   invalid: boolean = false;
 
+  @bindable({ set: booleanAttr })
+  autofocus: boolean = false;
+
   @slotted({ slotName: 'helper' })
   helperNodes: readonly Node[] = [];
 
@@ -239,7 +242,7 @@ export class UiDatepicker {
       } satisfies UiDatepickerDialogData,
       rejectOnCancel: false,
       options: { modal: true, closedby: 'closerequest' }
-    }).whenClosed() as DialogCloseResult;
+    }).whenClosed<DialogCloseResult, DialogCloseResult>();
     this.open = false;
     if (result.status === 'ok' && typeof result.value === 'string') {
       const previousValue = this.value;

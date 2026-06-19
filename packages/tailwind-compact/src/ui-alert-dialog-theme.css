@@ -2,7 +2,7 @@
 
 dialog:has(.ui-alert-modal),
 dialog:has(.ui-prompt-modal) {
-  @apply rounded-md border bg-card p-0 text-ink-900 shadow-xl;
+  @apply rounded-md border bg-canvas p-0 text-ink-900 shadow-xl;
   animation: ui-alert-dialog-in 140ms ease-out;
   border-color: var(--color-card-border);
   inset: 50% auto auto 50%;

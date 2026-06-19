@@ -1,0 +1,7 @@
+.form-actions {
+  gap: var(--ui-field-padding-x);
+}
+
+.form-state {
+  font-size: var(--ui-field-label-font-size);
+}

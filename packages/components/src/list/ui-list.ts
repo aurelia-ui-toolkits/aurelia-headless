@@ -140,10 +140,15 @@ export class UiList {
       return;
     }
 
-    if (this.typeaheadField && this.isTypeaheadKey(event)) {
+    if (this.isTypeaheadKey(event)) {
       event.preventDefault();
       this.handleTypeahead(event.key.toLowerCase());
     }
+  }
+
+  /** Feed a character into typeahead (used by ui-select to forward the first keystroke). */
+  typeahead(char: string): void {
+    this.handleTypeahead(char.toLowerCase());
   }
 
   isItemDisabled(item: unknown): boolean {

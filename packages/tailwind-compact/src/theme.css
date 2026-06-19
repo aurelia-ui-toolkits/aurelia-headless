@@ -5,6 +5,7 @@
   --color-ink-900: #111827;
   --color-ink-700: #374151;
   --color-ink-500: #6b7280;
+  --color-canvas: #ffffff;
   --color-card: #ffffff;
   --color-card-muted: #f3f4f6;
   --color-card-border: #d1d5db;
@@ -42,6 +43,11 @@
   --color-resize-handle: color-mix(in srgb, var(--color-card-border) 48%, transparent);
   --color-ring-muted: color-mix(in srgb, var(--color-ring) 38%, transparent);
   --ui-field-padding-x: 0.5rem;
+  --ui-field-gap: 0.25rem;
+  --ui-field-control-height: 1.75rem;
+  --ui-field-inset-control-height: 2.15rem;
+  --ui-field-label-font-size: 0.75rem;
+  --ui-field-label-line-height: 1rem;
 }
 
 :root {
@@ -50,6 +56,7 @@
   --color-ink-900: #111827;
   --color-ink-700: #374151;
   --color-ink-500: #6b7280;
+  --color-canvas: #ffffff;
   --color-card: #ffffff;
   --color-card-muted: #f3f4f6;
   --color-card-border: #d1d5db;
@@ -87,6 +94,11 @@
   --color-resize-handle: color-mix(in srgb, var(--color-card-border) 48%, transparent);
   --color-ring-muted: color-mix(in srgb, var(--color-ring) 38%, transparent);
   --ui-field-padding-x: 0.5rem;
+  --ui-field-gap: 0.25rem;
+  --ui-field-control-height: 1.75rem;
+  --ui-field-inset-control-height: 2.15rem;
+  --ui-field-label-font-size: 0.75rem;
+  --ui-field-label-line-height: 1rem;
 }
 
 :root[data-theme="dark"] {
@@ -94,6 +106,7 @@
   --color-ink-900: #f9fafb;
   --color-ink-700: #d1d5db;
   --color-ink-500: #9ca3af;
+  --color-canvas: #0b1120;
   --color-card: #111827;
   --color-card-muted: #1f2937;
   --color-card-border: #374151;

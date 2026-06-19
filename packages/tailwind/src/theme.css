@@ -5,6 +5,7 @@
   --color-ink-900: #10213b;
   --color-ink-700: #33415e;
   --color-ink-500: #5a6985;
+  --color-canvas: #ffffff;
   --color-card: #ffffff;
   --color-card-muted: #f4f7fc;
   --color-card-border: #c5cfdf;
@@ -19,6 +20,8 @@
   --color-selected: #0072c6;
   --color-selected-hover: #005a9e;
   --color-on-selected: #ffffff;
+  --color-info-bg: #e5f4ff;
+  --color-info-text: #004578;
   --color-info-border: color-mix(in srgb, var(--color-primary-600) 20%, transparent);
   --color-success-bg: #dcfce7;
   --color-success-text: #052e16;
@@ -45,6 +48,11 @@
   --color-resize-handle: color-mix(in srgb, var(--color-card-border) 40%, transparent);
   --color-ring-muted: color-mix(in srgb, var(--color-ring) 35%, transparent);
   --ui-field-padding-x: 0.75rem;
+  --ui-field-gap: 0rem;
+  --ui-field-control-height: 2.75rem;
+  --ui-field-inset-control-height: 2.75rem;
+  --ui-field-label-font-size: 0.875rem;
+  --ui-field-label-line-height: 1.25rem;
 }
 
 :root {
@@ -53,6 +61,7 @@
   --color-ink-900: #10213b;
   --color-ink-700: #33415e;
   --color-ink-500: #5a6985;
+  --color-canvas: #ffffff;
   --color-card: #ffffff;
   --color-card-muted: #f4f7fc;
   --color-card-border: #c5cfdf;
@@ -67,6 +76,8 @@
   --color-selected: #0072c6;
   --color-selected-hover: #005a9e;
   --color-on-selected: #ffffff;
+  --color-info-bg: #e5f4ff;
+  --color-info-text: #004578;
   --color-info-border: color-mix(in srgb, var(--color-primary-600) 20%, transparent);
   --color-success-bg: #dcfce7;
   --color-success-text: #052e16;
@@ -93,6 +104,11 @@
   --color-resize-handle: color-mix(in srgb, var(--color-card-border) 40%, transparent);
   --color-ring-muted: color-mix(in srgb, var(--color-ring) 35%, transparent);
   --ui-field-padding-x: 0.75rem;
+  --ui-field-gap: 0rem;
+  --ui-field-control-height: 2.75rem;
+  --ui-field-inset-control-height: 2.75rem;
+  --ui-field-label-font-size: 0.875rem;
+  --ui-field-label-line-height: 1.25rem;
 }
 
 :root[data-theme="dark"] {

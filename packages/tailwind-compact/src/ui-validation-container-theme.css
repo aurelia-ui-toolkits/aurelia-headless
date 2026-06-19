@@ -9,7 +9,7 @@
 }
 
 .ui-validation-container__errors {
-  @apply min-h-4 py-0.5 text-[0.68rem];
+  @apply text-[0.68rem];
   color: var(--color-validation-text);
   padding-left: var(--ui-field-padding-x);
   padding-right: var(--ui-field-padding-x);

@@ -1,0 +1,91 @@
+<demo-section title="ui-form">
+  <demo-block title="Responsive grid form">
+    <ui-form>
+      <ui-input class="col-span-12 md:col-span-6"
+        value.bind="workspaceName"
+        label="Workspace name"
+        helper-text="Displayed in the workspace switcher."
+        placeholder="Production workspace">
+      </ui-input>
+
+      <ui-input class="col-span-12 md:col-span-6"
+        value.bind="ownerEmail"
+        type="email"
+        label="Owner email"
+        helper-text="Used for approval notifications."
+        placeholder="owner@example.com">
+      </ui-input>
+
+      <ui-select class="col-span-12 md:col-span-6"
+        items.bind="teams"
+        value.bind="teamId"
+        value-field="id"
+        label-field="name"
+        label="Team"
+        helper-text="Choose the team responsible for changes."
+        placeholder="Select team">
+        <ui-list>
+          <ui-list-item repeat.for="team of $host.items" value.bind="team">
+            ${team.name}
+          </ui-list-item>
+        </ui-list>
+      </ui-select>
+
+      <ui-checkbox class="col-span-12 md:col-span-6"
+        checked.bind="notifyTeam"
+        label="Notify team after save"
+        helper-text="Send an update after this profile is saved.">
+      </ui-checkbox>
+
+      <ui-input class="col-span-12"
+        value.bind="summary"
+        textarea
+        rows="4"
+        label="Summary"
+        helper-text="Describe what this workspace is used for."
+        placeholder="Add details">
+      </ui-input>
+
+      <div class="form-actions col-span-12 flex flex-wrap items-center">
+        <button ui-button primary click.trigger="saveProfile()">Save profile</button>
+        <button ui-button outlined click.trigger="resetProfile()">Reset</button>
+        <span class="form-state text-ink-500">${saveMessage}</span>
+      </div>
+    </ui-form>
+  </demo-block>
+
+  <demo-block title="Inset form controls">
+    <ui-form>
+      <ui-input class="col-span-12 md:col-span-4"
+        value.bind="workspaceName"
+        inset
+        label="Workspace"
+        placeholder="Workspace">
+      </ui-input>
+
+      <ui-input class="col-span-12 md:col-span-4"
+        value.bind="ownerEmail"
+        inset
+        type="email"
+        label="Email"
+        placeholder="Email">
+        <span au-slot="leading">@</span>
+      </ui-input>
+
+      <ui-select class="col-span-12 md:col-span-4"
+        items.bind="teams"
+        value.bind="teamId"
+        value-field="id"
+        label-field="name"
+        inset
+        label="Team"
+        placeholder="Team">
+        <ui-list>
+          <ui-list-item repeat.for="team of $host.items" value.bind="team">
+            ${team.name}
+          </ui-list-item>
+        </ui-list>
+      </ui-select>
+    </ui-form>
+  </demo-block>
+</demo-section>
