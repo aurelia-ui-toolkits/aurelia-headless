@@ -5,10 +5,10 @@ import { bindable, customAttribute, queueTask, resolve } from 'aurelia';
 @customAttribute('ui-context-menu')
 export class UiContextMenuCustomAttribute implements EventListenerObject {
   private element = resolve(Element);
-  private menuAnchor: HTMLDivElement;
+  private menuAnchor: HTMLDivElement | undefined;
 
   @bindable()
-  value: UiMenu;
+  value: UiMenu | undefined;
 
   /** Optional CSS selector; when set, the menu only opens if the right-clicked
    *  target is within an element matching the selector (e.g. limit to "thead"). */
@@ -17,7 +17,7 @@ export class UiContextMenuCustomAttribute implements EventListenerObject {
 
   attached() {
     this.element.addEventListener('contextmenu', this);
-    this.menuAnchor = document.querySelector('div.ui-context-menu-anchor');
+    this.menuAnchor = document.querySelector<HTMLDivElement>('div.ui-context-menu-anchor') ?? undefined;
     if (!this.menuAnchor) {
       this.menuAnchor = document.createElement('div');
       this.menuAnchor.classList.add('ui-context-menu-anchor');
@@ -48,18 +48,24 @@ export class UiContextMenuCustomAttribute implements EventListenerObject {
   }
 
   private openMenu(e: PointerEvent) {
-    this.menuAnchor.style.left = `${e.clientX}px`;
-    this.menuAnchor.style.top = `${e.clientY}px`;
-    this.value.anchor = this.menuAnchor;
-    if (this.value.open) {
+    const menu = this.value;
+    const menuAnchor = this.menuAnchor;
+    if (!menu || !menuAnchor) {
+      return;
+    }
+
+    menuAnchor.style.left = `${e.clientX}px`;
+    menuAnchor.style.top = `${e.clientY}px`;
+    menu.anchor = menuAnchor;
+    if (menu.open) {
       // Re-anchor by closing then reopening on the next tick.
-      this.value.open = false;
+      menu.open = false;
       queueTask(() => {
-        this.value.anchor = this.menuAnchor;
-        this.value.open = true;
+        menu.anchor = menuAnchor;
+        menu.open = true;
       });
     } else {
-      this.value.open = true;
+      menu.open = true;
     }
   }
 }

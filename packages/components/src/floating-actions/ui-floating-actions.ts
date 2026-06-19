@@ -17,7 +17,8 @@ export class UiFloatingActions {
   hovering: boolean = false;
 
   get expanded(): boolean {
-    return this.items?.length > 0 && (this.items?.length === 1 || this.alwaysExpanded || this.open || this.hovering);
+    const itemCount = this.items?.length ?? 0;
+    return itemCount > 0 && (itemCount === 1 || this.alwaysExpanded || this.open || this.hovering);
   }
 
   toggle(): void {

@@ -31,13 +31,11 @@
         </ui-list>
       </ui-select>
 
-      <div class="form-check-field col-span-12 grid md:col-span-6">
-        <span class="form-check-field__label font-semibold text-ink-900">Notifications</span>
-        <div class="form-check-row flex items-center font-medium text-ink-700">
-          <ui-checkbox id="notify-team" checked.bind="notifyTeam"></ui-checkbox>
-          <label for="notify-team">Notify team after save</label>
-        </div>
-      </div>
+      <ui-checkbox class="col-span-12 md:col-span-6"
+        checked.bind="notifyTeam"
+        label="Notify team after save"
+        helper-text="Send an update after this profile is saved.">
+      </ui-checkbox>
 
       <ui-input class="col-span-12"
         value.bind="summary"

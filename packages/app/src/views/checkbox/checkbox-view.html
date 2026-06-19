@@ -1,32 +1,30 @@
 <demo-section title="ui-checkbox">
 
   <demo-block title="Basic">
-    <div class="checkbox-row">
-      <ui-checkbox id="marketing-consent" checked.bind="marketingConsent"></ui-checkbox>
-      <label class="checkbox-label" for="marketing-consent">Marketing emails</label>
-      <span class="checkbox-state">${marketingConsent ? 'Subscribed' : 'Unsubscribed'}</span>
-    </div>
+    <ui-checkbox checked.bind="marketingConsent" label="Marketing emails"></ui-checkbox>
+    <span class="text-sm text-ink-500">${marketingConsent ? 'Subscribed' : 'Unsubscribed'}</span>
   </demo-block>
 
   <demo-block title="Disabled">
-    <div class="checkbox-row">
-      <ui-checkbox id="security-updates" checked disabled></ui-checkbox>
-      <label class="checkbox-label" for="security-updates">Security updates</label>
-    </div>
+    <ui-checkbox checked disabled label="Security updates"></ui-checkbox>
   </demo-block>
 
   <demo-block title="Indeterminate">
-    <div class="checkbox-row">
-      <ui-checkbox id="partial-group" indeterminate></ui-checkbox>
-      <label class="checkbox-label" for="partial-group">Partially selected group</label>
-    </div>
+    <ui-checkbox indeterminate label="Partially selected group"></ui-checkbox>
   </demo-block>
 
   <demo-block title="Two-way binding">
-    <div class="checkbox-row">
-      <ui-checkbox id="accept-terms" checked.bind="termsAccepted"></ui-checkbox>
-      <label class="checkbox-label" for="accept-terms">Accept terms</label>
-      <span class="checkbox-state">${termsAccepted ? 'Accepted' : 'Required'}</span>
-    </div>
+    <ui-checkbox checked.bind="termsAccepted" label="Accept terms"></ui-checkbox>
+    <span class="text-sm text-ink-500">${termsAccepted ? 'Accepted' : 'Required'}</span>
+  </demo-block>
+
+  <demo-block title="Helper text">
+    <ui-checkbox checked.bind="reportsEnabled" label="Weekly reports" helper-text="Send a summary every Monday."></ui-checkbox>
+  </demo-block>
+
+  <demo-block title="Slotted helper">
+    <ui-checkbox checked.bind="advancedAlerts" label="Advanced alerts">
+      <span au-slot="helper">Includes warning and recovery notifications.</span>
+    </ui-checkbox>
   </demo-block>
 </demo-section>
