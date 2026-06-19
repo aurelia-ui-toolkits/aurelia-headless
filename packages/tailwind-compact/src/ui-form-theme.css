@@ -13,15 +13,15 @@
     @apply min-h-4;
   }
 
-  /* A labelled checkbox is a full field: stretch it across its grid cell, give its
-     control band the same height as an inset input's control so the box lines up,
-     and let the reserved __subscript line below provide the level-matching height. */
+  /* A labelled checkbox is a full field: line its control band up with other
+     field controls, below their label row. */
   & .ui-checkbox[data-field] {
     @apply w-full;
+    padding-block-start: calc(var(--ui-field-label-line-height) + var(--ui-field-gap));
   }
 
   & .ui-checkbox[data-field] .ui-checkbox__control {
-    min-height: 2.15rem; /* matches the inset input control band */
-    align-items: center; /* centre the box within the band */
+    min-height: var(--ui-field-control-height);
+    align-items: center;
   }
 }
