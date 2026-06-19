@@ -17,6 +17,9 @@
      field controls, below their label row. */
   & .ui-checkbox[data-field] {
     @apply w-full;
+  }
+
+  & .ui-checkbox[data-field]:not([data-inset]) {
     padding-block-start: calc(var(--ui-field-label-line-height) + var(--ui-field-gap));
   }
 

@@ -86,6 +86,21 @@
           </ui-list-item>
         </ui-list>
       </ui-select>
+
+      <ui-checkbox class="col-span-12 md:col-span-4"
+        inset
+        checked.bind="notifyTeam"
+        label="Notify team after save"
+        helper-text="Aligns with inset controls.">
+      </ui-checkbox>
+
+      <ui-input class="col-span-12 md:col-span-4"
+        value.bind="ownerEmail"
+        inset
+        type="email"
+        label="Fallback email"
+        placeholder="Fallback email">
+      </ui-input>
     </ui-form>
   </demo-block>
 </demo-section>
