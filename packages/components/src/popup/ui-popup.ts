@@ -222,7 +222,7 @@ export class UiPopup {
   }
 
   private focusPanel(): void {
-    const focusTarget = this.panelElement?.querySelector('[tabindex]') as HTMLElement | null;
+    const focusTarget = this.panelElement?.querySelector<HTMLElement>('[tabindex]');
     (focusTarget ?? this.panelElement)?.focus();
   }
 

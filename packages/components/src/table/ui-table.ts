@@ -1,6 +1,8 @@
 import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import type { UiTableColumn } from './ui-table-column';
+import type { UiMenu } from '../menu/ui-menu';
+import { UiTableConfiguration } from './ui-table-configuration';
 import template from './ui-table.html?raw';
 
 type TableSort = { column: string; direction: 'asc' | 'desc' };
@@ -9,8 +11,12 @@ type ColumnSort = { column: string; columnViewModel: UiTableColumn; direction: '
 @customElement({ name: 'ui-table', template })
 export class UiTable {
   private readonly host = resolve(INode) as HTMLElement;
+  private readonly configuration = resolve(UiTableConfiguration);
   private columnSizes: Record<string, number> = {};
   private readonly sortedColumns = new Map<string, UiTableColumn>();
+
+  /** The header context menu (see ui-table.html), bound via ui-context-menu. */
+  columnMenu: UiMenu | undefined;
 
   @bindable({ mode: BindingMode.twoWay })
   sort: TableSort[] = [];
@@ -50,11 +56,67 @@ export class UiTable {
   pageSizeOptions: (number | string)[] = [10, 25, 50];
 
   @bindable
-  paginationText: string | undefined;
+  paginationText: string;
+
+  @bindable
+  loadingText: string = this.configuration.loadingText;
+
+  @bindable
+  resetColumnsText: string = this.configuration.resetColumnsText;
+
+  @bindable
+  rowsPerPageText: string = this.configuration.rowsPerPageText;
+
+  @bindable
+  pageText: string = this.configuration.pageText;
+
+  @bindable
+  firstPageText: string = this.configuration.firstPageText;
+
+  @bindable
+  previousPageText: string = this.configuration.previousPageText;
+
+  @bindable
+  nextPageText: string = this.configuration.nextPageText;
+
+  @bindable
+  lastPageText: string = this.configuration.lastPageText;
 
   attaching(): void {
     this.loadColumnSizes();
     this.updateTotalPages();
+  }
+
+  resetColumnWidths(): void {
+    this.columnSizes = {};
+    if (this.storageKey) {
+      try {
+        localStorage.removeItem(this.storageId);
+      } catch {
+        // Ignore unavailable storage.
+      }
+    }
+
+    for (const th of this.host.querySelectorAll<HTMLElement>('thead th')) {
+      th.style.removeProperty('width');
+      th.style.removeProperty('min-width');
+    }
+  }
+
+  /**
+   * Freezes the current width of every column so that resizing one column
+   * doesn't make the browser redistribute width across the auto-sized
+   * siblings (which looks like the other columns shrinking).
+   */
+  freezeColumnWidths(): void {
+    for (const th of this.host.querySelectorAll<HTMLElement>('thead th')) {
+      if (th.style.width) {
+        continue;
+      }
+      const width = th.getBoundingClientRect().width;
+      th.style.width = `${width}px`;
+      th.style.minWidth = `${width}px`;
+    }
   }
 
   setColumnWidth(columnId: string, width: number, persist = false): void {

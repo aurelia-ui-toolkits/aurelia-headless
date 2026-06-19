@@ -70,7 +70,7 @@
     </span>
   </div>
 
-  <div class="ui-input__subscript" show.bind="errors.size || helperText || helperNodes.length">
+  <div class="ui-input__subscript">
     <div class="ui-input__helper" id.bind="helperId" show.bind="!errors.size && (helperText || helperNodes.length)">
       <au-slot name="helper">${helperText}</au-slot>
     </div>

@@ -5,5 +5,5 @@
 }
 
 .ui-popup__panel {
-  @apply z-[80] rounded-md border border-card-border bg-card p-1 text-xs text-ink-700 shadow-none;
+  @apply z-[80] rounded-md border border-card-border bg-canvas p-1 text-xs text-ink-700 shadow-none;
 }

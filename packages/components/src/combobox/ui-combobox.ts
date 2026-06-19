@@ -260,7 +260,9 @@ export class UiCombobox {
 
     if (!this.disabled && !this.readonly) {
       this.focus = true;
-      await this.loadOptions(true, this.value);
+      // Load options for immediate filtering, but don't open the popup on focus —
+      // it opens on typing (onInput), ArrowDown/Up, or Ctrl+Space.
+      await this.loadOptions(false, this.value);
     } else if (!this.disabled) {
       this.focus = true;
     }

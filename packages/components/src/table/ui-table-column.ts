@@ -79,6 +79,7 @@ export class UiTableColumn implements EventListenerObject {
     event.preventDefault();
     event.stopPropagation();
     this.resizing = true;
+    this.table.freezeColumnWidths();
     this.startX = event.clientX;
     this.startWidth = this.host.getBoundingClientRect().width;
     this.resizeHandle?.setPointerCapture(event.pointerId);

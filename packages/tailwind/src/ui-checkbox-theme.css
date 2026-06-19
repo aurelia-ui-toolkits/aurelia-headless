@@ -1,6 +1,25 @@
 @reference "./theme.css";
 
+ui-checkbox {
+  @apply inline-flex;
+}
+
 .ui-checkbox {
+  @apply inline-flex flex-col align-middle;
+}
+
+.ui-checkbox__control {
+  @apply flex items-center gap-2;
+}
+
+/* Indent the box to line up with an input's native element (inputs pad their
+   control by --ui-field-padding-x). Only when it is a field, so bare checkboxes
+   in tables/lists/menus stay flush. */
+.ui-checkbox[data-field] .ui-checkbox__control {
+  padding-inline-start: var(--ui-field-padding-x);
+}
+
+.ui-checkbox__box {
   @apply relative inline-grid h-6 w-6 cursor-pointer place-items-center rounded-md border border-card-border bg-card align-middle;
   transition: background-color 140ms ease, border-color 140ms ease, transform 140ms ease;
 
@@ -41,7 +60,7 @@
   }
 }
 
-.ui-checkbox__control {
+.ui-checkbox__native {
   @apply absolute inset-0 m-0 h-full w-full cursor-pointer opacity-0;
 }
 
@@ -49,6 +68,23 @@
   @apply pointer-events-none absolute opacity-0;
 }
 
-.ui-checkbox-field {
-  padding-left: var(--ui-field-padding-x);
+.ui-checkbox__label {
+  @apply cursor-pointer select-none text-sm text-ink-900;
+}
+
+.ui-checkbox[data-disabled] .ui-checkbox__label {
+  @apply cursor-not-allowed opacity-60;
+}
+
+.ui-checkbox__subscript {
+  @apply text-xs leading-5;
+  padding-inline: var(--ui-field-padding-x);
+}
+
+.ui-checkbox__helper {
+  @apply text-ink-500;
+}
+
+.ui-checkbox__errors {
+  color: var(--color-validation-text);
 }

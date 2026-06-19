@@ -4,13 +4,18 @@
   aria-disabled.attr="progress ? 'true' : null"
   data-disabled.attr="progress ? '' : null"
   data-progress.attr="progress ? '' : null">
-  <ui-progress class="ui-table__progress" if.bind="progress" label="Loading table"></ui-progress>
-  <div class="ui-table__body">
+  <ui-progress class="ui-table__progress" if.bind="progress" label.bind="loadingText"></ui-progress>
+  <div class="ui-table__body" ui-context-menu="value.bind: columnMenu; filter: thead">
     <au-slot></au-slot>
   </div>
+  <ui-menu component.ref="columnMenu" portal-target="body">
+    <ui-list role="menu">
+      <ui-list-item non-selectable click.trigger="resetColumnWidths()">${resetColumnsText}</ui-list-item>
+    </ui-list>
+  </ui-menu>
   <div class="ui-table__pagination" if.bind="pagination">
     <div class="ui-table__page-size">
-      <span class="ui-table__page-size-label">Rows per page</span>
+      <span class="ui-table__page-size-label">${rowsPerPageText}</span>
       <ui-select class="ui-table__page-size-select"
         value.to-view="pageSize"
         inset.bind="false"
@@ -22,7 +27,7 @@
       </ui-select>
     </div>
     <div class="ui-table__page-size">
-      <span class="ui-table__page-size-label">Page</span>
+      <span class="ui-table__page-size-label">${pageText}</span>
       <ui-select class="ui-table__page-select"
         inset.bind="false"
         value.to-view="page"
@@ -35,22 +40,22 @@
     </div>
     <span class="ui-table__pagination-summary">${paginationText}</span>
     <div class="ui-table__pagination-actions">
-      <button ui-icon-button type="button" disabled.bind="page === 1" aria-label="First page" click.trigger="firstPage()">
+      <button ui-icon-button type="button" disabled.bind="page === 1" aria-label.bind="firstPageText" click.trigger="firstPage()">
         <svg class="ui-table__pagination-icon" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M6 5v14M18 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
       </button>
-      <button ui-icon-button type="button" disabled.bind="page === 1" aria-label="Previous page" click.trigger="previousPage()">
+      <button ui-icon-button type="button" disabled.bind="page === 1" aria-label.bind="previousPageText" click.trigger="previousPage()">
         <svg class="ui-table__pagination-icon" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
       </button>
-      <button ui-icon-button type="button" disabled.bind="page === totalPages" aria-label="Next page" click.trigger="nextPage()">
+      <button ui-icon-button type="button" disabled.bind="page === totalPages" aria-label.bind="nextPageText" click.trigger="nextPage()">
         <svg class="ui-table__pagination-icon" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
       </button>
-      <button ui-icon-button type="button" disabled.bind="page === totalPages" aria-label="Last page" click.trigger="lastPage()">
+      <button ui-icon-button type="button" disabled.bind="page === totalPages" aria-label.bind="lastPageText" click.trigger="lastPage()">
         <svg class="ui-table__pagination-icon" viewBox="0 0 24 24" aria-hidden="true">
           <path d="M18 5v14M6 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>

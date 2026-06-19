@@ -113,7 +113,7 @@
   @apply w-24 shrink-0;
 
   & .ui-select__value {
-    @apply justify-end text-right tabular-nums;
+    @apply h-8 justify-end text-right tabular-nums;
   }
 
   & .ui-list-item__primary {

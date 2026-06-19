@@ -27,6 +27,7 @@ export class AlertService {
   busy$ = new BehaviorSubject<boolean>(false);
   busyAccumulator$ = merge(this.increment$.pipe(map(() => 1)), this.decrement$.pipe(map(() => -1)))
     .pipe(
+      // eslint-disable-next-line no-useless-assignment
       scan((acc, v) => acc += v, 0),
       map(v => v > 0)
     ).subscribe(this.busy$);
@@ -59,11 +60,15 @@ export class AlertService {
   async open<TOptions, TModel = any, TComponent extends object = any>(options: IDialogSettings<TOptions, TModel, TComponent>): Promise<string | undefined> {
     try {
       this.hideProgress();
-      const result = await (await this.dialogService.open(options)).dialog.closed;
-      return typeof result.value === 'string' ? result.value : result.status;
+      return await this.openWithProgress(options);
     } finally {
       this.showProgress();
     }
+  }
+
+  async openWithProgress<TOptions, TModel = any, TComponent extends object = any>(options: IDialogSettings<TOptions, TModel, TComponent>): Promise<string | undefined> {
+    const result = await (await this.dialogService.open(options)).dialog.closed;
+    return typeof result.value === 'string' ? result.value : result.status;
   }
 
   async showModal(model: Partial<IAlertModalPayload>): Promise<string | undefined> {

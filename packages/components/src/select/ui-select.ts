@@ -1,9 +1,8 @@
-import { bindable, BindingMode, computed, CustomElement, customElement, IContainer, resolve, slotted, ValueConverter } from 'aurelia';
+import { bindable, BindingMode, computed, CustomElement, customElement, IContainer, queueTask, resolve, slotted, ValueConverter } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { IError, IValidatedElement } from '../base/i-validated-element';
 import { Keys } from '../base/keys';
 import { UiFieldConfiguration } from '../field/ui-field-configuration';
-import { UiList } from '../list/ui-list';
 import { UiMenu } from '../menu/ui-menu';
 import template from './ui-select.html?raw';
 
@@ -90,6 +89,9 @@ export class UiSelect {
 
   @bindable({ set: booleanAttr })
   invalid: boolean = false;
+
+  @bindable({ set: booleanAttr })
+  autofocus: boolean = false;
 
   @bindable
   portalTarget: string | Element | null | undefined;
@@ -215,6 +217,21 @@ export class UiSelect {
     if (event.key === Keys.Escape) {
       event.preventDefault();
       this.open = false;
+      return;
+    }
+
+    // Printable key: open the popup and forward the keystroke to the list's typeahead.
+    if (event.key.length === 1 && event.key !== ' ' && !event.ctrlKey && !event.metaKey && !event.altKey) {
+      this.open = true;
+      const char = event.key;
+      queueTask(() => {
+        const list = this.menu.list;
+        if (!list) {
+          return;
+        }
+        list.typeaheadField = this.labelField;
+        list.typeahead(char);
+      });
     }
   }
 
@@ -366,12 +383,7 @@ export class UiSelect {
   }
 
   private getMenuSelectedItems(): unknown[] | undefined {
-    const list = this.menu.popup.panelElement?.querySelector('ui-list');
-    if (!list) {
-      return undefined;
-    }
-
-    const selected = CustomElement.for<UiList>(list).viewModel.selected;
+    const selected = this.menu.list?.selected;
     return Array.isArray(selected) ? [...selected] : undefined;
   }
 

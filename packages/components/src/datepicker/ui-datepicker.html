@@ -15,6 +15,7 @@
       show.bind="label && inset">${label}</span>
 
     <input ref="inputEl" class="ui-datepicker__native" id.bind="id" name.attr="name || null"
+      autofocus.bind="autofocus"
       disabled.bind="disabled" readonly.bind="readonly" required.bind="required" inputmode="numeric"
       aria-labelledby.bind="label ? labelId : null" aria-invalid.bind="invalid || errors.size ? 'true' : 'false'"
       aria-describedby.bind="errors.size ? errorsId : (helperNodes.length ? helperId : null)"
@@ -35,7 +36,7 @@
     </span>
   </div>
 
-  <div class="ui-datepicker__subscript" show.bind="errors.size || helperText || helperNodes.length">
+  <div class="ui-datepicker__subscript">
     <div class="ui-datepicker__helper" id.bind="helperId"
       show.bind="!errors.size && (helperText || helperNodes.length)">
       <au-slot name="helper">${helperText}</au-slot>

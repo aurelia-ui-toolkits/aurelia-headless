@@ -1,5 +1,27 @@
 @reference "./theme.css";
 
 .ui-form {
-  @apply grid grid-cols-12 items-start gap-x-6 gap-y-[15px] overflow-visible px-[5px] pt-[15px] pb-[5px];
+  @apply grid grid-cols-12 items-start gap-x-6 gap-y-1 overflow-visible px-[5px] pt-[15px] pb-[5px];
+
+  /* Inside a form, reserve one validation line so rows don't jump when validation toggles. */
+  & .ui-input__subscript,
+  & .ui-select__subscript,
+  & .ui-combobox__subscript,
+  & .ui-datepicker__subscript,
+  & .ui-checkbox__subscript,
+  & .ui-validation-container__errors {
+    @apply min-h-4;
+  }
+
+  /* A labelled checkbox is a full field: stretch it across its grid cell, give its
+     control band the same height as an inset input's control so the box lines up,
+     and let the reserved __subscript line below provide the level-matching height. */
+  & .ui-checkbox[data-field] {
+    @apply w-full;
+  }
+
+  & .ui-checkbox[data-field] .ui-checkbox__control {
+    min-height: 2.15rem; /* matches the inset input control band */
+    align-items: center; /* centre the box within the band */
+  }
 }

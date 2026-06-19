@@ -17,6 +17,9 @@ export function usingProgress(errorMessage?: string | Partial<IAlertModalPayload
       return this.alertService.usingProgress(async () => {
         return originalMethod.call(this, ...args, abortController.signal);
       }, async e => {
+        if (e.name === 'AbortError') {
+          return;
+        }
         const message = errorMessage instanceof Function ? errorMessage(e) : errorMessage;
         if (e.nonCritical) {
           await this.alertService.error(message ?? e.message);
