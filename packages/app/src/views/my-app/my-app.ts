@@ -82,11 +82,17 @@ export class MyApp {
   readonly logoUrl = logoUrl;
   selectedMenuItem: DemoRoute = this.menuItems[0];
   breadcrumbs: UiBreadcrumbItem[] = [];
-  themePackage: ThemePackage = this.loadThemePackage();
 
   @observable
   darkTheme = false;
   darkThemeChanged(): void {
+    this.applyTheme();
+    this.persistTheme();
+  }
+
+  @observable
+  compactTheme = this.loadThemePackage();
+  compactThemeChanged(): void {
     this.applyTheme();
     this.persistTheme();
   }
@@ -135,19 +141,6 @@ export class MyApp {
     void this.router.load(path || '');
   }
 
-  selectThemePackage(themePackage: string): void {
-    if (themePackage !== 'default' && themePackage !== 'compact') {
-      return;
-    }
-
-    if (themePackage === this.loadThemePackage()) {
-      return;
-    }
-
-    localStorage.setItem('aurelia-headless:theme-package', themePackage);
-    location.reload();
-  }
-
   private isMobile(): boolean {
     return globalThis.matchMedia?.(mobileQuery).matches ?? false;
   }
@@ -155,6 +148,7 @@ export class MyApp {
   private persistTheme(): void {
     try {
       localStorage.setItem('aurelia-headless:theme', this.darkTheme ? 'dark' : 'light');
+      localStorage.setItem('aurelia-headless:density', this.compactTheme ? 'compact' : 'default');
     } catch {
       // Ignore unavailable storage.
     }
@@ -162,6 +156,7 @@ export class MyApp {
 
   private applyTheme(): void {
     document.documentElement.dataset.theme = this.darkTheme ? 'dark' : 'light';
+    document.documentElement.dataset.density = this.compactTheme ? 'compact' : 'default';
   }
 
   private loadTheme(): boolean {
@@ -178,7 +173,7 @@ export class MyApp {
 
   private loadThemePackage(): ThemePackage {
     try {
-      return localStorage.getItem('aurelia-headless:theme-package') === 'compact' ? 'compact' : 'default';
+      return localStorage.getItem('aurelia-headless:density') === 'compact' ? 'compact' : 'default';
     } catch {
       return 'default';
     }

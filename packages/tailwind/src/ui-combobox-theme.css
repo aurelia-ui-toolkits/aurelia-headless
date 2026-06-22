@@ -41,8 +41,8 @@ ui-combobox,
   &[data-inset] {
     & .ui-combobox__native {
       height: var(--ui-field-inset-control-height);
-      padding-top: 0.75rem;
-      padding-bottom: 0.25rem;
+      padding-top: var(--ui-field-inset-padding-top);
+      padding-bottom: var(--ui-field-inset-padding-bottom);
     }
 
     & .ui-combobox__label {
@@ -51,8 +51,8 @@ ui-combobox,
 
     &[data-focus] .ui-combobox__inset-label,
     &[data-has-value] .ui-combobox__inset-label {
-      transform: translateY(-0.5rem) scale(0.75);
-      font-size: 0.75rem;
+      transform: translateY(-0.5rem) scale(var(--ui-field-inset-label-scale));
+      font-size: var(--ui-field-inset-label-font-size);
       color: var(--color-ink-700);
     }
   }
@@ -67,6 +67,7 @@ ui-combobox,
 .ui-combobox__control {
   @apply grid w-full grid-cols-[auto_1fr_auto] items-center gap-0 rounded-xl border border-card-border bg-transparent outline-none;
   position: relative;
+  border-radius: var(--ui-field-radius);
   padding-inline: var(--ui-field-padding-x);
   transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
 }
@@ -106,6 +107,8 @@ ui-combobox,
 
 .ui-combobox__native {
   @apply min-w-0 w-full bg-transparent text-sm text-ink-900 outline-none;
+  font-size: var(--ui-field-font-size);
+  line-height: var(--ui-field-line-height);
   grid-column: 2;
   grid-row: 1;
   height: var(--ui-field-control-height);
@@ -122,6 +125,8 @@ ui-combobox,
 
 .ui-combobox__subscript {
   @apply text-xs leading-5;
+  font-size: var(--ui-field-subscript-font-size);
+  line-height: var(--ui-field-subscript-line-height);
   padding-inline: var(--ui-field-padding-x);
 }
 

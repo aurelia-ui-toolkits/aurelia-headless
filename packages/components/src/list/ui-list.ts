@@ -98,6 +98,13 @@ export class UiList {
   }
 
   onKeyDown(event: KeyboardEvent): void {
+    // Don't hijack keys (typeahead/navigation) when focus is in an editable control such as a
+    // search box nested in the list — preventing default there would block typing.
+    const target = event.target as HTMLElement;
+    if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) {
+      return;
+    }
+
     const values = this.getEffectiveItems();
     if (values.length === 0) {
       return;

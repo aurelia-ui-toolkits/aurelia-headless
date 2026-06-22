@@ -8,11 +8,10 @@
       </svg>
     </button>
     <ui-breadcrumbs au-slot="breadcrumbs" items.bind="breadcrumbs"></ui-breadcrumbs>
-    <ui-segmented-control au-slot="actions" class="theme-package-control" value.two-way="themePackage"
-      label="Theme package" change.trigger="selectThemePackage(themePackage)">
-      <ui-segment value="default">Default</ui-segment>
-      <ui-segment value="compact">Compact</ui-segment>
-    </ui-segmented-control>
+    <label au-slot="actions" class="theme-toggle">
+      <span class="theme-toggle__label">Compact</span>
+      <ui-switch checked.two-way="compactTheme" aria-label="Toggle compact theme"></ui-switch>
+    </label>
     <label au-slot="actions" class="theme-toggle">
       <span class="theme-toggle__label">Dark</span>
       <ui-switch checked.two-way="darkTheme" aria-label="Toggle dark theme"></ui-switch>

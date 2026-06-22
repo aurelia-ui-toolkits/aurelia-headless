@@ -4,6 +4,9 @@
 
 .ui-button {
   @apply inline-flex cursor-pointer select-none items-center justify-center rounded-[0.65rem] border-2 border-transparent px-4 py-2 align-middle font-bold leading-none no-underline;
+  border-radius: var(--ui-button-radius);
+  font-size: var(--ui-button-font-size);
+  padding: var(--ui-button-padding-y) var(--ui-button-padding-x);
   transition: background-color 140ms ease, transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
 
   &[data-focus] {
@@ -86,19 +89,26 @@
 
 .ui-icon-button {
   @apply inline-grid cursor-pointer select-none place-items-center rounded-lg border border-transparent bg-transparent text-ink-700;
+  border-radius: var(--ui-icon-button-radius);
   line-height: 0;
   transition: background-color 140ms ease, transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease, color 140ms ease;
 
   &[data-size="small"] {
     @apply h-8 w-8;
+    height: var(--ui-icon-button-small-size);
+    width: var(--ui-icon-button-small-size);
   }
 
   &[data-size="medium"] {
     @apply h-9 w-9;
+    height: var(--ui-icon-button-medium-size);
+    width: var(--ui-icon-button-medium-size);
   }
 
   &[data-size="large"] {
     @apply h-11 w-11;
+    height: var(--ui-icon-button-large-size);
+    width: var(--ui-icon-button-large-size);
   }
 
   &[data-hover] {
@@ -142,4 +152,6 @@
 
 .ui-icon-button {
   @apply h-9 w-9;
+  height: var(--ui-icon-button-size);
+  width: var(--ui-icon-button-size);
 }

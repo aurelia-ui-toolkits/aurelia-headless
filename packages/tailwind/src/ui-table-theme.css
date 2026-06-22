@@ -2,6 +2,7 @@
 
 .ui-table {
   @apply relative flex max-h-full flex-col overflow-hidden rounded-xl border border-card-border bg-transparent;
+  border-radius: var(--ui-table-radius);
 
   &[data-disabled] {
     @apply pointer-events-none opacity-70;
@@ -17,12 +18,15 @@
 
   & table {
     @apply w-full border-collapse text-sm;
+    font-size: var(--ui-table-font-size);
+    line-height: var(--ui-table-line-height);
     table-layout: fixed;
   }
 
   & th,
   & td {
     @apply truncate border-b border-card-border px-3 py-2 text-left align-middle;
+    padding: var(--ui-table-cell-padding-y) var(--ui-table-cell-padding-x);
   }
 
   & td {
@@ -94,6 +98,9 @@
 
 .ui-table__pagination {
   @apply flex flex-none flex-wrap items-center justify-end gap-6 border-t border-card-border px-5 py-1.5 text-sm text-ink-900;
+  gap: var(--ui-table-pagination-gap);
+  padding: var(--ui-table-pagination-padding-y) var(--ui-table-pagination-padding-x);
+  font-size: var(--ui-table-pagination-font-size);
 }
 
 .ui-table__pagination-actions {
