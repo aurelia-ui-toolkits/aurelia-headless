@@ -2,6 +2,8 @@
 
 .ui-tree {
   @apply grid rounded-xl border border-card-border bg-transparent p-1;
+  border-radius: var(--ui-tree-radius);
+  padding: var(--ui-tree-padding);
 
   &:focus {
     outline: none;
@@ -10,6 +12,7 @@
   &[data-toggle-position="right"] {
     & .ui-tree__item {
       @apply grid-cols-[minmax(0,1fr)_auto] pl-2;
+      padding-left: calc(var(--ui-tree-indent-base) + var(--ui-tree-depth) * var(--ui-tree-indent));
     }
 
     & .ui-tree__toggle {
@@ -18,14 +21,18 @@
 
     & .ui-tree__content {
       @apply col-start-1 row-start-1;
-      padding-left: calc(var(--ui-tree-depth) * 1.25rem);
+      padding-left: calc(var(--ui-tree-depth) * var(--ui-tree-indent));
     }
   }
 }
 
 .ui-tree__item {
   @apply grid cursor-pointer grid-cols-[auto_1fr] items-center rounded-lg py-1.5 pr-2 text-sm text-ink-700 outline-none;
-  padding-left: calc(0.25rem + var(--ui-tree-depth) * 1.25rem);
+  border-radius: var(--ui-tree-item-radius);
+  font-size: var(--ui-tree-item-font-size);
+  line-height: var(--ui-tree-item-line-height);
+  min-height: var(--ui-tree-item-min-height);
+  padding: var(--ui-tree-item-padding-y) var(--ui-tree-item-padding-right) var(--ui-tree-item-padding-y) calc(var(--ui-tree-indent-base) + var(--ui-tree-depth) * var(--ui-tree-indent));
   transition: background-color 140ms ease, color 140ms ease, box-shadow 140ms ease;
 
   &:hover,
@@ -61,6 +68,9 @@
 
 .ui-tree__toggle {
   @apply grid h-6 w-6 place-items-center rounded-md text-ink-500 outline-none;
+  border-radius: var(--ui-tree-toggle-radius);
+  height: var(--ui-tree-toggle-size);
+  width: var(--ui-tree-toggle-size);
 
   &:hover {
     background: var(--color-subtle-overlay);

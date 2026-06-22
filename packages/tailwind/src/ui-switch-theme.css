@@ -1,8 +1,11 @@
 @reference "./theme.css";
 
 .ui-switch {
-  @apply relative inline-block h-7 w-12 cursor-pointer overflow-hidden rounded-full border border-card-border bg-card-muted align-middle;
+  @apply relative inline-block cursor-pointer overflow-hidden rounded-full border border-card-border bg-card-muted align-middle;
+  --ui-switch-checked-translate: calc(var(--ui-switch-width) - var(--ui-switch-thumb-size) - var(--ui-switch-thumb-offset) * 2);
+  height: var(--ui-switch-height);
   transition: background-color 140ms ease, border-color 140ms ease;
+  width: var(--ui-switch-width);
 
   &[data-changing] {
     transition-duration: 90ms;
@@ -12,11 +15,11 @@
     @apply border-primary-600 bg-primary-600;
 
     & .ui-switch__thumb {
-      transform: translateX(1.5rem);
+      transform: translateX(var(--ui-switch-checked-translate));
     }
 
     &[data-active] .ui-switch__thumb {
-      transform: translateX(1.4rem);
+      transform: translateX(calc(var(--ui-switch-checked-translate) - var(--ui-switch-active-offset)));
     }
   }
 
@@ -26,7 +29,7 @@
   }
 
   &[data-active] .ui-switch__thumb {
-    transform: translateX(0.1rem);
+    transform: translateX(var(--ui-switch-active-offset));
   }
 
   &[data-disabled] {
@@ -35,6 +38,9 @@
 }
 
 .ui-switch__thumb {
-  @apply absolute bottom-0 left-0.5 top-0 my-auto h-5 w-5 rounded-full bg-card shadow-sm;
+  @apply absolute bottom-0 top-0 my-auto rounded-full bg-card shadow-sm;
+  height: var(--ui-switch-thumb-size);
+  left: var(--ui-switch-thumb-offset);
   transition: transform 140ms ease;
+  width: var(--ui-switch-thumb-size);
 }

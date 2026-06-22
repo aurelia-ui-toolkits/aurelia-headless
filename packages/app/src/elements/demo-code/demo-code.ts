@@ -33,6 +33,7 @@ export class DemoCode {
     this.updateHtml();
     this.observer = new MutationObserver(() => this.updateHtml());
     this.observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    this.observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-density'] });
   }
 
   detaching(): void {

@@ -3,11 +3,14 @@ import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
 import { IError, IValidatedElement } from '../base/i-validated-element';
 import template from './ui-checkbox.html?raw';
+import { UiFieldConfiguration } from '../field/ui-field-configuration';
 
 let nextCheckboxId = 0;
 
 @customElement({ name: 'ui-checkbox', template })
 export class UiCheckbox {
+  private readonly configuration = resolve(UiFieldConfiguration);
+
   constructor() {
     defineUiCheckboxElementApis(resolve(Element) as HTMLElement);
   }
@@ -23,6 +26,9 @@ export class UiCheckbox {
 
   @bindable({ set: booleanAttr })
   invalid: boolean = false;
+
+  @bindable({ set: booleanAttr })
+  inset: boolean = this.configuration.defaultInset;
 
   @bindable
   id: string = `ui-checkbox-${++nextCheckboxId}`;

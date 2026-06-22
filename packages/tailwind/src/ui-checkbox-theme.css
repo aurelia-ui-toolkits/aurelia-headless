@@ -10,6 +10,7 @@ ui-checkbox {
 
 .ui-checkbox__control {
   @apply flex items-center gap-2;
+  gap: var(--ui-checkbox-gap);
 }
 
 /* Indent the box to line up with an input's native element (inputs pad their
@@ -21,6 +22,9 @@ ui-checkbox {
 
 .ui-checkbox__box {
   @apply relative inline-grid h-6 w-6 cursor-pointer place-items-center rounded-md border border-card-border bg-card align-middle;
+  border-radius: var(--ui-checkbox-radius);
+  height: var(--ui-checkbox-size);
+  width: var(--ui-checkbox-size);
   transition: background-color 140ms ease, border-color 140ms ease, transform 140ms ease;
 
   &[data-changing] {
@@ -45,6 +49,8 @@ ui-checkbox {
     @apply h-2.5 w-1.5 border-b-2 border-r-2 opacity-100;
     background: transparent;
     border-color: var(--color-on-primary);
+    height: var(--ui-checkbox-check-height);
+    width: var(--ui-checkbox-check-width);
     transform: rotate(45deg) translate(-1px, -1px);
   }
 
@@ -52,6 +58,8 @@ ui-checkbox {
     @apply h-0.5 w-3 rounded-sm opacity-100;
     background: var(--color-on-primary);
     border: 0;
+    height: var(--ui-checkbox-indeterminate-height);
+    width: var(--ui-checkbox-indeterminate-width);
     transform: none;
   }
 
@@ -70,6 +78,8 @@ ui-checkbox {
 
 .ui-checkbox__label {
   @apply cursor-pointer select-none text-sm text-ink-900;
+  font-size: var(--ui-checkbox-label-font-size);
+  line-height: var(--ui-checkbox-label-line-height);
 }
 
 .ui-checkbox[data-disabled] .ui-checkbox__label {
@@ -78,6 +88,8 @@ ui-checkbox {
 
 .ui-checkbox__subscript {
   @apply text-xs leading-5;
+  font-size: var(--ui-field-subscript-font-size);
+  line-height: var(--ui-field-subscript-line-height);
   padding-inline: var(--ui-field-padding-x);
 }
 

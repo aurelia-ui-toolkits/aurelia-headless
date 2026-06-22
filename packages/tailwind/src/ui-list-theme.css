@@ -2,18 +2,25 @@
 
 .ui-list {
   @apply block overflow-hidden rounded-xl border border-card-border bg-transparent p-1 outline-none select-none;
+  border-radius: var(--ui-list-radius);
+  padding: var(--ui-list-padding);
 
   & .ui-list__scroller {
     @apply grid h-full min-h-0 max-h-[inherit] gap-1 overflow-auto content-start;
+    gap: var(--ui-list-gap);
   }
 }
 
 .ui-list-item {
   @apply grid grid-cols-[auto_1fr_auto] items-center gap-0 rounded-lg px-3 py-2 text-sm text-ink-700;
+  border-radius: var(--ui-list-item-radius);
+  font-size: var(--ui-list-item-font-size);
+  line-height: var(--ui-list-item-line-height);
+  padding: var(--ui-list-item-padding-y) var(--ui-list-item-padding-x);
   transition: background-color 140ms ease;
 
   &[data-secondary] {
-    min-height: 3.25rem;
+    min-height: var(--ui-list-secondary-min-height);
   }
 
   /* In single-line items, cap the action icon button box to the text line height so it neither
@@ -59,17 +66,18 @@
 
 .ui-list-item__leading {
   @apply col-start-1;
-  margin-right: 0.75rem;
+  margin-right: var(--ui-list-icon-gap);
 }
 
 .ui-list-item__trailing {
   @apply col-start-3;
   justify-self: end;
-  margin-left: 0.75rem;
+  margin-left: var(--ui-list-icon-gap);
 }
 
 .ui-list-item__content {
   @apply min-w-0 grid gap-0.5 col-start-2;
+  gap: var(--ui-list-content-gap);
 }
 
 .ui-list-item__primary {

@@ -10,7 +10,6 @@
     "aurelia": ">=2.0.0-rc.1",
     "@aurelia-ui-toolkits/headless": "*",
     "@aurelia-ui-toolkits/headless-tailwind": "*",
-    "@aurelia-ui-toolkits/headless-tailwind-compact": "*",
     "shiki": "^4.0.2"
   }
 }

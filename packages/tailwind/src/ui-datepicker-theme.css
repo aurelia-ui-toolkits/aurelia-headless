@@ -37,8 +37,8 @@ ui-datepicker,
   &[data-inset] {
     & .ui-datepicker__native {
       height: var(--ui-field-inset-control-height);
-      padding-top: 0.75rem;
-      padding-bottom: 0.25rem;
+      padding-top: var(--ui-field-inset-padding-top);
+      padding-bottom: var(--ui-field-inset-padding-bottom);
     }
 
     & .ui-datepicker__label {
@@ -47,8 +47,8 @@ ui-datepicker,
 
     &[data-focus] .ui-datepicker__inset-label,
     &[data-has-value] .ui-datepicker__inset-label {
-      transform: translateY(-0.5rem) scale(0.75);
-      font-size: 0.75rem;
+      transform: translateY(-0.5rem) scale(var(--ui-field-inset-label-scale));
+      font-size: var(--ui-field-inset-label-font-size);
       color: var(--color-ink-700);
     }
   }
@@ -63,6 +63,7 @@ ui-datepicker,
 .ui-datepicker__control {
   @apply grid w-full grid-cols-[auto_1fr_auto] items-center gap-0 rounded-xl border border-card-border bg-transparent;
   position: relative;
+  border-radius: var(--ui-field-radius);
   padding-inline: var(--ui-field-padding-x);
   transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
 }
@@ -86,6 +87,8 @@ ui-datepicker,
 
 .ui-datepicker__button-icon {
   @apply h-4 w-4;
+  height: var(--ui-datepicker-button-icon-size);
+  width: var(--ui-datepicker-button-icon-size);
 }
 
 .ui-datepicker__inset-label {
@@ -101,6 +104,8 @@ ui-datepicker,
 
 .ui-datepicker__native {
   @apply min-w-0 w-full bg-transparent text-sm text-ink-900 outline-none;
+  font-size: var(--ui-field-font-size);
+  line-height: var(--ui-field-line-height);
   grid-column: 2;
   grid-row: 1;
   height: var(--ui-field-control-height);
@@ -117,6 +122,8 @@ ui-datepicker,
 
 .ui-datepicker__subscript {
   @apply text-xs leading-5;
+  font-size: var(--ui-field-subscript-font-size);
+  line-height: var(--ui-field-subscript-line-height);
   padding-inline: var(--ui-field-padding-x);
 }
 
@@ -132,10 +139,11 @@ dialog:has(.ui-datepicker-dialog) {
   @apply rounded-2xl border bg-canvas p-0 text-ink-900 shadow-2xl;
   animation: ui-datepicker-dialog-in 140ms ease-out;
   border-color: var(--color-card-border);
+  border-radius: var(--ui-datepicker-dialog-radius);
   inset: 0;
   margin: auto;
-  max-width: min(92vw, 28rem);
-  width: min(92vw, 28rem);
+  max-width: min(92vw, var(--ui-datepicker-dialog-width));
+  width: min(92vw, var(--ui-datepicker-dialog-width));
   overflow: visible;
 
   &::backdrop {
@@ -170,6 +178,9 @@ dialog:has(.ui-datepicker-dialog) {
 
 .ui-datepicker-dialog {
   @apply grid w-full gap-4 rounded-2xl bg-canvas p-5 text-ink-900;
+  border-radius: var(--ui-datepicker-dialog-radius);
+  gap: var(--ui-datepicker-dialog-gap);
+  padding: var(--ui-datepicker-dialog-padding);
   overflow: visible;
 }
 
@@ -180,26 +191,37 @@ dialog:has(.ui-datepicker-dialog) {
 
 .ui-datepicker-dialog__header {
   @apply grid gap-1;
+  gap: var(--ui-datepicker-dialog-header-gap);
 }
 
 .ui-datepicker-dialog__label {
   @apply text-xs font-bold uppercase tracking-wide text-ink-500;
+  font-size: var(--ui-datepicker-dialog-label-font-size);
 }
 
 .ui-datepicker-dialog__title {
   @apply m-0 text-2xl font-bold tracking-tight text-ink-900;
+  font-size: var(--ui-datepicker-dialog-title-font-size);
+  line-height: var(--ui-datepicker-dialog-title-line-height);
 }
 
 .ui-datepicker-dialog__body {
   @apply grid gap-4;
+  gap: var(--ui-datepicker-dialog-body-gap);
 }
 
 .ui-datepicker-dialog__nav {
   @apply grid grid-cols-[minmax(0,1fr)_6rem_auto_auto] items-center gap-2;
+  gap: var(--ui-datepicker-dialog-nav-gap);
+  grid-template-columns: minmax(0, 1fr) var(--ui-datepicker-dialog-nav-year-width) auto auto;
 }
 
 .ui-datepicker-dialog__time-field input {
   @apply rounded-lg border border-card-border bg-transparent py-2 text-sm font-semibold text-ink-900 outline-none;
+  border-radius: var(--ui-field-radius);
+  font-size: var(--ui-field-font-size);
+  line-height: var(--ui-field-line-height);
+  padding-block: var(--ui-datepicker-dialog-time-input-padding-y);
   padding-inline: var(--ui-field-padding-x);
 
   &:focus {
@@ -214,18 +236,26 @@ dialog:has(.ui-datepicker-dialog) {
 
 .ui-datepicker-dialog__nav-icon {
   @apply h-4 w-4;
+  height: var(--ui-datepicker-dialog-nav-icon-size);
+  width: var(--ui-datepicker-dialog-nav-icon-size);
 }
 
 .ui-datepicker-dialog__calendar {
   @apply grid grid-cols-7 gap-1;
+  gap: var(--ui-datepicker-dialog-calendar-gap);
 }
 
 .ui-datepicker-dialog__weekday {
   @apply grid h-8 place-items-center text-xs font-bold text-ink-500;
+  font-size: var(--ui-datepicker-dialog-weekday-font-size);
+  height: var(--ui-datepicker-dialog-weekday-size);
 }
 
 .ui-datepicker-dialog__day {
   @apply grid h-10 place-items-center rounded-full border border-transparent bg-transparent text-sm font-semibold text-ink-700 outline-none;
+  font-size: var(--ui-datepicker-dialog-day-font-size);
+  height: var(--ui-datepicker-dialog-day-size);
+  line-height: var(--ui-datepicker-dialog-day-line-height);
 
   &:hover:not(:disabled) {
     @apply bg-outline-hover text-ink-900;
@@ -255,12 +285,17 @@ dialog:has(.ui-datepicker-dialog) {
 
 .ui-datepicker-dialog__time {
   @apply grid grid-cols-2 gap-3 rounded-xl border border-card-border bg-card-muted p-3;
+  border-radius: var(--ui-datepicker-dialog-time-radius);
+  gap: var(--ui-datepicker-dialog-time-gap);
+  padding: var(--ui-datepicker-dialog-time-padding);
 }
 
 .ui-datepicker-dialog__time-field {
   @apply grid gap-1 text-xs font-bold text-ink-500;
+  font-size: var(--ui-datepicker-dialog-time-label-font-size);
 }
 
 .ui-datepicker-dialog__actions {
   @apply flex justify-end gap-4;
+  gap: var(--ui-datepicker-dialog-actions-gap);
 }
