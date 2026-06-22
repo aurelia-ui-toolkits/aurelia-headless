@@ -29,5 +29,3 @@ jobs:
       - run: npm pack --dry-run -w packages/components
 
       - run: npm pack --dry-run -w packages/tailwind
-
-      - run: npm pack --dry-run -w packages/tailwind-compact

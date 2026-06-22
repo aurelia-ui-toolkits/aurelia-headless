@@ -6,18 +6,11 @@ Headless UI components for Aurelia 2, with optional swappable Tailwind CSS theme
 
 - `@aurelia-ui-toolkits/headless`: component primitives and services.
 - `@aurelia-ui-toolkits/headless-tailwind`: default Tailwind CSS theme for the components.
-- `@aurelia-ui-toolkits/headless-tailwind-compact`: standalone compact Tailwind CSS theme for the components.
 
 ## Install
 
 ```shell
 npm install @aurelia-ui-toolkits/headless @aurelia-ui-toolkits/headless-tailwind
-```
-
-Install the compact theme too if you want a denser ready-made theme:
-
-```shell
-npm install @aurelia-ui-toolkits/headless-tailwind-compact
 ```
 
 Install peer dependencies if your app does not already include them:
@@ -48,17 +41,11 @@ Aurelia
 
 ## Theme
 
-Themes are just CSS packages. The components do not depend on a specific theme, so swapping the look is usually changing one import.
+Themes are just CSS packages. The components do not depend on a specific theme, so applying the ready-made theme is one import.
 
 ```ts
-// Default theme
 import '@aurelia-ui-toolkits/headless-tailwind';
-
-// Compact theme
-// import '@aurelia-ui-toolkits/headless-tailwind-compact';
 ```
-
-Both shipped themes are standalone packages. The compact theme does not layer on top of the default theme, so an app imports one theme package at a time.
 
 Apps can also override tokens by importing custom CSS after the package theme.
 

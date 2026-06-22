@@ -12,12 +12,7 @@ import { RoleLabelValueConverter } from './value-converters/role-label';
 
 import { RegexRule, RequiredRule, ValidationConfiguration } from '@aurelia/validation';
 
-const themePackage = localStorage.getItem('aurelia-headless:theme-package');
-if (themePackage === 'compact') {
-  await import('@aurelia-ui-toolkits/headless-tailwind-compact');
-} else {
-  await import('@aurelia-ui-toolkits/headless-tailwind');
-}
+await import('@aurelia-ui-toolkits/headless-tailwind');
 
 Aurelia
   .register(
