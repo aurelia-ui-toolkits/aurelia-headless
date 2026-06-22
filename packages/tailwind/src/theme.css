@@ -73,6 +73,11 @@
   --ui-checkbox-check-width: 0.375rem;
   --ui-checkbox-indeterminate-height: 0.125rem;
   --ui-checkbox-indeterminate-width: 0.75rem;
+  --ui-switch-height: 1.75rem;
+  --ui-switch-width: 3rem;
+  --ui-switch-thumb-size: 1.25rem;
+  --ui-switch-thumb-offset: 0.125rem;
+  --ui-switch-active-offset: 0.1rem;
   --ui-icon-button-radius: 0.5rem;
   --ui-icon-button-size: 2.25rem;
   --ui-icon-button-small-size: 2rem;
@@ -211,6 +216,11 @@
   --ui-checkbox-check-width: 0.375rem;
   --ui-checkbox-indeterminate-height: 0.125rem;
   --ui-checkbox-indeterminate-width: 0.75rem;
+  --ui-switch-height: 1.75rem;
+  --ui-switch-width: 3rem;
+  --ui-switch-thumb-size: 1.25rem;
+  --ui-switch-thumb-offset: 0.125rem;
+  --ui-switch-active-offset: 0.1rem;
   --ui-icon-button-radius: 0.5rem;
   --ui-icon-button-size: 2.25rem;
   --ui-icon-button-small-size: 2rem;
@@ -314,6 +324,11 @@
   --ui-checkbox-check-width: 0.3rem;
   --ui-checkbox-indeterminate-height: 0.125rem;
   --ui-checkbox-indeterminate-width: 0.5rem;
+  --ui-switch-height: 1.25rem;
+  --ui-switch-width: 2.25rem;
+  --ui-switch-thumb-size: 0.875rem;
+  --ui-switch-thumb-offset: 0.125rem;
+  --ui-switch-active-offset: 0.1rem;
   --ui-icon-button-radius: 0.125rem;
   --ui-icon-button-size: 1.75rem;
   --ui-icon-button-small-size: 1.5rem;
