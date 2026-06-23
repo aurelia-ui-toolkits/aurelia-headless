@@ -23,6 +23,7 @@ export class UiProgress {
   circular: boolean = false;
 
   indeterminate = true;
+  activeDeterminate = false;
   normalizedMax = 100;
   normalizedValue = 0;
   barStyle: string | undefined;
@@ -37,6 +38,7 @@ export class UiProgress {
     this.normalizedMax = max > 0 ? max : 100;
     this.indeterminate = this.value === undefined || this.value === null || Number.isNaN(Number(this.value));
     if (this.indeterminate) {
+      this.activeDeterminate = false;
       this.normalizedValue = 0;
       this.barStyle = undefined;
       this.circleStyle = undefined;
@@ -44,6 +46,7 @@ export class UiProgress {
     }
 
     this.normalizedValue = Math.max(0, Math.min(Number(this.value), this.normalizedMax));
+    this.activeDeterminate = this.normalizedValue < this.normalizedMax;
     const percent = this.normalizedValue / this.normalizedMax * 100;
     this.barStyle = `width: ${percent}%`;
     this.circleStyle = `stroke-dasharray: ${percent} 100`;
