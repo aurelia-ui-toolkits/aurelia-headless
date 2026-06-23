@@ -395,9 +395,9 @@
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --color-ink-900: #ffffffde;
-  --color-ink-700: #ffffffb3;
-  --color-ink-500: #ffffff99;
+  --color-ink-900: #ffffffcc;
+  --color-ink-700: #ffffffa6;
+  --color-ink-500: #ffffff80;
   --color-canvas: #121212;
   --color-card: #282828;
   --color-card-muted: #1f1f1f;
@@ -410,7 +410,7 @@
   --color-outline-active: #1d4c70;
   --color-selected: #1d4c70;
   --color-selected-hover: #26618f;
-  --color-on-selected: #ffffffde;
+  --color-on-selected: #ffffffcc;
   --color-info-bg: #102d43;
   --color-info-text: #d6efff;
   --color-info-border: #2f658a;

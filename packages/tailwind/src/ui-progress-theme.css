@@ -21,6 +21,13 @@
     @apply absolute w-1/3;
     animation: ui-progress-indeterminate 1.1s ease-in-out infinite;
   }
+
+  &[data-active-determinate]:not([data-circular]):not([data-indeterminate]) .ui-progress__track::after {
+    @apply absolute inset-y-0 left-0 w-1/3 rounded-full;
+    content: "";
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.45), transparent);
+    animation: ui-progress-active-determinate 1.3s ease-in-out infinite;
+  }
 }
 
 .ui-progress__track {
@@ -59,6 +66,16 @@
 
   100% {
     transform: translateX(320%);
+  }
+}
+
+@keyframes ui-progress-active-determinate {
+  0% {
+    transform: translateX(-120%);
+  }
+
+  100% {
+    transform: translateX(420%);
   }
 }
 

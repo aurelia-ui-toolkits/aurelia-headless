@@ -4,6 +4,7 @@
   aria-disabled.attr="progress ? 'true' : null"
   data-disabled.attr="progress ? '' : null"
   data-progress.attr="progress ? '' : null">
+  <style if.bind="columnWidths.length" textcontent.bind="columnStyleText"></style>
   <ui-progress class="ui-table__progress" if.bind="progress" label.bind="loadingText"></ui-progress>
   <div class="ui-table__body" ui-context-menu="value.bind: columnMenu; filter: thead">
     <au-slot></au-slot>

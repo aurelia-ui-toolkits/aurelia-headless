@@ -293,6 +293,24 @@ export class UiCombobox {
     this.active = false;
   }
 
+  async onChevronPointerDown(event: PointerEvent): Promise<void> {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (this.disabled || this.readonly) {
+      return;
+    }
+
+    this.focus = true;
+    this.inputEl.focus();
+    if (this.open) {
+      this.open = false;
+      return;
+    }
+
+    await this.loadOptions(true, this.value);
+  }
+
   private getItemValue(item: unknown): unknown {
     if (this.valueField instanceof Function) {
       return this.valueField(item);

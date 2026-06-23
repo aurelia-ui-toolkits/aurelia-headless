@@ -6,7 +6,8 @@
   aria-valuenow.attr="indeterminate ? null : normalizedValue"
   aria-valuetext.attr="indeterminate ? 'Loading' : null"
   data-circular.attr="circular ? '' : null"
-  data-indeterminate.attr="indeterminate ? '' : null">
+  data-indeterminate.attr="indeterminate ? '' : null"
+  data-active-determinate.attr="activeDeterminate ? '' : null">
   <span class="ui-progress__track" aria-hidden="true" if.bind="!circular">
     <span class="ui-progress__bar" style.bind="barStyle"></span>
   </span>

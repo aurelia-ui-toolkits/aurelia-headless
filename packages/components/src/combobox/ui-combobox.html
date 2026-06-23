@@ -48,9 +48,10 @@
       pointerleave.trigger="onPointerLeave()">
 
     <span class="ui-combobox__trailing">
-      <au-slot name="trailing">
+      <au-slot name="trailing"></au-slot>
+      <span class="ui-combobox__chevron-button" pointerdown.trigger="onChevronPointerDown($event)">
         <span class="ui-combobox__chevron" aria-hidden="true"></span>
-      </au-slot>
+      </span>
     </span>
   </div>
 
