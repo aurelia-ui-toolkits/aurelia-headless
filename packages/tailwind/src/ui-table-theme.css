@@ -17,20 +17,17 @@
   }
 
   & table {
-    @apply w-full border-collapse text-sm;
+    @apply border-collapse text-sm;
     font-size: var(--ui-table-font-size);
     line-height: var(--ui-table-line-height);
-    table-layout: fixed;
+    table-layout: auto;
+    width: max-content;
   }
 
   & th,
   & td {
     @apply truncate border-b border-card-border px-3 py-2 text-left align-middle;
     padding: var(--ui-table-cell-padding-y) var(--ui-table-cell-padding-x);
-  }
-
-  & td {
-    @apply max-w-0;
   }
 
   & th {

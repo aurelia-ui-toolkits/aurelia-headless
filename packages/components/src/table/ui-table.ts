@@ -7,6 +7,8 @@ import template from './ui-table.html?raw';
 
 type TableSort = { column: string; direction: 'asc' | 'desc' };
 type ColumnSort = { column: string; columnViewModel: UiTableColumn; direction: 'asc' | 'desc' | undefined; multiple: boolean };
+type ColumnWidth = { index: number; width: number };
+let nextTableId = 0;
 
 @customElement({ name: 'ui-table', template })
 export class UiTable {
@@ -14,6 +16,8 @@ export class UiTable {
   private readonly configuration = resolve(UiTableConfiguration);
   private columnSizes: Record<string, number> = {};
   private readonly sortedColumns = new Map<string, UiTableColumn>();
+  readonly tableId = `ui-table-${++nextTableId}`;
+  columnWidths: ColumnWidth[] = [];
 
   /** The header context menu (see ui-table.html), bound via ui-context-menu. */
   columnMenu: UiMenu | undefined;
@@ -43,7 +47,7 @@ export class UiTable {
   storageKey: string | undefined;
   storageKeyChanged(): void {
     this.loadColumnSizes();
-    this.applyColumnSizes();
+    this.updateColumnStyle();
   }
 
   @bindable({ set: booleanAttr })
@@ -83,8 +87,19 @@ export class UiTable {
   lastPageText: string = this.configuration.lastPageText;
 
   attaching(): void {
+    this.host.dataset.uiTableId = this.tableId;
     this.loadColumnSizes();
     this.updateTotalPages();
+  }
+
+  attached(): void {
+    this.updateColumnStyle();
+  }
+
+  get columnStyleText(): string {
+    return this.columnWidths
+      .map(column => `[data-ui-table-id="${this.tableId}"] table tr > :nth-child(${column.index}) { width: ${column.width}px !important; min-width: ${column.width}px !important; max-width: ${column.width}px !important; }`)
+      .join('');
   }
 
   resetColumnWidths(): void {
@@ -97,34 +112,12 @@ export class UiTable {
       }
     }
 
-    for (const th of this.host.querySelectorAll<HTMLElement>('thead th')) {
-      th.style.removeProperty('width');
-      th.style.removeProperty('min-width');
-    }
-  }
-
-  /**
-   * Freezes the current width of every column so that resizing one column
-   * doesn't make the browser redistribute width across the auto-sized
-   * siblings (which looks like the other columns shrinking).
-   */
-  freezeColumnWidths(): void {
-    for (const th of this.host.querySelectorAll<HTMLElement>('thead th')) {
-      if (th.style.width) {
-        continue;
-      }
-      const width = th.getBoundingClientRect().width;
-      th.style.width = `${width}px`;
-      th.style.minWidth = `${width}px`;
-    }
+    this.updateColumnStyle();
   }
 
   setColumnWidth(columnId: string, width: number, persist = false): void {
     this.columnSizes[columnId] = width;
-    const column = this.host.querySelector<HTMLElement>(`#${columnId}`);
-    if (column) {
-      this.applyColumnWidth(column, width);
-    }
+    this.updateColumnStyle();
 
     if (persist) {
       this.persistColumnSizes();
@@ -226,27 +219,6 @@ export class UiTable {
     this.page = Math.max(1, Math.min(this.totalPages, Number(this.page) || 1));
   }
 
-  private applyColumnSizes(): void {
-    for (const column of this.host.querySelectorAll<HTMLElement>('.ui-table-column')) {
-      this.applyColumnWidth(column, this.columnSizes[column.id]);
-    }
-  }
-
-  getColumnWidth(columnId: string): number | undefined {
-    return this.columnSizes[columnId];
-  }
-
-  private applyColumnWidth(column: HTMLElement, width: number | undefined): void {
-    if (width === undefined) {
-      column.style.removeProperty('width');
-      column.style.removeProperty('min-width');
-      return;
-    }
-
-    column.style.width = `${width}px`;
-    column.style.minWidth = `${width}px`;
-  }
-
   private loadColumnSizes(): void {
     this.columnSizes = {};
     if (!this.storageKey) {
@@ -259,6 +231,20 @@ export class UiTable {
     } catch {
       this.columnSizes = {};
     }
+  }
+
+  private updateColumnStyle(): void {
+    this.columnWidths = Array.from(this.host.querySelectorAll<HTMLElement>('.ui-table-column[id]'))
+      .map(column => {
+        const width = this.columnSizes[column.id];
+        const index = Array.from(column.parentElement?.children ?? []).indexOf(column) + 1;
+        if (width === undefined || index < 1) {
+          return undefined;
+        }
+
+        return { index, width };
+      })
+      .filter((column): column is ColumnWidth => column !== undefined);
   }
 
   private persistColumnSizes(): void {

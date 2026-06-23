@@ -27,10 +27,6 @@ export class UiTableColumn implements EventListenerObject {
   @bindable
   sortOrder: number | undefined;
 
-  attaching(): void {
-    this.applyWidth(this.table.getColumnWidth(this.host.id));
-  }
-
   detaching(): void {
     window.removeEventListener('pointermove', this);
     window.removeEventListener('pointerup', this);
@@ -45,17 +41,6 @@ export class UiTableColumn implements EventListenerObject {
     if (event.type === 'pointerup') {
       this.onPointerUp();
     }
-  }
-
-  applyWidth(width: number | undefined): void {
-    if (width === undefined) {
-      this.host.style.removeProperty('width');
-      this.host.style.removeProperty('min-width');
-      return;
-    }
-
-    this.host.style.width = `${width}px`;
-    this.host.style.minWidth = `${width}px`;
   }
 
   onClick(event: MouseEvent): void {
@@ -79,7 +64,6 @@ export class UiTableColumn implements EventListenerObject {
     event.preventDefault();
     event.stopPropagation();
     this.resizing = true;
-    this.table.freezeColumnWidths();
     this.startX = event.clientX;
     this.startWidth = this.host.getBoundingClientRect().width;
     this.resizeHandle?.setPointerCapture(event.pointerId);
