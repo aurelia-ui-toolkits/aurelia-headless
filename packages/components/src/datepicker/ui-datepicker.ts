@@ -241,7 +241,7 @@ export class UiDatepicker {
         i18n: this.i18n
       } satisfies UiDatepickerDialogData,
       rejectOnCancel: false,
-      options: { modal: true, closedby: 'closerequest' }
+      options: { modal: true }
     }).whenClosed<DialogCloseResult, DialogCloseResult>();
     this.open = false;
     if (result.status === 'ok' && typeof result.value === 'string') {

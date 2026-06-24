@@ -27,4 +27,8 @@
     min-height: var(--ui-field-control-height);
     align-items: center;
   }
+
+  & .ui-checkbox[data-field][data-inset] .ui-checkbox__control {
+    min-height: var(--ui-field-inset-control-height);
+  }
 }

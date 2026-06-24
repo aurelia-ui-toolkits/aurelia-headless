@@ -20,6 +20,10 @@ ui-checkbox {
   padding-inline-start: var(--ui-field-padding-x);
 }
 
+.ui-checkbox[data-field][data-inset] .ui-checkbox__control {
+  min-height: var(--ui-field-inset-control-height);
+}
+
 .ui-checkbox__box {
   @apply relative inline-grid h-6 w-6 cursor-pointer place-items-center rounded-md border border-card-border bg-card align-middle;
   border-radius: var(--ui-checkbox-radius);

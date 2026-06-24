@@ -77,7 +77,7 @@ export class AlertService {
       component: () => this.configuration.defaultAlertModal || UiAlertModal,
       model: payload,
       rejectOnCancel: false,
-      options: { modal: true, closedby: 'closerequest' }
+      options: { modal: true }
     });
   }
 
@@ -130,7 +130,7 @@ export class AlertService {
       component: () => this.configuration.defaultPromptDialog || UiPromptDialog,
       model: data,
       rejectOnCancel: false,
-      options: { modal: true, closedby: 'closerequest' }
+      options: { modal: true }
     });
     if (result !== undefined && result !== 'cancel') {
       data.text = result;
