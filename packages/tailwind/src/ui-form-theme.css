@@ -13,22 +13,4 @@
     @apply min-h-5;
   }
 
-  /* A labelled checkbox is a full field: line its control band up with other
-     field controls, below their label row. */
-  & .ui-checkbox[data-field] {
-    @apply w-full;
-  }
-
-  & .ui-checkbox[data-field]:not([data-inset]) {
-    padding-block-start: calc(var(--ui-field-label-line-height) + var(--ui-field-gap));
-  }
-
-  & .ui-checkbox[data-field] .ui-checkbox__control {
-    min-height: var(--ui-field-control-height);
-    align-items: center;
-  }
-
-  & .ui-checkbox[data-field][data-inset] .ui-checkbox__control {
-    min-height: var(--ui-field-inset-control-height);
-  }
 }

@@ -8,6 +8,14 @@ ui-checkbox {
   @apply inline-flex flex-col align-middle;
 }
 
+.ui-checkbox[data-field] {
+  @apply w-full;
+}
+
+.ui-checkbox[data-field]:not([data-inset]) {
+  padding-block-start: calc(var(--ui-field-label-line-height) + var(--ui-field-gap));
+}
+
 .ui-checkbox__control {
   @apply flex items-center gap-2;
   gap: var(--ui-checkbox-gap);
@@ -17,6 +25,8 @@ ui-checkbox {
    control by --ui-field-padding-x). Only when it is a field, so bare checkboxes
    in tables/lists/menus stay flush. */
 .ui-checkbox[data-field] .ui-checkbox__control {
+  min-height: var(--ui-field-control-height);
+  align-items: center;
   padding-inline-start: var(--ui-field-padding-x);
 }
 
