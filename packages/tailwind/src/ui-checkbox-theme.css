@@ -22,6 +22,7 @@ ui-checkbox {
 
 .ui-checkbox[data-field][data-inset] .ui-checkbox__control {
   min-height: var(--ui-field-inset-control-height);
+  transform: translateY(calc((var(--ui-field-inset-padding-top) - var(--ui-field-inset-padding-bottom)) / 2));
 }
 
 .ui-checkbox__box {
