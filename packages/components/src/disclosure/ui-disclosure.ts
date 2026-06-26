@@ -1,11 +1,10 @@
 import { bindable, customElement } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
-import template from './ui-disclosure.html?raw';
 
 let nextPanelId = 0;
 
-@customElement({ name: 'ui-disclosure', template })
+@customElement('ui-disclosure')
 export class UiDisclosure {
   @bindable({ set: booleanAttr })
   open: boolean = false;

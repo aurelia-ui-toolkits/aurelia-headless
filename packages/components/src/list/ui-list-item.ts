@@ -1,9 +1,8 @@
 import { bindable, customElement, INode, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
-import template from './ui-list-item.html?raw';
 import { UiList } from './ui-list';
 
-@customElement({ name: 'ui-list-item', template })
+@customElement('ui-list-item')
 export class UiListItem {
   readonly element = resolve(INode) as HTMLElement;
   readonly parentList = resolve(UiList);

@@ -3,11 +3,10 @@ import { booleanAttr } from '../base/boolean-attr';
 import { IError, IValidatedElement } from '../base/i-validated-element';
 import { Keys } from '../base/keys';
 import { UiRadio } from './ui-radio';
-import template from './ui-radio-group.html?raw';
 
 let nextRadioGroupId = 0;
 
-@customElement({ name: 'ui-radio-group', template })
+@customElement('ui-radio-group')
 export class UiRadioGroup {
   constructor() {
     defineUiRadioGroupElementApis(this.element);

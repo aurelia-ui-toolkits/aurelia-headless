@@ -4,12 +4,11 @@ import { IError, IValidatedElement } from '../base/i-validated-element';
 import { Keys } from '../base/keys';
 import { UiFieldConfiguration } from '../field/ui-field-configuration';
 import { UiMenu } from '../menu/ui-menu';
-import template from './ui-select.html?raw';
 
 let nextSelectId = 0;
 type ResolvedLabelConverter = { toView(value: unknown): unknown };
 
-@customElement({ name: 'ui-select', template })
+@customElement('ui-select')
 export class UiSelect {
   private readonly configuration = resolve(UiFieldConfiguration);
   private readonly container = resolve(IContainer);

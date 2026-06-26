@@ -1,11 +1,10 @@
 import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
-import template from './ui-popup.html?raw';
 
 type PopupPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end' | 'right-start' | 'right-end' | 'left-start' | 'left-end';
 
-@customElement({ name: 'ui-popup', template })
+@customElement('ui-popup')
 export class UiPopup {
   readonly element = resolve(INode) as HTMLElement;
   readonly slotHost = this;

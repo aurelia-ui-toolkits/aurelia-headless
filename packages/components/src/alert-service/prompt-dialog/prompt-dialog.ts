@@ -1,6 +1,5 @@
 import { IDialogController } from '@aurelia/dialog';
 import { customElement, resolve } from 'aurelia';
-import template from './prompt-dialog.html?raw';
 
 export interface IPromptDialogData {
   title?: string;
@@ -12,7 +11,7 @@ export interface IPromptDialogData {
   cancelText?: string;
 }
 
-@customElement({ name: 'ui-prompt-modal', template })
+@customElement('ui-prompt-modal')
 export class UiPromptDialog {
   private readonly dialog = resolve(IDialogController);
 

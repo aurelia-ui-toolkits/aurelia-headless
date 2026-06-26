@@ -1,10 +1,9 @@
 import { bindable, BindingMode, children, customElement, INode, resolve } from 'aurelia';
 import { Keys } from '../base/keys';
 import { UiTab } from './ui-tab';
-import template from './ui-tabs.html?raw';
 import { booleanAttr } from '../base/boolean-attr';
 
-@customElement({ name: 'ui-tabs', template })
+@customElement('ui-tabs')
 export class UiTabs {
   private readonly element = resolve(INode) as HTMLElement;
 

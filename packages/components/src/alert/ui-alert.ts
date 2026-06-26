@@ -1,10 +1,9 @@
 import { bindable, BindingMode, customElement, INode, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
-import template from './ui-alert.html?raw';
 
 export type AlertTone = 'info' | 'success' | 'warning' | 'danger';
 
-@customElement({ name: 'ui-alert', template })
+@customElement('ui-alert')
 export class UiAlert {
   private readonly host = resolve(INode) as HTMLElement;
 

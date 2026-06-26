@@ -1,5 +1,4 @@
 import { bindable, customElement } from 'aurelia';
-import template from './ui-breadcrumbs.html?raw';
 
 export interface UiBreadcrumbItem {
   label: string;
@@ -7,7 +6,7 @@ export interface UiBreadcrumbItem {
   current?: boolean;
 }
 
-@customElement({ name: 'ui-breadcrumbs', template })
+@customElement('ui-breadcrumbs')
 export class UiBreadcrumbs {
   @bindable
   items: readonly UiBreadcrumbItem[] = [];

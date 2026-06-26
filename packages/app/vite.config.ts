@@ -4,6 +4,11 @@ import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
 import babel from '@rolldown/plugin-babel';
 
+const aureliaResourceInclude = [
+  path.posix.join(path.resolve(__dirname, 'src').replaceAll('\\', '/'), '**/*.{ts,js,html}'),
+  path.posix.join(path.resolve(__dirname, '../components/src').replaceAll('\\', '/'), '**/*.{ts,js,html}'),
+];
+
 function decoratorPreset(options: Record<string, unknown>) {
   return {
     preset: () => ({
@@ -29,7 +34,7 @@ export default defineConfig({
     port: 9000,
   },
   plugins: [
-    aurelia({ useDev: true }),
+    aurelia({ useDev: true, include: aureliaResourceInclude }),
     babel({ presets: [decoratorPreset({ version: '2023-11' })] }),
     tailwindcss(),
   ]

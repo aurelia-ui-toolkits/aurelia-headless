@@ -1,8 +1,7 @@
 import { bindable, customElement } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
-import template from './ui-progress.html?raw';
 
-@customElement({ name: 'ui-progress', template })
+@customElement('ui-progress')
 export class UiProgress {
   @bindable
   value: number | undefined;

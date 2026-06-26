@@ -2,11 +2,10 @@ import { bindable, CustomElement, customElement, INode, resolve, slotted } from 
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
 import { UiListItem } from './ui-list-item';
-import template from './ui-list.html?raw';
 
 type ListOrientation = 'vertical' | 'horizontal';
 
-@customElement({ name: 'ui-list', template })
+@customElement('ui-list')
 export class UiList {
   private readonly host = resolve(INode) as HTMLElement;
   private scrollerEl!: HTMLElement;

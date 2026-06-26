@@ -2,9 +2,8 @@ import { bindable, BindingMode, children, customElement, INode, resolve } from '
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
 import { UiSegment } from './ui-segment';
-import template from './ui-segmented-control.html?raw';
 
-@customElement({ name: 'ui-segmented-control', template })
+@customElement('ui-segmented-control')
 export class UiSegmentedControl {
   private readonly host = resolve(INode) as HTMLElement;
 

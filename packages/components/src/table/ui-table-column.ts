@@ -1,9 +1,8 @@
 import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { UiTable } from './ui-table';
-import template from './ui-table-column.html?raw';
 
-@customElement({ name: 'ui-table-column', template })
+@customElement('ui-table-column')
 export class UiTableColumn implements EventListenerObject {
   readonly host = resolve(INode) as HTMLElement;
   readonly table = resolve(UiTable);

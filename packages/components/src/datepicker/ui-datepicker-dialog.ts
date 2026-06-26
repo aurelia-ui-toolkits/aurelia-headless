@@ -2,7 +2,6 @@ import { IDialogController } from '@aurelia/dialog';
 import { customElement, INode, resolve } from 'aurelia';
 import { formatDate, getDaysInMonth, isSameDay, parseCanonical, startOfLocalDay, toCanonical, UiDatepickerI18n, UiDatepickerYearRange, withTime } from './date-utils';
 import { UiDatepickerDialogConfiguration } from './ui-datepicker-dialog-configuration';
-import template from './ui-datepicker-dialog.html?raw';
 
 export interface UiDatepickerDialogDay {
   date: Date | undefined;
@@ -35,7 +34,7 @@ export interface UiDatepickerDialogData {
   i18n?: UiDatepickerI18n;
 }
 
-@customElement({ name: 'ui-datepicker-dialog', template })
+@customElement('ui-datepicker-dialog')
 export class UiDatepickerDialog {
   private readonly element = resolve(INode) as HTMLElement;
   private readonly dialog = resolve(IDialogController);

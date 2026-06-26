@@ -1,8 +1,7 @@
 import { bindable, customElement, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
-import template from './ui-top-app-bar.html?raw';
 
-@customElement({ name: 'ui-top-app-bar', template })
+@customElement('ui-top-app-bar')
 export class UiTopAppBar {
   @bindable({ set: booleanAttr })
   sticky: boolean = false;
