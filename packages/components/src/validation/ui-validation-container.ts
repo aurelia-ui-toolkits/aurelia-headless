@@ -1,8 +1,7 @@
 import { bindable, CustomElement, customElement, INode, resolve } from 'aurelia';
 import { IError, IValidatedElement } from '../base/i-validated-element';
-import template from './ui-validation-container.html?raw';
 
-@customElement({ name: 'ui-validation-container', template })
+@customElement('ui-validation-container')
 export class UiValidationContainer {
   private readonly element = resolve(INode) as HTMLElement;
 

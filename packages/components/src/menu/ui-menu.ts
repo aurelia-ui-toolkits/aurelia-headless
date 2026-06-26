@@ -3,11 +3,10 @@ import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
 import { UiList } from '../list/ui-list';
 import { UiPopup } from '../popup/ui-popup';
-import template from './ui-menu.html?raw';
 
 type MenuPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end' | 'right-start' | 'right-end' | 'left-start' | 'left-end';
 
-@customElement({ name: 'ui-menu', template })
+@customElement('ui-menu')
 export class UiMenu {
   readonly element = resolve(INode) as HTMLElement;
   readonly slotHost = this;

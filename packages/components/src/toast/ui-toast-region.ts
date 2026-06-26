@@ -1,8 +1,7 @@
 import { bindable, customElement, INode, resolve } from 'aurelia';
 import { UiToastMessage } from './ui-toast-service';
-import template from './ui-toast-region.html?raw';
 
-@customElement({ name: 'ui-toast-region', template })
+@customElement('ui-toast-region')
 export class UiToastRegion {
   private readonly host = resolve(INode) as HTMLElement;
 

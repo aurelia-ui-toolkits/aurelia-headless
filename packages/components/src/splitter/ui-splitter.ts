@@ -1,11 +1,10 @@
 import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
-import template from './ui-splitter.html?raw';
 
 type SplitterDirection = 'horizontal' | 'vertical';
 
-@customElement({ name: 'ui-splitter', template })
+@customElement('ui-splitter')
 export class UiSplitter implements EventListenerObject {
   private readonly host = resolve(INode) as HTMLElement;
   /** The sibling element this splitter resizes (resolved from `target` on attach). */

@@ -1,8 +1,7 @@
 import { bindable, customElement, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
-import template from './ui-floating-actions.html?raw';
 
-@customElement({ name: 'ui-floating-actions', template })
+@customElement('ui-floating-actions')
 export class UiFloatingActions {
   /** When set, all actions are shown and the collapse trigger is never rendered. */
   @bindable({ set: booleanAttr })

@@ -1,11 +1,10 @@
 import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
-import template from './ui-drawer.html?raw';
 
 type DrawerSide = 'left' | 'right' | 'top' | 'bottom';
 
-@customElement({ name: 'ui-drawer', template })
+@customElement('ui-drawer')
 export class UiDrawer implements EventListenerObject {
   private readonly host = resolve(INode) as HTMLElement;
 

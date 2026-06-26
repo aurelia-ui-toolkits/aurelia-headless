@@ -1,9 +1,8 @@
 import { bindable, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { UiSegmentedControl } from './ui-segmented-control';
-import template from './ui-segment.html?raw';
 
-@customElement({ name: 'ui-segment', template })
+@customElement('ui-segment')
 export class UiSegment {
   readonly element = resolve(INode) as HTMLElement;
   readonly parentControl = resolve(UiSegmentedControl);

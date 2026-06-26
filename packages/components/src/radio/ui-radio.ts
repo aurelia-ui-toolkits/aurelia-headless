@@ -1,9 +1,8 @@
 import { bindable, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { UiRadioGroup } from './ui-radio-group';
-import template from './ui-radio.html?raw';
 
-@customElement({ name: 'ui-radio', template })
+@customElement('ui-radio')
 export class UiRadio {
   readonly element = resolve(INode) as HTMLElement;
   readonly parentGroup = resolve(UiRadioGroup);

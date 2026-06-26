@@ -2,12 +2,11 @@ import { bindable, BindingMode, CustomElement, customElement, resolve, slotted }
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
 import { IError, IValidatedElement } from '../base/i-validated-element';
-import template from './ui-checkbox.html?raw';
 import { UiFieldConfiguration } from '../field/ui-field-configuration';
 
 let nextCheckboxId = 0;
 
-@customElement({ name: 'ui-checkbox', template })
+@customElement('ui-checkbox')
 export class UiCheckbox {
   private readonly configuration = resolve(UiFieldConfiguration);
 

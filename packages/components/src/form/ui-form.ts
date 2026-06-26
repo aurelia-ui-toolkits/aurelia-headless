@@ -1,6 +1,5 @@
 import { customElement } from 'aurelia';
-import template from './ui-form.html?raw';
 
-@customElement({ name: 'ui-form', template })
+@customElement('ui-form')
 export class UiForm {
 }

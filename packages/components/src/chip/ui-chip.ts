@@ -1,11 +1,10 @@
 import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
-import template from './ui-chip.html?raw';
 
 type ChipTone = 'neutral' | 'primary' | 'success' | 'warning' | 'danger';
 
-@customElement({ name: 'ui-chip', template })
+@customElement('ui-chip')
 export class UiChip {
   private readonly host = resolve(INode) as HTMLElement;
 

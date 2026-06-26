@@ -3,14 +3,13 @@ import { booleanAttr } from '../base/boolean-attr';
 import type { UiTableColumn } from './ui-table-column';
 import type { UiMenu } from '../menu/ui-menu';
 import { UiTableConfiguration } from './ui-table-configuration';
-import template from './ui-table.html?raw';
 
 type TableSort = { column: string; direction: 'asc' | 'desc' };
 type ColumnSort = { column: string; columnViewModel: UiTableColumn; direction: 'asc' | 'desc' | undefined; multiple: boolean };
 type ColumnWidth = { index: number; width: number };
 let nextTableId = 0;
 
-@customElement({ name: 'ui-table', template })
+@customElement('ui-table')
 export class UiTable {
   private readonly host = resolve(INode) as HTMLElement;
   private readonly configuration = resolve(UiTableConfiguration);

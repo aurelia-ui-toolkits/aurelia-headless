@@ -1,6 +1,5 @@
 import { bindable, CustomElement, customElement, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
-import template from './ui-input.html?raw';
 import { IValidatedElement } from '../base/i-validated-element';
 import { UiFieldConfiguration } from '../field/ui-field-configuration';
 
@@ -10,7 +9,7 @@ export interface IError {
   message: string | undefined;
 }
 
-@customElement({ name: 'ui-input', template })
+@customElement('ui-input')
 export class UiInput {
   private readonly configuration = resolve(UiFieldConfiguration);
 

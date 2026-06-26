@@ -1,7 +1,6 @@
 import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
-import template from './ui-tree.html?raw';
 
 type TreeField<T> = string | ((item: T) => unknown);
 type TreeSelectionMode = 'single' | 'none';
@@ -28,7 +27,7 @@ export interface UiTreeRowSlotHost {
   row: UiTreeRow;
 }
 
-@customElement({ name: 'ui-tree', template })
+@customElement('ui-tree')
 export class UiTree {
   private readonly host = resolve(INode) as HTMLElement;
   private expandedValues = new Set<unknown>();

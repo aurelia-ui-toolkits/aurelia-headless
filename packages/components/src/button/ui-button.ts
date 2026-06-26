@@ -1,10 +1,9 @@
 import { bindable, customElement } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
-import template from './ui-button.html?raw';
 
 type ButtonType = 'button' | 'submit' | 'reset';
 
-@customElement({ name: 'ui-button', template })
+@customElement('ui-button')
 export class UiButton {
   @bindable
   type: ButtonType = 'button';

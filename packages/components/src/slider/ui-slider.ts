@@ -1,11 +1,10 @@
 import { bindable, BindingMode, CustomElement, customElement, INode, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { IError, IValidatedElement } from '../base/i-validated-element';
-import template from './ui-slider.html?raw';
 
 let nextSliderId = 0;
 
-@customElement({ name: 'ui-slider', template })
+@customElement('ui-slider')
 export class UiSlider {
   constructor() {
     defineUiSliderElementApis(this.element);

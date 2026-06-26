@@ -1,9 +1,8 @@
 import { IDialogController } from '@aurelia/dialog';
 import { customElement, resolve } from 'aurelia';
-import template from './alert-modal.html?raw';
 import { IAlertModalPayload } from './i-alert-modal-payload';
 
-@customElement({ name: 'ui-alert-modal', template })
+@customElement('ui-alert-modal')
 export class UiAlertModal {
   private readonly dialog = resolve(IDialogController);
 

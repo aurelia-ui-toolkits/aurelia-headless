@@ -1,9 +1,8 @@
 import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
-import template from './ui-switch.html?raw';
 
-@customElement({ name: 'ui-switch', template })
+@customElement('ui-switch')
 export class UiSwitch {
   private readonly host = resolve(INode) as HTMLElement;
 

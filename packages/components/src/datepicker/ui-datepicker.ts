@@ -5,11 +5,10 @@ import { UiFieldConfiguration } from '../field/ui-field-configuration';
 import { IError, IValidatedElement } from '../base/i-validated-element';
 import { formatDate, getCanonicalFormat, parseByFormat, parseCanonical } from './date-utils';
 import { UiDatepickerDialog, UiDatepickerDialogData } from './ui-datepicker-dialog';
-import template from './ui-datepicker.html?raw';
 
 let nextDatepickerId = 0;
 
-@customElement({ name: 'ui-datepicker', template })
+@customElement('ui-datepicker')
 export class UiDatepicker {
   private readonly configuration = resolve(UiFieldConfiguration);
 
