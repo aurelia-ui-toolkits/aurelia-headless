@@ -54,6 +54,9 @@ export class UiList {
     this.syncListItemSelection();
   }
 
+  @bindable({ set: booleanAttr })
+  toggleSelection: boolean = false;
+
   @bindable
   orientation: ListOrientation = 'vertical';
 
@@ -386,7 +389,7 @@ export class UiList {
 
   /**
    * Multi-selection semantics matching the legacy MDC SelectionHandler:
-   * - plain click selects only the clicked item (clears any previous selection);
+   * - plain click selects only the clicked item (clears any previous selection), unless toggleSelection is enabled;
    * - shift+click selects the range between the anchor and the clicked item;
    * - ctrl/cmd+click toggles the clicked item in/out of the selection.
    */
@@ -404,7 +407,7 @@ export class UiList {
         }
       }
       this.selected = range;
-    } else if (event && (event.ctrlKey || event.metaKey)) {
+    } else if (this.toggleSelection || (event && (event.ctrlKey || event.metaKey))) {
       const selected = Array.isArray(this.selected) ? [...this.selected] : [];
       const index = selected.indexOf(item);
       if (index >= 0) {
