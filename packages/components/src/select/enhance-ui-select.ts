@@ -24,6 +24,7 @@ export class EnhanceUiSelect {
         ['selected', '$host.selectedItem'],
         ['items', '$host.items'],
         ['multiple', '$host.multiple'],
+        ['toggle-selection', '$host.multiple'],
         ['typeahead-field', '$host.labelField']
       ]);
     }

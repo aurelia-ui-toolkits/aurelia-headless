@@ -67,7 +67,7 @@
       placeholder="Select projects">
       <ui-list>
         <ui-list-item repeat.for="project of $host.items" value.bind="project" disabled.bind="project.disabled">
-          <ui-checkbox au-slot="leading" checked.bind="$host.selected" tab-index="-1"></ui-checkbox>
+          <ui-checkbox au-slot="leading" checked.bind="$host.selected" disabled.bind="$host.disabled" tab-index="-1"></ui-checkbox>
           ${project.name}
           <span au-slot="secondary">${project.region}</span>
         </ui-list-item>
@@ -89,7 +89,7 @@
       placeholder="Select roles">
       <ui-list>
         <ui-list-item repeat.for="role of $host.items" value.bind="role">
-          <ui-checkbox au-slot="leading" checked.bind="$host.selected" tab-index="-1"></ui-checkbox>
+          <ui-checkbox au-slot="leading" checked.bind="$host.selected" disabled.bind="$host.disabled" tab-index="-1"></ui-checkbox>
           ${role | roleLabel}
         </ui-list-item>
       </ui-list>

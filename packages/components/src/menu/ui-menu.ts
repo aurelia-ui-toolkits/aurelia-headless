@@ -84,6 +84,10 @@ export class UiMenu {
   }
 
   onPopupOpened(): void {
+    const listViewModel = this.list;
+    listViewModel?.clearActive();
+    listViewModel?.suppressNextMouseOver();
+
     this.element.dispatchEvent(new CustomEvent('menu-opened', { bubbles: true }));
 
     if (!this.focusOnOpen) {
