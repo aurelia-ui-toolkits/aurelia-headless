@@ -233,6 +233,14 @@ export class UiList {
     this.activeItem = undefined;
   }
 
+  clearActive(): void {
+    this.activeItem = undefined;
+  }
+
+  suppressNextMouseOver(): void {
+    this.suppressMouseOver = true;
+  }
+
   focusFirst(): void {
     this.host.focus();
     this.setFirstActive();
