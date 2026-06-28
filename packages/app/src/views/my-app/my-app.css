@@ -39,7 +39,7 @@ body {
 }
 
 :root[data-theme="dark"] .app-layout .ui-drawer__panel[data-persistent] {
-  background: color-mix(in srgb, var(--color-card) 88%, transparent);
+  background: color-mix(in srgb, var(--color-canvas) 88%, transparent);
 }
 
 .menu-toggle-icon {
@@ -59,7 +59,7 @@ body {
 }
 
 :root[data-theme="dark"] .app-top-bar .ui-top-app-bar__header {
-  background: color-mix(in srgb, var(--color-card) 90%, transparent);
+  background: color-mix(in srgb, var(--color-canvas) 90%, transparent);
 }
 
 .app-top-bar .ui-top-app-bar__title {
@@ -75,7 +75,7 @@ body {
 }
 
 :root[data-theme="dark"] .brand {
-  background: color-mix(in srgb, var(--color-card-muted) 78%, transparent);
+  background: color-mix(in srgb, var(--color-canvas) 70%, transparent);
 }
 
 .theme-toggle {
@@ -162,6 +162,7 @@ body {
 }
 
 :root[data-theme="dark"] .demo-block {
+  background: var(--color-canvas);
   border-color: var(--color-card-border);
 }
 

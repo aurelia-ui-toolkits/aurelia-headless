@@ -1,5 +1,5 @@
-import { UiAlertModal } from './alert-modal/alert-modal';
-import { UiPromptDialog } from './prompt-dialog/prompt-dialog';
+import { UiAlertModal } from './alert-modal/ui-alert-modal';
+import { UiPromptDialog } from './prompt-dialog/ui-prompt-dialog';
 
 export class AlertConfiguration {
   defaultAlertModal: new (...args: never[]) => object = UiAlertModal;

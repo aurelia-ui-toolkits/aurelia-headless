@@ -2,27 +2,30 @@
   <demo-block title="Responsive grid form">
     <ui-form>
       <ui-input class="col-span-12 md:col-span-6"
-        value.bind="workspaceName"
+        value.bind="workspaceName & validate"
         label="Workspace name"
         helper-text="Displayed in the workspace switcher."
+        required
         placeholder="Production workspace">
       </ui-input>
 
       <ui-input class="col-span-12 md:col-span-6"
-        value.bind="ownerEmail"
+        value.bind="ownerEmail & validate"
         type="email"
         label="Owner email"
         helper-text="Used for approval notifications."
+        required
         placeholder="owner@example.com">
       </ui-input>
 
       <ui-select class="col-span-12 md:col-span-6"
         items.bind="teams"
-        value.bind="teamId"
+        value.bind="teamId & validate"
         value-field="id"
         label-field="name"
         label="Team"
         helper-text="Choose the team responsible for changes."
+        required
         placeholder="Select team">
         <ui-list>
           <ui-list-item repeat.for="team of $host.items" value.bind="team">
@@ -38,11 +41,12 @@
       </ui-checkbox>
 
       <ui-input class="col-span-12"
-        value.bind="summary"
+        value.bind="summary & validate"
         textarea
         rows="4"
         label="Summary"
         helper-text="Describe what this workspace is used for."
+        required
         placeholder="Add details">
       </ui-input>
 
