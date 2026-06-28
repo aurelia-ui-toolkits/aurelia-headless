@@ -1,10 +1,10 @@
 import { IDialogSettings, IDialogService } from '@aurelia/dialog';
 import { Constructable, resolve } from 'aurelia';
 import { AlertConfiguration } from './alert-configuration';
-import { UiAlertModal } from './alert-modal/alert-modal';
+import { UiAlertModal } from './alert-modal/ui-alert-modal';
 import { IAlertModalPayload } from './alert-modal/i-alert-modal-payload';
 import { ExceptionsTracker } from './exceptions-tracker';
-import { IPromptDialogData, UiPromptDialog } from './prompt-dialog/prompt-dialog';
+import { IPromptDialogData, UiPromptDialog } from './prompt-dialog/ui-prompt-dialog';
 import { Subject } from 'rxjs/internal/Subject';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { merge } from 'rxjs/internal/observable/merge';
