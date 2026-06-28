@@ -2,6 +2,8 @@ import Inputmask from 'inputmask';
 import { OptionsStore } from './options-store';
 import { BindingMode, bindable, customAttribute, resolve } from 'aurelia';
 
+const InputmaskCtor = (Inputmask as unknown as { default?: typeof Inputmask }).default ?? Inputmask;
+
 @customAttribute({ name: 'ui-inputmask', defaultProperty: 'mask' })
 export class UiInputmaskCustomAttribute {
   private element = resolve(Element);
@@ -66,7 +68,7 @@ export class UiInputmaskCustomAttribute {
 
   createInstance() {
     const options = { ...this.optionsStore.options, ...this.options };
-    this.instance = new Inputmask(this.mask ?? '', options);
+    this.instance = new InputmaskCtor(this.mask ?? '', options);
   }
 
   detaching() {
