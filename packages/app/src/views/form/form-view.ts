@@ -9,11 +9,11 @@ type TeamOption = {
 };
 
 export class FormView {
-  workspaceName = 'Aurora Ops';
-  ownerEmail = 'ops@example.com';
-  teamId = 'platform';
-  summary = 'Coordinate release checks, deployment windows, and post-launch monitoring.';
-  notifyTeam = true;
+  workspaceName = '';
+  ownerEmail = '';
+  teamId = '';
+  summary = '';
+  notifyTeam = false;
   saveMessage = 'No form action yet.';
 
   public validationController: IValidationController = resolve(newInstanceForScope(IValidationController));
@@ -41,7 +41,7 @@ export class FormView {
   resetProfile(): void {
     this.workspaceName = '';
     this.ownerEmail = '';
-    this.teamId = 'platform';
+    this.teamId = '';
     this.summary = '';
     this.notifyTeam = false;
     this.saveMessage = 'Form reset.';
