@@ -3,6 +3,10 @@ import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
 
 type SplitterDirection = 'horizontal' | 'vertical';
+type SplitterStorageState = {
+  size: number;
+  expandedSize?: number;
+};
 
 @customElement('ui-splitter')
 export class UiSplitter implements EventListenerObject {
@@ -65,6 +69,7 @@ export class UiSplitter implements EventListenerObject {
 
   /**
    * Persists the dragged size under `ui-splitter:<storageKey>:size` and restores it on load.
+   * Collapsed splitters also keep their last expanded size so click-to-expand survives a reload.
    * Ignored for `fitContent` splitters (those always start content-fit; drags are session-only).
    */
   @bindable
@@ -198,7 +203,9 @@ export class UiSplitter implements EventListenerObject {
   private setSize(size: number, persist = false): void {
     this.manual = true;
     this.size = Math.max(this.minSize, Math.min(this.maxSize, Number(size) || this.minSize));
-    this.expandedSize = this.size;
+    if (this.size > 0) {
+      this.expandedSize = this.size;
+    }
     this.applySize();
     this.updateValueNow();
     if (persist) {
@@ -290,10 +297,13 @@ export class UiSplitter implements EventListenerObject {
     try {
       const value = localStorage.getItem(this.storageId);
       if (value !== null) {
+        const state = this.parseStoredState(value);
         this.manual = true;
-        this.size = Math.max(0, Math.min(this.maxSize, Number(value) || 0));
+        this.size = Math.max(0, Math.min(this.maxSize, state.size));
         if (this.size > 0) {
           this.expandedSize = this.size;
+        } else if (state.expandedSize !== undefined) {
+          this.expandedSize = Math.max(this.minSize, Math.min(this.maxSize, state.expandedSize));
         }
       }
     } catch {
@@ -307,10 +317,26 @@ export class UiSplitter implements EventListenerObject {
     }
 
     try {
-      localStorage.setItem(this.storageId, String(this.size));
+      localStorage.setItem(this.storageId, JSON.stringify({
+        size: this.size,
+        expandedSize: this.expandedSize,
+      } satisfies SplitterStorageState));
     } catch {
       // Ignore unavailable storage.
     }
+  }
+
+  private parseStoredState(value: string): SplitterStorageState {
+    const numericValue = Number(value);
+    if (!Number.isNaN(numericValue)) {
+      return { size: numericValue };
+    }
+
+    const state = JSON.parse(value) as Partial<SplitterStorageState>;
+    return {
+      size: Number(state.size) || 0,
+      expandedSize: state.expandedSize === undefined ? undefined : Number(state.expandedSize) || undefined,
+    };
   }
 
   private get minSize(): number {
