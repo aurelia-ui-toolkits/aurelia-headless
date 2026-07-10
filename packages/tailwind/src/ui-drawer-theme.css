@@ -16,6 +16,7 @@
 
 .ui-drawer__panel {
   @apply pointer-events-none fixed z-50 overflow-auto bg-canvas p-5 text-ink-700 opacity-0 shadow-2xl outline-none;
+  --ui-drawer-inline-size: min(28rem, 100vw);
   transition: opacity 180ms ease, transform 180ms ease;
 
   &[data-open] {
@@ -38,7 +39,8 @@
   }
 
   &[data-side="right"] {
-    @apply bottom-0 right-0 top-0 w-[min(28rem,100vw)];
+    @apply bottom-0 right-0 top-0;
+    inline-size: var(--ui-drawer-inline-size);
     border-left: 1px solid var(--color-card-border);
     transform: translateX(100%);
 
@@ -55,7 +57,8 @@
   }
 
   &[data-side="left"] {
-    @apply bottom-0 left-0 top-0 w-[min(28rem,100vw)];
+    @apply bottom-0 left-0 top-0;
+    inline-size: var(--ui-drawer-inline-size);
     border-right: 1px solid var(--color-card-border);
     transform: translateX(-100%);
 
