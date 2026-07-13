@@ -21,4 +21,17 @@
       </template>
     </ui-disclosure>
   </demo-block>
+
+  <demo-block title="Controlled (two-way open)">
+    <button ui-button outlined click.trigger="controlledOpen = !controlledOpen">Toggle from outside</button>
+    <span class="disclosure-state">open = ${controlledOpen}</span>
+    <ui-disclosure open.bind="controlledOpen">
+      <template au-slot="header">
+        Payment methods
+      </template>
+      <template au-slot="content">
+        We accept all major cards and PayPal.
+      </template>
+    </ui-disclosure>
+  </demo-block>
 </demo-section>

@@ -1,4 +1,4 @@
-import { bindable, customElement } from 'aurelia';
+import { bindable, BindingMode, customElement } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
 
@@ -6,7 +6,7 @@ let nextPanelId = 0;
 
 @customElement('ui-disclosure')
 export class UiDisclosure {
-  @bindable({ set: booleanAttr })
+  @bindable({ mode: BindingMode.twoWay, set: booleanAttr })
   open: boolean = false;
   
   panelId: string = `ui-disclosure-panel-${++nextPanelId}`;

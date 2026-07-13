@@ -1,5 +1,6 @@
 import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
+import { getFocusableWithin } from '../base/focusable';
 import { Keys } from '../base/keys';
 
 type PopupPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end' | 'right-start' | 'right-end' | 'left-start' | 'left-end';
@@ -152,7 +153,19 @@ export class UiPopup {
     }
 
     if (event.key === Keys.Tab && this.panelElement?.contains(event.target as Node | null)) {
-      this.focusNextFromTabReference(event.shiftKey);
+      const focusables = this.getPanelFocusableElements();
+      const index = focusables.indexOf(document.activeElement as HTMLElement);
+      const atStart = index <= 0;                     // -1 (panel/none) or the first element
+      const atEnd = index === focusables.length - 1;  // the last element, or -1 when the list is empty
+
+      // At a boundary (or with 0/1 internal stops) tab away, closing the popup — this preserves the
+      // single-stop menu/select/combobox behaviour. Otherwise move within the panel, since the panel
+      // is portaled and native Tab order across that boundary is unreliable.
+      if (event.shiftKey ? atStart : atEnd) {
+        this.focusNextFromTabReference(event.shiftKey);
+      } else {
+        focusables[index + (event.shiftKey ? -1 : 1)]?.focus();
+      }
       event.preventDefault();
       return;
     }
@@ -174,7 +187,13 @@ export class UiPopup {
     this.setListeners(true);
     this.observePanelSize();
     if (this.focusOnOpen) {
-      this.focusPanel();
+      // Defer: the panel is still positioned off-screen/hidden at this point, so focusing it now
+      // would silently fail. Focus once it has been laid out (matches ui-menu's deferred focus).
+      setTimeout(() => {
+        if (this.open) {
+          this.focusPanel();
+        }
+      }, 0);
     }
   }
 
@@ -221,7 +240,10 @@ export class UiPopup {
   }
 
   private focusPanel(): void {
-    const focusTarget = this.panelElement?.querySelector<HTMLElement>('[tabindex]');
+    // Prefer the panel's first genuinely focusable element (e.g. a form field or a menu's list),
+    // falling back to the panel itself so keyboard users land inside the popup on open.
+    const focusTarget = this.getPanelFocusableElements()[0]
+      ?? this.panelElement?.querySelector<HTMLElement>('[tabindex]');
     (focusTarget ?? this.panelElement)?.focus();
   }
 
@@ -260,32 +282,13 @@ export class UiPopup {
   }
 
   private getFocusableElements(): HTMLElement[] {
-    const selector = [
-      'a[href]',
-      'button',
-      'input:not([type="hidden"])',
-      'select',
-      'textarea',
-      'iframe',
-      '[tabindex]',
-      '[contenteditable="true"]'
-    ].join(',');
-
-    return Array.from(document.querySelectorAll<HTMLElement>(selector))
-      .filter((element) => this.isFocusable(element));
+    // Document-wide, excluding the panel — used to find the page neighbour of the tab reference.
+    return getFocusableWithin(document).filter((element) => !this.panelElement?.contains(element));
   }
 
-  private isFocusable(element: HTMLElement): boolean {
-    if (this.panelElement?.contains(element)) {
-      return false;
-    }
-
-    if (element.tabIndex < 0 || element.hasAttribute('disabled') || element.getAttribute('aria-hidden') === 'true') {
-      return false;
-    }
-
-    const style = window.getComputedStyle(element);
-    return style.display !== 'none' && style.visibility !== 'hidden';
+  private getPanelFocusableElements(): HTMLElement[] {
+    // Scoped to the panel — used to Tab between the panel's own focusable elements.
+    return getFocusableWithin(this.panelElement);
   }
 
   private setListeners(listen: boolean): void {

@@ -395,6 +395,11 @@ export class UiCombobox {
     if (this.filteredItems.length) {
       this.selectedOption = this.filteredItems[0];
       this.textValue = this.getItemLabel(this.filteredItems[0]);
+    } else if (this.value !== undefined) {
+      // Value set to something no option matches: clear the stale display so the input
+      // doesn't keep showing the previously selected option's label.
+      this.selectedOption = undefined;
+      this.textValue = undefined;
     }
   }
 

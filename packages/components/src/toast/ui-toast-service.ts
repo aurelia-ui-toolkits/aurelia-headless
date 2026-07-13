@@ -1,8 +1,6 @@
 import { Aurelia, IContainer, resolve } from 'aurelia';
 import { AlertTone } from '../alert/ui-alert';
 
-type EnhancedView = { deactivate(): void | Promise<void> };
-
 export interface UiToastOptions {
   tone?: AlertTone;
   title?: string;
@@ -18,7 +16,7 @@ export interface UiToastMessage extends Required<Pick<UiToastOptions, 'tone' | '
 export class UiToastService {
   private readonly container = resolve(IContainer);
   private host: HTMLElement | undefined;
-  private enhanced: EnhancedView | undefined;
+  private enhancedPromise: Promise<void> | undefined;
   private nextId = 0;
   private timers = new Map<number, ReturnType<typeof setTimeout>>();
 
@@ -81,20 +79,22 @@ export class UiToastService {
     };
   }
 
-  private async ensureEnhanced(): Promise<void> {
-    if (this.enhanced) {
-      return;
-    }
+  private ensureEnhanced(): Promise<void> {
+    // Memoize the in-flight enhancement so two show() calls in the same tick don't each
+    // create a host and enhance it (which would append duplicate toast regions).
+    return this.enhancedPromise ??= this.createEnhanced();
+  }
 
+  private async createEnhanced(): Promise<void> {
     this.host = document.createElement('div');
     this.host.className = 'ui-toast-host';
     this.host.innerHTML = `<ui-toast-region toasts.bind="toasts" toast-close.trigger="remove($event.detail)"></ui-toast-region>`;
     document.body.append(this.host);
 
-    this.enhanced = await Aurelia.enhance({
+    await Aurelia.enhance({
       host: this.host,
       component: this,
       container: this.container
-    }) as EnhancedView;
+    });
   }
 }

@@ -32,4 +32,23 @@
       </div>
     </ui-popup>
   </demo-block>
+
+  <demo-block title="Popup with a form (multiple focus stops)">
+    <button ui-button primary ref="formAnchor" click.trigger="formOpen = !formOpen">
+      ${formOpen ? 'Hide form' : 'Edit label'}
+    </button>
+    <button ui-button outlined>Next control (tab-away target)</button>
+
+    <ui-popup open.bind="formOpen" anchor.bind="formAnchor">
+      <div class="popup-demo-card">
+        <strong>Edit label</strong>
+        <ui-input value.bind="formName" label="Name"></ui-input>
+        <ui-input value.bind="formEmail" label="Email"></ui-input>
+        <div class="popup-demo-actions">
+          <button ui-button outlined click.trigger="formOpen = false">Cancel</button>
+          <button ui-button primary click.trigger="formOpen = false">Save</button>
+        </div>
+      </div>
+    </ui-popup>
+  </demo-block>
 </demo-section>

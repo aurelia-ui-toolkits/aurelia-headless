@@ -7,3 +7,7 @@
 .popup-demo-target {
   @apply mb-3 min-h-14 rounded-xl border border-dashed border-card-border bg-card-muted;
 }
+
+.popup-demo-actions {
+  @apply flex justify-end gap-2;
+}

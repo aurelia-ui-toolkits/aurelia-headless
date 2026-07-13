@@ -17,21 +17,23 @@ export class UiContextMenuCustomAttribute implements EventListenerObject {
 
   attached() {
     this.element.addEventListener('contextmenu', this);
-    this.menuAnchor = document.querySelector<HTMLDivElement>('div.ui-context-menu-anchor') ?? undefined;
-    if (!this.menuAnchor) {
-      this.menuAnchor = document.createElement('div');
-      this.menuAnchor.classList.add('ui-context-menu-anchor');
-      this.menuAnchor.style.position = 'fixed';
-      document.body.appendChild(this.menuAnchor);
-    }
+    this.menuAnchor = document.createElement('div');
+    this.menuAnchor.classList.add('ui-context-menu-anchor');
+    this.menuAnchor.style.position = 'fixed';
+    document.body.appendChild(this.menuAnchor);
   }
 
   detaching() {
     this.element.removeEventListener('contextmenu', this);
+    this.menuAnchor?.remove();
+    this.menuAnchor = undefined;
   }
 
   handleEvent(e: Event) {
-    if (e.type !== 'contextmenu' || !(e instanceof PointerEvent)) {
+    // `contextmenu` is a PointerEvent in Chrome but a plain MouseEvent in Firefox, and keyboard
+    // invocation (Menu key / Shift+F10) also fires a MouseEvent — match the base type so the menu
+    // opens in all cases. PointerEvent extends MouseEvent, so Chrome still matches.
+    if (e.type !== 'contextmenu' || !(e instanceof MouseEvent)) {
       return;
     }
 
@@ -47,7 +49,7 @@ export class UiContextMenuCustomAttribute implements EventListenerObject {
     return true;
   }
 
-  private openMenu(e: PointerEvent) {
+  private openMenu(e: MouseEvent) {
     const menu = this.value;
     const menuAnchor = this.menuAnchor;
     if (!menu || !menuAnchor) {

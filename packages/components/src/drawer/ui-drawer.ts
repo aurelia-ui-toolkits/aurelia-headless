@@ -1,5 +1,6 @@
 import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
+import { getFocusableWithin } from '../base/focusable';
 import { Keys } from '../base/keys';
 
 type DrawerSide = 'left' | 'right' | 'top' | 'bottom';
@@ -179,40 +180,23 @@ export class UiDrawer implements EventListenerObject {
 
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
+    const active = document.activeElement;
+    // Treat focus that has escaped the panel like the wrap boundary, so a modal drawer
+    // re-captures it instead of letting Tab move to the page behind it.
+    const outside = !active || !this.panelElement?.contains(active);
+    if (event.shiftKey && (active === first || outside)) {
       event.preventDefault();
       last.focus();
       return;
     }
 
-    if (!event.shiftKey && document.activeElement === last) {
+    if (!event.shiftKey && (active === last || outside)) {
       event.preventDefault();
       first.focus();
     }
   }
 
   private getFocusableElements(): HTMLElement[] {
-    const selector = [
-      'a[href]',
-      'button',
-      'input:not([type="hidden"])',
-      'select',
-      'textarea',
-      'iframe',
-      '[tabindex]',
-      '[contenteditable="true"]'
-    ].join(',');
-
-    return Array.from(this.panelElement?.querySelectorAll<HTMLElement>(selector) ?? [])
-      .filter((element) => this.isFocusable(element));
-  }
-
-  private isFocusable(element: HTMLElement): boolean {
-    if (element.tabIndex < 0 || element.hasAttribute('disabled') || element.getAttribute('aria-hidden') === 'true') {
-      return false;
-    }
-
-    const style = window.getComputedStyle(element);
-    return style.display !== 'none' && style.visibility !== 'hidden';
+    return getFocusableWithin(this.panelElement);
   }
 }

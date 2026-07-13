@@ -1,7 +1,6 @@
 import { Aurelia, IContainer, resolve } from 'aurelia';
 
 type TooltipPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end';
-type EnhancedView = { deactivate(): void | Promise<void> };
 
 let nextTooltipId = 0;
 
@@ -15,7 +14,7 @@ interface TooltipOptions {
 export class UiTooltipService {
   private readonly container = resolve(IContainer);
   private host: HTMLElement | undefined;
-  private enhanced: EnhancedView | undefined;
+  private enhancedPromise: Promise<void> | undefined;
   private request = 0;
 
   open = false;
@@ -49,11 +48,12 @@ export class UiTooltipService {
     this.anchor = undefined;
   }
 
-  private async ensureEnhanced(): Promise<void> {
-    if (this.enhanced) {
-      return;
-    }
+  private ensureEnhanced(): Promise<void> {
+    // Memoize the in-flight enhancement so concurrent show() calls don't each append a host.
+    return this.enhancedPromise ??= this.createEnhanced();
+  }
 
+  private async createEnhanced(): Promise<void> {
     this.host = document.createElement('div');
     this.host.className = 'ui-tooltip';
     this.host.innerHTML = `
@@ -73,11 +73,11 @@ export class UiTooltipService {
     `;
     document.body.append(this.host);
 
-    this.enhanced = await Aurelia.enhance({
+    await Aurelia.enhance({
       host: this.host,
       component: this,
       container: this.container
-    }) as EnhancedView;
+    });
   }
 }
 

@@ -18,7 +18,7 @@ export class UiTab {
   }
 
   get tabIndex(): number {
-    return !this.disabled && this.selected ? 0 : -1;
+    return this.parentTabs.isTabbable(this) ? 0 : -1;
   }
 
   onClick(): void {
