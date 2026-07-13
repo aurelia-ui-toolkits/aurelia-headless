@@ -45,8 +45,7 @@
 }
 
 .ui-top-app-bar__title {
-  @apply min-w-0 truncate text-lg font-extrabold leading-tight text-ink-900;
-  letter-spacing: -0.03em;
+  @apply min-w-0 truncate text-base font-bold leading-tight text-ink-900;
 }
 
 @media (max-width: 520px) {

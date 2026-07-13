@@ -138,8 +138,14 @@ ui-input,
 textarea.ui-input__native {
   @apply min-h-24 resize-y;
   height: auto;
-  padding-block: 0.625rem;
-  line-height: 1.25rem;
+  padding-top: calc((var(--ui-field-control-height) - var(--ui-field-line-height)) / 2 + 0.25rem);
+  padding-bottom: calc((var(--ui-field-control-height) - var(--ui-field-line-height)) / 2);
+  line-height: var(--ui-field-line-height);
+}
+
+.ui-input[data-inset] textarea.ui-input__native {
+  padding-top: calc(var(--ui-field-inset-padding-top) + 0.25rem);
+  padding-bottom: var(--ui-field-inset-padding-bottom);
 }
 
 .ui-input__subscript {

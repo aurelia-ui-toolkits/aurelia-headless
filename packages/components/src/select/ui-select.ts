@@ -207,9 +207,16 @@ export class UiSelect {
       return;
     }
 
-    if (event.key === Keys.Enter || event.key === Keys.Space || event.key === Keys.ArrowDown) {
+    if (event.key === Keys.Enter || event.key === Keys.Space) {
       event.preventDefault();
       this.open = true;
+      return;
+    }
+
+    if (event.key === Keys.ArrowDown || event.key === Keys.ArrowUp) {
+      event.preventDefault();
+      this.open = true;
+      queueTask(() => this.menu.focus(event.key === Keys.ArrowDown ? Keys.Home : Keys.End));
       return;
     }
 

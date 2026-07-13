@@ -92,6 +92,7 @@ export { UiMenu };
 export { UiValidationControllerFactory };
 export { UiValidationContainer };
 export type { IError };
+export type { IValidatedElement } from './base/i-validated-element';
 export { UiList };
 export { UiListItem };
 export { UiPopup };
