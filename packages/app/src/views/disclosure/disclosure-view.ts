@@ -1,1 +1,3 @@
-export class DisclosureView {}
+export class DisclosureView {
+  controlledOpen = false;
+}
