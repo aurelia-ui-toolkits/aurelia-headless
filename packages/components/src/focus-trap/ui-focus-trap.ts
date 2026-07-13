@@ -1,18 +1,5 @@
 import { customAttribute, INode, resolve } from 'aurelia';
-
-const FOCUSABLE_SELECTOR = [
-  'a[href]',
-  'area[href]',
-  'input:not([disabled]):not([type="hidden"])',
-  'select:not([disabled])',
-  'textarea:not([disabled])',
-  'button:not([disabled])',
-  'iframe',
-  'object',
-  'embed',
-  '[tabindex]:not([tabindex="-1"])',
-  '[contenteditable]'
-].join(',');
+import { FOCUSABLE_SELECTOR } from '../base/focusable';
 
 /**
  * Keeps keyboard focus within the host element while active. Headless replacement for the

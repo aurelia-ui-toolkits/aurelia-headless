@@ -1,19 +1,9 @@
 import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
+import { getFocusableWithin } from '../base/focusable';
 import { Keys } from '../base/keys';
 
 type PopupPlacement = 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end' | 'right-start' | 'right-end' | 'left-start' | 'left-end';
-
-const FOCUSABLE_SELECTOR = [
-  'a[href]',
-  'button',
-  'input:not([type="hidden"])',
-  'select',
-  'textarea',
-  'iframe',
-  '[tabindex]',
-  '[contenteditable="true"]'
-].join(',');
 
 @customElement('ui-popup')
 export class UiPopup {
@@ -293,23 +283,12 @@ export class UiPopup {
 
   private getFocusableElements(): HTMLElement[] {
     // Document-wide, excluding the panel — used to find the page neighbour of the tab reference.
-    return Array.from(document.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR))
-      .filter((element) => !this.panelElement?.contains(element) && this.isFocusable(element));
+    return getFocusableWithin(document).filter((element) => !this.panelElement?.contains(element));
   }
 
   private getPanelFocusableElements(): HTMLElement[] {
     // Scoped to the panel — used to Tab between the panel's own focusable elements.
-    return Array.from(this.panelElement?.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR) ?? [])
-      .filter((element) => this.isFocusable(element));
-  }
-
-  private isFocusable(element: HTMLElement): boolean {
-    if (element.tabIndex < 0 || element.hasAttribute('disabled') || element.getAttribute('aria-hidden') === 'true') {
-      return false;
-    }
-
-    const style = window.getComputedStyle(element);
-    return style.display !== 'none' && style.visibility !== 'hidden';
+    return getFocusableWithin(this.panelElement);
   }
 
   private setListeners(listen: boolean): void {

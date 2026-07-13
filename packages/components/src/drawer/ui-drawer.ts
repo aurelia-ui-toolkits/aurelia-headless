@@ -1,5 +1,6 @@
 import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
+import { getFocusableWithin } from '../base/focusable';
 import { Keys } from '../base/keys';
 
 type DrawerSide = 'left' | 'right' | 'top' | 'bottom';
@@ -196,27 +197,6 @@ export class UiDrawer implements EventListenerObject {
   }
 
   private getFocusableElements(): HTMLElement[] {
-    const selector = [
-      'a[href]',
-      'button',
-      'input:not([type="hidden"])',
-      'select',
-      'textarea',
-      'iframe',
-      '[tabindex]',
-      '[contenteditable="true"]'
-    ].join(',');
-
-    return Array.from(this.panelElement?.querySelectorAll<HTMLElement>(selector) ?? [])
-      .filter((element) => this.isFocusable(element));
-  }
-
-  private isFocusable(element: HTMLElement): boolean {
-    if (element.tabIndex < 0 || element.hasAttribute('disabled') || element.getAttribute('aria-hidden') === 'true') {
-      return false;
-    }
-
-    const style = window.getComputedStyle(element);
-    return style.display !== 'none' && style.visibility !== 'hidden';
+    return getFocusableWithin(this.panelElement);
   }
 }
