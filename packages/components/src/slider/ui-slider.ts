@@ -205,7 +205,9 @@ export class UiSlider {
     if (this.value !== this.normalizedValue) {
       this.value = this.normalizedValue;
     }
-    if (this.endValue !== this.normalizedEndValue) {
+    // Only sync `endValue` back in range mode; a single slider must not clobber a
+    // consumer's bound `endValue` by forcing it to `max`.
+    if (this.range && this.endValue !== this.normalizedEndValue) {
       this.endValue = this.normalizedEndValue;
     }
   }
