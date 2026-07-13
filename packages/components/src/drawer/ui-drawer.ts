@@ -179,13 +179,17 @@ export class UiDrawer implements EventListenerObject {
 
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
+    const active = document.activeElement;
+    // Treat focus that has escaped the panel like the wrap boundary, so a modal drawer
+    // re-captures it instead of letting Tab move to the page behind it.
+    const outside = !active || !this.panelElement?.contains(active);
+    if (event.shiftKey && (active === first || outside)) {
       event.preventDefault();
       last.focus();
       return;
     }
 
-    if (!event.shiftKey && document.activeElement === last) {
+    if (!event.shiftKey && (active === last || outside)) {
       event.preventDefault();
       first.focus();
     }
