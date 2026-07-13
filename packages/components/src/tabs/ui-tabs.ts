@@ -40,6 +40,24 @@ export class UiTabs {
     return this.value === tab.value;
   }
 
+  /**
+   * Whether `tab` should be the tablist's single Tab stop (roving tabindex). Normally that's the
+   * selected tab, but when `value` matches no tab (e.g. an out-of-range bound value) fall back to
+   * the first enabled tab so the tablist never becomes keyboard-unreachable.
+   */
+  isTabbable(tab: UiTab): boolean {
+    if (tab.disabled) {
+      return false;
+    }
+
+    if (this.isSelected(tab)) {
+      return true;
+    }
+
+    const enabled = this.enabledTabs;
+    return !enabled.some(candidate => this.isSelected(candidate)) && enabled[0] === tab;
+  }
+
   onKeyDown(event: KeyboardEvent): void {
     const tabs = this.enabledTabs;
     if (!tabs.length) {
