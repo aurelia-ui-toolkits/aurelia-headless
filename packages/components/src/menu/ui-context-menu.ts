@@ -17,17 +17,16 @@ export class UiContextMenuCustomAttribute implements EventListenerObject {
 
   attached() {
     this.element.addEventListener('contextmenu', this);
-    this.menuAnchor = document.querySelector<HTMLDivElement>('div.ui-context-menu-anchor') ?? undefined;
-    if (!this.menuAnchor) {
-      this.menuAnchor = document.createElement('div');
-      this.menuAnchor.classList.add('ui-context-menu-anchor');
-      this.menuAnchor.style.position = 'fixed';
-      document.body.appendChild(this.menuAnchor);
-    }
+    this.menuAnchor = document.createElement('div');
+    this.menuAnchor.classList.add('ui-context-menu-anchor');
+    this.menuAnchor.style.position = 'fixed';
+    document.body.appendChild(this.menuAnchor);
   }
 
   detaching() {
     this.element.removeEventListener('contextmenu', this);
+    this.menuAnchor?.remove();
+    this.menuAnchor = undefined;
   }
 
   handleEvent(e: Event) {
