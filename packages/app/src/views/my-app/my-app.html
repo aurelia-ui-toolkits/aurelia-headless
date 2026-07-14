@@ -12,10 +12,12 @@
       <span class="theme-toggle__label">Compact</span>
       <ui-switch checked.two-way="compactTheme" aria-label="Toggle compact theme"></ui-switch>
     </label>
-    <label au-slot="actions" class="theme-toggle">
-      <span class="theme-toggle__label">Dark</span>
-      <ui-switch checked.two-way="darkTheme" aria-label="Toggle dark theme"></ui-switch>
-    </label>
+    <ui-segmented-control au-slot="actions" class="theme-mode-control" value.two-way="theme.mode"
+      label="Theme mode">
+      <ui-segment value="light">Light</ui-segment>
+      <ui-segment value="dark">Dark</ui-segment>
+      <ui-segment value="custom">Custom</ui-segment>
+    </ui-segmented-control>
     <a au-slot="actions" ui-icon-button size="large" href="https://github.com/aurelia-ui-toolkits/aurelia-headless"
       target="_blank" rel="noreferrer" aria-label="GitHub repository">
       <svg class="github-icon" viewBox="0 0 24 24" aria-hidden="true">
