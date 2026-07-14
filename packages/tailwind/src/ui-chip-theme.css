@@ -1,7 +1,12 @@
 @reference "./theme.css";
 
 .ui-chip {
-  @apply inline-flex min-h-8 cursor-pointer select-none items-center gap-1.5 rounded-full border border-card-border bg-card px-4 py-1 text-sm font-semibold leading-normal text-ink-700 outline-none transition-colors;
+  @apply inline-flex cursor-pointer select-none items-center border border-card-border bg-card font-semibold leading-normal text-ink-700 outline-none transition-colors;
+  min-height: var(--ui-chip-min-height);
+  gap: var(--ui-chip-gap);
+  border-radius: var(--ui-chip-radius);
+  padding: var(--ui-chip-padding-y) var(--ui-chip-padding-x);
+  font-size: var(--ui-chip-font-size);
 
   &[data-hover] {
     @apply bg-card-muted text-ink-900;

@@ -1,0 +1,50 @@
+<demo-section title="Theme builder">
+  <p class="max-w-3xl text-ink-500">
+    Pick a brand colour and a few surfaces; the whole gallery re-skins live. Changes apply to the
+    <strong>Custom</strong> theme &mdash; switch to <strong>Light</strong> or <strong>Dark</strong> in the top bar to
+    compare against the shipped presets, then copy the tokens into your own <code>:root</code>.
+  </p>
+
+  <div class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,24rem)_minmax(0,1fr)]">
+    <ui-form class="rounded-2xl border border-card-border bg-card p-5">
+      <ui-input class="col-span-12" type="color" value.two-way="primary" label="Brand colour"
+        helper-text="Derives the primary ramp, ring, and selection colours."></ui-input>
+      <ui-input class="col-span-12" type="color" value.two-way="ink" label="Text"
+        helper-text="Seeds the ink-900 / 700 / 500 text ramp."></ui-input>
+      <ui-input class="col-span-12 md:col-span-6" type="color" value.two-way="canvas" label="Canvas"></ui-input>
+      <ui-input class="col-span-12 md:col-span-6" type="color" value.two-way="card" label="Card"></ui-input>
+      <ui-input class="col-span-12 md:col-span-6" type="color" value.two-way="cardBorder" label="Card border"></ui-input>
+      <ui-slider class="col-span-12" value.two-way="radius" min="0" max="20" step="1" label="Corner radius"
+        helper-text="Applies to buttons, fields, lists, tables, and trees."></ui-slider>
+      <div class="col-span-12 mt-2 flex flex-wrap gap-3">
+        <button ui-button outlined click.trigger="resetToLight()">Reset to Light</button>
+        <button ui-button primary click.trigger="copy()">${copied ? 'Copied!' : 'Copy CSS'}</button>
+      </div>
+    </ui-form>
+
+    <div class="flex min-w-0 flex-col gap-4 rounded-2xl border border-card-border bg-card p-5">
+      <h3 class="text-lg font-semibold text-ink-900">Live preview</h3>
+      <p class="text-ink-500">Every component below reads from the tokens on the left.</p>
+      <div class="flex flex-wrap items-center gap-3">
+        <button ui-button primary>Primary</button>
+        <button ui-button outlined>Outlined</button>
+        <ui-chip>Chip</ui-chip>
+        <ui-badge tone="primary">Badge</ui-badge>
+      </div>
+      <div class="flex flex-wrap items-center gap-6">
+        <ui-switch checked.bind="true" aria-label="Preview switch"></ui-switch>
+        <ui-checkbox checked.bind="true" label="Checkbox"></ui-checkbox>
+      </div>
+      <ui-list class="max-w-sm">
+        <ui-list-item value="one" selected.bind="true">Selected item</ui-list-item>
+        <ui-list-item value="two">Second item</ui-list-item>
+        <ui-list-item value="three">Third item</ui-list-item>
+      </ui-list>
+    </div>
+  </div>
+
+  <section class="mt-8">
+    <h3 class="mb-3 text-lg font-semibold text-ink-900">Copy into your <code>:root</code></h3>
+    <demo-code code.bind="generatedCss" language="css"></demo-code>
+  </section>
+</demo-section>

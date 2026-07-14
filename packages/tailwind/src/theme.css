@@ -140,6 +140,12 @@
   --ui-datepicker-dialog-time-padding: 0.75rem;
   --ui-datepicker-dialog-time-label-font-size: 0.75rem;
   --ui-datepicker-dialog-actions-gap: 1rem;
+  --ui-chip-radius: 9999px;
+  --ui-chip-min-height: 2rem;
+  --ui-chip-padding-x: 1rem;
+  --ui-chip-padding-y: 0.25rem;
+  --ui-chip-gap: 0.375rem;
+  --ui-chip-font-size: 0.875rem;
 }
 
 :root {
@@ -283,6 +289,12 @@
   --ui-datepicker-dialog-time-padding: 0.75rem;
   --ui-datepicker-dialog-time-label-font-size: 0.75rem;
   --ui-datepicker-dialog-actions-gap: 1rem;
+  --ui-chip-radius: 9999px;
+  --ui-chip-min-height: 2rem;
+  --ui-chip-padding-x: 1rem;
+  --ui-chip-padding-y: 0.25rem;
+  --ui-chip-gap: 0.375rem;
+  --ui-chip-font-size: 0.875rem;
 }
 
 :root[data-density="compact"] {
@@ -391,6 +403,11 @@
   --ui-datepicker-dialog-time-padding: 0.5rem;
   --ui-datepicker-dialog-time-label-font-size: 0.65rem;
   --ui-datepicker-dialog-actions-gap: 0.75rem;
+  --ui-chip-min-height: 1.5rem;
+  --ui-chip-padding-x: 0.5rem;
+  --ui-chip-padding-y: 0.125rem;
+  --ui-chip-gap: 0.25rem;
+  --ui-chip-font-size: 0.75rem;
 }
 
 :root[data-theme="dark"] {

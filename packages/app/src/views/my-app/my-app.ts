@@ -30,6 +30,8 @@ import { ToastView } from '../toast/toast-view';
 import { TooltipView } from '../tooltip/tooltip-view';
 import { TopAppBarView } from '../top-app-bar/top-app-bar-view';
 import { TreeView } from '../tree/tree-view';
+import { ThemeBuilder } from '../theme-builder/theme-builder';
+import { ThemeController } from '../theme-builder/theme-controller';
 import logoUrl from '../../assets/aurelia-headless-logo.png';
 
 type DemoRoute = { id: string; path: string; title: string; component: unknown };
@@ -42,6 +44,7 @@ export class MyApp {
 
   static routes: DemoRoute[] = [
     { id: 'get-started', path: '', title: 'Get started', component: GetStartedView },
+    { id: 'theme-builder', path: 'theme-builder', title: 'Theme builder', component: ThemeBuilder },
     { id: 'alert', path: 'alert', title: 'alert', component: AlertView },
     { id: 'badge', path: 'badge', title: 'badge', component: BadgeView },
     { id: 'button', path: 'button', title: 'button', component: ButtonView },
@@ -83,27 +86,21 @@ export class MyApp {
   selectedMenuItem: DemoRoute = this.menuItems[0];
   breadcrumbs: UiBreadcrumbItem[] = [];
 
-  @observable
-  darkTheme = false;
-  darkThemeChanged(): void {
-    this.applyTheme();
-    this.persistTheme();
-  }
+  readonly theme = resolve(ThemeController);
 
   @observable
   compactTheme = this.loadThemePackage();
   compactThemeChanged(): void {
-    this.applyTheme();
-    this.persistTheme();
+    this.applyDensity();
+    this.persistDensity();
   }
 
   constructor() {
-    this.darkTheme = this.loadTheme();
-    this.applyTheme();
+    this.applyDensity();
   }
 
   attached(): void {
-    this.applyTheme();
+    this.applyDensity();
     this.updateRouteState();
     this.mobileMedia = globalThis.matchMedia?.(mobileQuery);
     this.mobileMedia?.addEventListener('change', this.onMobileChange);
@@ -145,30 +142,16 @@ export class MyApp {
     return globalThis.matchMedia?.(mobileQuery).matches ?? false;
   }
 
-  private persistTheme(): void {
+  private persistDensity(): void {
     try {
-      localStorage.setItem('aurelia-headless:theme', this.darkTheme ? 'dark' : 'light');
       localStorage.setItem('aurelia-headless:density', this.compactTheme ? 'compact' : 'default');
     } catch {
       // Ignore unavailable storage.
     }
   }
 
-  private applyTheme(): void {
-    document.documentElement.dataset.theme = this.darkTheme ? 'dark' : 'light';
+  private applyDensity(): void {
     document.documentElement.dataset.density = this.compactTheme ? 'compact' : 'default';
-  }
-
-  private loadTheme(): boolean {
-    try {
-      const stored = localStorage.getItem('aurelia-headless:theme');
-      if (stored) {
-        return stored === 'dark';
-      }
-    } catch {
-      // Ignore unavailable storage.
-    }
-    return globalThis.matchMedia?.('(prefers-color-scheme: dark)').matches ?? false;
   }
 
   private loadThemePackage(): ThemePackage {
