@@ -36,3 +36,14 @@
     outline-offset: -1px;
   }
 }
+
+@media (prefers-reduced-transparency: reduce) {
+  /* Make the modal dimming behind dialogs/drawers more solid. */
+  :root {
+    --color-backdrop: color-mix(in srgb, #000000 75%, transparent);
+  }
+
+  :root[data-theme="dark"] {
+    --color-backdrop: color-mix(in srgb, #000000 85%, transparent);
+  }
+}
