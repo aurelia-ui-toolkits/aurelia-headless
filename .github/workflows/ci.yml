@@ -22,6 +22,8 @@ jobs:
 
       - run: npm i
 
+      - run: npm run lint
+
       - run: npm run build -w packages/components
 
       - run: npm run build -w packages/app
