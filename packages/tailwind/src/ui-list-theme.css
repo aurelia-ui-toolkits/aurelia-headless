@@ -17,7 +17,7 @@
   font-size: var(--ui-list-item-font-size);
   line-height: var(--ui-list-item-line-height);
   padding: var(--ui-list-item-padding-y) var(--ui-list-item-padding-x);
-  transition: background-color 140ms ease;
+  transition: background-color var(--ui-duration-base) var(--ui-ease-standard);
 
   &[data-secondary] {
     min-height: var(--ui-list-secondary-min-height);

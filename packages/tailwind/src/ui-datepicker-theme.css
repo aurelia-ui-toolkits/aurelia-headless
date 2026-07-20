@@ -9,7 +9,7 @@ ui-datepicker,
   @apply grid w-full;
   row-gap: var(--ui-field-gap);
 
-  &[data-focus] .ui-datepicker__control {
+  &:has(.ui-datepicker__native:focus-visible) .ui-datepicker__control {
     @apply border-primary-600;
     box-shadow: 0 0 0 3px var(--color-ring);
   }
@@ -65,7 +65,7 @@ ui-datepicker,
   position: relative;
   border-radius: var(--ui-field-radius);
   padding-inline: var(--ui-field-padding-x);
-  transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
+  transition: border-color var(--ui-duration-base) var(--ui-ease-standard), box-shadow var(--ui-duration-base) var(--ui-ease-standard), background-color var(--ui-duration-base) var(--ui-ease-standard);
 }
 
 .ui-datepicker__leading,
@@ -99,7 +99,7 @@ ui-datepicker,
   justify-self: start;
   z-index: 2;
   transform-origin: left top;
-  transition: transform 140ms ease, font-size 140ms ease, color 140ms ease;
+  transition: transform var(--ui-duration-base) var(--ui-ease-standard), font-size var(--ui-duration-base) var(--ui-ease-standard), color var(--ui-duration-base) var(--ui-ease-standard);
 }
 
 .ui-datepicker__native {
@@ -137,7 +137,7 @@ ui-datepicker,
 
 dialog:has(.ui-datepicker-dialog) {
   @apply rounded-2xl border bg-canvas p-0 text-ink-900 shadow-2xl;
-  animation: ui-datepicker-dialog-in 140ms ease-out;
+  animation: ui-datepicker-dialog-in var(--ui-duration-base) var(--ui-ease-out);
   border-color: var(--color-card-border);
   border-radius: var(--ui-datepicker-dialog-radius);
   inset: 0;
@@ -147,7 +147,7 @@ dialog:has(.ui-datepicker-dialog) {
   overflow: visible;
 
   &::backdrop {
-    animation: ui-datepicker-dialog-backdrop-in 140ms ease-out;
+    animation: ui-datepicker-dialog-backdrop-in var(--ui-duration-base) var(--ui-ease-out);
     background: var(--color-backdrop);
   }
 

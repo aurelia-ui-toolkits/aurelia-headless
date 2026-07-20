@@ -9,7 +9,7 @@ ui-select,
   @apply grid w-full;
   row-gap: var(--ui-field-gap);
 
-  &[data-focus] .ui-select__control {
+  & .ui-select__control:focus-visible {
     @apply border-primary-600;
     box-shadow: 0 0 0 3px var(--color-ring);
   }
@@ -69,7 +69,7 @@ ui-select,
   position: relative;
   border-radius: var(--ui-field-radius);
   padding-inline: var(--ui-field-padding-x);
-  transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
+  transition: border-color var(--ui-duration-base) var(--ui-ease-standard), box-shadow var(--ui-duration-base) var(--ui-ease-standard), background-color var(--ui-duration-base) var(--ui-ease-standard);
 }
 
 .ui-select__leading,
@@ -102,7 +102,7 @@ ui-select,
   justify-self: start;
   z-index: 2;
   transform-origin: left top;
-  transition: transform 140ms ease, font-size 140ms ease, color 140ms ease;
+  transition: transform var(--ui-duration-base) var(--ui-ease-standard), font-size var(--ui-duration-base) var(--ui-ease-standard), color var(--ui-duration-base) var(--ui-ease-standard);
 }
 
 .ui-select__value {

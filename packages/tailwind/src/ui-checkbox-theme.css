@@ -42,13 +42,13 @@ ui-checkbox {
   border-radius: var(--ui-checkbox-radius);
   height: var(--ui-checkbox-size);
   width: var(--ui-checkbox-size);
-  transition: background-color 140ms ease, border-color 140ms ease, transform 140ms ease;
+  transition: background-color var(--ui-duration-base) var(--ui-ease-standard), border-color var(--ui-duration-base) var(--ui-ease-standard), transform var(--ui-duration-base) var(--ui-ease-standard);
 
   &[data-changing] {
-    transition-duration: 90ms;
+    transition-duration: var(--ui-duration-fast);
   }
 
-  &[data-focus] {
+  &:focus-visible {
     outline: 3px solid var(--color-ring);
     outline-offset: 2px;
   }

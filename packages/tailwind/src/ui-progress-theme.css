@@ -36,7 +36,7 @@
 
 .ui-progress__bar {
   @apply block h-full rounded-full bg-primary-600;
-  transition: width 160ms ease;
+  transition: width var(--ui-duration-base) var(--ui-ease-standard);
 }
 
 .ui-progress__circle {
@@ -56,7 +56,7 @@
 .ui-progress__circle-bar {
   stroke: var(--color-primary-600);
   stroke-linecap: round;
-  transition: stroke-dasharray 160ms ease;
+  transition: stroke-dasharray var(--ui-duration-base) var(--ui-ease-standard);
 }
 
 @keyframes ui-progress-indeterminate {

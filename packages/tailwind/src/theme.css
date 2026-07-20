@@ -146,6 +146,12 @@
   --ui-chip-padding-y: 0.25rem;
   --ui-chip-gap: 0.375rem;
   --ui-chip-font-size: 0.875rem;
+  --ui-duration-fast: 100ms;
+  --ui-duration-base: 140ms;
+  --ui-duration-slow: 180ms;
+  --ui-ease-standard: ease;
+  --ui-ease-out: ease-out;
+  --ui-ease-emphasized: ease-in-out;
 }
 
 :root {
@@ -295,6 +301,12 @@
   --ui-chip-padding-y: 0.25rem;
   --ui-chip-gap: 0.375rem;
   --ui-chip-font-size: 0.875rem;
+  --ui-duration-fast: 100ms;
+  --ui-duration-base: 140ms;
+  --ui-duration-slow: 180ms;
+  --ui-ease-standard: ease;
+  --ui-ease-out: ease-out;
+  --ui-ease-emphasized: ease-in-out;
 }
 
 :root[data-density="compact"] {

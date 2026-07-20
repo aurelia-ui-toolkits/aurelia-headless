@@ -4,11 +4,11 @@
   @apply relative inline-block cursor-pointer overflow-hidden rounded-full border border-card-border bg-card-muted align-middle;
   --ui-switch-checked-translate: calc(var(--ui-switch-width) - var(--ui-switch-thumb-size) - var(--ui-switch-thumb-offset) * 2);
   height: var(--ui-switch-height);
-  transition: background-color 140ms ease, border-color 140ms ease;
+  transition: background-color var(--ui-duration-base) var(--ui-ease-standard), border-color var(--ui-duration-base) var(--ui-ease-standard);
   width: var(--ui-switch-width);
 
   &[data-changing] {
-    transition-duration: 90ms;
+    transition-duration: var(--ui-duration-fast);
   }
 
   &[data-checked] {
@@ -23,7 +23,7 @@
     }
   }
 
-  &[data-focus] {
+  &:focus-visible {
     outline: 3px solid var(--color-ring);
     outline-offset: 2px;
   }
@@ -41,6 +41,6 @@
   @apply absolute bottom-0 top-0 my-auto rounded-full bg-card shadow-sm;
   height: var(--ui-switch-thumb-size);
   left: var(--ui-switch-thumb-offset);
-  transition: transform 140ms ease;
+  transition: transform var(--ui-duration-base) var(--ui-ease-standard);
   width: var(--ui-switch-thumb-size);
 }

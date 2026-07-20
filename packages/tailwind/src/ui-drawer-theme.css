@@ -7,7 +7,7 @@
 .ui-drawer__backdrop {
   @apply pointer-events-none fixed inset-0 z-40 opacity-0;
   background: var(--color-backdrop);
-  transition: opacity 180ms ease;
+  transition: opacity var(--ui-duration-slow) var(--ui-ease-standard);
 
   &[data-open] {
     @apply pointer-events-auto opacity-100;
@@ -17,7 +17,7 @@
 .ui-drawer__panel {
   @apply pointer-events-none fixed z-50 overflow-auto bg-canvas p-5 text-ink-700 opacity-0 shadow-2xl outline-none;
   --ui-drawer-inline-size: min(28rem, 100vw);
-  transition: opacity 180ms ease, transform 180ms ease;
+  transition: opacity var(--ui-duration-slow) var(--ui-ease-standard), transform var(--ui-duration-slow) var(--ui-ease-standard);
 
   &[data-open] {
     @apply pointer-events-auto opacity-100;

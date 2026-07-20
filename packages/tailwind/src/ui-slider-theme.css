@@ -24,7 +24,7 @@ ui-slider,
     }
   }
 
-  &[data-focus] .ui-slider__native {
+  & .ui-slider__native:focus-visible {
     &::-webkit-slider-thumb {
       box-shadow: 0 0 0 3px var(--color-ring);
     }

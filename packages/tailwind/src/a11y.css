@@ -1,0 +1,38 @@
+/* Accessibility safety nets: reduced motion and forced colours (Windows High Contrast). */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (forced-colors: active) {
+  /* box-shadow focus rings are dropped in forced-colours; guarantee a system outline. */
+  :focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+
+  /* States conveyed only by a background/overlay colour get a non-colour indicator,
+     since those fills are flattened in forced-colours mode. */
+  .ui-chip[data-selected],
+  .ui-list-item[data-selected],
+  .ui-segment[data-selected],
+  .ui-tab[data-selected],
+  .ui-checkbox__box[data-checked],
+  .ui-radio[data-selected],
+  .ui-switch[data-checked] {
+    outline: 2px solid Highlight;
+    outline-offset: -1px;
+  }
+
+  .ui-button[data-primary] {
+    outline: 1px solid ButtonText;
+    outline-offset: -1px;
+  }
+}
