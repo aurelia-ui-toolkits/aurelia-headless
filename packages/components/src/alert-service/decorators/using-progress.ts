@@ -6,7 +6,7 @@ export interface IWithAlertService {
 }
 
 export function usingProgress(errorMessage?: string | Partial<IAlertModalPayload> | ((e: Error) => string), allowCancel: boolean = false) {
-  return function actualDecorator<This extends IWithAlertService, Args extends any[], Result>(originalMethod: (this: This, ...args: [...Args, AbortSignal?]) => Promise<Result>,
+  return function actualDecorator<This extends IWithAlertService, Args extends unknown[], Result>(originalMethod: (this: This, ...args: [...Args, AbortSignal?]) => Promise<Result>,
     _: ClassMethodDecoratorContext<This, (this: This, ...args: Args) => Promise<Result>>) {
     return async function replacementMethod(this: This, ...args: Args) {
       if (!this.alertService) {

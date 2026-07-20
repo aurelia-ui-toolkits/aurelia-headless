@@ -23,6 +23,8 @@ are versioned in lockstep.
 ### Changed
 - **RTL** — non-field components now use logical properties
   (`margin-inline-*`, `padding-inline-*`, `text-start/end`, `ps-/pe-/ms-/me-`).
+- Tightened public types (replaced `any`): `ui-list` `items` is now `unknown[]`,
+  and the alert-service dialog generics default to `unknown` / `object`.
 
 ### Fixed
 - Honor `prefers-reduced-motion` (transitions/animations reduced globally).

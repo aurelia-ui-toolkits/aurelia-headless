@@ -18,10 +18,10 @@ export class UiList {
   private typeaheadTimer: ReturnType<typeof setTimeout> | undefined;
 
   /** Sentinel default; if `items` still references this, no consumer/enhancer binding supplied items. */
-  private readonly defaultItems: any[] = [];
+  private readonly defaultItems: unknown[] = [];
 
   @bindable
-  items: any[] = this.defaultItems;
+  items: unknown[] = this.defaultItems;
   itemsChanged(): void {
     // Ignore our own slot-derived assignment; any other (consumer/enhancer) binding means the
     // items are externally owned and must never be overwritten by slot derivation.
@@ -167,7 +167,7 @@ export class UiList {
     }
 
     if (typeof this.disabledField === 'string') {
-      return !!(item as any)[this.disabledField];
+      return !!(item as Record<string, unknown>)[this.disabledField];
     } else if (typeof this.disabledField === 'function') {
       return this.disabledField(item);
     }
@@ -269,7 +269,7 @@ export class UiList {
       return this.items;
     }
 
-    const merged = [...rendered];
+    const merged: unknown[] = [...rendered];
     for (const value of this.items) {
       if (!merged.includes(value)) {
         merged.push(value);
