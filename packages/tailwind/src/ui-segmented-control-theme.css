@@ -8,7 +8,7 @@ ui-segmented-control,
 ui-segment,
 .ui-segment {
   @apply cursor-pointer rounded-lg px-3 py-2 text-sm font-semibold text-ink-500 outline-none;
-  transition: background-color 140ms ease, color 140ms ease, box-shadow 140ms ease;
+  transition: background-color var(--ui-duration-base) var(--ui-ease-standard), color var(--ui-duration-base) var(--ui-ease-standard), box-shadow var(--ui-duration-base) var(--ui-ease-standard);
 
   &:hover {
     @apply bg-card text-ink-900;
@@ -19,7 +19,8 @@ ui-segment,
   }
 
   &[data-selected] {
-    @apply bg-card text-primary-700 shadow-sm;
+    @apply bg-card text-primary-700;
+    box-shadow: var(--ui-shadow-sm);
   }
 
   &[data-disabled] {

@@ -57,7 +57,7 @@ export class AlertService {
     }
   }
 
-  async open<TOptions, TModel = any, TComponent extends object = any>(options: IDialogSettings<TOptions, TModel, TComponent>): Promise<string | undefined> {
+  async open<TOptions, TModel = unknown, TComponent extends object = object>(options: IDialogSettings<TOptions, TModel, TComponent>): Promise<string | undefined> {
     try {
       this.hideProgress();
       return await this.openWithProgress(options);
@@ -66,7 +66,7 @@ export class AlertService {
     }
   }
 
-  async openWithProgress<TOptions, TModel = any, TComponent extends object = any>(options: IDialogSettings<TOptions, TModel, TComponent>): Promise<string | undefined> {
+  async openWithProgress<TOptions, TModel = unknown, TComponent extends object = object>(options: IDialogSettings<TOptions, TModel, TComponent>): Promise<string | undefined> {
     const result = await (await this.dialogService.open(options)).dialog.closed;
     return typeof result.value === 'string' ? result.value : result.status;
   }

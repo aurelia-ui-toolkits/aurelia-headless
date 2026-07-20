@@ -1,5 +1,13 @@
 import { resolve } from 'aurelia';
 import { buildCssVars, ThemeController } from './theme-controller';
+import { contrastRatio, onPrimaryFor } from './color-utils';
+
+interface ContrastCheck {
+  label: string;
+  ratio: string;
+  aa: boolean;
+  aaa: boolean;
+}
 
 export class ThemeBuilder {
   private readonly theme = resolve(ThemeController);
@@ -46,6 +54,19 @@ export class ThemeBuilder {
   }
   set radius(value: number) {
     this.theme.setToken('radius', Number(value));
+  }
+
+  get contrastChecks(): ContrastCheck[] {
+    const t = this.theme.tokens;
+    const check = (label: string, fg: string, bg: string): ContrastCheck => {
+      const ratio = contrastRatio(fg, bg);
+      return { label, ratio: ratio.toFixed(2), aa: ratio >= 4.5, aaa: ratio >= 7 };
+    };
+    return [
+      check('Body text (ink on card)', t.ink, t.card),
+      check('Text on canvas', t.ink, t.canvas),
+      check('Button label', onPrimaryFor(t.primary), t.primary)
+    ];
   }
 
   get generatedCss(): string {

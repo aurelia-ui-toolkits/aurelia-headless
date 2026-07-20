@@ -6,7 +6,8 @@
   ],
   "scripts": {
     "build": "npm run build -w packages/components",
-    "start": "npm run start -w packages/app"
+    "start": "npm run start -w packages/app",
+    "lint": "eslint \"packages/*/src/**/*.ts\""
   },
   "devDependencies": {
     "@aurelia/router": ">=2.0.0-rc.1",

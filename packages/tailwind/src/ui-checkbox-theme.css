@@ -42,13 +42,26 @@ ui-checkbox {
   border-radius: var(--ui-checkbox-radius);
   height: var(--ui-checkbox-size);
   width: var(--ui-checkbox-size);
-  transition: background-color 140ms ease, border-color 140ms ease, transform 140ms ease;
+  transition: background-color var(--ui-duration-base) var(--ui-ease-standard), border-color var(--ui-duration-base) var(--ui-ease-standard), transform var(--ui-duration-base) var(--ui-ease-standard);
 
-  &[data-changing] {
-    transition-duration: 90ms;
+  /* WCAG 2.5.8: guarantee a >=24px tap target even when compact shrinks the box. */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    min-width: 24px;
+    min-height: 24px;
+    transform: translate(-50%, -50%);
   }
 
-  &[data-focus] {
+  &[data-changing] {
+    transition-duration: var(--ui-duration-fast);
+  }
+
+  &:focus-visible {
     outline: 3px solid var(--color-ring);
     outline-offset: 2px;
   }

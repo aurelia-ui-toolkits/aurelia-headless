@@ -9,7 +9,7 @@ ui-combobox,
   @apply grid w-full;
   row-gap: var(--ui-field-gap);
 
-  &[data-focus] .ui-combobox__control {
+  &:has(.ui-combobox__native:focus-visible) .ui-combobox__control {
     @apply border-primary-600;
     box-shadow: 0 0 0 3px var(--color-ring);
   }
@@ -69,7 +69,7 @@ ui-combobox,
   position: relative;
   border-radius: var(--ui-field-radius);
   padding-inline: var(--ui-field-padding-x);
-  transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
+  transition: border-color var(--ui-duration-base) var(--ui-ease-standard), box-shadow var(--ui-duration-base) var(--ui-ease-standard), background-color var(--ui-duration-base) var(--ui-ease-standard);
 }
 
 .ui-combobox__leading,
@@ -80,7 +80,7 @@ ui-combobox,
 
 .ui-combobox__leading {
   grid-column: 1;
-  margin-right: 0.5rem;
+  margin-inline-end: 0.5rem;
 }
 
 .ui-combobox__trailing {
@@ -92,7 +92,7 @@ ui-combobox,
   @apply inline-flex cursor-pointer items-center justify-center;
   align-self: stretch;
   min-width: var(--ui-field-control-height);
-  margin-right: calc(var(--ui-field-padding-x) * -1);
+  margin-inline-end: calc(var(--ui-field-padding-x) * -1);
 }
 
 .ui-combobox__chevron {
@@ -108,7 +108,7 @@ ui-combobox,
   justify-self: start;
   z-index: 2;
   transform-origin: left top;
-  transition: transform 140ms ease, font-size 140ms ease, color 140ms ease;
+  transition: transform var(--ui-duration-base) var(--ui-ease-standard), font-size var(--ui-duration-base) var(--ui-ease-standard), color var(--ui-duration-base) var(--ui-ease-standard);
 }
 
 .ui-combobox__native {

@@ -11,8 +11,8 @@
 
   &[data-toggle-position="right"] {
     & .ui-tree__item {
-      @apply grid-cols-[minmax(0,1fr)_auto] pl-2;
-      padding-left: calc(var(--ui-tree-indent-base) + var(--ui-tree-depth) * var(--ui-tree-indent));
+      @apply grid-cols-[minmax(0,1fr)_auto] ps-2;
+      padding-inline-start: calc(var(--ui-tree-indent-base) + var(--ui-tree-depth) * var(--ui-tree-indent));
     }
 
     & .ui-tree__toggle {
@@ -21,19 +21,19 @@
 
     & .ui-tree__content {
       @apply col-start-1 row-start-1;
-      padding-left: calc(var(--ui-tree-depth) * var(--ui-tree-indent));
+      padding-inline-start: calc(var(--ui-tree-depth) * var(--ui-tree-indent));
     }
   }
 }
 
 .ui-tree__item {
-  @apply grid cursor-pointer grid-cols-[auto_1fr] items-center rounded-lg py-1.5 pr-2 text-sm text-ink-700 outline-none;
+  @apply grid cursor-pointer grid-cols-[auto_1fr] items-center rounded-lg py-1.5 pe-2 text-sm text-ink-700 outline-none;
   border-radius: var(--ui-tree-item-radius);
   font-size: var(--ui-tree-item-font-size);
   line-height: var(--ui-tree-item-line-height);
   min-height: var(--ui-tree-item-min-height);
   padding: var(--ui-tree-item-padding-y) var(--ui-tree-item-padding-right) var(--ui-tree-item-padding-y) calc(var(--ui-tree-indent-base) + var(--ui-tree-depth) * var(--ui-tree-indent));
-  transition: background-color 140ms ease, color 140ms ease, box-shadow 140ms ease;
+  transition: background-color var(--ui-duration-base) var(--ui-ease-standard), color var(--ui-duration-base) var(--ui-ease-standard), box-shadow var(--ui-duration-base) var(--ui-ease-standard);
 
   &:hover,
   &[data-active] {
@@ -67,10 +67,23 @@
 }
 
 .ui-tree__toggle {
-  @apply grid h-6 w-6 place-items-center rounded-md text-ink-500 outline-none;
+  @apply relative grid h-6 w-6 place-items-center rounded-md text-ink-500 outline-none;
   border-radius: var(--ui-tree-toggle-radius);
   height: var(--ui-tree-toggle-size);
   width: var(--ui-tree-toggle-size);
+
+  /* WCAG 2.5.8: guarantee a >=24px tap target even when compact shrinks the toggle. */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    min-width: 24px;
+    min-height: 24px;
+    transform: translate(-50%, -50%);
+  }
 
   &:hover {
     background: var(--color-subtle-overlay);
@@ -84,7 +97,7 @@
 .ui-tree__toggle-icon {
   @apply block h-2 w-2 border-b-2 border-r-2 border-current;
   transform: rotate(-45deg);
-  transition: transform 140ms ease;
+  transition: transform var(--ui-duration-base) var(--ui-ease-standard);
 }
 
 .ui-tree__content {

@@ -1,7 +1,8 @@
 @reference "./theme.css";
 
 .ui-floating-actions {
-  @apply relative inline-grid place-items-start rounded-lg border border-card-border bg-card p-1 align-top shadow-md;
+  @apply relative inline-grid place-items-start rounded-lg border border-card-border bg-card p-1 align-top;
+  box-shadow: var(--ui-shadow-md);
 }
 
 .ui-floating-actions__items {

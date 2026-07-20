@@ -2,8 +2,9 @@
 
 dialog:has(.ui-alert-modal),
 dialog:has(.ui-prompt-modal) {
-  @apply rounded-2xl border bg-canvas p-0 text-ink-900 shadow-2xl;
-  animation: ui-alert-dialog-in 140ms ease-out;
+  @apply rounded-2xl border bg-canvas p-0 text-ink-900;
+  box-shadow: var(--ui-shadow-2xl);
+  animation: ui-alert-dialog-in var(--ui-duration-base) var(--ui-ease-out);
   border-color: var(--color-card-border);
   inset: 50% auto auto 50%;
   margin: 0;
@@ -12,7 +13,7 @@ dialog:has(.ui-prompt-modal) {
   width: min(92vw, 32rem);
 
   &::backdrop {
-    animation: ui-alert-dialog-backdrop-in 140ms ease-out;
+    animation: ui-alert-dialog-backdrop-in var(--ui-duration-base) var(--ui-ease-out);
     background: var(--color-backdrop);
   }
 }

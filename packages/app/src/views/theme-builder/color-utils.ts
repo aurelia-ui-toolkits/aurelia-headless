@@ -28,3 +28,14 @@ function relativeLuminance(hex: string): number {
 export function onPrimaryFor(hex: string): string {
   return relativeLuminance(hex) > 0.55 ? '#212121' : '#ffffff';
 }
+
+/**
+ * WCAG contrast ratio between two colours (1–21). Order-independent.
+ */
+export function contrastRatio(a: string, b: string): number {
+  const la = relativeLuminance(a);
+  const lb = relativeLuminance(b);
+  const lighter = Math.max(la, lb);
+  const darker = Math.min(la, lb);
+  return (lighter + 0.05) / (darker + 0.05);
+}

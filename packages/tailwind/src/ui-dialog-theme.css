@@ -13,7 +13,8 @@
  * rule (see ui-alert-dialog-theme.css / ui-datepicker-theme.css and per-view CSS).
  */
 dialog {
-  @apply rounded-2xl border bg-canvas p-0 text-ink-900 shadow-2xl outline-none;
+  @apply rounded-2xl border bg-canvas p-0 text-ink-900 outline-none;
+  box-shadow: var(--ui-shadow-2xl);
   inset: 0;
   margin: auto;
   max-width: min(95vw, 40rem);

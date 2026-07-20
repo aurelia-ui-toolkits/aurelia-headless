@@ -20,7 +20,7 @@ ui-radio-group,
 ui-radio,
 .ui-radio {
   @apply flex cursor-pointer items-center gap-3 rounded-xl border border-card-border bg-card px-3 py-2 text-sm text-ink-700 outline-none;
-  transition: border-color 140ms ease, background-color 140ms ease, box-shadow 140ms ease;
+  transition: border-color var(--ui-duration-base) var(--ui-ease-standard), background-color var(--ui-duration-base) var(--ui-ease-standard), box-shadow var(--ui-duration-base) var(--ui-ease-standard);
 
   &:hover {
     @apply border-primary-600 bg-outline-hover text-ink-900;
@@ -54,7 +54,7 @@ ui-radio,
     @apply h-2 w-2 rounded-full bg-primary-600;
     content: '';
     transform: scale(0);
-    transition: transform 140ms ease;
+    transition: transform var(--ui-duration-base) var(--ui-ease-standard);
   }
 }
 
