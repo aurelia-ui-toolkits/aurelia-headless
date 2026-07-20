@@ -4,6 +4,7 @@
   "description": "Headless UI components for Aurelia 2",
   "license": "MIT",
   "type": "module",
+  "sideEffects": false,
   "author": "Maxim Balaganskiy <m.balaganskiy@gmail.com>",
   "repository": {
     "type": "git",
@@ -38,7 +39,8 @@
     "prebuild": "rimraf dist",
     "build:js": "vite build",
     "build:types": "tsc -p tsconfig.build.json --emitDeclarationOnly",
-    "build": "npm run build:js && npm run build:types"
+    "build": "npm run build:js && npm run build:types",
+    "docs": "typedoc"
   },
   "peerDependencies": {
     "@aurelia/dialog": ">=2.0.0-rc.1",
