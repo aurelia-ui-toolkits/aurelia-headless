@@ -76,13 +76,13 @@ ui-datepicker,
 
 .ui-datepicker__leading {
   grid-column: 1;
-  margin-right: 0.5rem;
+  margin-inline-end: 0.5rem;
 }
 
 .ui-datepicker__trailing {
   @apply inline-flex items-center justify-center gap-1;
   grid-column: 3;
-  margin-left: 0.5rem;
+  margin-inline-start: 0.5rem;
 }
 
 .ui-datepicker__button-icon {
@@ -136,7 +136,8 @@ ui-datepicker,
 }
 
 dialog:has(.ui-datepicker-dialog) {
-  @apply rounded-2xl border bg-canvas p-0 text-ink-900 shadow-2xl;
+  @apply rounded-2xl border bg-canvas p-0 text-ink-900;
+  box-shadow: var(--ui-shadow-2xl);
   animation: ui-datepicker-dialog-in var(--ui-duration-base) var(--ui-ease-out);
   border-color: var(--color-card-border);
   border-radius: var(--ui-datepicker-dialog-radius);

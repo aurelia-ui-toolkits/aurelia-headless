@@ -38,7 +38,8 @@
 }
 
 .ui-switch__thumb {
-  @apply absolute bottom-0 top-0 my-auto rounded-full bg-card shadow-sm;
+  @apply absolute bottom-0 top-0 my-auto rounded-full bg-card;
+  box-shadow: var(--ui-shadow-sm);
   height: var(--ui-switch-thumb-size);
   left: var(--ui-switch-thumb-offset);
   transition: transform var(--ui-duration-base) var(--ui-ease-standard);

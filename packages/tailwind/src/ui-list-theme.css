@@ -66,13 +66,13 @@
 
 .ui-list-item__leading {
   @apply col-start-1;
-  margin-right: var(--ui-list-icon-gap);
+  margin-inline-end: var(--ui-list-icon-gap);
 }
 
 .ui-list-item__trailing {
   @apply col-start-3;
   justify-self: end;
-  margin-left: var(--ui-list-icon-gap);
+  margin-inline-start: var(--ui-list-icon-gap);
 }
 
 .ui-list-item__content {

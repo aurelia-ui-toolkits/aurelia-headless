@@ -2,7 +2,8 @@
 
 dialog:has(.ui-alert-modal),
 dialog:has(.ui-prompt-modal) {
-  @apply rounded-2xl border bg-canvas p-0 text-ink-900 shadow-2xl;
+  @apply rounded-2xl border bg-canvas p-0 text-ink-900;
+  box-shadow: var(--ui-shadow-2xl);
   animation: ui-alert-dialog-in var(--ui-duration-base) var(--ui-ease-out);
   border-color: var(--color-card-border);
   inset: 50% auto auto 50%;

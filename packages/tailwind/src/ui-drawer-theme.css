@@ -15,7 +15,8 @@
 }
 
 .ui-drawer__panel {
-  @apply pointer-events-none fixed z-50 overflow-auto bg-canvas p-5 text-ink-700 opacity-0 shadow-2xl outline-none;
+  @apply pointer-events-none fixed z-50 overflow-auto bg-canvas p-5 text-ink-700 opacity-0 outline-none;
+  box-shadow: var(--ui-shadow-2xl);
   --ui-drawer-inline-size: min(28rem, 100vw);
   transition: opacity var(--ui-duration-slow) var(--ui-ease-standard), transform var(--ui-duration-slow) var(--ui-ease-standard);
 

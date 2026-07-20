@@ -80,13 +80,13 @@ ui-select,
 
 .ui-select__leading {
   grid-column: 1;
-  margin-right: 0.5rem;
+  margin-inline-end: 0.5rem;
 }
 
 .ui-select__trailing {
   @apply inline-flex items-center justify-center;
   grid-column: 3;
-  margin-left: 0.5rem;
+  margin-inline-start: 0.5rem;
 }
 
 .ui-select__chevron {

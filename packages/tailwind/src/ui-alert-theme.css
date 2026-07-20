@@ -1,7 +1,8 @@
 @reference "./theme.css";
 
 .ui-alert {
-  @apply grid grid-cols-[auto_1fr_auto] gap-3 rounded-xl border px-4 py-3 text-sm shadow-sm;
+  @apply grid grid-cols-[auto_1fr_auto] gap-3 rounded-xl border px-4 py-3 text-sm;
+  box-shadow: var(--ui-shadow-sm);
 
   &[data-tone="info"] {
     border-color: var(--color-info-border);
@@ -49,7 +50,7 @@
 }
 
 .ui-alert__close {
-  @apply -mr-1 -mt-1 grid h-7 w-7 place-items-center rounded-lg opacity-70 outline-none;
+  @apply -me-1 -mt-1 grid h-7 w-7 place-items-center rounded-lg opacity-70 outline-none;
 
   &:hover {
     @apply opacity-100;

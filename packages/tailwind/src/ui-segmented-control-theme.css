@@ -19,7 +19,8 @@ ui-segment,
   }
 
   &[data-selected] {
-    @apply bg-card text-primary-700 shadow-sm;
+    @apply bg-card text-primary-700;
+    box-shadow: var(--ui-shadow-sm);
   }
 
   &[data-disabled] {

@@ -9,7 +9,7 @@
 }
 
 .ui-disclosure__header {
-  @apply flex w-full cursor-pointer select-none items-center justify-between rounded-lg border border-card-border bg-transparent px-3 py-2 text-left font-semibold text-ink-900;
+  @apply flex w-full cursor-pointer select-none items-center justify-between rounded-lg border border-card-border bg-transparent px-3 py-2 text-start font-semibold text-ink-900;
   transition: background-color var(--ui-duration-base) var(--ui-ease-standard), border-color var(--ui-duration-base) var(--ui-ease-standard);
 
   &[data-hover] {

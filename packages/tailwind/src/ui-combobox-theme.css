@@ -80,7 +80,7 @@ ui-combobox,
 
 .ui-combobox__leading {
   grid-column: 1;
-  margin-right: 0.5rem;
+  margin-inline-end: 0.5rem;
 }
 
 .ui-combobox__trailing {
@@ -92,7 +92,7 @@ ui-combobox,
   @apply inline-flex cursor-pointer items-center justify-center;
   align-self: stretch;
   min-width: var(--ui-field-control-height);
-  margin-right: calc(var(--ui-field-padding-x) * -1);
+  margin-inline-end: calc(var(--ui-field-padding-x) * -1);
 }
 
 .ui-combobox__chevron {

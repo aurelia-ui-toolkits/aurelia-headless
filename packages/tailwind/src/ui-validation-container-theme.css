@@ -11,8 +11,8 @@
 .ui-validation-container__errors {
   @apply text-xs;
   color: var(--color-validation-text);
-  padding-left: var(--ui-field-padding-x);
-  padding-right: var(--ui-field-padding-x);
+  padding-inline-start: var(--ui-field-padding-x);
+  padding-inline-end: var(--ui-field-padding-x);
 }
 
 .ui-validation-container__error {
