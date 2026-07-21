@@ -58,6 +58,7 @@
   --ui-field-inset-padding-bottom: 0.25rem;
   --ui-field-inset-label-scale: 0.75;
   --ui-field-inset-label-font-size: 0.75rem;
+  --ui-field-inset-textarea-band: 1rem;
   --ui-field-subscript-font-size: 0.75rem;
   --ui-field-subscript-line-height: 1.25rem;
   --ui-button-radius: 0.65rem;
@@ -218,6 +219,7 @@
   --ui-field-inset-padding-bottom: 0.25rem;
   --ui-field-inset-label-scale: 0.75;
   --ui-field-inset-label-font-size: 0.75rem;
+  --ui-field-inset-textarea-band: 1rem;
   --ui-field-subscript-font-size: 0.75rem;
   --ui-field-subscript-line-height: 1.25rem;
   --ui-button-radius: 0.65rem;
@@ -343,6 +345,7 @@
   --ui-field-inset-padding-bottom: 0.125rem;
   --ui-field-inset-label-scale: 0.82;
   --ui-field-inset-label-font-size: 0.7rem;
+  --ui-field-inset-textarea-band: 0.8rem;
   --ui-field-subscript-font-size: 0.7rem;
   --ui-field-subscript-line-height: 1rem;
   --ui-button-radius: 0.375rem;
