@@ -5,6 +5,10 @@ import { UiListItem } from './ui-list-item';
 
 type ListOrientation = 'vertical' | 'horizontal';
 
+// Items may be hosted on any tag via as-element (e.g. <a as-element="ui-list-item">), so a bare
+// tag selector misses them.
+const LIST_ITEM_SELECTOR = 'ui-list-item, [as-element=ui-list-item]';
+
 @customElement('ui-list')
 export class UiList {
   private readonly host = resolve(INode) as HTMLElement;
@@ -75,7 +79,7 @@ export class UiList {
   /** True while `items` is derived from the slotted list-items (not provided by the consumer). */
   private slotDerivedItems = false;
 
-  @slotted('ui-list-item')
+  @slotted(LIST_ITEM_SELECTOR)
   listItemElements: HTMLElement[] = [];
   listItemElementsChanged() {
     this.listItems = this.listItemElements.map(element => CustomElement.for<UiListItem>(element).viewModel);
@@ -446,7 +450,7 @@ export class UiList {
   }
 
   private resolveElementFromEvent(target: EventTarget | null) {
-    return target instanceof HTMLElement ? target.closest('ui-list-item') : null;
+    return target instanceof HTMLElement ? target.closest(LIST_ITEM_SELECTOR) : null;
   }
 
   private isTypeaheadKey(event: KeyboardEvent): boolean {
