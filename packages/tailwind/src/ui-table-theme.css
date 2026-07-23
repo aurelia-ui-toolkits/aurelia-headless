@@ -34,6 +34,10 @@
     @apply sticky top-0 z-10 bg-card-muted font-semibold text-ink-900;
   }
 
+  & tbody tr:hover {
+    @apply bg-card-muted;
+  }
+
   & tbody tr[data-selected] {
     @apply bg-outline-hover;
   }
