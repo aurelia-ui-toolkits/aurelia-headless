@@ -68,7 +68,9 @@ export class UiInputmaskCustomAttribute {
 
   createInstance() {
     const options = { ...this.optionsStore.options, ...this.options };
-    this.instance = new InputmaskCtor(this.mask ?? '', options);
+    // Without an explicit mask, use the options-only constructor — an empty-string mask
+    // overrides alias-driven mask generation (e.g. the currency alias) and crashes Inputmask.
+    this.instance = this.mask === undefined ? new InputmaskCtor(options) : new InputmaskCtor(this.mask, options);
   }
 
   detaching() {

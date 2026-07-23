@@ -14,4 +14,11 @@ export class UiToastRegion {
       detail: toast.id
     }));
   }
+
+  action(toast: UiToastMessage): void {
+    this.host.dispatchEvent(new CustomEvent('toast-action', {
+      bubbles: true,
+      detail: toast.id
+    }));
+  }
 }

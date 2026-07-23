@@ -128,6 +128,7 @@ export type { IPromptDialogData } from './alert-service/prompt-dialog/ui-prompt-
 export type { UiBreadcrumbItem } from './breadcrumbs/ui-breadcrumbs';
 export type { UiDatepickerDialogData, UiDatepickerDialogDay } from './datepicker/ui-datepicker-dialog';
 export type { UiDatepickerI18n, UiDatepickerYearRange } from './datepicker/date-utils';
+export type { UiToastAction, UiToastMessage, UiToastOptions } from './toast/ui-toast-service';
 export { validate } from './validation/validate';
 export { booleanAttr } from './base/boolean-attr';
 

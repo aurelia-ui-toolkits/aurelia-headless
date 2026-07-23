@@ -103,6 +103,20 @@ export class UiInput {
     }
   }
 
+  // ui-inputmask rewrites the native value programmatically, which fires no input/change
+  // event, so the inputEl.value observation alone goes stale. The attribute announces those
+  // writes with ui-inputmask-change; bumping the version re-evaluates this getter.
+  private maskVersion = 0;
+
+  get hasValue(): boolean {
+    void this.maskVersion;
+    return !!this.inputEl?.value;
+  }
+
+  onInputmaskChange(): void {
+    this.maskVersion++;
+  }
+
   get labelId(): string {
     return `${this.id}-label`;
   }

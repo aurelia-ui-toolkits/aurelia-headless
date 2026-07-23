@@ -7,5 +7,7 @@
     dismissible
     alert-close.trigger="close(toast)">
     ${toast.message}
+    <button au-slot="actions" if.bind="toast.action" type="button"
+      class="ui-toast-region__action" click.trigger="action(toast)">${toast.action.label}</button>
   </ui-alert>
 </template>

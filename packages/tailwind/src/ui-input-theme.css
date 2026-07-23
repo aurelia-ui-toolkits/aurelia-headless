@@ -55,17 +55,25 @@ ui-input,
     /* Textarea is multi-line: the inset label must sit at the top (not vertically centred),
        resting on the first text line and floating up to the top edge from there. */
     &[data-textarea] {
+      /* Reserve the floated-label band with margin (not padding): a textarea's top padding
+         scrolls away with the content, so padding lets scrolled lines slide up under the
+         floated label. A margin keeps the text box strictly below the band, so scrolled
+         content is clipped at the box edge instead of overlapping the label. */
       & .ui-input__native {
         height: auto;
+        align-self: start;
+        margin-top: var(--ui-field-inset-textarea-band);
+        padding-top: 0.125rem;
+        padding-bottom: var(--ui-field-inset-padding-bottom);
       }
 
       & .ui-input__inset-label {
         align-self: start;
-        transform: translateY(0.75rem);
+        transform: translateY(calc(var(--ui-field-inset-textarea-band) + 0.125rem));
       }
 
       /* Override the centred single-line float (translateY(-0.5rem)) which would land above the box.
-         0.25rem matches where the single-line inset label floats to (its centred base shifted up 0.5rem). */
+         The label floats up into the reserved band, above the text box. */
       &[data-focus] .ui-input__inset-label,
       &[data-has-value] .ui-input__inset-label {
         transform: translateY(0.25rem) scale(0.75);
@@ -141,11 +149,6 @@ textarea.ui-input__native {
   padding-top: calc((var(--ui-field-control-height) - var(--ui-field-line-height)) / 2 + 0.25rem);
   padding-bottom: calc((var(--ui-field-control-height) - var(--ui-field-line-height)) / 2);
   line-height: var(--ui-field-line-height);
-}
-
-.ui-input[data-inset] textarea.ui-input__native {
-  padding-top: calc(var(--ui-field-inset-padding-top) + 0.25rem);
-  padding-bottom: var(--ui-field-inset-padding-bottom);
 }
 
 .ui-input__subscript {
