@@ -6,8 +6,9 @@ import { UiListItem } from './ui-list-item';
 type ListOrientation = 'vertical' | 'horizontal';
 
 // Items may be hosted on any tag via as-element (e.g. <a as-element="ui-list-item">), so a bare
-// tag selector misses them.
-const LIST_ITEM_SELECTOR = 'ui-list-item, [as-element=ui-list-item]';
+// tag selector misses them; as-element itself is a compile-time instruction stripped from the
+// DOM, so match the ui-list-item class the component template applies to its host instead.
+const LIST_ITEM_SELECTOR = 'ui-list-item, .ui-list-item';
 
 @customElement('ui-list')
 export class UiList {
