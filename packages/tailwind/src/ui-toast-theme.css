@@ -8,3 +8,12 @@
   @apply pointer-events-auto;
   box-shadow: var(--ui-shadow-xl);
 }
+
+.ui-toast-region__action {
+  @apply -mx-2 rounded-lg px-2 py-1 text-sm font-semibold outline-none;
+
+  &:hover,
+  &:focus-visible {
+    background: var(--color-subtle-overlay);
+  }
+}

@@ -1,16 +1,23 @@
 import { Aurelia, IContainer, resolve } from 'aurelia';
 import { AlertTone } from '../alert/ui-alert';
 
+export interface UiToastAction {
+  label: string;
+  handler: () => void;
+}
+
 export interface UiToastOptions {
   tone?: AlertTone;
   title?: string;
   message: string;
   duration?: number;
+  action?: UiToastAction;
 }
 
 export interface UiToastMessage extends Required<Pick<UiToastOptions, 'tone' | 'message' | 'duration'>> {
   id: number;
   title?: string;
+  action?: UiToastAction;
 }
 
 export class UiToastService {
@@ -50,6 +57,12 @@ export class UiToastService {
     return this.show({ tone: 'danger', title, message, duration: 7000 });
   }
 
+  invokeAction(id: number): void {
+    const toast = this.toasts.find(t => t.id === id);
+    this.remove(id);
+    toast?.action?.handler();
+  }
+
   remove(id: number): void {
     const timer = this.timers.get(id);
     if (timer) {
@@ -75,7 +88,8 @@ export class UiToastService {
       tone: normalized.tone ?? 'info',
       title: normalized.title,
       message: normalized.message,
-      duration: normalized.duration ?? 5000
+      duration: normalized.duration ?? 5000,
+      action: normalized.action
     };
   }
 
@@ -88,7 +102,7 @@ export class UiToastService {
   private async createEnhanced(): Promise<void> {
     this.host = document.createElement('div');
     this.host.className = 'ui-toast-host';
-    this.host.innerHTML = `<ui-toast-region toasts.bind="toasts" toast-close.trigger="remove($event.detail)"></ui-toast-region>`;
+    this.host.innerHTML = `<ui-toast-region toasts.bind="toasts" toast-close.trigger="remove($event.detail)" toast-action.trigger="invokeAction($event.detail)"></ui-toast-region>`;
     document.body.append(this.host);
 
     await Aurelia.enhance({
