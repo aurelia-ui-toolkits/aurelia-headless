@@ -4,6 +4,16 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.1.8]
+
+### Added
+- **`as-element` list items** — a host such as
+  `<a as-element="ui-list-item" load="...">` is now recognised by the list for
+  hover, keyboard navigation and selection, and its resolved router `href` is
+  reflected onto the host element (previously the router only assigned it to the
+  view model, so anchor-based list items had no DOM `href` and were invisible to
+  the list).
+
 ## [1.1.7]
 
 ### Added

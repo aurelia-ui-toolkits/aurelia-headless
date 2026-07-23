@@ -38,4 +38,20 @@ export class UiListItem {
   /** When set, the secondary slot renders above the primary slot as a small overline label. */
   @bindable({ set: booleanAttr })
   reverse: boolean = false;
+
+  /**
+   * The router's load/href attributes assign the resolved URL to the view model when their host
+   * is a custom element; reflect it onto the host so <a as-element="ui-list-item"> gets a real
+   * href (open-in-new-tab, copy link, etc.).
+   */
+  get href(): string | null {
+    return this.element.getAttribute('href');
+  }
+  set href(value: string | null) {
+    if (value == null) {
+      this.element.removeAttribute('href');
+    } else {
+      this.element.setAttribute('href', value);
+    }
+  }
 }
