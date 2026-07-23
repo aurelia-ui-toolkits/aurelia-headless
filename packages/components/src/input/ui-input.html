@@ -6,9 +6,10 @@
   data-active.attr="active ? '' : null"
   data-inset.attr="inset ? '' : null"
   data-textarea.attr="textarea ? '' : null"
-  data-has-value.attr="inputEl.value ? '' : null"
+  data-has-value.attr="hasValue ? '' : null"
   mouseenter.trigger="onMouseEnter()"
-  mouseleave.trigger="onMouseLeave()">
+  mouseleave.trigger="onMouseLeave()"
+  ui-inputmask-change.trigger="onInputmaskChange()">
   <label class="ui-input__label"
     for.bind="id"
     id.bind="!inset && label ? labelId : null"
