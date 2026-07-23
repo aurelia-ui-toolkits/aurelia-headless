@@ -39,7 +39,9 @@ export function parseByFormat(value: string | undefined, formatString: string, l
 
 export function parseCanonical(value: string | undefined, time: boolean): Date | undefined {
   if (!time) {
-    return parseByFormat(value, DATE_VALUE_FORMAT);
+    // DTO values often arrive as full ISO datetimes (e.g. 2023-01-01T00:00:00Z); take the calendar
+    // date as sent instead of failing the parse or shifting it through the local timezone.
+    return parseByFormat(value?.slice(0, DATE_VALUE_FORMAT.length), DATE_VALUE_FORMAT);
   }
   for (const formatString of DATETIME_PARSE_FORMATS) {
     const date = parseByFormat(value, formatString);
