@@ -4,6 +4,24 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.1.7]
+
+### Added
+- **Toast action button** — `UiToastOptions.action` (`{ label, handler }`)
+  renders a button in the toast; activating it removes the toast and then runs
+  the handler (via a `toast-action` event). Toast option types are now exported.
+- **Table row hover** — table body rows highlight on hover.
+
+### Fixed
+- `ui-datepicker` accepts full ISO datetime values (e.g. `2023-01-01T00:00:00Z`)
+  when `time` is off, using the calendar-date portion with no local-timezone
+  shift, instead of rendering empty.
+- `ui-input` refreshes its inset-label float state (`data-has-value`) on
+  `ui-inputmask-change` — a masked programmatic value write fires no
+  input/change event, so the label state no longer goes stale.
+- `ui-inputmask` uses an options-only constructor when no mask is set.
+- Textarea text no longer overflows the inset label.
+
 ## [1.1.6]
 
 ### Added
