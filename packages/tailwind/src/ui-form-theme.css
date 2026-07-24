@@ -13,4 +13,9 @@
     @apply min-h-5;
   }
 
+  /* Buttons share rows with field controls, which are taller and reserve a subscript line —
+     match the control height so buttons line up with the inputs. */
+  & .ui-button {
+    height: var(--ui-field-control-height);
+  }
 }
