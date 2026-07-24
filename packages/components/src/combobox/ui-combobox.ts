@@ -106,6 +106,10 @@ export class UiCombobox {
   @bindable({ set: booleanAttr })
   invalid: boolean = false;
 
+  /** Commit the first filtered option when focus leaves the field with a partial filter typed. */
+  @bindable({ set: booleanAttr })
+  selectOnBlur: boolean = false;
+
   @slotted({ slotName: 'helper' })
   helperNodes: readonly Node[] = [];
 
@@ -274,8 +278,27 @@ export class UiCombobox {
       return;
     }
 
+    if (this.selectOnBlur) {
+      this.commitFirstFilteredItem();
+    }
+
     this.open = false;
     this.focus = false;
+  }
+
+  private commitFirstFilteredItem(): void {
+    if (!this.textValue?.trim() || !this.filteredItems.length) {
+      return;
+    }
+    const first = this.filteredItems[0];
+    if (this.selectedOption !== undefined && this.getItemLabel(this.selectedOption) === this.textValue) {
+      return;
+    }
+    this.selectedOption = first;
+    this.textValue = this.getItemLabel(first);
+    this.value = this.getItemValue(first);
+    this.dispatchValueEvent('input');
+    this.dispatchValueEvent('change');
   }
 
   onPointerDown(): void {
