@@ -4,6 +4,22 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.1.9]
+
+### Added
+- **`ui-combobox` `open-on-focus`** (opt-in, default off) — opens the popup when
+  the input gains focus; the default still waits for typing, ArrowDown/Up,
+  Ctrl+Space, or the chevron.
+- **`ui-combobox` `select-on-blur`** (opt-in) — leaving the field with a partly
+  typed filter commits the first matching option (mdc-lookup parity).
+
+### Fixed
+- `ui-input` refreshes its inset-label float state when the value is set through
+  the element API — a programmatic value write fires no input/change event, so
+  the float previously went stale (e.g. a lookup setting its filter text).
+- `ui-form` buttons in a form row now match the height of field controls
+  (which are taller and reserve a subscript line), so they align.
+
 ## [1.1.8]
 
 ### Added

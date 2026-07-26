@@ -106,6 +106,14 @@ export class UiCombobox {
   @bindable({ set: booleanAttr })
   invalid: boolean = false;
 
+  /** Commit the first filtered option when focus leaves the field with a partial filter typed. */
+  @bindable({ set: booleanAttr })
+  selectOnBlur: boolean = false;
+
+  /** Open the popup when the input receives focus. */
+  @bindable({ set: booleanAttr })
+  openOnFocus: boolean = false;
+
   @slotted({ slotName: 'helper' })
   helperNodes: readonly Node[] = [];
 
@@ -259,9 +267,9 @@ export class UiCombobox {
 
     if (!this.disabled && !this.readonly) {
       this.focus = true;
-      // Load options for immediate filtering, but don't open the popup on focus —
-      // it opens on typing (onInput), ArrowDown/Up, or Ctrl+Space.
-      await this.loadOptions(false, this.value);
+      // Without open-on-focus, load options for immediate filtering only — the popup
+      // opens on typing (onInput), ArrowDown/Up, or Ctrl+Space.
+      await this.loadOptions(this.openOnFocus, this.value);
     } else if (!this.disabled) {
       this.focus = true;
     }
@@ -274,8 +282,27 @@ export class UiCombobox {
       return;
     }
 
+    if (this.selectOnBlur) {
+      this.commitFirstFilteredItem();
+    }
+
     this.open = false;
     this.focus = false;
+  }
+
+  private commitFirstFilteredItem(): void {
+    if (!this.textValue?.trim() || !this.filteredItems.length) {
+      return;
+    }
+    const first = this.filteredItems[0];
+    if (this.selectedOption !== undefined && this.getItemLabel(this.selectedOption) === this.textValue) {
+      return;
+    }
+    this.selectedOption = first;
+    this.textValue = this.getItemLabel(first);
+    this.value = this.getItemValue(first);
+    this.dispatchValueEvent('input');
+    this.dispatchValueEvent('change');
   }
 
   onPointerDown(): void {
