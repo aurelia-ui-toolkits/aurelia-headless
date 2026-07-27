@@ -7,7 +7,11 @@ ui-input,
 
 .ui-input {
   @apply grid w-full;
-  row-gap: var(--ui-field-gap);
+  /* Parts are pinned to fixed tracks with the control owning the flexible one, so sizing the
+     host (e.g. h-full) grows the control — not the subscript. Auto-placed rows would split the
+     extra space across all parts, and a hidden label (inset mode) would shift the tracks.
+     Spacing is on the parts (margins) instead of row-gap so an empty label track adds no gap. */
+  grid-template-rows: auto minmax(0, 1fr) auto;
 
   &:has(.ui-input__native:focus-visible) .ui-input__control {
     @apply border-primary-600;
@@ -61,7 +65,6 @@ ui-input,
          content is clipped at the box edge instead of overlapping the label. */
       & .ui-input__native {
         height: auto;
-        align-self: start;
         margin-top: var(--ui-field-inset-textarea-band);
         padding-top: 0.125rem;
         padding-bottom: var(--ui-field-inset-padding-bottom);
@@ -84,12 +87,15 @@ ui-input,
 
 .ui-input__label {
   @apply font-semibold text-ink-900;
+  grid-row: 1;
+  margin-bottom: var(--ui-field-gap);
   font-size: var(--ui-field-label-font-size);
   line-height: var(--ui-field-label-line-height);
 }
 
 .ui-input__control {
   @apply grid w-full grid-cols-[auto_1fr_auto] items-center gap-0 rounded-xl border border-card-border bg-transparent;
+  grid-row: 2;
   position: relative;
   border-radius: var(--ui-field-radius);
   padding-inline: var(--ui-field-padding-x);
@@ -145,7 +151,10 @@ ui-input,
 
 textarea.ui-input__native {
   @apply min-h-24 resize-y;
+  /* Stretch (not height: 100%) so a grown control is filled while margins — the inset
+     floated-label band — are respected. Content-sized as usual when the control is auto. */
   height: auto;
+  align-self: stretch;
   padding-top: calc((var(--ui-field-control-height) - var(--ui-field-line-height)) / 2 + 0.25rem);
   padding-bottom: calc((var(--ui-field-control-height) - var(--ui-field-line-height)) / 2);
   line-height: var(--ui-field-line-height);
@@ -153,6 +162,8 @@ textarea.ui-input__native {
 
 .ui-input__subscript {
   @apply text-xs leading-5;
+  grid-row: 3;
+  margin-top: var(--ui-field-gap);
   font-size: var(--ui-field-subscript-font-size);
   line-height: var(--ui-field-subscript-line-height);
   padding-inline: var(--ui-field-padding-x);
