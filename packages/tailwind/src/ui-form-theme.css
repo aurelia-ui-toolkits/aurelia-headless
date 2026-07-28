@@ -14,8 +14,9 @@
   }
 
   /* Buttons share rows with field controls, which are taller and reserve a subscript line —
-     match the control height so buttons line up with the inputs. */
+     centre the button on the control band without changing its natural height (leading-none
+     makes line-height = font-size; 4px covers the 2px borders). */
   & .ui-button {
-    height: var(--ui-field-control-height);
+    margin-top: calc((var(--ui-field-control-height) - var(--ui-button-font-size) - 2 * var(--ui-button-padding-y) - 4px) / 2);
   }
 }
