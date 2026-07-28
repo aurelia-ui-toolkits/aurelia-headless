@@ -1,7 +1,9 @@
 @reference "./theme.css";
 
 .ui-form {
-  @apply grid grid-cols-12 items-start gap-x-6 gap-y-1 overflow-visible px-[5px] pt-[15px] pb-[5px];
+  /* Baseline alignment lines a button's text up with the text inside adjacent field controls
+     regardless of the boxes' heights. */
+  @apply grid grid-cols-12 items-baseline gap-x-6 gap-y-1 overflow-visible px-[5px] pt-[15px] pb-[5px];
 
   /* Inside a form, reserve one validation line so rows don't jump when validation toggles. */
   & .ui-input__subscript,
@@ -11,12 +13,5 @@
   & .ui-checkbox__subscript,
   & .ui-validation-container__errors {
     @apply min-h-5;
-  }
-
-  /* Buttons share rows with field controls, which are taller and reserve a subscript line —
-     centre the button on the control band without changing its natural height (leading-none
-     makes line-height = font-size; 4px covers the 2px borders). */
-  & .ui-button {
-    margin-top: calc((var(--ui-field-control-height) - var(--ui-button-font-size) - 2 * var(--ui-button-padding-y) - 4px) / 2);
   }
 }
