@@ -142,7 +142,9 @@ export class UiSelect {
     if (valueDisplayText !== undefined) {
       return valueDisplayText;
     }
-    if (!this.valueField && !this.labelField && this.value !== undefined) {
+    // null is "no selection" (see hasValue), so it must not be stringified into the control —
+    // that both printed "null" and left the inset label unfloated on top of it.
+    if (!this.valueField && !this.labelField && this.value !== undefined && this.value !== null) {
       return String(this.value);
     }
 
