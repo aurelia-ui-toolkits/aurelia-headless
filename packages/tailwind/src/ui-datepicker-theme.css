@@ -93,6 +93,7 @@ ui-datepicker,
 
 .ui-datepicker__inset-label {
   @apply pointer-events-none text-sm text-ink-500;
+  position: absolute;
   align-self: center;
   grid-column: 2;
   grid-row: 1;
