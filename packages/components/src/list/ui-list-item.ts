@@ -4,6 +4,7 @@ import { UiList } from './ui-list';
 
 @customElement('ui-list-item')
 export class UiListItem {
+
   readonly element = resolve(INode) as HTMLElement;
   readonly parentList = resolve(UiList);
   readonly slotHost = this;
@@ -28,6 +29,14 @@ export class UiListItem {
   }
 
   selected: boolean = false;
+
+  /**
+   * Dataset index used by reordering. Defaults to the repeat's $index in a reorderable list
+   * (see EnhanceUiList); set explicitly when $index is not the dataset index (a windowed
+   * repeat with window-relative indexes: `index.bind="$index + firstVisibleIndex"`).
+   */
+  @bindable
+  index: number | undefined;
 
   @bindable({ set: booleanAttr })
   disabled: boolean = false;
