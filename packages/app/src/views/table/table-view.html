@@ -37,4 +37,37 @@
       </table>
     </ui-table>
   </demo-block>
+
+  <demo-block title="Reorderable rows (ui-reorder)">
+    <ui-table ui-reorder pagination.bind="false" items.bind="reorderRows" selected.bind="reorderSelection"
+      reorder.trigger="applyReorder(reorderRows, $event.detail)">
+      <table>
+        <thead>
+          <tr>
+            <th class="table-demo-select-cell"></th>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr repeat.for="row of reorderRows" data-selected.attr="row.selected ? '' : null">
+            <td class="table-demo-select-cell">
+              <ui-checkbox checked.to-view="row.selected" change.trigger="toggleReorderSelected(row)"
+                aria-label="Select ${row.name}"></ui-checkbox>
+            </td>
+            <td>${row.name}</td>
+            <td>${row.status}</td>
+            <td>${row.owner}</td>
+          </tr>
+          <tr data-no-reorder>
+            <td></td>
+            <td>TOTAL</td>
+            <td colspan="2">${reorderRows.length} tasks</td>
+          </tr>
+        </tbody>
+      </table>
+    </ui-table>
+    <span class="list-state">${reorderRows.map(x => x.name).join(', ')}</span>
+  </demo-block>
 </demo-section>

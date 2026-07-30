@@ -108,12 +108,16 @@ export class UiReorder implements EventListenerObject {
       throw new Error(`ui-reorder: <${this.element.tagName.toLowerCase()}> does not implement IReorderHost`);
     }
     this.host = vm;
+    // The template compiler strips the ui-reorder attribute from the rendered DOM; stamp a
+    // runtime marker so themes can style reorderable hosts.
+    this.element.setAttribute('data-ui-reorder', '');
     this.element.addEventListener('pointerdown', this);
     registry.add(this);
   }
 
   detaching(): void {
     this.cancelDrag();
+    this.element.removeAttribute('data-ui-reorder');
     this.element.removeEventListener('pointerdown', this);
     registry.delete(this);
   }
