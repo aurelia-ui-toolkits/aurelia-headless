@@ -36,7 +36,6 @@ import logoUrl from '../../assets/aurelia-headless-logo.png';
 
 type DemoRoute = { id: string; path: string; title: string; component: unknown };
 const mobileQuery = '(max-width: 760px)';
-type ThemePackage = 'default' | 'compact';
 
 export class MyApp {
   mobile = this.isMobile();
@@ -89,7 +88,7 @@ export class MyApp {
   readonly theme = resolve(ThemeController);
 
   @observable
-  compactTheme = this.loadThemePackage();
+  compactTheme: boolean = this.loadCompactTheme();
   compactThemeChanged(): void {
     this.applyDensity();
     this.persistDensity();
@@ -154,11 +153,11 @@ export class MyApp {
     document.documentElement.dataset.density = this.compactTheme ? 'compact' : 'default';
   }
 
-  private loadThemePackage(): ThemePackage {
+  private loadCompactTheme(): boolean {
     try {
-      return localStorage.getItem('aurelia-headless:density') === 'compact' ? 'compact' : 'default';
+      return localStorage.getItem('aurelia-headless:density') === 'compact';
     } catch {
-      return 'default';
+      return false;
     }
   }
 
