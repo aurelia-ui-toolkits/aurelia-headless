@@ -11,9 +11,6 @@
       <au-slot name="leading"></au-slot>
     </span>
 
-    <span class="ui-datepicker__inset-label" id.bind="inset && label ? labelId : null"
-      show.bind="label && inset">${label}</span>
-
     <input ref="inputEl" class="ui-datepicker__native" id.bind="id" name.attr="name || null"
       autofocus.bind="autofocus"
       disabled.bind="disabled" readonly.bind="readonly" required.bind="required" inputmode="numeric"
@@ -23,6 +20,9 @@
       ui-inputmask="mask:datetime; options.bind: { inputFormat: inputmaskFormat, showMaskOnHover: false }; is-value-masked: true; value.bind: inputmaskValue"
       focusin.trigger="onFocusIn()" pointerdown.trigger="onPointerDown()" pointerup.trigger="onPointerUp()"
       pointerleave.trigger="onPointerLeave()">
+
+    <span class="ui-datepicker__inset-label" id.bind="inset && label ? labelId : null"
+      show.bind="label && inset">${label}</span>
 
     <span class="ui-datepicker__trailing">
       <au-slot name="trailing"></au-slot>
