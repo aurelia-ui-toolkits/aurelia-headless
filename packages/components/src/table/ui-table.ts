@@ -2,6 +2,7 @@ import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import type { UiTableColumn } from './ui-table-column';
 import type { UiMenu } from '../menu/ui-menu';
+import type { IReorderHost } from '../reorder/ui-reorder';
 import { UiTableConfiguration } from './ui-table-configuration';
 
 type TableSort = { column: string; direction: 'asc' | 'desc' };
@@ -10,8 +11,9 @@ type ColumnWidth = { index: number; width: number };
 let nextTableId = 0;
 
 @customElement('ui-table')
-export class UiTable {
+export class UiTable implements IReorderHost {
   private readonly host = resolve(INode) as HTMLElement;
+  private bodyEl!: HTMLElement;
   private readonly configuration = resolve(UiTableConfiguration);
   private columnSizes: Record<string, number> = {};
   private readonly sortedColumns = new Map<string, UiTableColumn>();
@@ -41,6 +43,14 @@ export class UiTable {
 
   totalPages = 1;
   pageOptions: number[] = [1];
+
+  /** Row items backing the rendered tbody rows (reorder: resolves the dragged item values). */
+  @bindable
+  items: unknown[] | undefined;
+
+  /** Items considered selected (reorder: dragging a selected row moves the whole selection). */
+  @bindable
+  selected: unknown[] | undefined;
 
   @bindable
   storageKey: string | undefined;
@@ -261,4 +271,81 @@ export class UiTable {
   private get storageId(): string {
     return `ui-table:${this.storageKey}:columns`;
   }
+
+  // #region IReorderHost (the ui-reorder attribute drives these; rows are consumer-owned <tr>s)
+
+  get reorderContainer(): HTMLElement {
+    // The ref may not be assigned yet when the ui-reorder attribute validates the host.
+    return this.bodyEl ?? this.host;
+  }
+
+  get reorderOrientation(): 'vertical' | 'horizontal' {
+    return 'vertical';
+  }
+
+  resolveSlot(target: EventTarget | null): Element | null {
+    if (!(target instanceof Element)) {
+      return null;
+    }
+    const slot = target.closest('tbody > tr');
+    // Only rows of this table's own body (not a nested ui-table's).
+    return slot && this.bodyEl.contains(slot) && slot.closest('.ui-table__body') === this.bodyEl ? slot : null;
+  }
+
+  slots(): readonly Element[] {
+    return Array.from(this.bodyEl.querySelectorAll(':scope > table > tbody > tr'));
+  }
+
+  indexOf(slot: Element): number {
+    // data-index is the windowed-repeat contract (dataset index of a windowed row, injected
+    // for plain repeats by EnhanceUiTable); fall back to DOM position.
+    const index = slot.getAttribute('data-index');
+    return index !== null ? Number(index) : this.slots().indexOf(slot);
+  }
+
+  itemAt(index: number): unknown {
+    return this.items?.[index];
+  }
+
+  selectedIndexes(): number[] {
+    if (!this.items || !this.selected) {
+      return [];
+    }
+    return this.selected.map(value => this.items!.indexOf(value)).filter(index => index >= 0);
+  }
+
+  canReorder(slot: Element): boolean {
+    return !slot.hasAttribute('data-no-reorder');
+  }
+
+  createGhost(slot: Element, count: number): HTMLElement {
+    // A bare <tr> does not render outside a table: wrap the clone and pin the widths so the
+    // ghost keeps the source row's layout.
+    const cells = Array.from(slot.children) as HTMLElement[];
+    const clone = slot.cloneNode(true) as HTMLElement;
+    Array.from(clone.children).forEach((cell, index) => {
+      const rect = cells[index].getBoundingClientRect();
+      (cell as HTMLElement).style.width = `${rect.width}px`;
+      (cell as HTMLElement).style.maxWidth = `${rect.width}px`;
+      (cell as HTMLElement).style.boxSizing = 'border-box';
+    });
+    const rect = slot.getBoundingClientRect();
+    const table = document.createElement('table');
+    table.style.width = `${rect.width}px`;
+    table.style.borderCollapse = 'collapse';
+    const tbody = document.createElement('tbody');
+    tbody.appendChild(clone);
+    table.appendChild(tbody);
+    const ghost = document.createElement('div');
+    ghost.appendChild(table);
+    if (count > 1) {
+      const badge = document.createElement('span');
+      badge.classList.add('ui-reorder-ghost__count');
+      badge.textContent = count.toString();
+      ghost.appendChild(badge);
+    }
+    return ghost;
+  }
+
+  // #endregion
 }

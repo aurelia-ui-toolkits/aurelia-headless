@@ -1,4 +1,5 @@
 import { observable } from 'aurelia';
+import { IReorderDetail } from '@aurelia-ui-toolkits/headless';
 
 type SortDirection = 'asc' | 'desc';
 
@@ -124,4 +125,27 @@ export class TableView {
     }, 2000);
   }
 
+
+  reorderRows = Array.from({ length: 6 }, (_, index) => ({
+    id: `row-${index + 1}`,
+    name: `Task ${index + 1}`,
+    status: index % 2 === 0 ? 'Active' : 'Paused',
+    owner: ['Dana', 'Lee', 'Kim'][index % 3],
+    selected: false
+  }));
+  reorderSelection: unknown[] = [];
+
+  toggleReorderSelected(row: { selected: boolean }): void {
+    row.selected = !row.selected;
+    this.reorderSelection = this.reorderRows.filter(x => x.selected);
+  }
+
+  applyReorder(list: unknown[], detail: IReorderDetail): void {
+    if (detail.from) {
+      [...detail.from].sort((a, b) => b - a).forEach(index => list.splice(index, 1));
+    }
+    if (detail.to !== undefined) {
+      list.splice(detail.to, 0, ...detail.items);
+    }
+  }
 }

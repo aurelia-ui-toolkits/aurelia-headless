@@ -97,3 +97,26 @@
 .ui-list-item[data-reverse] .ui-list-item__secondary {
   order: 1;
 }
+
+/* Drag-reorder (ui-reorder attribute) */
+.ui-list-item[data-dragging] {
+  @apply opacity-40;
+}
+
+/* Insertion indicator: a line, not a layout-shifting gap (virtual-list safe). */
+.ui-list-item[data-drop-before] {
+  box-shadow: 0 -2px 0 0 var(--color-primary-600);
+}
+
+.ui-list-item[data-drop-after] {
+  box-shadow: 0 2px 0 0 var(--color-primary-600);
+}
+
+.ui-reorder-ghost {
+  @apply rounded-lg bg-card opacity-90 shadow-lg;
+  cursor: grabbing;
+}
+
+.ui-reorder-ghost .ui-reorder-ghost__count {
+  @apply absolute -right-2 -top-2 grid h-5 min-w-5 place-items-center rounded-full bg-primary-600 px-1 text-xs text-on-primary;
+}

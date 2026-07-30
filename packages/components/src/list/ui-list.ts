@@ -1,6 +1,7 @@
 import { bindable, CustomElement, customElement, INode, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
+import { IReorderHost } from '../reorder/ui-reorder';
 import { UiListItem } from './ui-list-item';
 
 type ListOrientation = 'vertical' | 'horizontal';
@@ -11,12 +12,18 @@ type ListOrientation = 'vertical' | 'horizontal';
 const LIST_ITEM_SELECTOR = 'ui-list-item, .ui-list-item';
 
 @customElement('ui-list')
-export class UiList {
+export class UiList implements IReorderHost {
   private readonly host = resolve(INode) as HTMLElement;
   private scrollerEl!: HTMLElement;
   private listItems: UiListItem[] = [];
   private listItemsChangedCallback: (() => void) | undefined;
   activeItem: unknown;
+  /**
+   * The rendered item the activation originated from. Hover/keyboard highlighting is
+   * instance-based so duplicate values do not light up together; selection stays value-keyed
+   * by design - a selected value renders (and drags) all of its rows.
+   */
+  activeListItem: UiListItem | undefined;
   /** Anchor item for shift-range selection in multiple mode. */
   private selectionAnchor: unknown;
   private typeaheadBuffer = '';
@@ -94,6 +101,10 @@ export class UiList {
       this.slotDerivedItems = true;
     }
     this.syncListItemSelection();
+    // Re-anchor the active row when the rendered set changed (e.g. a virtual repeat window moved).
+    if (this.activeItem !== undefined && (!this.activeListItem || !this.listItems.includes(this.activeListItem))) {
+      this.activeListItem = this.listItems.find(x => x.value === this.activeItem);
+    }
     if (this.listItemsChangedCallback) {
       this.listItemsChangedCallback();
       this.listItemsChangedCallback = undefined;
@@ -207,7 +218,7 @@ export class UiList {
       return;
     }
 
-    this.selectItem(listItem.value, event);
+    this.selectItem(listItem.value, event, listItem);
   }
 
   private suppressMouseOver = false;
@@ -231,15 +242,17 @@ export class UiList {
       return;
     }
 
-    this.activateItem(listItem.value);
+    this.activateItem(listItem.value, listItem);
   }
 
   onMouseLeave(): void {
     this.activeItem = undefined;
+    this.activeListItem = undefined;
   }
 
   clearActive(): void {
     this.activeItem = undefined;
+    this.activeListItem = undefined;
   }
 
   suppressNextMouseOver(): void {
@@ -367,8 +380,9 @@ export class UiList {
     this.activateItem(selected);
   }
 
-  private activateItem(item: unknown): void {
+  private activateItem(item: unknown, source?: UiListItem): void {
     this.activeItem = item;
+    this.activeListItem = source ?? this.listItems.find(x => x.value === item);
     this.emitActivate(item);
   }
 
@@ -385,11 +399,11 @@ export class UiList {
       listItem.element.click();
       return;
     }
-    this.selectItem(this.activeItem);
+    this.selectItem(this.activeItem, undefined, this.activeListItem?.value === this.activeItem ? this.activeListItem : undefined);
   }
 
-  private selectItem(item: unknown, event?: MouseEvent): void {
-    this.activateItem(item);
+  private selectItem(item: unknown, event?: MouseEvent, source?: UiListItem): void {
+    this.activateItem(item, source);
     if (this.multiple) {
       this.selectMultiple(item, event);
     } else {
@@ -496,6 +510,52 @@ export class UiList {
       this.typeaheadTimer = undefined;
     }
   }
+
+  // #region IReorderHost (the ui-reorder attribute drives these; it never moves DOM itself)
+
+  get reorderContainer(): HTMLElement {
+    return this.scrollerEl ?? this.host;
+  }
+
+  get reorderOrientation(): 'vertical' | 'horizontal' {
+    return this.orientation;
+  }
+
+  resolveSlot(target: EventTarget | null): Element | null {
+    return this.resolveElementFromEvent(target);
+  }
+
+  slots(): readonly Element[] {
+    return this.listItemElements;
+  }
+
+  indexOf(slot: Element): number {
+    // An explicit list-item `index` is the virtual-repeat contract (dataset index of a
+    // windowed row); plain lists fall back to DOM position.
+    const listItem = CustomElement.for<UiListItem>(slot).viewModel;
+    if (listItem.index !== undefined) {
+      return Number(listItem.index);
+    }
+    const index = this.getEffectiveItems().indexOf(listItem.value);
+    return index >= 0 ? index : this.listItemElements.indexOf(slot as HTMLElement);
+  }
+
+  itemAt(index: number): unknown {
+    return this.getEffectiveItems()[index];
+  }
+
+  selectedIndexes(): number[] {
+    const items = this.getEffectiveItems();
+    const selection = Array.isArray(this.selected) ? this.selected : this.selected !== undefined ? [this.selected] : [];
+    return selection.map(value => items.indexOf(value)).filter(index => index >= 0);
+  }
+
+  canReorder(slot: Element): boolean {
+    const listItem = CustomElement.for<UiListItem>(slot).viewModel;
+    return !listItem.disabled;
+  }
+
+  // #endregion
 
   scrollItemIntoView(item: unknown, behavior: ScrollBehavior = 'smooth'): void {
     const listItem = this.listItems.find(x => x.value === item);

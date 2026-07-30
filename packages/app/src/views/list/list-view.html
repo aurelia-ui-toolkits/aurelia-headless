@@ -32,4 +32,59 @@
       </ui-list-item>
     </ui-list>
   </demo-block>
+
+  <demo-block title="Reorderable (ui-reorder)">
+    <ui-list ui-reorder reorder.trigger="applyReorder(reorderList, $event.detail)">
+      <ui-list-item repeat.for="item of reorderList" value.bind="item">
+        ${item.label}
+        <span au-slot="trailing">${item.id}</span>
+      </ui-list-item>
+    </ui-list>
+    <span class="list-state">${reorderList.map(x => x.id).join(', ')}</span>
+  </demo-block>
+
+  <demo-block title="Reorder a multi-selection">
+    <ui-list ui-reorder multiple toggle-selection selected.bind="multiReorderSelection"
+      reorder.trigger="applyReorder(multiReorderList, $event.detail)">
+      <ui-list-item repeat.for="item of multiReorderList" value.bind="item">
+        ${item.label}
+        <span au-slot="trailing">${item.id}</span>
+      </ui-list-item>
+    </ui-list>
+    <span class="list-state">Select a few (click toggles), then drag one of them.</span>
+  </demo-block>
+
+  <demo-block title="Drag handle only">
+    <ui-list ui-reorder="handle: .drag-grip" reorder.trigger="applyReorder(handleReorderList, $event.detail)">
+      <ui-list-item repeat.for="item of handleReorderList" value.bind="item">
+        <span au-slot="leading" class="drag-grip" style="cursor: grab;">⠿</span>
+        ${item.label}
+      </ui-list-item>
+    </ui-list>
+    <span class="list-state">The body still selects; only the grip drags.</span>
+  </demo-block>
+
+  <demo-block title="Cross-list drag (shared group)">
+    <div style="display: flex; gap: 1rem;">
+      <ui-list ui-reorder="pool" style="flex: 1;" reorder.trigger="applyReorder(poolA, $event.detail)">
+        <ui-list-item repeat.for="item of poolA" value.bind="item">${item.label}</ui-list-item>
+      </ui-list>
+      <ui-list ui-reorder="pool" style="flex: 1;" reorder.trigger="applyReorder(poolB, $event.detail)">
+        <ui-list-item repeat.for="item of poolB" value.bind="item">${item.label}</ui-list-item>
+      </ui-list>
+    </div>
+  </demo-block>
+
+  <demo-block title="Duplicate values (auto $index)">
+    <ui-list ui-reorder reorder.trigger="applyReorder(duplicateValuesList, $event.detail)">
+      <ui-list-item repeat.for="fruit of duplicateValuesList" value.bind="fruit">${fruit}</ui-list-item>
+    </ui-list>
+    <span class="list-state">${duplicateValuesList.join(', ')}</span>
+  </demo-block>
+
+  <demo-block title="Edge autoscroll (constrained height)">
+    <ui-list ui-reorder style="height: 240px;" reorder.trigger="applyReorder(tallReorderList, $event.detail)">
+      <ui-list-item repeat.for="item of tallReorderList" value.bind="item">${item.label}</ui-list-item>
+    </ui-list>
+  </demo-block>
 </demo-section>
