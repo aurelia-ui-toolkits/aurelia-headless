@@ -329,11 +329,11 @@ export class UiReorder implements EventListenerObject {
     let to = target.slot ? host.indexOf(target.slot) + (target.after ? 1 : 0) : 0;
     if (target.attribute === this) {
       // Same-list move: adjust the insertion index for the items removed before it and
-      // ignore no-op drops onto the dragged block itself.
-      const removedBefore = this.sourceIndexes.filter(i => i < to).length;
-      to -= removedBefore;
-      const unadjusted = to + removedBefore;
-      if (this.sourceIndexes.length === 1 && (unadjusted === this.sourceIndexes[0] || unadjusted === this.sourceIndexes[0] + 1)) {
+      // ignore no-op drops onto the dragged block itself. A contiguous block reinserted at
+      // its own start index reproduces the array; a non-contiguous selection always compacts.
+      to -= this.sourceIndexes.filter(i => i < to).length;
+      const contiguous = this.sourceIndexes[this.sourceIndexes.length - 1] - this.sourceIndexes[0] === this.sourceIndexes.length - 1;
+      if (contiguous && to === this.sourceIndexes[0]) {
         return;
       }
       this.emit(this.element, { items: this.items, from: this.sourceIndexes, to });
