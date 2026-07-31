@@ -152,6 +152,10 @@
   box-shadow: inset 0 -2px 0 0 var(--color-primary-600);
 }
 
+.ui-table__body[data-drop-empty] {
+  box-shadow: inset 0 0 0 2px var(--color-primary-600);
+}
+
 .ui-reorder-ghost td,
 .ui-reorder-ghost th {
   @apply truncate bg-card text-start align-middle text-sm text-ink-900;

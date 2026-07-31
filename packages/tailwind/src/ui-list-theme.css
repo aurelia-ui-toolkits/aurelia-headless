@@ -112,6 +112,10 @@
   box-shadow: 0 2px 0 0 var(--color-primary-600);
 }
 
+.ui-list__scroller[data-drop-empty] {
+  box-shadow: inset 0 0 0 2px var(--color-primary-600);
+}
+
 .ui-reorder-ghost {
   @apply rounded-lg bg-card opacity-90 shadow-lg;
   cursor: grabbing;

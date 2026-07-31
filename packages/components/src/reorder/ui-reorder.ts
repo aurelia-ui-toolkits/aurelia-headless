@@ -58,7 +58,7 @@ const EDGE_SCROLL_SPEED = 12;
 
 interface IDropTarget {
   attribute: UiReorder;
-  slot: Element;
+  slot?: Element;
   after: boolean;
 }
 
@@ -260,14 +260,30 @@ export class UiReorder implements EventListenerObject {
 
   private updateTarget(x: number, y: number): void {
     const next = this.findTarget(x, y);
-    if (this.target && (this.target.slot !== next?.slot || this.target.after !== next?.after)) {
-      this.target.slot.removeAttribute('data-drop-before');
-      this.target.slot.removeAttribute('data-drop-after');
+    if (this.target && (
+      this.target.attribute !== next?.attribute
+      || this.target.slot !== next?.slot
+      || this.target.after !== next?.after
+    )) {
+      this.clearTargetMarker(this.target);
     }
     this.target = next;
     if (next) {
-      next.slot.setAttribute(next.after ? 'data-drop-after' : 'data-drop-before', '');
-      next.slot.removeAttribute(next.after ? 'data-drop-before' : 'data-drop-after');
+      if (next.slot) {
+        next.slot.setAttribute(next.after ? 'data-drop-after' : 'data-drop-before', '');
+        next.slot.removeAttribute(next.after ? 'data-drop-before' : 'data-drop-after');
+      } else {
+        next.attribute.host.reorderContainer.setAttribute('data-drop-empty', '');
+      }
+    }
+  }
+
+  private clearTargetMarker(target: IDropTarget): void {
+    if (target.slot) {
+      target.slot.removeAttribute('data-drop-before');
+      target.slot.removeAttribute('data-drop-after');
+    } else {
+      target.attribute.host.reorderContainer.removeAttribute('data-drop-empty');
     }
   }
 
@@ -280,7 +296,7 @@ export class UiReorder implements EventListenerObject {
       }
       const slots = attribute.host.slots();
       if (!slots.length) {
-        continue;
+        return { attribute, after: false };
       }
       const vertical = attribute.host.reorderOrientation === 'vertical';
       const pointer = vertical ? y : x;
@@ -345,7 +361,7 @@ export class UiReorder implements EventListenerObject {
       return;
     }
     const host = target.attribute.host;
-    let to = host.indexOf(target.slot) + (target.after ? 1 : 0);
+    let to = target.slot ? host.indexOf(target.slot) + (target.after ? 1 : 0) : 0;
     if (target.attribute === this) {
       // Same-list move: adjust the insertion index for the items removed before it and
       // ignore no-op drops onto the dragged block itself.
@@ -378,8 +394,7 @@ export class UiReorder implements EventListenerObject {
       this.scrollFrame = undefined;
     }
     if (this.target) {
-      this.target.slot.removeAttribute('data-drop-before');
-      this.target.slot.removeAttribute('data-drop-after');
+      this.clearTargetMarker(this.target);
       this.target = undefined;
     }
     for (const attribute of this.candidates()) {
