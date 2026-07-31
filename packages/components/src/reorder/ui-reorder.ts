@@ -75,9 +75,18 @@ export class UiReorder implements EventListenerObject {
       throw new Error(`ui-reorder: <${this.element.tagName.toLowerCase()}> does not implement IReorderHost`);
     }
     this.host = vm;
-    this.element.setAttribute('data-ui-reorder', '');
+    this.updateMarker();
     this.element.addEventListener('pointerdown', this);
     registry.add(this);
+  }
+
+  disabledChanged(): void {
+    this.updateMarker();
+  }
+
+  /** The marker doubles as the ownership probe for nested hosts, so it follows `disabled`. */
+  private updateMarker(): void {
+    this.element.toggleAttribute('data-ui-reorder', !this.disabled);
   }
 
   detaching(): void {
@@ -117,6 +126,10 @@ export class UiReorder implements EventListenerObject {
 
   private onPointerDown(event: PointerEvent): void {
     if (this.disabled || this.pointerId !== undefined || event.button !== 0) {
+      return;
+    }
+    // pointerdown bubbles through nested reorder hosts; only the innermost enabled one owns it.
+    if (!(event.target instanceof Element) || event.target.closest('[data-ui-reorder]') !== this.element) {
       return;
     }
     const slot = this.host.resolveSlot(event.target);
