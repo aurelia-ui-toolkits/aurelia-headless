@@ -115,6 +115,13 @@ export class UiInput {
     return !!this.inputEl?.value;
   }
 
+  onInput(): void {
+    // The browser updates inputEl.value before value.bind calls the component setter.
+    // The setter therefore skips the redundant native assignment, so explicitly
+    // invalidate hasValue for user edits as well.
+    this.valueVersion++;
+  }
+
   onInputmaskChange(): void {
     this.valueVersion++;
   }
