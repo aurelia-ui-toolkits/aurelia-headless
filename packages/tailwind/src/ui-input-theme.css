@@ -49,8 +49,7 @@ ui-input,
       display: none;
     }
 
-    &[data-focus] .ui-input__inset-label,
-    &[data-has-value] .ui-input__inset-label {
+    & .ui-input__inset-label[data-floating] {
       transform: translateY(-0.5rem) scale(var(--ui-field-inset-label-scale));
       font-size: var(--ui-field-inset-label-font-size);
       color: var(--color-ink-700);
@@ -77,8 +76,7 @@ ui-input,
 
       /* Override the centred single-line float (translateY(-0.5rem)) which would land above the box.
          The label floats up into the reserved band, above the text box. */
-      &[data-focus] .ui-input__inset-label,
-      &[data-has-value] .ui-input__inset-label {
+      & .ui-input__inset-label[data-floating] {
         transform: translateY(0.25rem) scale(0.75);
       }
     }
