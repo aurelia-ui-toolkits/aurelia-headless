@@ -135,6 +135,10 @@
 }
 
 /* Drag-reorder (ui-reorder attribute): tr box-shadow/opacity are unreliable - style the cells. */
+.ui-table[data-ui-reorder] .ui-table__body {
+  touch-action: none;
+}
+
 .ui-table[data-ui-reorder] tbody {
   @apply select-none;
 }

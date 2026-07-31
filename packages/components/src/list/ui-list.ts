@@ -1,7 +1,7 @@
 import { bindable, CustomElement, customElement, INode, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
-import { IReorderHost } from '../reorder/ui-reorder';
+import type { IReorderHost } from '../reorder/i-reorder-host';
 import { UiListItem } from './ui-list-item';
 
 type ListOrientation = 'vertical' | 'horizontal';

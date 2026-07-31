@@ -1,41 +1,8 @@
 import { bindable, customAttribute, CustomElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
-
-/**
- * Contract a component must implement for its host to accept the `ui-reorder` attribute.
- * The attribute never moves DOM: it translates pointer gestures into data-index intents,
- * so any repeater (plain or virtual) stays the sole owner of the rendered items.
- */
-export interface IReorderHost {
-  /** Scroll/positioning container of the item slots (used for bounds and edge autoscroll). */
-  readonly reorderContainer: HTMLElement;
-  readonly reorderOrientation: 'vertical' | 'horizontal';
-  /** The item slot owning an event target, or null (used to arm a drag on pointerdown). */
-  resolveSlot(target: EventTarget | null): Element | null;
-  /** Currently rendered item slots, in DOM order (used for hit-testing). */
-  slots(): readonly Element[];
-  /** DATA index of a rendered slot (under virtualization this is the dataset index). */
-  indexOf(slot: Element): number;
-  /** Resolved item value at a data index. */
-  itemAt(index: number): unknown;
-  /** Data indexes of the current selection ([] when nothing is selected). */
-  selectedIndexes(): number[];
-  canReorder(slot: Element): boolean;
-  /** Optional custom drag ghost; the default is a size-pinned clone with a count badge. */
-  createGhost?(slot: Element, count: number): HTMLElement;
-}
-
-export interface IReorderDetail {
-  items: unknown[];
-  /** Source data indexes; absent on the target of a cross-list drop (insertion intent). */
-  from?: number[];
-  /**
-   * Insertion data index, already adjusted for same-list removals; absent on the source
-   * of a cross-list drop (removal intent).
-   */
-  to?: number;
-}
+import type { IReorderDetail } from './i-reorder-detail';
+import type { IReorderHost } from './i-reorder-host';
 
 function isReorderHost(vm: unknown): vm is IReorderHost {
   const host = vm as IReorderHost;
@@ -108,8 +75,6 @@ export class UiReorder implements EventListenerObject {
       throw new Error(`ui-reorder: <${this.element.tagName.toLowerCase()}> does not implement IReorderHost`);
     }
     this.host = vm;
-    // The template compiler strips the ui-reorder attribute from the rendered DOM; stamp a
-    // runtime marker so themes can style reorderable hosts.
     this.element.setAttribute('data-ui-reorder', '');
     this.element.addEventListener('pointerdown', this);
     registry.add(this);
@@ -415,4 +380,5 @@ export class UiReorder implements EventListenerObject {
     window.removeEventListener('pointercancel', this);
     window.removeEventListener('keydown', this, true);
   }
+
 }

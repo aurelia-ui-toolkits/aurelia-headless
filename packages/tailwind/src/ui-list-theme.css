@@ -99,6 +99,10 @@
 }
 
 /* Drag-reorder (ui-reorder attribute) */
+.ui-list[data-ui-reorder] .ui-list__scroller {
+  touch-action: none;
+}
+
 .ui-list-item[data-dragging] {
   @apply opacity-40;
 }

@@ -57,7 +57,7 @@
   <demo-block title="Drag handle only">
     <ui-list ui-reorder="handle: .drag-grip" reorder.trigger="applyReorder(handleReorderList, $event.detail)">
       <ui-list-item repeat.for="item of handleReorderList" value.bind="item">
-        <span au-slot="leading" class="drag-grip" style="cursor: grab;">⠿</span>
+        <span au-slot="leading" class="drag-grip cursor-grab">⠿</span>
         ${item.label}
       </ui-list-item>
     </ui-list>
