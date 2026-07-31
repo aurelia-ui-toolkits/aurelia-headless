@@ -112,11 +112,17 @@ export class UiReorder implements EventListenerObject {
         break;
       case 'keydown':
         if ((event as KeyboardEvent).key === Keys.Escape) {
+          if (this.dragging) {
+            // The cancelled press still ends with a click when the button is released.
+            window.addEventListener('click', this, true);
+            window.addEventListener('pointerup', () => setTimeout(() => window.removeEventListener('click', this, true)), { capture: true, once: true });
+          }
           this.cancelDrag();
         }
         break;
       case 'click':
-        // One-shot capture suppressor so the click that follows a completed drag does not select.
+        // One-shot capture suppressor so the click that ends a drag does not select. It fires
+        // at pointer release - right after a drop, but also later, after an Escape cancel.
         event.stopPropagation();
         event.preventDefault();
         window.removeEventListener('click', this, true);
@@ -174,7 +180,9 @@ export class UiReorder implements EventListenerObject {
     }
     const target = this.target;
     this.emitDrop(target);
-    // Suppress the click the browser fires after the drag's pointerup (would trigger selection).
+    // Suppress the click the browser fires right after the drag's pointerup (would trigger
+    // selection). It may also never come (the drop re-rendered the rows under the pointer),
+    // hence the timeout disarm - a lingering suppressor would eat the next real click.
     window.addEventListener('click', this, true);
     setTimeout(() => window.removeEventListener('click', this, true));
     this.cleanup();
