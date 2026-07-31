@@ -57,7 +57,7 @@
   <demo-block title="Drag handle only">
     <ui-list ui-reorder="handle: .drag-grip" reorder.trigger="applyReorder(handleReorderList, $event.detail)">
       <ui-list-item repeat.for="item of handleReorderList" value.bind="item">
-        <span au-slot="leading" class="drag-grip" style="cursor: grab;">⠿</span>
+        <span au-slot="leading" class="drag-grip cursor-grab">⠿</span>
         ${item.label}
       </ui-list-item>
     </ui-list>
@@ -77,14 +77,17 @@
 
   <demo-block title="Duplicate values (auto $index)">
     <ui-list ui-reorder reorder.trigger="applyReorder(duplicateValuesList, $event.detail)">
+      <ui-list-item non-selectable>Fixed header</ui-list-item>
       <ui-list-item repeat.for="fruit of duplicateValuesList" value.bind="fruit">${fruit}</ui-list-item>
+      <ui-list-item non-selectable>Fixed footer</ui-list-item>
     </ui-list>
     <span class="list-state">${duplicateValuesList.join(', ')}</span>
   </demo-block>
 
   <demo-block title="Edge autoscroll (constrained height)">
-    <ui-list ui-reorder style="height: 240px;" reorder.trigger="applyReorder(tallReorderList, $event.detail)">
-      <ui-list-item repeat.for="item of tallReorderList" value.bind="item">${item.label}</ui-list-item>
+    <ui-list ui-reorder items.bind="tallReorderList" style="height: 240px;"
+      reorder.trigger="applyReorder(tallReorderList, $event.detail)">
+      <ui-list-item virtual-repeat.for="item of $host.items" value.bind="item">${item.label}</ui-list-item>
     </ui-list>
   </demo-block>
 </demo-section>

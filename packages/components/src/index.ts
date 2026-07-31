@@ -28,7 +28,7 @@ import { InputmaskConfiguration, UiInputmaskCustomAttribute } from './inputmask'
 import { UiMenu } from './menu/ui-menu';
 import { EnhanceUiList } from './list/enhance-ui-list';
 import { UiList } from './list/ui-list';
-import { IReorderDetail, IReorderHost, UiReorder } from './reorder/ui-reorder';
+import { UiReorder } from './reorder/ui-reorder';
 import { UiListItem } from './list/ui-list-item';
 import { UiPopup } from './popup/ui-popup';
 import { UiProgress } from './progress/ui-progress';
@@ -98,7 +98,8 @@ export type { IValidatedElement } from './base/i-validated-element';
 export { EnhanceUiList };
 export { UiList };
 export { UiReorder };
-export type { IReorderDetail, IReorderHost };
+export type { IReorderDetail } from './reorder/i-reorder-detail';
+export type { IReorderHost } from './reorder/i-reorder-host';
 export { UiListItem };
 export { UiPopup };
 export { UiProgress };

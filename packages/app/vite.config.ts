@@ -31,7 +31,7 @@ export default defineConfig({
   },
   server: {
     open: true,
-    port: 9000,
+    port: 9010,
   },
   plugins: [
     aurelia({ useDev: true, include: aureliaResourceInclude }),

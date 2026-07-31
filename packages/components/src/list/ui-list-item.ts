@@ -38,6 +38,15 @@ export class UiListItem {
   @bindable
   index: number | undefined;
 
+  /** Whether this item is part of the active drag (renders `data-dragging`, virtual-safe). */
+  get dragging(): boolean {
+    const indexes = this.parentList.draggingIndexes;
+    if (!indexes) {
+      return false;
+    }
+    return indexes.includes(this.index !== undefined ? Number(this.index) : this.parentList.reorderItems.indexOf(this));
+  }
+
   @bindable({ set: booleanAttr })
   disabled: boolean = false;
 

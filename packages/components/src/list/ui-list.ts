@@ -1,7 +1,7 @@
 import { bindable, CustomElement, customElement, INode, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
-import { IReorderHost } from '../reorder/ui-reorder';
+import type { IReorderHost } from '../reorder/i-reorder-host';
 import { UiListItem } from './ui-list-item';
 
 type ListOrientation = 'vertical' | 'horizontal';
@@ -16,6 +16,8 @@ export class UiList implements IReorderHost {
   private readonly host = resolve(INode) as HTMLElement;
   private scrollerEl!: HTMLElement;
   private listItems: UiListItem[] = [];
+  /** Rendered items participating in reorder (list-items also derive their drag state from it). */
+  reorderItems: UiListItem[] = [];
   private listItemsChangedCallback: (() => void) | undefined;
   activeItem: unknown;
   /**
@@ -91,6 +93,8 @@ export class UiList implements IReorderHost {
   listItemElements: HTMLElement[] = [];
   listItemElementsChanged() {
     this.listItems = this.listItemElements.map(element => CustomElement.for<UiListItem>(element).viewModel);
+    const indexed = this.listItems.filter(item => item.index !== undefined);
+    this.reorderItems = indexed.length ? indexed : this.listItems;
     // Keep derived items in sync when the rendered set changes (e.g. items with if.bind),
     // but never overwrite a consumer/enhancer-provided `items` binding (which would otherwise
     // fight that binding and, with extra static items, grow the list every cycle).
@@ -526,7 +530,7 @@ export class UiList implements IReorderHost {
   }
 
   slots(): readonly Element[] {
-    return this.listItemElements;
+    return this.reorderItems.map(item => item.element);
   }
 
   indexOf(slot: Element): number {
@@ -536,23 +540,37 @@ export class UiList implements IReorderHost {
     if (listItem.index !== undefined) {
       return Number(listItem.index);
     }
-    const index = this.getEffectiveItems().indexOf(listItem.value);
-    return index >= 0 ? index : this.listItemElements.indexOf(slot as HTMLElement);
+    return this.reorderItems.indexOf(listItem);
   }
 
   itemAt(index: number): unknown {
-    return this.getEffectiveItems()[index];
+    if (this.itemsExternallyProvided) {
+      return this.items[index];
+    }
+    const item = this.reorderItems.find((candidate, position) =>
+      (candidate.index === undefined ? position : Number(candidate.index)) === index);
+    return item?.value;
   }
 
   selectedIndexes(): number[] {
-    const items = this.getEffectiveItems();
     const selection = Array.isArray(this.selected) ? this.selected : this.selected !== undefined ? [this.selected] : [];
-    return selection.map(value => items.indexOf(value)).filter(index => index >= 0);
+    if (this.itemsExternallyProvided) {
+      return this.items.flatMap((value, index) => selection.includes(value) ? [index] : []);
+    }
+    return this.reorderItems.flatMap((item, position) =>
+      selection.includes(item.value) ? [item.index === undefined ? position : Number(item.index)] : []);
   }
 
   canReorder(slot: Element): boolean {
     const listItem = CustomElement.for<UiListItem>(slot).viewModel;
-    return !listItem.disabled;
+    return !listItem.disabled && this.reorderItems.includes(listItem);
+  }
+
+  /** Data indexes of the active drag; list-items render `data-dragging` from it (virtual-safe). */
+  draggingIndexes: number[] | undefined;
+
+  markDragging(indexes: number[] | undefined): void {
+    this.draggingIndexes = indexes;
   }
 
   // #endregion

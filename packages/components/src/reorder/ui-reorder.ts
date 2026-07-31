@@ -1,41 +1,8 @@
 import { bindable, customAttribute, CustomElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
-
-/**
- * Contract a component must implement for its host to accept the `ui-reorder` attribute.
- * The attribute never moves DOM: it translates pointer gestures into data-index intents,
- * so any repeater (plain or virtual) stays the sole owner of the rendered items.
- */
-export interface IReorderHost {
-  /** Scroll/positioning container of the item slots (used for bounds and edge autoscroll). */
-  readonly reorderContainer: HTMLElement;
-  readonly reorderOrientation: 'vertical' | 'horizontal';
-  /** The item slot owning an event target, or null (used to arm a drag on pointerdown). */
-  resolveSlot(target: EventTarget | null): Element | null;
-  /** Currently rendered item slots, in DOM order (used for hit-testing). */
-  slots(): readonly Element[];
-  /** DATA index of a rendered slot (under virtualization this is the dataset index). */
-  indexOf(slot: Element): number;
-  /** Resolved item value at a data index. */
-  itemAt(index: number): unknown;
-  /** Data indexes of the current selection ([] when nothing is selected). */
-  selectedIndexes(): number[];
-  canReorder(slot: Element): boolean;
-  /** Optional custom drag ghost; the default is a size-pinned clone with a count badge. */
-  createGhost?(slot: Element, count: number): HTMLElement;
-}
-
-export interface IReorderDetail {
-  items: unknown[];
-  /** Source data indexes; absent on the target of a cross-list drop (insertion intent). */
-  from?: number[];
-  /**
-   * Insertion data index, already adjusted for same-list removals; absent on the source
-   * of a cross-list drop (removal intent).
-   */
-  to?: number;
-}
+import type { IReorderDetail } from './i-reorder-detail';
+import type { IReorderHost } from './i-reorder-host';
 
 function isReorderHost(vm: unknown): vm is IReorderHost {
   const host = vm as IReorderHost;
@@ -58,7 +25,7 @@ const EDGE_SCROLL_SPEED = 12;
 
 interface IDropTarget {
   attribute: UiReorder;
-  slot: Element;
+  slot?: Element;
   after: boolean;
 }
 
@@ -101,6 +68,8 @@ export class UiReorder implements EventListenerObject {
   private scrollFrame: number | undefined;
   private lastPointerX = 0;
   private lastPointerY = 0;
+  /** Scrollable-ancestor chains per reorder container, resolved on demand and cleared per drag. */
+  private scrollChains = new Map<HTMLElement, Element[]>();
 
   attached(): void {
     const vm = CustomElement.for(this.element, { optional: true })?.viewModel;
@@ -108,11 +77,18 @@ export class UiReorder implements EventListenerObject {
       throw new Error(`ui-reorder: <${this.element.tagName.toLowerCase()}> does not implement IReorderHost`);
     }
     this.host = vm;
-    // The template compiler strips the ui-reorder attribute from the rendered DOM; stamp a
-    // runtime marker so themes can style reorderable hosts.
-    this.element.setAttribute('data-ui-reorder', '');
+    this.updateMarker();
     this.element.addEventListener('pointerdown', this);
     registry.add(this);
+  }
+
+  disabledChanged(): void {
+    this.updateMarker();
+  }
+
+  /** The marker doubles as the ownership probe for nested hosts, so it follows `disabled`. */
+  private updateMarker(): void {
+    this.element.toggleAttribute('data-ui-reorder', !this.disabled);
   }
 
   detaching(): void {
@@ -138,11 +114,17 @@ export class UiReorder implements EventListenerObject {
         break;
       case 'keydown':
         if ((event as KeyboardEvent).key === Keys.Escape) {
+          if (this.dragging) {
+            // The cancelled press still ends with a click when the button is released.
+            window.addEventListener('click', this, true);
+            window.addEventListener('pointerup', () => setTimeout(() => window.removeEventListener('click', this, true)), { capture: true, once: true });
+          }
           this.cancelDrag();
         }
         break;
       case 'click':
-        // One-shot capture suppressor so the click that follows a completed drag does not select.
+        // One-shot capture suppressor so the click that ends a drag does not select. It fires
+        // at pointer release - right after a drop, but also later, after an Escape cancel.
         event.stopPropagation();
         event.preventDefault();
         window.removeEventListener('click', this, true);
@@ -152,6 +134,10 @@ export class UiReorder implements EventListenerObject {
 
   private onPointerDown(event: PointerEvent): void {
     if (this.disabled || this.pointerId !== undefined || event.button !== 0) {
+      return;
+    }
+    // pointerdown bubbles through nested reorder hosts; only the innermost enabled one owns it.
+    if (!(event.target instanceof Element) || event.target.closest('[data-ui-reorder]') !== this.element) {
       return;
     }
     const slot = this.host.resolveSlot(event.target);
@@ -196,7 +182,9 @@ export class UiReorder implements EventListenerObject {
     }
     const target = this.target;
     this.emitDrop(target);
-    // Suppress the click the browser fires after the drag's pointerup (would trigger selection).
+    // Suppress the click the browser fires right after the drag's pointerup (would trigger
+    // selection). It may also never come (the drop re-rendered the rows under the pointer),
+    // hence the timeout disarm - a lingering suppressor would eat the next real click.
     window.addEventListener('click', this, true);
     setTimeout(() => window.removeEventListener('click', this, true));
     this.cleanup();
@@ -224,7 +212,11 @@ export class UiReorder implements EventListenerObject {
     this.positionGhost(this.startX, this.startY);
 
     this.host.reorderContainer.setAttribute('data-reordering', '');
-    this.markSourceSlots();
+    if (this.host.markDragging) {
+      this.host.markDragging(this.sourceIndexes);
+    } else {
+      this.markSourceSlots();
+    }
     window.addEventListener('keydown', this, true);
     this.scrollFrame = requestAnimationFrame(() => this.autoScroll());
   }
@@ -260,14 +252,30 @@ export class UiReorder implements EventListenerObject {
 
   private updateTarget(x: number, y: number): void {
     const next = this.findTarget(x, y);
-    if (this.target && (this.target.slot !== next?.slot || this.target.after !== next?.after)) {
-      this.target.slot.removeAttribute('data-drop-before');
-      this.target.slot.removeAttribute('data-drop-after');
+    if (this.target && (
+      this.target.attribute !== next?.attribute
+      || this.target.slot !== next?.slot
+      || this.target.after !== next?.after
+    )) {
+      this.clearTargetMarker(this.target);
     }
     this.target = next;
     if (next) {
-      next.slot.setAttribute(next.after ? 'data-drop-after' : 'data-drop-before', '');
-      next.slot.removeAttribute(next.after ? 'data-drop-before' : 'data-drop-after');
+      if (next.slot) {
+        next.slot.setAttribute(next.after ? 'data-drop-after' : 'data-drop-before', '');
+        next.slot.removeAttribute(next.after ? 'data-drop-before' : 'data-drop-after');
+      } else {
+        next.attribute.host.reorderContainer.setAttribute('data-drop-empty', '');
+      }
+    }
+  }
+
+  private clearTargetMarker(target: IDropTarget): void {
+    if (target.slot) {
+      target.slot.removeAttribute('data-drop-before');
+      target.slot.removeAttribute('data-drop-after');
+    } else {
+      target.attribute.host.reorderContainer.removeAttribute('data-drop-empty');
     }
   }
 
@@ -280,7 +288,7 @@ export class UiReorder implements EventListenerObject {
       }
       const slots = attribute.host.slots();
       if (!slots.length) {
-        continue;
+        return { attribute, after: false };
       }
       const vertical = attribute.host.reorderOrientation === 'vertical';
       const pointer = vertical ? y : x;
@@ -313,31 +321,81 @@ export class UiReorder implements EventListenerObject {
     return result;
   }
 
+  /**
+   * Two edge bands per frame: the container's (scrolls the list) and the viewport's (scrolls the
+   * page). Dragging past the end of a list inside a scrolling page must keep going, so a
+   * container that cannot consume the scroll falls through to its nearest scrollable ancestor.
+   */
   private autoScroll(): void {
     if (!this.dragging) {
       return;
     }
-    const container = (this.target?.attribute ?? this).host.reorderContainer;
-    const bounds = container.getBoundingClientRect();
-    const vertical = (this.target?.attribute ?? this).host.reorderOrientation === 'vertical';
+    const host = (this.target?.attribute ?? this).host;
+    const vertical = host.reorderOrientation === 'vertical';
     const pointer = vertical ? this.lastPointerY : this.lastPointerX;
-    const start = vertical ? bounds.top : bounds.left;
-    const end = vertical ? bounds.bottom : bounds.right;
-    let delta = 0;
-    if (pointer < start + EDGE_SIZE && pointer > start - EDGE_SIZE) {
-      delta = -EDGE_SCROLL_SPEED;
-    } else if (pointer > end - EDGE_SIZE && pointer < end + EDGE_SIZE) {
-      delta = EDGE_SCROLL_SPEED;
+    const container = host.reorderContainer;
+    const bounds = container.getBoundingClientRect();
+
+    // The container's band reaches slightly outside it; the viewport's only inwards.
+    let delta = this.edgeDelta(pointer, vertical ? bounds.top : bounds.left, vertical ? bounds.bottom : bounds.right, EDGE_SIZE);
+    let scroller: Element | undefined = delta && this.canScroll(container, vertical, delta) ? container : undefined;
+    if (!scroller) {
+      delta = this.edgeDelta(pointer, 0, vertical ? window.innerHeight : window.innerWidth, 0);
+      scroller = delta ? this.scrollableAncestors(container).find(x => this.canScroll(x, vertical, delta)) : undefined;
     }
-    if (delta) {
+
+    if (scroller) {
       if (vertical) {
-        container.scrollTop += delta;
+        scroller.scrollTop += delta;
       } else {
-        container.scrollLeft += delta;
+        scroller.scrollLeft += delta;
       }
       this.updateTarget(this.lastPointerX, this.lastPointerY);
     }
     this.scrollFrame = requestAnimationFrame(() => this.autoScroll());
+  }
+
+  /** Scroll step for a pointer inside an edge band; `outside` extends the band beyond the box. */
+  private edgeDelta(pointer: number, start: number, end: number, outside: number): number {
+    if (pointer < start + EDGE_SIZE && pointer > start - outside) {
+      return -EDGE_SCROLL_SPEED;
+    }
+    if (pointer > end - EDGE_SIZE && pointer < end + outside) {
+      return EDGE_SCROLL_SPEED;
+    }
+    return 0;
+  }
+
+  private canScroll(element: Element, vertical: boolean, delta: number): boolean {
+    const position = vertical ? element.scrollTop : element.scrollLeft;
+    if (delta < 0) {
+      return position > 0;
+    }
+    // 1px slack: fractional zoom leaves the scroll position a hair short of its maximum.
+    const extent = vertical ? element.scrollHeight - element.clientHeight : element.scrollWidth - element.clientWidth;
+    return position < extent - 1;
+  }
+
+  /**
+   * Scrollable ancestors of the container, innermost first, ending at the document. Resolved once
+   * per drag - overflow styles do not change mid-gesture and getComputedStyle is costly.
+   */
+  private scrollableAncestors(container: HTMLElement): Element[] {
+    let chain = this.scrollChains.get(container);
+    if (!chain) {
+      chain = [];
+      for (let element = container.parentElement; element; element = element.parentElement) {
+        const overflow = getComputedStyle(element).overflow;
+        if (overflow.includes('auto') || overflow.includes('scroll')) {
+          chain.push(element);
+        }
+      }
+      if (document.scrollingElement && !chain.includes(document.scrollingElement)) {
+        chain.push(document.scrollingElement);
+      }
+      this.scrollChains.set(container, chain);
+    }
+    return chain;
   }
 
   private emitDrop(target: IDropTarget | undefined): void {
@@ -345,14 +403,14 @@ export class UiReorder implements EventListenerObject {
       return;
     }
     const host = target.attribute.host;
-    let to = host.indexOf(target.slot) + (target.after ? 1 : 0);
+    let to = target.slot ? host.indexOf(target.slot) + (target.after ? 1 : 0) : 0;
     if (target.attribute === this) {
       // Same-list move: adjust the insertion index for the items removed before it and
-      // ignore no-op drops onto the dragged block itself.
-      const removedBefore = this.sourceIndexes.filter(i => i < to).length;
-      to -= removedBefore;
-      const unadjusted = to + removedBefore;
-      if (this.sourceIndexes.length === 1 && (unadjusted === this.sourceIndexes[0] || unadjusted === this.sourceIndexes[0] + 1)) {
+      // ignore no-op drops onto the dragged block itself. A contiguous block reinserted at
+      // its own start index reproduces the array; a non-contiguous selection always compacts.
+      to -= this.sourceIndexes.filter(i => i < to).length;
+      const contiguous = this.sourceIndexes[this.sourceIndexes.length - 1] - this.sourceIndexes[0] === this.sourceIndexes.length - 1;
+      if (contiguous && to === this.sourceIndexes[0]) {
         return;
       }
       this.emit(this.element, { items: this.items, from: this.sourceIndexes, to });
@@ -377,12 +435,13 @@ export class UiReorder implements EventListenerObject {
       cancelAnimationFrame(this.scrollFrame);
       this.scrollFrame = undefined;
     }
+    this.scrollChains.clear();
     if (this.target) {
-      this.target.slot.removeAttribute('data-drop-before');
-      this.target.slot.removeAttribute('data-drop-after');
+      this.clearTargetMarker(this.target);
       this.target = undefined;
     }
     for (const attribute of this.candidates()) {
+      attribute.host.markDragging?.(undefined);
       for (const slot of attribute.host.slots()) {
         slot.removeAttribute('data-dragging');
       }
@@ -400,4 +459,5 @@ export class UiReorder implements EventListenerObject {
     window.removeEventListener('pointercancel', this);
     window.removeEventListener('keydown', this, true);
   }
+
 }

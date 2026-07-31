@@ -99,6 +99,10 @@
 }
 
 /* Drag-reorder (ui-reorder attribute) */
+.ui-list[data-ui-reorder] .ui-list__scroller {
+  touch-action: none;
+}
+
 .ui-list-item[data-dragging] {
   @apply opacity-40;
 }
@@ -110,6 +114,10 @@
 
 .ui-list-item[data-drop-after] {
   box-shadow: 0 2px 0 0 var(--color-primary-600);
+}
+
+.ui-list__scroller[data-drop-empty] {
+  box-shadow: inset 0 0 0 2px var(--color-primary-600);
 }
 
 .ui-reorder-ghost {

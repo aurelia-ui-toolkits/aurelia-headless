@@ -2,7 +2,7 @@ import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import type { UiTableColumn } from './ui-table-column';
 import type { UiMenu } from '../menu/ui-menu';
-import type { IReorderHost } from '../reorder/ui-reorder';
+import type { IReorderHost } from '../reorder/i-reorder-host';
 import { UiTableConfiguration } from './ui-table-configuration';
 
 type TableSort = { column: string; direction: 'asc' | 'desc' };
