@@ -68,6 +68,8 @@ export class UiReorder implements EventListenerObject {
   private scrollFrame: number | undefined;
   private lastPointerX = 0;
   private lastPointerY = 0;
+  /** Scrollable-ancestor chains per reorder container, resolved on demand and cleared per drag. */
+  private scrollChains = new Map<HTMLElement, Element[]>();
 
   attached(): void {
     const vm = CustomElement.for(this.element, { optional: true })?.viewModel;
@@ -319,31 +321,81 @@ export class UiReorder implements EventListenerObject {
     return result;
   }
 
+  /**
+   * Two edge bands per frame: the container's (scrolls the list) and the viewport's (scrolls the
+   * page). Dragging past the end of a list inside a scrolling page must keep going, so a
+   * container that cannot consume the scroll falls through to its nearest scrollable ancestor.
+   */
   private autoScroll(): void {
     if (!this.dragging) {
       return;
     }
-    const container = (this.target?.attribute ?? this).host.reorderContainer;
-    const bounds = container.getBoundingClientRect();
-    const vertical = (this.target?.attribute ?? this).host.reorderOrientation === 'vertical';
+    const host = (this.target?.attribute ?? this).host;
+    const vertical = host.reorderOrientation === 'vertical';
     const pointer = vertical ? this.lastPointerY : this.lastPointerX;
-    const start = vertical ? bounds.top : bounds.left;
-    const end = vertical ? bounds.bottom : bounds.right;
-    let delta = 0;
-    if (pointer < start + EDGE_SIZE && pointer > start - EDGE_SIZE) {
-      delta = -EDGE_SCROLL_SPEED;
-    } else if (pointer > end - EDGE_SIZE && pointer < end + EDGE_SIZE) {
-      delta = EDGE_SCROLL_SPEED;
+    const container = host.reorderContainer;
+    const bounds = container.getBoundingClientRect();
+
+    // The container's band reaches slightly outside it; the viewport's only inwards.
+    let delta = this.edgeDelta(pointer, vertical ? bounds.top : bounds.left, vertical ? bounds.bottom : bounds.right, EDGE_SIZE);
+    let scroller: Element | undefined = delta && this.canScroll(container, vertical, delta) ? container : undefined;
+    if (!scroller) {
+      delta = this.edgeDelta(pointer, 0, vertical ? window.innerHeight : window.innerWidth, 0);
+      scroller = delta ? this.scrollableAncestors(container).find(x => this.canScroll(x, vertical, delta)) : undefined;
     }
-    if (delta) {
+
+    if (scroller) {
       if (vertical) {
-        container.scrollTop += delta;
+        scroller.scrollTop += delta;
       } else {
-        container.scrollLeft += delta;
+        scroller.scrollLeft += delta;
       }
       this.updateTarget(this.lastPointerX, this.lastPointerY);
     }
     this.scrollFrame = requestAnimationFrame(() => this.autoScroll());
+  }
+
+  /** Scroll step for a pointer inside an edge band; `outside` extends the band beyond the box. */
+  private edgeDelta(pointer: number, start: number, end: number, outside: number): number {
+    if (pointer < start + EDGE_SIZE && pointer > start - outside) {
+      return -EDGE_SCROLL_SPEED;
+    }
+    if (pointer > end - EDGE_SIZE && pointer < end + outside) {
+      return EDGE_SCROLL_SPEED;
+    }
+    return 0;
+  }
+
+  private canScroll(element: Element, vertical: boolean, delta: number): boolean {
+    const position = vertical ? element.scrollTop : element.scrollLeft;
+    if (delta < 0) {
+      return position > 0;
+    }
+    // 1px slack: fractional zoom leaves the scroll position a hair short of its maximum.
+    const extent = vertical ? element.scrollHeight - element.clientHeight : element.scrollWidth - element.clientWidth;
+    return position < extent - 1;
+  }
+
+  /**
+   * Scrollable ancestors of the container, innermost first, ending at the document. Resolved once
+   * per drag - overflow styles do not change mid-gesture and getComputedStyle is costly.
+   */
+  private scrollableAncestors(container: HTMLElement): Element[] {
+    let chain = this.scrollChains.get(container);
+    if (!chain) {
+      chain = [];
+      for (let element = container.parentElement; element; element = element.parentElement) {
+        const overflow = getComputedStyle(element).overflow;
+        if (overflow.includes('auto') || overflow.includes('scroll')) {
+          chain.push(element);
+        }
+      }
+      if (document.scrollingElement && !chain.includes(document.scrollingElement)) {
+        chain.push(document.scrollingElement);
+      }
+      this.scrollChains.set(container, chain);
+    }
+    return chain;
   }
 
   private emitDrop(target: IDropTarget | undefined): void {
@@ -383,6 +435,7 @@ export class UiReorder implements EventListenerObject {
       cancelAnimationFrame(this.scrollFrame);
       this.scrollFrame = undefined;
     }
+    this.scrollChains.clear();
     if (this.target) {
       this.clearTargetMarker(this.target);
       this.target = undefined;
