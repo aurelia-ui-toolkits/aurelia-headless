@@ -50,7 +50,7 @@
       </ui-input>
 
       <ui-select class="col-span-12 md:col-span-4" items.bind="teams" value.bind="teamId" value-field="id"
-        label-field="name" inset label="Team" placeholder="Team">
+        label-field="name" inset label="Team">
         <ui-list>
           <ui-list-item repeat.for="team of $host.items" value.bind="team">
             ${team.name}
