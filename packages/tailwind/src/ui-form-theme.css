@@ -1,9 +1,13 @@
 @reference "./theme.css";
 
 .ui-form {
-  /* Baseline alignment lines a button's text up with the text inside adjacent field controls
-     regardless of the boxes' heights. */
-  @apply grid grid-cols-12 items-baseline gap-x-6 gap-y-1 overflow-visible px-[5px] pt-[15px] pb-[5px];
+  --ui-form-control-offset: 0px;
+
+  @apply grid grid-cols-12 items-start gap-x-6 gap-y-1 overflow-visible px-[5px] pt-[15px] pb-[5px];
+
+  &:has(> :is(.ui-input, .ui-select, .ui-combobox, .ui-datepicker, .ui-checkbox[data-field]):not([data-inset])) {
+    --ui-form-control-offset: calc(var(--ui-field-label-line-height) + var(--ui-field-gap));
+  }
 
   /* Inside a form, reserve one validation line so rows don't jump when validation toggles. */
   & .ui-input__subscript,
@@ -13,5 +17,27 @@
   & .ui-checkbox__subscript,
   & .ui-validation-container__errors {
     @apply min-h-5;
+  }
+
+  /* Buttons have their own natural heights; centre direct form-row buttons
+     explicitly within the field control band. */
+  & > .ui-button {
+    margin-block-start: calc(var(--ui-form-control-offset) + (var(--ui-field-inset-control-height) - var(--ui-button-font-size) - 2 * var(--ui-button-padding-y) - 4px) / 2);
+  }
+
+  & > .ui-icon-button {
+    margin-block-start: calc(var(--ui-form-control-offset) + (var(--ui-field-inset-control-height) - var(--ui-icon-button-size)) / 2);
+  }
+
+  & > .ui-icon-button[data-size="small"] {
+    margin-block-start: calc(var(--ui-form-control-offset) + (var(--ui-field-inset-control-height) - var(--ui-icon-button-small-size)) / 2);
+  }
+
+  & > .ui-icon-button[data-size="medium"] {
+    margin-block-start: calc(var(--ui-form-control-offset) + (var(--ui-field-inset-control-height) - var(--ui-icon-button-medium-size)) / 2);
+  }
+
+  & > .ui-icon-button[data-size="large"] {
+    margin-block-start: calc(var(--ui-form-control-offset) + (var(--ui-field-inset-control-height) - var(--ui-icon-button-large-size)) / 2);
   }
 }

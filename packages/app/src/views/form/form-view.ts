@@ -11,6 +11,7 @@ type TeamOption = {
 export class FormView {
   workspaceName = '';
   ownerEmail = '';
+  maskedPhone = '(02) 9876 5432';
   teamId = '';
   summary = '';
   notifyTeam = false;
@@ -41,6 +42,7 @@ export class FormView {
   resetProfile(): void {
     this.workspaceName = '';
     this.ownerEmail = '';
+    this.maskedPhone = '(02) 9876 5432';
     this.teamId = '';
     this.summary = '';
     this.notifyTeam = false;

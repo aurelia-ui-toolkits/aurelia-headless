@@ -45,8 +45,7 @@ ui-datepicker,
       display: none;
     }
 
-    &[data-focus] .ui-datepicker__inset-label,
-    &[data-has-value] .ui-datepicker__inset-label {
+    & .ui-datepicker__inset-label[data-floating] {
       transform: translateY(-0.5rem) scale(var(--ui-field-inset-label-scale));
       font-size: var(--ui-field-inset-label-font-size);
       color: var(--color-ink-700);

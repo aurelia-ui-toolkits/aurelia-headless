@@ -49,8 +49,7 @@ ui-select,
       display: none;
     }
 
-    &[data-focus] .ui-select__inset-label,
-    &[data-has-value] .ui-select__inset-label {
+    & .ui-select__inset-label[data-floating] {
       transform: translateY(-0.5rem) scale(var(--ui-field-inset-label-scale));
       font-size: var(--ui-field-inset-label-font-size);
       color: var(--color-ink-700);

@@ -49,8 +49,7 @@ ui-combobox,
       display: none;
     }
 
-    &[data-focus] .ui-combobox__inset-label,
-    &[data-has-value] .ui-combobox__inset-label {
+    & .ui-combobox__inset-label[data-floating] {
       transform: translateY(-0.5rem) scale(var(--ui-field-inset-label-scale));
       font-size: var(--ui-field-inset-label-font-size);
       color: var(--color-ink-700);

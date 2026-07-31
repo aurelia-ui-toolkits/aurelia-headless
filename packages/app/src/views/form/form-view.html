@@ -1,31 +1,16 @@
 <demo-section title="ui-form">
   <demo-block title="Responsive grid form">
     <ui-form>
-      <ui-input class="col-span-12 md:col-span-6"
-        value.bind="workspaceName & validate"
-        label="Workspace name"
-        helper-text="Displayed in the workspace switcher."
-        required
-        placeholder="Production workspace">
+      <ui-input class="col-span-12 md:col-span-6" value.bind="workspaceName & validate" label="Workspace name"
+        helper-text="Displayed in the workspace switcher." required placeholder="Production workspace">
       </ui-input>
 
-      <ui-input class="col-span-12 md:col-span-6"
-        value.bind="ownerEmail & validate"
-        type="email"
-        label="Owner email"
-        helper-text="Used for approval notifications."
-        required
-        placeholder="owner@example.com">
+      <ui-input class="col-span-12 md:col-span-6" value.bind="ownerEmail & validate" type="email" label="Owner email"
+        helper-text="Used for approval notifications." required placeholder="owner@example.com">
       </ui-input>
 
-      <ui-select class="col-span-12 md:col-span-6"
-        items.bind="teams"
-        value.bind="teamId & validate"
-        value-field="id"
-        label-field="name"
-        label="Team"
-        helper-text="Choose the team responsible for changes."
-        required
+      <ui-select class="col-span-12 md:col-span-4" items.bind="teams" value.bind="teamId & validate" value-field="id"
+        label-field="name" label="Team" helper-text="Choose the team responsible for changes." required
         placeholder="Select team">
         <ui-list>
           <ui-list-item repeat.for="team of $host.items" value.bind="team">
@@ -34,20 +19,15 @@
         </ui-list>
       </ui-select>
 
-      <ui-checkbox class="col-span-12 md:col-span-6"
-        checked.bind="notifyTeam"
-        label="Notify team after save"
+      <ui-button class="col-span-12 md:col-span-2" outlined>Cancel</ui-button>
+      <ui-button class="col-span-12 md:col-span-2" primary>Save</ui-button>
+
+      <ui-checkbox class="col-span-12 md:col-span-4" checked.bind="notifyTeam" label="Notify team after save"
         helper-text="Send an update after this profile is saved.">
       </ui-checkbox>
 
-      <ui-input class="col-span-12"
-        value.bind="summary & validate"
-        textarea
-        rows="4"
-        label="Summary"
-        helper-text="Describe what this workspace is used for."
-        required
-        placeholder="Add details">
+      <ui-input class="col-span-12" value.bind="summary & validate" textarea rows="4" label="Summary"
+        helper-text="Describe what this workspace is used for." required placeholder="Add details">
       </ui-input>
 
       <div class="form-actions col-span-12 flex flex-wrap items-center">
@@ -60,30 +40,17 @@
 
   <demo-block title="Inset form controls">
     <ui-form>
-      <ui-input class="col-span-12 md:col-span-4"
-        value.bind="workspaceName"
-        inset
-        label="Workspace"
+      <ui-input class="col-span-12 md:col-span-4" value.bind="workspaceName" inset label="Workspace"
         placeholder="Workspace">
       </ui-input>
 
-      <ui-input class="col-span-12 md:col-span-4"
-        value.bind="ownerEmail"
-        inset
-        type="email"
-        label="Email"
+      <ui-input class="col-span-12 md:col-span-4" value.bind="ownerEmail" inset type="email" label="Email"
         placeholder="Email">
         <span au-slot="leading">@</span>
       </ui-input>
 
-      <ui-select class="col-span-12 md:col-span-4"
-        items.bind="teams"
-        value.bind="teamId"
-        value-field="id"
-        label-field="name"
-        inset
-        label="Team"
-        placeholder="Team">
+      <ui-select class="col-span-12 md:col-span-4" items.bind="teams" value.bind="teamId" value-field="id"
+        label-field="name" inset label="Team">
         <ui-list>
           <ui-list-item repeat.for="team of $host.items" value.bind="team">
             ${team.name}
@@ -91,20 +58,20 @@
         </ui-list>
       </ui-select>
 
-      <ui-checkbox class="col-span-12 md:col-span-4"
-        inset
-        checked.bind="notifyTeam"
-        label="Notify team after save"
+      <ui-checkbox class="col-span-12" inset checked.bind="notifyTeam" label="Notify team after save"
         helper-text="Aligns with inset controls.">
       </ui-checkbox>
 
-      <ui-input class="col-span-12 md:col-span-4"
-        value.bind="ownerEmail"
-        inset
-        type="email"
-        label="Fallback email"
+      <ui-input class="col-span-12 md:col-span-4" value.bind="ownerEmail" inset type="email" label="Fallback email"
         placeholder="Fallback email">
       </ui-input>
+
+      <ui-input class="col-span-12 md:col-span-4" value.bind="maskedPhone" inset label="Phone"
+        ui-inputmask="mask: (99) 9999 9999; value.bind: maskedPhone; is-value-masked: true">
+      </ui-input>
+
+      <ui-button class="col-span-12 md:col-span-2" outlined>Cancel</ui-button>
+      <ui-button class="col-span-12 md:col-span-2" primary>Save</ui-button>
     </ui-form>
   </demo-block>
 </demo-section>

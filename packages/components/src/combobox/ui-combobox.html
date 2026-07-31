@@ -6,7 +6,6 @@
   data-active.attr="active ? '' : null"
   data-open.attr="open ? '' : null"
   data-inset.attr="inset ? '' : null"
-  data-has-value.attr="hasValue ? '' : null"
   mouseenter.trigger="onMouseEnter()"
   mouseleave.trigger="onMouseLeave()">
   <label class="ui-combobox__label"
@@ -45,6 +44,7 @@
 
     <span class="ui-combobox__inset-label"
       id.bind="inset && label ? labelId : null"
+      data-floating.attr="focus || hasValue ? '' : null"
       show.bind="label && inset">${label}</span>
 
     <span class="ui-combobox__trailing">

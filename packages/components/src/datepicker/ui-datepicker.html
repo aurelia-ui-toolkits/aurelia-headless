@@ -1,7 +1,7 @@
 <template class="ui-datepicker" data-disabled.attr="disabled ? '' : null"
   data-invalid.attr="invalid || errors.size ? '' : null" data-hover.attr="hover ? '' : null" data-focus.attr="focus ? '' : null"
   data-active.attr="active ? '' : null" data-open.attr="open ? '' : null" data-inset.attr="inset ? '' : null"
-  data-has-value.attr="hasValue ? '' : null" data-time.attr="time ? '' : null"
+  data-time.attr="time ? '' : null"
   mouseenter.trigger="onMouseEnter()" mouseleave.trigger="onMouseLeave()">
   <label class="ui-datepicker__label" for.bind="id" id.bind="!inset && label ? labelId : null"
     show.bind="label && !inset">${label}</label>
@@ -22,6 +22,7 @@
       pointerleave.trigger="onPointerLeave()">
 
     <span class="ui-datepicker__inset-label" id.bind="inset && label ? labelId : null"
+      data-floating.attr="focus || hasValue ? '' : null"
       show.bind="label && inset">${label}</span>
 
     <span class="ui-datepicker__trailing">
