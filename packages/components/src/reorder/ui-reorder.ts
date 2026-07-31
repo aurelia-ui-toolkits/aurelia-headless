@@ -210,7 +210,11 @@ export class UiReorder implements EventListenerObject {
     this.positionGhost(this.startX, this.startY);
 
     this.host.reorderContainer.setAttribute('data-reordering', '');
-    this.markSourceSlots();
+    if (this.host.markDragging) {
+      this.host.markDragging(this.sourceIndexes);
+    } else {
+      this.markSourceSlots();
+    }
     window.addEventListener('keydown', this, true);
     this.scrollFrame = requestAnimationFrame(() => this.autoScroll());
   }
@@ -384,6 +388,7 @@ export class UiReorder implements EventListenerObject {
       this.target = undefined;
     }
     for (const attribute of this.candidates()) {
+      attribute.host.markDragging?.(undefined);
       for (const slot of attribute.host.slots()) {
         slot.removeAttribute('data-dragging');
       }

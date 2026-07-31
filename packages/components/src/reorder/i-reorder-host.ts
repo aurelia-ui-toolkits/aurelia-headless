@@ -20,4 +20,11 @@ export interface IReorderHost {
   canReorder(slot: Element): boolean;
   /** Optional custom drag ghost; the default is a size-pinned clone with a count badge. */
   createGhost?(slot: Element, count: number): HTMLElement;
+  /**
+   * Optional: reflect the dragged data indexes on the rendered items (undefined = drag ended).
+   * Hosts whose items render `data-dragging` from data (ui-list items bind it off their index)
+   * stay correct under virtualization; without it the attribute stamps `data-dragging` on the
+   * rendered slots, which recycled rows would carry to the wrong items.
+   */
+  markDragging?(indexes: number[] | undefined): void;
 }

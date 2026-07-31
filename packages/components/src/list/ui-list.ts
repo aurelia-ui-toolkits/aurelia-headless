@@ -16,7 +16,8 @@ export class UiList implements IReorderHost {
   private readonly host = resolve(INode) as HTMLElement;
   private scrollerEl!: HTMLElement;
   private listItems: UiListItem[] = [];
-  private reorderItems: UiListItem[] = [];
+  /** Rendered items participating in reorder (list-items also derive their drag state from it). */
+  reorderItems: UiListItem[] = [];
   private listItemsChangedCallback: (() => void) | undefined;
   activeItem: unknown;
   /**
@@ -563,6 +564,13 @@ export class UiList implements IReorderHost {
   canReorder(slot: Element): boolean {
     const listItem = CustomElement.for<UiListItem>(slot).viewModel;
     return !listItem.disabled && this.reorderItems.includes(listItem);
+  }
+
+  /** Data indexes of the active drag; list-items render `data-dragging` from it (virtual-safe). */
+  draggingIndexes: number[] | undefined;
+
+  markDragging(indexes: number[] | undefined): void {
+    this.draggingIndexes = indexes;
   }
 
   // #endregion

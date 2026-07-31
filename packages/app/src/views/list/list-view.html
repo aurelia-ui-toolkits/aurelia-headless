@@ -87,7 +87,7 @@
   <demo-block title="Edge autoscroll (constrained height)">
     <ui-list ui-reorder items.bind="tallReorderList" style="height: 240px;"
       reorder.trigger="applyReorder(tallReorderList, $event.detail)">
-      <ui-list-item repeat.for="item of $host.items" value.bind="item">${item.label}</ui-list-item>
+      <ui-list-item virtual-repeat.for="item of $host.items" value.bind="item">${item.label}</ui-list-item>
     </ui-list>
   </demo-block>
 </demo-section>
