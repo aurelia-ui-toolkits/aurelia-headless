@@ -19,10 +19,6 @@
       <au-slot name="leading"></au-slot>
     </span>
 
-    <span class="ui-combobox__inset-label"
-      id.bind="inset && label ? labelId : null"
-      show.bind="label && inset">${label}</span>
-
     <input ref="inputEl"
       class="ui-combobox__native"
       id.bind="id"
@@ -46,6 +42,10 @@
       pointerdown.trigger="onPointerDown()"
       pointerup.trigger="onPointerUp()"
       pointerleave.trigger="onPointerLeave()">
+
+    <span class="ui-combobox__inset-label"
+      id.bind="inset && label ? labelId : null"
+      show.bind="label && inset">${label}</span>
 
     <span class="ui-combobox__trailing">
       <au-slot name="trailing"></au-slot>

@@ -1,6 +1,8 @@
 import { UiMenu } from './ui-menu';
 import { bindable, customAttribute, queueTask, resolve } from 'aurelia';
 
+const menuAnchorClass = 'ui-context-menu-anchor';
+
 /** Opens the bound headless ui-menu at the pointer position on right-click. */
 @customAttribute('ui-context-menu')
 export class UiContextMenuCustomAttribute implements EventListenerObject {
@@ -17,15 +19,17 @@ export class UiContextMenuCustomAttribute implements EventListenerObject {
 
   attached() {
     this.element.addEventListener('contextmenu', this);
-    this.menuAnchor = document.createElement('div');
-    this.menuAnchor.classList.add('ui-context-menu-anchor');
-    this.menuAnchor.style.position = 'fixed';
-    document.body.appendChild(this.menuAnchor);
+    this.menuAnchor = document.querySelector<HTMLDivElement>(`div.${menuAnchorClass}`) ?? undefined;
+    if (!this.menuAnchor) {
+      this.menuAnchor = document.createElement('div');
+      this.menuAnchor.classList.add(menuAnchorClass);
+      this.menuAnchor.style.position = 'fixed';
+      document.body.appendChild(this.menuAnchor);
+    }
   }
 
   detaching() {
     this.element.removeEventListener('contextmenu', this);
-    this.menuAnchor?.remove();
     this.menuAnchor = undefined;
   }
 

@@ -38,13 +38,13 @@
       <au-slot name="leading"></au-slot>
     </span>
 
-    <span class="ui-select__inset-label"
-      id.bind="inset && label ? labelId : null"
-      show.bind="label && inset">${label}</span>
-
     <span class="ui-select__value" data-placeholder.attr="displayText ? null : ''">
       ${displayText || placeholderText}
     </span>
+
+    <span class="ui-select__inset-label"
+      id.bind="inset && label ? labelId : null"
+      show.bind="label && inset">${label}</span>
 
     <span class="ui-select__trailing">
       <au-slot name="trailing">
