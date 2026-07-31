@@ -58,12 +58,16 @@
         </ui-list>
       </ui-select>
 
-      <ui-checkbox class="col-span-12 md:col-span-4" inset checked.bind="notifyTeam" label="Notify team after save"
+      <ui-checkbox class="col-span-12" inset checked.bind="notifyTeam" label="Notify team after save"
         helper-text="Aligns with inset controls.">
       </ui-checkbox>
 
       <ui-input class="col-span-12 md:col-span-4" value.bind="ownerEmail" inset type="email" label="Fallback email"
         placeholder="Fallback email">
+      </ui-input>
+
+      <ui-input class="col-span-12 md:col-span-4" value.bind="maskedPhone" inset label="Phone"
+        ui-inputmask="mask: (99) 9999 9999; value.bind: maskedPhone; is-value-masked: true">
       </ui-input>
 
       <ui-button class="col-span-12 md:col-span-2" outlined>Cancel</ui-button>
