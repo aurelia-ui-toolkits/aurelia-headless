@@ -26,14 +26,12 @@
     data-disabled.attr="disabled || row.disabled ? '' : null"
     style.bind="`--ui-tree-depth: ${row.depth}`"
     click.trigger="onRowClick(row)">
-    <button class="ui-tree__toggle"
-      type="button"
-      tabindex="-1"
+    <span class="ui-tree__toggle"
       aria-hidden="true"
       data-hidden.attr="row.children.length ? null : ''"
       click.trigger="onToggleClick(row, $event)">
       <span class="ui-tree__toggle-icon"></span>
-    </button>
+    </span>
     <div class="ui-tree__content">
       <au-slot name="item" expose.bind="row.slotHost">${row.label}</au-slot>
     </div>
