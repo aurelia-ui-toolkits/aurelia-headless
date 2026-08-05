@@ -1,7 +1,7 @@
 @reference "./theme.css";
 
 .ui-tree {
-  @apply grid rounded-xl border border-card-border bg-transparent p-1;
+  @apply grid content-start rounded-xl border border-card-border bg-transparent p-1;
   border-radius: var(--ui-tree-radius);
   padding: var(--ui-tree-padding);
 
