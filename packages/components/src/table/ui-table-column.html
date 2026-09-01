@@ -1,6 +1,9 @@
 <template class="ui-table-column"
   data-sortable.attr="sortable ? '' : null"
   data-resizable.attr="resizable ? '' : null"
+  data-movable.attr="movable ? '' : null"
+  data-hideable.attr="hideable ? '' : null"
+  data-default-hidden.attr="defaultHidden ? '' : null"
   data-sort.attr="direction || ''"
   aria-sort.attr="direction ? (direction === 'asc' ? 'ascending' : 'descending') : null"
   click.trigger="onClick($event)">

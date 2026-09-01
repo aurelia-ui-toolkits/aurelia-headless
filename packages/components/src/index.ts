@@ -116,6 +116,8 @@ export { UiTabs };
 export { UiTable };
 export { UiTableColumn };
 export { UiTableConfiguration };
+export type { IColumnReorderDetail } from './table/i-column-reorder-detail';
+export type { IColumnVisibilityDetail } from './table/i-column-visibility-detail';
 export { HeadlessConfiguration };
 export { UiToastRegion };
 export { UiToastService };

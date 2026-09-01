@@ -1,7 +1,9 @@
 <demo-section title="ui-table">
   <demo-block title="Consumer-owned table">
     <ui-table sort.bind="sort" page.bind="page" page-size.bind="pageSize" total.bind="total"
-      page-size-options.bind="pageSizeOptions" storage-key="projects-demo" progress.to-view="tableLoading">
+      page-size-options.bind="pageSizeOptions" storage-key="projects-demo" progress.to-view="tableLoading"
+      column-reorder.trigger="columnOrder = $event.detail.order"
+      column-visibility.trigger="hiddenColumns = $event.detail.hidden">
       <table>
         <thead>
           <tr>
@@ -9,9 +11,9 @@
               <ui-checkbox checked.to-view="allVisibleSelected" indeterminate.to-view="someVisibleSelected"
                 change.trigger="toggleVisibleSelection()" aria-label="Select visible rows"></ui-checkbox>
             </th>
-            <th ui-table-column="name" sortable resizable>Name</th>
-            <th ui-table-column="status" sortable resizable>Status</th>
-            <th ui-table-column="owner" sortable resizable>Owner</th>
+            <th ui-table-column="name" sortable resizable movable hideable>Name</th>
+            <th ui-table-column="status" sortable resizable movable hideable>Status</th>
+            <th ui-table-column="owner" sortable resizable movable hideable default-hidden>Owner</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -32,6 +34,64 @@
                 </svg>
               </button>
             </td>
+          </tr>
+        </tbody>
+      </table>
+    </ui-table>
+    <span class="list-state" if.bind="columnOrder.length">column order: ${columnOrder.join(', ')}</span>
+    <span class="list-state" if.bind="hiddenColumns.length">hidden: ${hiddenColumns.join(', ')}</span>
+  </demo-block>
+
+  <demo-block title="Column reorder benchmark">
+    <div class="flex flex-wrap items-center gap-3">
+      <button ui-button outlined click.trigger="benchPopulate(2000)">Populate 2000 rows</button>
+      <button ui-button outlined click.trigger="benchMove()">Move column</button>
+      <button ui-button outlined click.trigger="benchRerender()">Re-render rows</button>
+      <button ui-button outlined click.trigger="benchChurn()">Churn cells</button>
+      <button ui-button outlined click.trigger="benchResetOrder()">Reset order</button>
+    </div>
+    <ui-table component.ref="benchTable" pagination.bind="false" style="max-height: 320px">
+      <table>
+        <thead>
+          <tr>
+            <th ui-table-column="bench-id">Id</th>
+            <th ui-table-column="bench-name" movable hideable resizable>Name</th>
+            <th ui-table-column="bench-status" movable hideable>Status</th>
+            <th ui-table-column="bench-owner" movable hideable>Owner</th>
+            <th ui-table-column="bench-flag" movable>Flag</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr repeat.for="row of benchRows">
+            <td>${row.id}</td>
+            <td>${row.name}</td>
+            <td>${row.status}</td>
+            <td>${row.owner}</td>
+            <td><span if.bind="row.flag">●</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </ui-table>
+    <div class="flex flex-col gap-1">
+      <span class="list-state" repeat.for="line of benchResults">${line}</span>
+    </div>
+  </demo-block>
+
+  <demo-block title="Movable columns + virtual repeat">
+    <ui-table pagination.bind="false" style="max-height: 320px">
+      <table>
+        <thead>
+          <tr>
+            <th ui-table-column="virtual-name" movable>Name</th>
+            <th ui-table-column="virtual-status" movable>Status</th>
+            <th ui-table-column="virtual-owner" movable>Owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr virtual-repeat.for="row of virtualRows">
+            <td>${row.name}</td>
+            <td>${row.status}</td>
+            <td>${row.owner}</td>
           </tr>
         </tbody>
       </table>

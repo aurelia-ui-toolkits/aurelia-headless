@@ -4,6 +4,42 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.2.0]
+
+### Added
+- **`ui-table-column` `movable`** — dragging a movable header reorders the column.
+  The table owns the permutation (cells have no backing array): it moves the DOM
+  cells of every matching row and re-applies the order to rows the repeater
+  renders later (paging, sorting). Only movable headers are drop anchors, so
+  immovable edge columns (selection, actions) keep their place; rows with a
+  different cell count (colspan summaries) keep their authored order. The order
+  persists under `storage-key` alongside column widths, and the table emits a
+  bubbling `column-reorder` CustomEvent (`IColumnReorderDetail`: `from`, `to`,
+  resulting `order` keys).
+- **`ui-table-column` `hideable`** — the header context menu lists hideable
+  columns with visibility toggles. Hidden columns get `data-col-hidden` on every
+  matching row's cell (`display: none` via the table's injected style, so the
+  cells leave layout and the accessibility tree; bindings stay alive). The last
+  visible column cannot be hidden. Emits a bubbling `column-visibility`
+  CustomEvent (`IColumnVisibilityDetail`: `column`, `visible`, resulting
+  `hidden` keys). A column authored with `default-hidden` starts hidden — stored
+  user state overrides the default, and reset restores the authored defaults
+  (the `hidden` section persists whenever it differs from them, including as an
+  explicit empty array).
+
+### Changed
+- **`.ui-table` shrink-wraps its table** (`width: fit-content; max-width: 100%`):
+  the card — and with it the pagination bar — follows the table's width as
+  columns resize, instead of always filling the parent. Consumers wanting the
+  old behavior can set `ui-table { width: 100%; }`.
+- **Column state storage combined** (breaking for stored state): widths, order,
+  and hidden columns persist as one `ui-table:<storage-key>` entry
+  (`{ widths, order, hidden }`) instead of `ui-table:<storage-key>:columns`.
+  Previously stored widths are ignored; there is no legacy migration.
+- The table header context menu's reset action now restores column order and
+  visibility as well as widths; the default `resetColumnsText` label changed
+  from "Reset column widths" to "Reset columns".
+
 ## [1.1.9]
 
 ### Added
