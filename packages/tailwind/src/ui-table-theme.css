@@ -1,7 +1,9 @@
 @reference "./theme.css";
 
 .ui-table {
-  @apply relative flex max-h-full flex-col overflow-hidden rounded-xl border border-card-border bg-transparent;
+  /* Shrink-wrap the table so pagination stays close to the data; the body scrolls when
+     the table outgrows the container. */
+  @apply relative flex w-fit max-w-full max-h-full flex-col overflow-hidden rounded-xl border border-card-border bg-transparent;
   border-radius: var(--ui-table-radius);
 
   &[data-disabled] {
@@ -158,6 +160,32 @@
 
 .ui-table__body[data-drop-empty] {
   box-shadow: inset 0 0 0 2px var(--color-primary-600);
+}
+
+.ui-table__column-toggle-check {
+  @apply inline-block w-5 text-center;
+}
+
+/* Column drag (movable columns): the dragged header dims, drop edges mark the insertion point. */
+.ui-table-column[data-movable] {
+  @apply touch-none;
+}
+
+.ui-table__body[data-column-reordering] {
+  @apply select-none;
+  cursor: grabbing;
+}
+
+.ui-table thead th[data-dragging] {
+  @apply opacity-40;
+}
+
+.ui-table thead th[data-drop-before] {
+  box-shadow: inset 2px 0 0 0 var(--color-primary-600);
+}
+
+.ui-table thead th[data-drop-after] {
+  box-shadow: inset -2px 0 0 0 var(--color-primary-600);
 }
 
 .ui-reorder-ghost td,

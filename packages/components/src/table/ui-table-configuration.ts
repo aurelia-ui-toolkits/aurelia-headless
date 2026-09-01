@@ -2,7 +2,7 @@
  *  localize every table at once; per-instance bindables still take precedence. */
 export class UiTableConfiguration {
   loadingText: string = 'Loading table';
-  resetColumnsText: string = 'Reset column widths';
+  resetColumnsText: string = 'Reset columns';
   rowsPerPageText: string = 'Rows per page';
   pageText: string = 'Page';
   firstPageText: string = 'First page';

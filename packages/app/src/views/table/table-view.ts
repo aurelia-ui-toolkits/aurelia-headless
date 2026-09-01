@@ -1,5 +1,5 @@
 import { observable } from 'aurelia';
-import { IReorderDetail } from '@aurelia-ui-toolkits/headless';
+import { IReorderDetail, UiTable } from '@aurelia-ui-toolkits/headless';
 
 type SortDirection = 'asc' | 'desc';
 
@@ -14,6 +14,14 @@ type ProjectRow = {
   status: string;
   owner: string;
   selected: boolean;
+};
+
+type BenchRow = {
+  id: number;
+  name: string;
+  status: string;
+  owner: string;
+  flag: boolean;
 };
 
 export class TableView {
@@ -40,6 +48,8 @@ export class TableView {
 
   total = 0;
   tableLoading = false;
+  columnOrder: string[] = [];
+  hiddenColumns: string[] = [];
   allVisibleSelected = false;
   someVisibleSelected = false;
   pageRows: ProjectRow[] = [];
@@ -147,5 +157,80 @@ export class TableView {
     if (detail.to !== undefined) {
       list.splice(detail.to, 0, ...detail.items);
     }
+  }
+
+  benchTable!: UiTable;
+  benchRows: BenchRow[] = [];
+  benchResults: string[] = [];
+  virtualRows: BenchRow[] = Array.from({ length: 5000 }, (_, index) => this.makeBenchRow(index));
+
+  benchPopulate(count: number): void {
+    this.benchRows = Array.from({ length: count }, (_, index) => this.makeBenchRow(index));
+    this.benchLog(`populated ${count} rows`);
+  }
+
+  /** Drop cost: moveColumn permutes the cells of every rendered row synchronously. */
+  benchMove(): void {
+    if (!this.benchRows.length) {
+      this.benchPopulate(2000);
+    }
+    const start = performance.now();
+    this.benchTable.moveColumn(1, 3);
+    this.benchLog(`moveColumn over ${this.benchRows.length} rows: ${(performance.now() - start).toFixed(1)} ms`);
+  }
+
+  /**
+   * Row churn cost with an active order: fresh object identities force the repeater to
+   * recreate every row; the observer then re-applies the permutation to each. The await
+   * lands after the observer's microtask, so its work is included.
+   */
+  async benchRerender(): Promise<void> {
+    if (!this.benchRows.length) {
+      return;
+    }
+    const start = performance.now();
+    this.benchRows = this.benchRows.map(row => ({ ...row }));
+    await Promise.resolve();
+    this.benchLog(`re-render ${this.benchRows.length} rows: ${(performance.now() - start).toFixed(1)} ms (includes observer re-apply)`);
+  }
+
+  /**
+   * Observer discard-path cost: toggling if.bind content inside cells fires childList
+   * records the observer must inspect and ignore. Compare ms/tick with a moved column
+   * (observer active) against after "Reset order" (observer disconnected).
+   */
+  async benchChurn(): Promise<void> {
+    if (!this.benchRows.length) {
+      return;
+    }
+    const ticks = 30;
+    const start = performance.now();
+    for (let tick = 0; tick < ticks; tick++) {
+      for (let index = 0; index < this.benchRows.length; index += 4) {
+        this.benchRows[index].flag = !this.benchRows[index].flag;
+      }
+      await new Promise(resolve => setTimeout(resolve));
+    }
+    const perTick = (performance.now() - start) / ticks;
+    this.benchLog(`churn ${Math.ceil(this.benchRows.length / 4)} cell toggles/tick: ${perTick.toFixed(2)} ms/tick`);
+  }
+
+  benchResetOrder(): void {
+    this.benchTable.resetColumnOrder();
+    this.benchLog('order reset (layout observer disconnected)');
+  }
+
+  private makeBenchRow(index: number): BenchRow {
+    return {
+      id: index + 1,
+      name: `Row ${index + 1}`,
+      status: index % 2 === 0 ? 'Open' : 'Closed',
+      owner: ['Avery', 'Blake', 'Casey'][index % 3],
+      flag: index % 4 === 0
+    };
+  }
+
+  private benchLog(line: string): void {
+    this.benchResults = [`${new Date().toLocaleTimeString()} — ${line}`, ...this.benchResults].slice(0, 8);
   }
 }

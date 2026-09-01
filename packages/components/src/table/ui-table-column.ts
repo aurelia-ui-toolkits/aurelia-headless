@@ -17,6 +17,16 @@ export class UiTableColumn implements EventListenerObject {
   @bindable({ set: booleanAttr })
   resizable: boolean = false;
 
+  @bindable({ set: booleanAttr })
+  movable: boolean = false;
+
+  @bindable({ set: booleanAttr })
+  hideable: boolean = false;
+
+  /** Initial visibility default; stored user state overrides it. */
+  @bindable({ set: booleanAttr })
+  defaultHidden: boolean = false;
+
   @bindable
   minWidth: number = 64;
 
