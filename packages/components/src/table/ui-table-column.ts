@@ -1,27 +1,29 @@
 import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { UiTable } from './ui-table';
+import { UiTableConfiguration } from './ui-table-configuration';
 
 @customElement('ui-table-column')
 export class UiTableColumn implements EventListenerObject {
   readonly host = resolve(INode) as HTMLElement;
   readonly table = resolve(UiTable);
+  private readonly configuration = resolve(UiTableConfiguration);
   private resizeHandle: HTMLElement | undefined;
   private startX = 0;
   private startWidth = 0;
   private resizing = false;
 
   @bindable({ set: booleanAttr })
-  sortable: boolean = false;
+  sortable: boolean = this.configuration.defaultSortable;
 
   @bindable({ set: booleanAttr })
-  resizable: boolean = false;
+  resizable: boolean = this.configuration.defaultResizable;
 
   @bindable({ set: booleanAttr })
-  movable: boolean = false;
+  movable: boolean = this.configuration.defaultMovable;
 
   @bindable({ set: booleanAttr })
-  hideable: boolean = false;
+  hideable: boolean = this.configuration.defaultHideable;
 
   /** Initial visibility default; stored user state overrides it. */
   @bindable({ set: booleanAttr })
