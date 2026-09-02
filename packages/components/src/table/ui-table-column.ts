@@ -1,27 +1,30 @@
 import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { UiTable } from './ui-table';
+import { UiTableConfiguration } from './ui-table-configuration';
 
 @customElement('ui-table-column')
 export class UiTableColumn implements EventListenerObject {
   readonly host = resolve(INode) as HTMLElement;
   readonly table = resolve(UiTable);
+  private readonly configuration = resolve(UiTableConfiguration);
   private resizeHandle: HTMLElement | undefined;
   private startX = 0;
   private startWidth = 0;
+  private lastWidth: number | undefined;
   private resizing = false;
 
   @bindable({ set: booleanAttr })
-  sortable: boolean = false;
+  sortable: boolean = this.configuration.defaultSortable;
 
   @bindable({ set: booleanAttr })
-  resizable: boolean = false;
+  resizable: boolean = this.configuration.defaultResizable;
 
   @bindable({ set: booleanAttr })
-  movable: boolean = false;
+  movable: boolean = this.configuration.defaultMovable;
 
   @bindable({ set: booleanAttr })
-  hideable: boolean = false;
+  hideable: boolean = this.configuration.defaultHideable;
 
   /** Initial visibility default; stored user state overrides it. */
   @bindable({ set: booleanAttr })
@@ -75,6 +78,7 @@ export class UiTableColumn implements EventListenerObject {
     this.resizing = true;
     this.startX = event.clientX;
     this.startWidth = this.host.getBoundingClientRect().width;
+    this.lastWidth = undefined;
     this.resizeHandle?.setPointerCapture(event.pointerId);
     window.addEventListener('pointermove', this);
     window.addEventListener('pointerup', this);
@@ -85,8 +89,8 @@ export class UiTableColumn implements EventListenerObject {
       return;
     }
 
-    const width = Math.max(Number(this.minWidth) || 64, this.startWidth + event.clientX - this.startX);
-    this.table.setColumnWidth(this.host.id, width);
+    this.lastWidth = Math.max(Number(this.minWidth) || 64, this.startWidth + event.clientX - this.startX);
+    this.table.setColumnWidth(this.host.id, this.lastWidth);
   }
 
   private onPointerUp(): void {
@@ -97,6 +101,10 @@ export class UiTableColumn implements EventListenerObject {
     this.resizing = false;
     window.removeEventListener('pointermove', this);
     window.removeEventListener('pointerup', this);
-    this.table.setColumnWidth(this.host.id, this.host.getBoundingClientRect().width, true);
+    // Persist the width set by the latest move: re-measuring the header here reads back
+    // table-layout quirks (collapsed borders, rounding) and can make the size jump.
+    if (this.lastWidth !== undefined) {
+      this.table.setColumnWidth(this.host.id, this.lastWidth, true);
+    }
   }
 }
