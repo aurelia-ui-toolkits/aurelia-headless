@@ -12,6 +12,11 @@ are versioned in lockstep.
   `defaultHideable`, allowing apps to enable column behavior globally while
   individual columns can opt out with an explicit `="false"` attribute.
 
+### Changed
+- Updated the Aurelia peer baseline from `2.0.0-rc.1` to `2.0.0-rc.2` and
+  refreshed runtime dependencies, including `date-fns` 4.4 and Inputmask
+  5.0.10.
+
 ### Fixed
 - Column resizing now persists the exact tracked width on pointer release,
   avoiding a final size shift caused by re-measuring table-layout geometry.

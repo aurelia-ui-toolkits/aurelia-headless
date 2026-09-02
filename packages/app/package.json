@@ -7,10 +7,10 @@
     "build": "vite build"
   },
   "dependencies": {
-    "aurelia": ">=2.0.0-rc.1",
+    "aurelia": ">=2.0.0-rc.2",
     "@aurelia-ui-toolkits/headless": "*",
     "@aurelia-ui-toolkits/headless-tailwind": "*",
-    "shiki": "^4.0.2"
+    "shiki": "^4.4.3"
   },
   "version": "1.1.14"
 }
