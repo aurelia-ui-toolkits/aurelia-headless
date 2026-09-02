@@ -11,6 +11,7 @@ export class UiTableColumn implements EventListenerObject {
   private resizeHandle: HTMLElement | undefined;
   private startX = 0;
   private startWidth = 0;
+  private lastWidth: number | undefined;
   private resizing = false;
 
   @bindable({ set: booleanAttr })
@@ -77,6 +78,7 @@ export class UiTableColumn implements EventListenerObject {
     this.resizing = true;
     this.startX = event.clientX;
     this.startWidth = this.host.getBoundingClientRect().width;
+    this.lastWidth = undefined;
     this.resizeHandle?.setPointerCapture(event.pointerId);
     window.addEventListener('pointermove', this);
     window.addEventListener('pointerup', this);
@@ -87,8 +89,8 @@ export class UiTableColumn implements EventListenerObject {
       return;
     }
 
-    const width = Math.max(Number(this.minWidth) || 64, this.startWidth + event.clientX - this.startX);
-    this.table.setColumnWidth(this.host.id, width);
+    this.lastWidth = Math.max(Number(this.minWidth) || 64, this.startWidth + event.clientX - this.startX);
+    this.table.setColumnWidth(this.host.id, this.lastWidth);
   }
 
   private onPointerUp(): void {
@@ -99,6 +101,10 @@ export class UiTableColumn implements EventListenerObject {
     this.resizing = false;
     window.removeEventListener('pointermove', this);
     window.removeEventListener('pointerup', this);
-    this.table.setColumnWidth(this.host.id, this.host.getBoundingClientRect().width, true);
+    // Persist the width set by the latest move: re-measuring the header here reads back
+    // table-layout quirks (collapsed borders, rounding) and can make the size jump.
+    if (this.lastWidth !== undefined) {
+      this.table.setColumnWidth(this.host.id, this.lastWidth, true);
+    }
   }
 }
