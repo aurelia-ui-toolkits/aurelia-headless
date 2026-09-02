@@ -4,6 +4,18 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.2.1]
+
+### Added
+- **Global table-column defaults** — `UiTableConfiguration` now provides
+  `defaultSortable`, `defaultResizable`, `defaultMovable`, and
+  `defaultHideable`, allowing apps to enable column behavior globally while
+  individual columns can opt out with an explicit `="false"` attribute.
+
+### Fixed
+- Column resizing now persists the exact tracked width on pointer release,
+  avoiding a final size shift caused by re-measuring table-layout geometry.
+
 ## [1.2.0]
 
 ### Added
@@ -26,10 +38,6 @@ are versioned in lockstep.
   user state overrides the default, and reset restores the authored defaults
   (the `hidden` section persists whenever it differs from them, including as an
   explicit empty array).
-- **Global table-column defaults** — `UiTableConfiguration` now provides
-  `defaultSortable`, `defaultResizable`, `defaultMovable`, and
-  `defaultHideable`, allowing apps to enable column behavior globally while
-  individual columns can opt out with an explicit `="false"` attribute.
 
 ### Changed
 - **`.ui-table` shrink-wraps its table** (`width: fit-content; max-width: 100%`):
@@ -43,10 +51,6 @@ are versioned in lockstep.
 - The table header context menu's reset action now restores column order and
   visibility as well as widths; the default `resetColumnsText` label changed
   from "Reset column widths" to "Reset columns".
-
-### Fixed
-- Column resizing now persists the exact tracked width on pointer release,
-  avoiding a final size shift caused by re-measuring table-layout geometry.
 
 ## [1.1.9]
 
