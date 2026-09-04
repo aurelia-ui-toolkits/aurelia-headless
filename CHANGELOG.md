@@ -4,6 +4,13 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.2.3]
+
+### Added
+- **Optional datepicker time completion** — `ui-datepicker` can opt into
+  `complete-time-on-blur`, which fills an omitted time with midnight when the
+  date portion is valid.
+
 ## [1.2.2]
 
 ### Fixed

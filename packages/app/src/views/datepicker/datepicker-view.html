@@ -6,8 +6,8 @@
   </demo-block>
 
   <demo-block title="Date with time">
-    <ui-datepicker class="datepicker-demo-control" value.bind="dateTimeValue" time label="Starts at" minute-step="15" format="dd/MM/yyyy HH:mm" inputmask-format="dd/MM/yyyy HH:mm"
-      helper-text="The dialog keeps the date and time together.">
+    <ui-datepicker class="datepicker-demo-control" value.bind="dateTimeValue" time complete-time-on-blur label="Starts at" minute-step="15" format="dd/MM/yyyy HH:mm" inputmask-format="dd/MM/yyyy HH:mm"
+      helper-text="The dialog keeps the date and time together; an omitted time defaults to midnight.">
     </ui-datepicker>
     <span class="datepicker-state">Value: ${dateTimeValue || 'empty'}</span>
   </demo-block>
