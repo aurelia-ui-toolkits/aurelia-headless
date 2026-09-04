@@ -68,7 +68,7 @@ export class UiDatepicker {
   format: string = 'dd/MM/yyyy';
 
   @bindable
-  inputmaskFormat: string = 'dd/mm/yyyy';
+  inputmaskFormat: string = 'dd/MM/yyyy';
 
   @bindable
   dialogFormat: string | undefined;
@@ -140,7 +140,7 @@ export class UiDatepicker {
   }
 
   get hasValue(): boolean {
-    // inputEl.value carries the mask placeholder ("dd/mm/yyyy …") even when empty, so rely on the
+    // inputEl.value carries the mask placeholder ("dd/MM/yyyy …") even when empty, so rely on the
     // real masked value plus any digits the user has actually typed.
     return !!this.inputmaskValue || !!this.inputEl?.inputmask?.unmaskedvalue();
   }

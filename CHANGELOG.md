@@ -4,6 +4,12 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.2.2]
+
+### Fixed
+- Updated `ui-datepicker`'s default and demo Inputmask datetime formats for
+  Inputmask 5.0.10's Unicode-style tokens (`M` for month and `m` for minute).
+
 ## [1.2.1]
 
 ### Added
