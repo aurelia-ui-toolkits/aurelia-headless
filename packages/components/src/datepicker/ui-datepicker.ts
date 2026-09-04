@@ -76,6 +76,9 @@ export class UiDatepicker {
   @bindable({ set: booleanAttr })
   time: boolean = false;
 
+  @bindable({ set: booleanAttr })
+  completeTimeOnBlur: boolean = false;
+
   @bindable
   minuteStep: number = 1;
 
@@ -190,7 +193,13 @@ export class UiDatepicker {
   handleBlur(event: Event): void {
     this.focus = false;
     event.stopPropagation();
-    this.element.dispatchEvent(new CustomEvent('blur', { bubbles: true }));
+    const completedTime = this.completeMissingTime();
+    if (!completedTime) {
+      this.element.dispatchEvent(new CustomEvent('blur', { bubbles: true }));
+      return;
+    }
+    this.inputEl.dispatchEvent(new Event('change', { bubbles: true }));
+    queueTask(() => this.element.dispatchEvent(new CustomEvent('blur', { bubbles: true })));
   }
 
   handleChange(event: Event): void {
@@ -269,6 +278,26 @@ export class UiDatepicker {
       }
     }
     return undefined;
+  }
+
+  private completeMissingTime(): boolean {
+    if (!this.completeTimeOnBlur || !this.time) {
+      return false;
+    }
+
+    const timeFormat = /H{1,2}:m{1,2}(?::s{1,2})?$/.exec(this.inputmaskFormat);
+    if (!timeFormat || !this.inputEl.value.endsWith(timeFormat[0])) {
+      return false;
+    }
+
+    const dateFormat = this.inputmaskFormat.slice(0, timeFormat.index).trimEnd();
+    const dateValue = this.inputEl.value.slice(0, -timeFormat[0].length).trimEnd();
+    if (!dateFormat || !parseByFormat(dateValue, dateFormat)) {
+      return false;
+    }
+
+    this.inputEl.value = `${this.inputEl.value.slice(0, -timeFormat[0].length)}${timeFormat[0].replace(/[Hms]/g, '0')}`;
+    return true;
   }
 
 }
