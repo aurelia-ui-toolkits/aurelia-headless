@@ -4,6 +4,20 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## Unreleased
+
+### Changed
+- Updated build and lint dependencies, including Vite 8.3, Babel 8.0.6,
+  TypeScript ESLint 8.70.1, and ESLint 10.11; removed the unused Sass
+  dependency.
+- Updated the demo app's Vite config to use `import.meta.dirname`, making it
+  compatible with Vite's native config loader.
+
+### Fixed
+- `ui-select` and `ui-combobox` keyboard navigation now keeps the active option
+  stationary while it remains visible, scrolling only when it crosses the top
+  or bottom of the menu viewport.
+
 ## [1.2.3]
 
 ### Added

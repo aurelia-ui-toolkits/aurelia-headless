@@ -580,7 +580,7 @@ export class UiList implements IReorderHost {
     this.suppressMouseOver = true;
 
     if (listItem) {
-      listItem.element.scrollIntoView({ behavior, block: 'start', inline: 'nearest' });
+      listItem.element.scrollIntoView({ behavior, block: 'nearest', inline: 'nearest' });
     } else {
       const items = this.getEffectiveItems();
       const index = items.indexOf(item);

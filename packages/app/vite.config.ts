@@ -5,8 +5,8 @@ import path from 'path';
 import babel from '@rolldown/plugin-babel';
 
 const aureliaResourceInclude = [
-  path.posix.join(path.resolve(__dirname, 'src').replaceAll('\\', '/'), '**/*.{ts,js,html}'),
-  path.posix.join(path.resolve(__dirname, '../components/src').replaceAll('\\', '/'), '**/*.{ts,js,html}'),
+  path.posix.join(path.resolve(import.meta.dirname, 'src').replaceAll('\\', '/'), '**/*.{ts,js,html}'),
+  path.posix.join(path.resolve(import.meta.dirname, '../components/src').replaceAll('\\', '/'), '**/*.{ts,js,html}'),
 ];
 
 function decoratorPreset(options: Record<string, unknown>) {
@@ -26,7 +26,7 @@ export default defineConfig({
   base: process.env.GITHUB_ACTIONS ? '/aurelia-headless/' : '/',
   resolve: {
     alias: [
-      { find: /^@aurelia-ui-toolkits\/headless$/, replacement: path.resolve(__dirname, '../components/src/index.ts') },
+      { find: /^@aurelia-ui-toolkits\/headless$/, replacement: path.resolve(import.meta.dirname, '../components/src/index.ts') },
     ]
   },
   server: {
