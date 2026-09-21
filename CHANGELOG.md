@@ -4,7 +4,7 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
-## Unreleased
+## [1.2.4]
 
 ### Changed
 - Updated build and lint dependencies, including Vite 8.3, Babel 8.0.6,
