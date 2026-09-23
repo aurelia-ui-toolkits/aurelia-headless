@@ -74,7 +74,7 @@
   }
 
   &[aria-sort] {
-    @apply text-primary-700;
+    @apply text-accent-raised;
   }
 
   &:hover .ui-table-column__resize-handle {
@@ -83,7 +83,7 @@
 }
 
 .ui-table-column__sort-indicator {
-  @apply absolute right-4 inline-flex items-center gap-1 text-primary-700;
+  @apply absolute right-4 inline-flex items-center gap-1 text-accent-raised;
 }
 
 .ui-table-column__sort-order {

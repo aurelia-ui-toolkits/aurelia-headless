@@ -44,7 +44,7 @@
   }
 
   &[data-outlined] {
-    @apply border-primary-600 bg-transparent text-primary-600;
+    @apply border-accent bg-transparent text-accent;
 
     &[data-hover] {
       @apply bg-outline-hover;
@@ -116,7 +116,7 @@
   }
 
   &[data-outlined] {
-    @apply border-primary-600 text-primary-600;
+    @apply border-accent text-accent;
 
     &[data-hover] {
       @apply bg-outline-hover;

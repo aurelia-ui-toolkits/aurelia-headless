@@ -26,7 +26,7 @@
   }
 
   &[data-tone="primary"] {
-    @apply border-primary-600 text-primary-600;
+    @apply border-accent text-accent;
   }
 
   &[data-tone="success"] {

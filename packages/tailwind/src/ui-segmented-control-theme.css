@@ -19,7 +19,7 @@ ui-segment,
   }
 
   &[data-selected] {
-    @apply bg-card text-primary-700;
+    @apply bg-card text-accent-raised;
     box-shadow: var(--ui-shadow-sm);
   }
 

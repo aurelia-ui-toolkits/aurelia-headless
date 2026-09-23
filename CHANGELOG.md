@@ -4,6 +4,18 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.3.0]
+
+### Added
+- `--color-accent` and `--color-accent-raised`: the brand colour used as a foreground
+  rather than a fill - an outline and its label on the page background, and brand text on
+  a card or tinted surface. The outlined button, outlined badge, primary chip, selected
+  tab and segment, primary badge, sorted table column, breadcrumb hover and the
+  datepicker's today marker read them instead of `--color-primary-600`/`700` directly.
+  Both default to the matching ramp step, so a theme that only overrides the ramp renders
+  exactly as before; set them when the brand fill and the brand foreground have to differ,
+  which dark modes usually need.
+
 ## [1.2.6]
 
 ### Fixed
