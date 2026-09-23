@@ -47,7 +47,10 @@ Themes are just CSS packages. The components do not depend on a specific theme, 
 import '@aurelia-ui-toolkits/headless-tailwind';
 ```
 
-Apps can also override tokens by importing custom CSS after the package theme.
+Apps can also override tokens from their own CSS. The shipped tokens live in Tailwind's
+`theme` cascade layer, so a plain (unlayered) `:root` rule always wins - no matter where the
+bundler places the app's stylesheet relative to the theme. An override in `:root` applies in
+dark mode as well, so override `:root[data-theme="dark"]` too when a mode needs its own value.
 
 ```css
 @import "@aurelia-ui-toolkits/headless-tailwind";
