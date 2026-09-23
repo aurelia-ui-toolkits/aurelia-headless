@@ -4,6 +4,16 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.2.5]
+
+### Fixed
+- The theme package's runtime tokens (`:root`, `:root[data-density="compact"]` and
+  `:root[data-theme="dark"]`) now sit in Tailwind's `theme` cascade layer instead of
+  being unlayered. An app's own unlayered `:root` overrides used to win only when the
+  bundler happened to emit the app's CSS after the theme's; they now win by cascade
+  layer, whatever the order. Note that a `:root` override now also applies in dark
+  mode - override `:root[data-theme="dark"]` too for a mode-specific value.
+
 ## [1.2.4]
 
 ### Changed
