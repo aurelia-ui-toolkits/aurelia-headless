@@ -61,6 +61,25 @@ dark mode as well, so override `:root[data-theme="dark"]` too when a mode needs 
 }
 ```
 
+Two tokens carry the brand colour as a *foreground* rather than a fill: `--color-accent`
+for an outline and its label on the page background (outlined button, outlined badge,
+primary chip), and `--color-accent-raised` for brand text on a card or tinted surface
+(selected tab or segment, primary badge, sorted table column, breadcrumb hover). They
+default to `var(--color-primary-600)` and `var(--color-primary-700)`, so an app that only
+recolours the ramp keeps them in step; set them when the brand fill and the brand text
+have to differ, which they usually do in dark mode - a fill stays dark enough for
+`--color-on-primary` text, while a foreground has to lift off the dark canvas.
+
+```css
+:root[data-theme="dark"] {
+  --color-primary-600: #2b6658; /* fill: white text sits on it */
+  --color-accent: #60d8a6;      /* outline + label on the dark canvas */
+}
+```
+
+Because the defaults are resolved where they are declared, an app that overrides the ramp
+per subtree rather than on `:root` has to set the accent tokens in that same rule.
+
 The theme package also exposes individual CSS files, including `@aurelia-ui-toolkits/headless-tailwind/theme.css`.
 That makes it easy to build a custom theme incrementally: import the shared tokens first, then import or replace component theme files one by one.
 

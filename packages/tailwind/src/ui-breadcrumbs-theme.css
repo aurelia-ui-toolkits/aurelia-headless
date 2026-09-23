@@ -16,7 +16,7 @@
   @apply min-w-0 truncate rounded-md px-1 text-ink-500 no-underline outline-none;
 
   &:hover {
-    @apply text-primary-700;
+    @apply text-accent-raised;
   }
 
   &:focus-visible {

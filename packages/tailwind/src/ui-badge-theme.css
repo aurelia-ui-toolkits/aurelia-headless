@@ -16,10 +16,10 @@
   }
 
   &[data-tone="primary"] {
-    @apply bg-outline-hover text-primary-700;
+    @apply bg-outline-hover text-accent-raised;
 
     &[data-outlined] {
-      @apply border-primary-600 text-primary-600;
+      @apply border-accent text-accent;
     }
   }
 

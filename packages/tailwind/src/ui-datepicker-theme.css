@@ -267,7 +267,7 @@ dialog:has(.ui-datepicker-dialog) {
   }
 
   &[data-today] {
-    @apply border-primary-600 text-primary-700;
+    @apply border-primary-600 text-accent-raised;
   }
 
   &[data-selected] {

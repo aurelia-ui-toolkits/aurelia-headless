@@ -12,6 +12,11 @@
   --color-primary-600: #0072c6;
   --color-primary-700: #005a9e;
   --color-primary-800: #004578;
+  /* Brand foreground roles, kept apart from the ramp so an app can recolour a brand
+     outline or the ink of a selected tab without moving the fill they share. Both
+     reference the ramp, so overriding the ramp alone still carries them. */
+  --color-accent: var(--color-primary-600);
+  --color-accent-raised: var(--color-primary-700);
   --color-ring: #7dc8ff;
   --color-outline-hover: #e5f4ff;
   --color-outline-active: #ccecff;
@@ -177,6 +182,8 @@
     --color-primary-600: #0072c6;
     --color-primary-700: #005a9e;
     --color-primary-800: #004578;
+    --color-accent: var(--color-primary-600);
+    --color-accent-raised: var(--color-primary-700);
     --color-ring: #7dc8ff;
     --color-outline-hover: #e5f4ff;
     --color-outline-active: #ccecff;
