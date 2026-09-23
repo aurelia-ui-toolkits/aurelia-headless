@@ -6,6 +6,12 @@ import { UiFieldConfiguration } from '../field/ui-field-configuration';
 
 let nextCheckboxId = 0;
 
+// A slotted label is usually bare text, which @slotted's default '*' query skips - it only
+// collects elements. '$all' keeps the text, and everything without content (whitespace between
+// tags, the comment markers a template controller leaves behind) is filtered out here instead.
+const isLabelContent = (node: Node) =>
+  node.nodeType === 1 || (node.nodeType === 3 && node.textContent?.trim() !== '');
+
 @customElement('ui-checkbox')
 export class UiCheckbox {
   private readonly configuration = resolve(UiFieldConfiguration);
@@ -44,7 +50,7 @@ export class UiCheckbox {
   @slotted({ slotName: 'helper' })
   helperNodes: readonly Node[] = [];
 
-  @slotted()
+  @slotted({ query: '$all' })
   labelNodes: readonly Node[] = [];
 
   errors = new Map<IError, boolean>();
@@ -58,7 +64,7 @@ export class UiCheckbox {
   private changingFrame: number | undefined;
 
   get hasLabel(): boolean {
-    return !!this.label || this.labelNodes.length > 0;
+    return !!this.label || this.labelNodes.some(isLabelContent);
   }
 
   get hasField(): boolean {

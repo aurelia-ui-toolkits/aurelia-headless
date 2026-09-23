@@ -4,6 +4,14 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.2.6]
+
+### Fixed
+- `ui-checkbox` now renders a label that is projected as plain text. `@slotted`'s
+  default query collects elements only, so `<ui-checkbox>Some label</ui-checkbox>`
+  counted as unlabelled and the label element stayed hidden - it appeared only when
+  the projection happened to contain an element as well.
+
 ## [1.2.5]
 
 ### Fixed
