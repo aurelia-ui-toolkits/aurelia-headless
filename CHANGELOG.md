@@ -4,6 +4,12 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.3.1]
+
+### Fixed
+- Center the checkbox tick with grid alignment and a scalable SVG mask in normal
+  and compact density. Preserve its 2px stroke to match the indeterminate bar.
+
 ## [1.3.0]
 
 ### Added

@@ -76,21 +76,21 @@ ui-checkbox {
   }
 
   &[data-checked] .ui-checkbox__indicator {
-    @apply h-2.5 w-1.5 border-b-2 border-r-2 opacity-100;
-    background: transparent;
-    border-color: var(--color-on-primary);
+    @apply opacity-100;
+    background: var(--color-on-primary);
     height: var(--ui-checkbox-check-height);
-    width: var(--ui-checkbox-check-width);
-    transform: rotate(45deg) translate(-1px, -1px);
+    width: calc(var(--ui-checkbox-check-width) + var(--ui-checkbox-check-height));
+    /* The SVG's visible bounds are centered in its viewBox; grid centers the
+       indicator and the mask scales with the density tokens. */
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 16'%3E%3Cpath d='M3 8 8 13 17 3' fill='none' stroke='black' stroke-width='2' vector-effect='non-scaling-stroke' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
   }
 
   &[data-indeterminate] .ui-checkbox__indicator {
     @apply h-0.5 w-3 rounded-sm opacity-100;
     background: var(--color-on-primary);
-    border: 0;
+    mask: none;
     height: var(--ui-checkbox-indeterminate-height);
     width: var(--ui-checkbox-indeterminate-width);
-    transform: none;
   }
 
   &[data-disabled] {
@@ -103,7 +103,7 @@ ui-checkbox {
 }
 
 .ui-checkbox__indicator {
-  @apply pointer-events-none absolute opacity-0;
+  @apply pointer-events-none opacity-0;
 }
 
 .ui-checkbox__label {
