@@ -141,7 +141,15 @@ export class UiTableColumnDrag implements EventListenerObject {
     this.ghost.style.top = '0';
     this.ghost.style.pointerEvents = 'none';
     this.ghost.style.zIndex = '10000';
+    // A manual popover joins the top layer, so the ghost stays above a modal <dialog> (which no
+    // z-index can beat). Undo the popover UA box: it centres with margin:auto over inset:0.
+    this.ghost.popover = 'manual';
+    this.ghost.style.margin = '0';
+    this.ghost.style.right = 'auto';
+    this.ghost.style.bottom = 'auto';
+    this.ghost.style.overflow = 'visible';
     document.body.appendChild(this.ghost);
+    this.ghost.showPopover();
     this.positionGhost(this.startX, this.startY);
     this.table.reorderContainer.setAttribute('data-column-reordering', '');
     th.setAttribute('data-dragging', '');
