@@ -32,7 +32,7 @@ export class UiSplitter implements EventListenerObject {
    * Current size of the target, in pixels (width for horizontal, height for vertical).
    * Two-way so a host can read/preset it. Ignored while a `fitContent` splitter is content-driven.
    */
-  @bindable({ mode: BindingMode.twoWay })
+  @bindable({ mode: BindingMode.twoWay, set: Number })
   size: number = 240;
   sizeChanged(): void {
     this.applySize();

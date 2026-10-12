@@ -4,6 +4,13 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.3.3]
+
+### Fixed
+- Declarative `ui-splitter` sizes are now coerced to numbers, so pointer and
+  keyboard resizing starts from the configured pixel value instead of applying
+  string arithmetic.
+
 ## [1.3.2]
 
 ### Fixed
