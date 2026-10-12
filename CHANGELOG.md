@@ -4,6 +4,13 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.3.2]
+
+### Fixed
+- List-item and table-column drag ghosts now render in the browser top layer,
+  keeping them visible above modal dialogs while preserving their authored
+  styling.
+
 ## [1.3.1]
 
 ### Fixed
