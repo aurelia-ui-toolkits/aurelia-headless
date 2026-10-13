@@ -4,6 +4,13 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.3.5]
+
+### Fixed
+- Disabled interactive components now expose `aria-disabled="true"` instead of
+  an empty ARIA value, ensuring assistive technologies receive a valid disabled
+  state for buttons, selection controls, tabs, lists, and trees.
+
 ## [1.3.4]
 
 ### Fixed

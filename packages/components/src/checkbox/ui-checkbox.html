@@ -8,7 +8,7 @@
       role="checkbox"
       tabindex.bind="disabled ? null : tabIndex"
       aria-checked.attr="indeterminate ? 'mixed' : checked ? 'true' : 'false'"
-      aria-disabled.attr="disabled ? '' : null"
+      aria-disabled.attr="disabled ? 'true' : null"
       aria-labelledby.bind="hasLabel ? labelId : null"
       aria-describedby.bind="errors.size ? errorsId : (helperText || helperNodes.length ? helperId : null)"
       data-checked.attr="checked ? '' : null"

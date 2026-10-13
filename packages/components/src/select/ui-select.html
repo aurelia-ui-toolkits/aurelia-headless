@@ -24,7 +24,7 @@
     aria-labelledby.bind="label ? labelId : null"
     aria-invalid.bind="invalid || errors.size ? 'true' : 'false'"
     aria-describedby.bind="errors.size ? errorsId : (helperNodes.length ? helperId : null)"
-    aria-disabled.attr="disabled ? '' : null"
+    aria-disabled.attr="disabled ? 'true' : null"
     aria-required.attr="required ? 'true' : null"
     click.trigger="onClick()"
     keydown.trigger="onKeyDown($event)"
