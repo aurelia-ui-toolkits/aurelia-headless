@@ -81,7 +81,7 @@ dialog:has(.ui-prompt-modal) {
 
 .ui-alert-modal__message,
 .ui-alert-modal__html {
-  @apply m-0 text-sm leading-6 text-ink-500;
+  @apply m-0 text-sm leading-6 text-ink-700;
 }
 
 .ui-alert-modal__actions,
