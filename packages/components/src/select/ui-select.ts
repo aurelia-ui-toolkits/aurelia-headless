@@ -354,6 +354,18 @@ export class UiSelect {
 
   private syncSelectedItemFromValue(): void {
     if (!this.items?.length) {
+      // Static <ui-list-item> options: there are no items to look the value up in. Keep the
+      // selected item while it still matches the value (it may be an object option with a
+      // valueField), and drop it once it no longer does, so a reset or changed value does not leave
+      // the previous selection on screen. Without a valueField the option value is the value itself.
+      if (!this.multiple) {
+        const empty = this.value === undefined || this.value === null || this.value === '';
+        if (empty) {
+          this.selectedItem = undefined;
+        } else if (this.selectedItem === undefined || this.getItemValue(this.selectedItem) !== this.value) {
+          this.selectedItem = this.valueField ? undefined : this.value;
+        }
+      }
       return;
     }
 
