@@ -9,7 +9,7 @@
     <div class="ui-alert__message">
       <au-slot></au-slot>
     </div>
-    <div class="ui-alert__actions" if.bind="actionNodes.length">
+    <div class="ui-alert__actions" show.bind="actionNodes.length">
       <au-slot name="actions"></au-slot>
     </div>
   </div>

@@ -380,7 +380,7 @@ export class UiCombobox {
 
   private getOptionsDefault = (filter: string | undefined, value: unknown): unknown[] => {
     const options = Array.isArray(this.items) ? this.items : [];
-    if (value !== undefined) {
+    if (value !== undefined && value !== null) {
       const option = options.find(item => this.getItemValue(item) === value);
       return option === undefined ? [] : [option];
     }
@@ -411,9 +411,15 @@ export class UiCombobox {
   }
 
   private async updateFilterBasedOnValue(): Promise<void> {
-    if (this.value !== undefined) {
+    // null is "no selection" as well: loading options for it returns the unfiltered list, whose
+    // first entry was then shown in the input as if it had been selected.
+    const hasValue = this.value !== undefined && this.value !== null;
+    if (hasValue) {
       await this.loadOptions(false, this.value);
     } else {
+      // Invalidate any lookup still in flight for an earlier value, or it would restore that
+      // value's label after this reset (loadOptions only applies the latest request).
+      ++this.optionsRequest;
       this.filteredItems = [];
       this.selectedOption = undefined;
       this.textValue = undefined;
@@ -422,7 +428,7 @@ export class UiCombobox {
     if (this.filteredItems.length) {
       this.selectedOption = this.filteredItems[0];
       this.textValue = this.getItemLabel(this.filteredItems[0]);
-    } else if (this.value !== undefined) {
+    } else if (hasValue) {
       // Value set to something no option matches: clear the stale display so the input
       // doesn't keep showing the previously selected option's label.
       this.selectedOption = undefined;
