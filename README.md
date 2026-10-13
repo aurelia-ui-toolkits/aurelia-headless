@@ -7,6 +7,23 @@ Headless UI components for Aurelia 2, with optional swappable Tailwind CSS theme
 - `@aurelia-ui-toolkits/headless`: component primitives and services.
 - `@aurelia-ui-toolkits/headless-tailwind`: default Tailwind CSS theme for the components.
 
+## Development tests
+
+Run `npm ci`, then `npm test` to type-check and run the component tests, or `npm run test:watch`
+to rerun them during development. To run a single suite, use
+`npm run test -w packages/components -- test/select.spec.ts` (or `test/combobox.spec.ts`).
+
+Tests live in `packages/components/test` and mount real Aurelia components and
+slotted content with Vitest and jsdom. Suites cover every custom element and
+custom attribute, including form controls, navigation, tables, trees, lists,
+overlays, datepickers, dialogs, notifications, input masks, resizing, and reorder
+gestures. Service tests cover asynchronous requests, timers, progress tracking,
+and validation presentation.
+
+Popup geometry and browser layout require browser testing. Tests stub jsdom's
+missing resize observer, scrolling, and popover APIs; drag tests supply explicit
+bounding rectangles to verify move intent rather than browser layout.
+
 ## Install
 
 ```shell

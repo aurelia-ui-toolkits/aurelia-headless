@@ -1,4 +1,4 @@
-import { bindable, BindingMode, children, customElement, INode, resolve } from 'aurelia';
+import { bindable, BindingMode, children, customElement, INode, queueTask, resolve } from 'aurelia';
 import { Keys } from '../base/keys';
 import { UiTab } from './ui-tab';
 import { booleanAttr } from '../base/boolean-attr';
@@ -14,7 +14,8 @@ export class UiTabs {
   externalValue: unknown;
 
   @children({
-    query: '.ui-tab',
+    query: '*',
+    filter: (_node, viewModel) => viewModel instanceof UiTab,
     map: (_node, viewModel) => viewModel
   })
   tabs: UiTab[] = [];
@@ -23,7 +24,8 @@ export class UiTabs {
   }
 
   attached(): void {
-    this.selectInitialTab();
+    // Projected tab controllers can finish mounting after this hook.
+    queueTask(() => this.selectInitialTab());
   }
 
   select(value: unknown): void {

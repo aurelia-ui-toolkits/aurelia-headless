@@ -4,6 +4,20 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.3.7]
+
+### Added
+- Added a comprehensive Vitest and jsdom component test suite, with `npm test`
+  scripts, contributor guidance, and a required CI test step.
+
+### Fixed
+- Alert action slots now stay mounted while empty, allowing actions projected
+  after initial render to be detected and displayed.
+- `ui-combobox` now treats `null` as no selection and invalidates stale option
+  lookups when its value is reset, preventing an old label from reappearing.
+- `ui-tabs` now discovers projected tab view-models reliably and defers initial
+  selection until their controllers have mounted.
+
 ## [1.3.6]
 
 ### Fixed
