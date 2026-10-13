@@ -2,7 +2,7 @@
   role="radio"
   tabindex.bind="parentGroup.disabled || disabled ? -1 : 0"
   aria-checked.attr="parentGroup.value === value ? 'true' : 'false'"
-  aria-disabled.attr="disabled || parentGroup.disabled ? '' : null"
+  aria-disabled.attr="disabled || parentGroup.disabled ? 'true' : null"
   data-selected.attr="parentGroup.value === value ? '' : null"
   data-disabled.attr="disabled || parentGroup.disabled ? '' : null"
   click.trigger="onClick()">
