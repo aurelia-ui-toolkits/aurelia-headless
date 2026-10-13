@@ -4,6 +4,13 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.3.6]
+
+### Fixed
+- `ui-select` now synchronizes its displayed selection for static
+  `<ui-list-item>` options when the bound value is reset or changed externally,
+  preventing a stale option from remaining visible.
+
 ## [1.3.5]
 
 ### Fixed
