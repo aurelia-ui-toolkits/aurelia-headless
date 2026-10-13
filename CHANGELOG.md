@@ -4,6 +4,12 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.3.4]
+
+### Fixed
+- Alert and prompt dialog message text now uses the stronger `ink-700` colour,
+  improving readability and contrast against the modal surface.
+
 ## [1.3.3]
 
 ### Fixed
