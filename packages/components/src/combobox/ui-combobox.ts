@@ -393,7 +393,7 @@ export class UiCombobox {
     return options.filter(item => this.getItemFilterText(item).toLowerCase().includes(text));
   };
 
-  private async loadOptions(open: boolean, value: unknown): Promise<void> {
+  private async loadOptions(open: boolean, value: unknown): Promise<number | undefined> {
     if (!this.getOptions) {
       return;
     }
@@ -408,6 +408,7 @@ export class UiCombobox {
     if (open) {
       this.open = true;
     }
+    return request;
   }
 
   private async updateFilterBasedOnValue(): Promise<void> {
@@ -415,7 +416,11 @@ export class UiCombobox {
     // first entry was then shown in the input as if it had been selected.
     const hasValue = this.value !== undefined && this.value !== null;
     if (hasValue) {
-      await this.loadOptions(false, this.value);
+      const request = await this.loadOptions(false, this.value);
+      // A reset or newer lookup can supersede this one before this continuation runs.
+      if (request === undefined || request !== this.optionsRequest) {
+        return;
+      }
     } else {
       // Invalidate any lookup still in flight for an earlier value, or it would restore that
       // value's label after this reset (loadOptions only applies the latest request).
