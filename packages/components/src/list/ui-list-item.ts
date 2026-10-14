@@ -26,7 +26,6 @@ export class UiListItem {
   value: object = this;
   valueChanged(): void {
     this.selected = this.parentList.isItemSelected(this.value);
-    this.parentList.updateEmptyItem();
   }
 
   selected: boolean = false;

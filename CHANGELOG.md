@@ -4,6 +4,15 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.3.11]
+
+### Fixed
+- Selecting a valueless or null `ui-select` option now clears the selected item
+  and restores the placeholder instead of displaying the empty option as a
+  selection.
+- `ui-select` now keeps labels from keyed item collections after selection and
+  floats inset labels when a label converter supplies text for an empty value.
+
 ## [1.3.10]
 
 ### Fixed

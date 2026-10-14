@@ -147,103 +147,74 @@ describe('ui-select', () => {
     f.assertText('.ui-select__value', 'Role 0; Role 2', { compact: true });
   });
 
-  it('shows and selects a static option without a value while the value is empty', async () => {
-    const f = createFixture(`<ui-select value.bind="value" label="Theme" inset>
-      <ui-list><ui-list-item>Default</ui-list-item><ui-list-item value="Dark">Dark</ui-list-item></ui-list>
-    </ui-select>`, { value: null as unknown }, registrations);
+  it('floats an inset label when an empty value has converted display text', async () => {
+    const f = createFixture(`<ui-select inset label="Role" value.bind="value" label-converter.bind="converter"></ui-select>`,
+      { value: '' as string | null, converter: (value: unknown) => value === '' ? 'Default' : String(value) }, registrations);
     await f.started;
     await settle();
-    const vm = CustomElement.for<UiSelect>(f.getBy('.ui-select')!).viewModel;
-    const insetLabel = f.getBy<HTMLElement>('.ui-select__inset-label')!;
+    const label = f.getBy<HTMLElement>('.ui-select__inset-label')!;
     f.assertText('.ui-select__value', 'Default', { compact: true });
-    expect(insetLabel.hasAttribute('data-floating')).toBe(true);
-    expect(vm.hasValue).toBe(false);
-    expect(rows()[0].getAttribute('aria-selected')).toBe('true');
+    expect(label.hasAttribute('data-floating')).toBe(true);
 
+    f.component.value = null;
+    await settle();
+    f.assertText('.ui-select__value', '', { compact: true });
+    expect(label.hasAttribute('data-floating')).toBe(false);
+
+    f.component.value = '';
+    await settle();
+    f.assertText('.ui-select__value', 'Default', { compact: true });
+    expect(label.hasAttribute('data-floating')).toBe(true);
+  });
+
+  it('shows the item label after picking an option bound to the item key', async () => {
+    const f = createFixture(`<ui-select items.bind="items" value.bind="value" value-field="key" label-field="label">
+      <ui-list><ui-list-item repeat.for="item of $host.items" value.bind="item.key">\${item.label}</ui-list-item></ui-list>
+    </ui-select>`, { items: [{ key: 0, label: 'Customer' }, { key: 1, label: 'Partner' }], value: 0 as unknown }, registrations);
+    await f.started;
+    await settle();
+    f.assertText('.ui-select__value', 'Customer', { compact: true });
     f.getBy<HTMLElement>('.ui-select__control')!.click();
     await settle();
     rows()[1].click();
     await settle();
-    expect(f.component.value).toBe('Dark');
-    f.assertText('.ui-select__value', 'Dark', { compact: true });
-    expect(rows()[0].getAttribute('aria-selected')).toBe('false');
+    expect(f.component.value).toBe(1);
+    f.assertText('.ui-select__value', 'Partner', { compact: true });
+  });
 
+  it('clears the select when an option without a value or with an empty value is picked', async () => {
+    const f = createFixture(`<ui-select value.bind="value" placeholder="Pick">
+      <ui-list>
+        <ui-list-item>Default</ui-list-item>
+        <ui-list-item value.bind="null">None</ui-list-item>
+        <ui-list-item value="Dark">Dark</ui-list-item>
+      </ui-list>
+    </ui-select>`, { value: null as unknown }, registrations);
+    await f.started;
+    await settle();
+    const vm = CustomElement.for<UiSelect>(f.getBy('.ui-select')!).viewModel;
+    f.assertText('.ui-select__value', 'Pick', { compact: true });
+
+    for (const [option, expected] of [['Default', undefined], ['None', null]] as const) {
+      f.component.value = 'Dark';
+      await settle();
+      f.assertText('.ui-select__value', 'Dark', { compact: true });
+      f.getBy<HTMLElement>('.ui-select__control')!.click();
+      await settle();
+      rows().find(row => row.textContent!.trim() === option)!.click();
+      await settle();
+      // An option without a value reports the list item itself; the model never receives it.
+      expect(f.component.value).toBe(expected);
+      expect(vm.selectedItem).toBeUndefined();
+      f.assertText('.ui-select__value', 'Pick', { compact: true });
+    }
+
+    // Picking an empty option while the value is already empty leaves nothing selected either.
     f.getBy<HTMLElement>('.ui-select__control')!.click();
     await settle();
-    rows()[0].click();
+    rows().find(row => row.textContent!.trim() === 'Default')!.click();
     await settle();
-    // The option reports itself as its value; the select writes "no value", never the list item.
-    expect(f.component.value).toBeUndefined();
-    f.assertText('.ui-select__value', 'Default', { compact: true });
-    expect(rows()[0].getAttribute('aria-selected')).toBe('true');
-
-    f.component.value = 'Dark';
-    await settle();
-    f.assertText('.ui-select__value', 'Dark', { compact: true });
-    f.component.value = '';
-    await settle();
-    f.assertText('.ui-select__value', 'Default', { compact: true });
-  });
-
-  it('shows a static empty option next to bound items while the value is empty', async () => {
-    const f = await selectFixture('', { value: null });
-    // selectFixture has no empty option, so an empty value shows the placeholder.
-    f.assertText('.ui-select__value', 'Choose project', { compact: true });
-
-    const withNone = createFixture(`<ui-select items.bind="items" value.bind="value" value-field="id" label-field="name">
-      <ui-list>
-        <ui-list-item value.bind="undefined">None</ui-list-item>
-        <ui-list-item repeat.for="item of $host.items" value.bind="item">\${item.name}</ui-list-item>
-      </ui-list>
-    </ui-select>`, { items: options, value: null as unknown }, registrations);
-    await withNone.started;
-    await settle();
-    withNone.assertText('.ui-select__value', 'None', { compact: true });
-    withNone.component.value = 2;
-    await settle();
-    withNone.assertText('.ui-select__value', 'Beta', { compact: true });
-
-    withNone.getBy<HTMLElement>('.ui-select__control')!.click();
-    await settle();
-    rows().find(row => row.textContent!.trim() === 'None')!.click();
-    await settle();
-    // The list's select event carries the undefined value as a CustomEvent detail, i.e. null.
-    expect(withNone.component.value).toBeNull();
-    withNone.assertText('.ui-select__value', 'None', { compact: true });
-
-    // Picking it again leaves the value null, so only the select itself can keep the label.
-    withNone.getBy<HTMLElement>('.ui-select__control')!.click();
-    await settle();
-    rows().find(row => row.textContent!.trim() === 'None')!.click();
-    await settle();
-    expect(withNone.component.value).toBeNull();
-    withNone.assertText('.ui-select__value', 'None', { compact: true });
-  });
-
-  it('recognises an empty option rendered after startup and drops one that leaves', async () => {
-    const f = createFixture(`<ui-select value.bind="value" placeholder="Pick">
-      <ui-list><ui-list-item if.bind="showEmpty">None</ui-list-item><ui-list-item value="Dark">Dark</ui-list-item></ui-list>
-    </ui-select>`, { value: undefined as unknown, showEmpty: false }, registrations);
-    await f.started;
-    await settle();
+    expect(vm.selectedItem).toBeUndefined();
     f.assertText('.ui-select__value', 'Pick', { compact: true });
-    f.component.showEmpty = true;
-    await settle();
-    f.assertText('.ui-select__value', 'None', { compact: true });
-    f.component.showEmpty = false;
-    await settle();
-    f.assertText('.ui-select__value', 'Pick', { compact: true });
-  });
-
-  it('follows bound text changes of the empty option', async () => {
-    const f = createFixture(`<ui-select value.bind="value">
-      <ui-list><ui-list-item>\${emptyLabel}</ui-list-item><ui-list-item value="Dark">Dark</ui-list-item></ui-list>
-    </ui-select>`, { value: undefined as unknown, emptyLabel: 'None' }, registrations);
-    await f.started;
-    await settle();
-    f.assertText('.ui-select__value', 'None', { compact: true });
-    f.component.emptyLabel = 'Default';
-    await settle();
-    f.assertText('.ui-select__value', 'Default', { compact: true });
   });
 });
