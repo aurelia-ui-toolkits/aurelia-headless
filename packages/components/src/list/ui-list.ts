@@ -1,4 +1,4 @@
-import { bindable, CustomElement, customElement, INode, resolve, slotted } from 'aurelia';
+import { bindable, BindingMode, CustomElement, customElement, INode, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
 import type { IReorderHost } from '../reorder/i-reorder-host';
@@ -18,6 +18,18 @@ export class UiList implements IReorderHost {
   private listItems: UiListItem[] = [];
   /** Rendered items participating in reorder (list-items also derive their drag state from it). */
   reorderItems: UiListItem[] = [];
+
+  /**
+   * The rendered item that stands for "no value" in a select: one without a value of its own
+   * (its value is then the item itself) or bound to undefined, e.g. `<ui-list-item>None</ui-list-item>`.
+   * Kept current as items render, leave or change value; EnhanceUiSelect binds it to the select.
+   */
+  @bindable({ mode: BindingMode.fromView })
+  emptyItem: UiListItem | undefined;
+
+  updateEmptyItem(): void {
+    this.emptyItem = this.listItems.find(item => item.value === item || item.value === undefined);
+  }
   private listItemsChangedCallback: (() => void) | undefined;
   activeItem: unknown;
   /**
@@ -105,6 +117,7 @@ export class UiList implements IReorderHost {
       this.slotDerivedItems = true;
     }
     this.syncListItemSelection();
+    this.updateEmptyItem();
     // Re-anchor the active row when the rendered set changed (e.g. a virtual repeat window moved).
     if (this.activeItem !== undefined && (!this.activeListItem || !this.listItems.includes(this.activeListItem))) {
       this.activeListItem = this.listItems.find(x => x.value === this.activeItem);

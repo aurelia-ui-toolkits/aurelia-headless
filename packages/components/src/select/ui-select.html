@@ -43,7 +43,7 @@
 
     <span class="ui-select__inset-label"
       id.bind="inset && label ? labelId : null"
-      data-floating.attr="focus || hasValue ? '' : null"
+      data-floating.attr="focus || hasValue || displayText ? '' : null"
       show.bind="label && inset">${label}</span>
 
     <span class="ui-select__trailing">

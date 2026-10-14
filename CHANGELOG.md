@@ -4,6 +4,13 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.3.10]
+
+### Fixed
+- `ui-select` now treats a static `<ui-list-item>` without a value (or bound to
+  `undefined`) as its empty option, keeps its selection and displayed label in
+  sync as the option renders or changes, and floats inset labels correctly.
+
 ## [1.3.9]
 
 ### Fixed
