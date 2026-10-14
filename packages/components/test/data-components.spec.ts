@@ -2,11 +2,13 @@ import { describe, expect, it, vi } from 'vitest';
 import { key, settle } from './fixture';
 import { dispatch, mount, UI, viewModel } from './library-fixture';
 
-async function tableFixture() {
+type TableSort = { column: string; direction: 'asc' | 'desc' }[];
+
+async function tableFixture(sort: TableSort = []) {
   const f = await mount(`<ui-table total.bind="total" page.bind="page" page-size.bind="pageSize" sort.bind="sort" storage-key="test-table" items.bind="items">
     <table><thead><tr><th ui-table-column="name" sortable hideable>Name</th><th ui-table-column="score" sortable hideable>Score</th></tr></thead>
     <tbody><tr repeat.for="item of items"><td textcontent.bind="item.name"></td><td textcontent.bind="item.score"></td></tr></tbody></table>
-  </ui-table>`, { total: 45, page: 1, pageSize: 10, sort: [] as { column: string; direction: 'asc' | 'desc' }[], items: [{ name: 'Alpha', score: 1 }, { name: 'Beta', score: 2 }] });
+  </ui-table>`, { total: 45, page: 1, pageSize: 10, sort, items: [{ name: 'Alpha', score: 1 }, { name: 'Beta', score: 2 }] });
   return { ...f, vm: viewModel<UI.UiTable>(f.getBy('ui-table')!) };
 }
 
@@ -49,6 +51,65 @@ describe('ui-table and ui-table-column', () => {
     name.click();
     await settle();
     expect(f.component.sort).toEqual([]);
+  });
+
+  it('shows a bound initial sort on the headers before any click, so the first click advances it', async () => {
+    const f = await tableFixture([{ column: 'name', direction: 'asc' }]);
+    const name = f.getBy<HTMLElement>('#name')!;
+    const score = f.getBy<HTMLElement>('#score')!;
+    expect(name.getAttribute('aria-sort')).toBe('ascending');
+    expect(score.hasAttribute('aria-sort')).toBe(false);
+    name.click();
+    await settle();
+    expect(f.component.sort).toEqual([{ column: 'name', direction: 'desc' }]);
+    expect(name.getAttribute('aria-sort')).toBe('descending');
+  });
+
+  it('numbers each column of a bound initial multi-sort', async () => {
+    const f = await tableFixture([{ column: 'score', direction: 'desc' }, { column: 'name', direction: 'asc' }]);
+    expect(f.getBy<HTMLElement>('#score')!.getAttribute('aria-sort')).toBe('descending');
+    expect(f.getBy<HTMLElement>('#name')!.getAttribute('aria-sort')).toBe('ascending');
+    expect(f.getBy('#score .ui-table-column__sort-order')!.textContent!.trim()).toBe('1');
+    expect(f.getBy('#name .ui-table-column__sort-order')!.textContent!.trim()).toBe('2');
+  });
+
+  it("keeps a column's own direction when the table sort leaves it out", async () => {
+    const f = await mount(`<ui-table><table><thead><tr>
+      <th ui-table-column="date" sortable direction="desc">Date</th><th ui-table-column="file" sortable>File</th>
+    </tr></thead><tbody></tbody></table></ui-table>`, {});
+    expect(f.getBy<HTMLElement>('#date')!.getAttribute('aria-sort')).toBe('descending');
+    expect(f.getBy<HTMLElement>('#file')!.hasAttribute('aria-sort')).toBe(false);
+  });
+
+  it('clears a stale table-set direction when a cached column is shown again after the sort moved on', async () => {
+    const f = await mount(`<ui-table sort.bind="sort"><table><thead><tr>
+      <th ui-table-column="name" sortable>Name</th><th if.bind="show" ui-table-column="score" sortable>Score</th>
+    </tr></thead><tbody></tbody></table></ui-table>`, { sort: [] as TableSort, show: true });
+    f.getBy<HTMLElement>('#score')!.click();
+    await settle();
+    expect(f.component.sort).toEqual([{ column: 'score', direction: 'asc' }]);
+    f.component.show = false;
+    await settle();
+    f.component.sort = [];
+    await settle();
+    f.component.show = true;
+    await settle();
+    const score = f.getBy<HTMLElement>('#score')!;
+    expect(score.hasAttribute('aria-sort')).toBe(false);
+    score.click();
+    await settle();
+    expect(f.component.sort).toEqual([{ column: 'score', direction: 'asc' }]);
+  });
+
+  it('keeps an authored direction when a cached column is shown again', async () => {
+    const f = await mount(`<ui-table><table><thead><tr>
+      <th if.bind="show" ui-table-column="date" sortable direction="desc">Date</th><th ui-table-column="file" sortable>File</th>
+    </tr></thead><tbody></tbody></table></ui-table>`, { show: true });
+    f.component.show = false;
+    await settle();
+    f.component.show = true;
+    await settle();
+    expect(f.getBy<HTMLElement>('#date')!.getAttribute('aria-sort')).toBe('descending');
   });
 
   it('reorders all rows, persists widths/visibility, protects the last column and resets', async () => {

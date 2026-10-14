@@ -26,6 +26,8 @@ export class UiTable implements IReorderHost {
   private readonly configuration = resolve(UiTableConfiguration);
   private columnSizes: Record<string, number> = {};
   private readonly sortedColumns = new Map<string, UiTableColumn>();
+  /** Columns whose current direction the table set (as opposed to one they were authored with). */
+  private readonly tableSortedColumns = new WeakSet<UiTableColumn>();
   /** Visual column order as authored column indexes; [] until a reorder is applied. */
   private columnOrder: number[] = [];
   /** Hidden columns as authored column indexes. */
@@ -471,6 +473,28 @@ export class UiTable implements IReorderHost {
     this.host.dispatchEvent(new CustomEvent<IColumnVisibilityDetail>('column-visibility', { bubbles: true, detail }));
   }
 
+  /**
+   * Columns register when attached, so a bound initial sort shows on their headers before any click.
+   * A column that comes back (e.g. a cached `if.bind` view) may still carry a direction the table
+   * gave it before it was detached; that is cleared when the sort has moved on, while a direction
+   * the column was authored with is left alone.
+   */
+  registerColumn(column: UiTableColumn): void {
+    this.sortedColumns.set(column.host.id, column);
+    const index = this.sort.findIndex(sort => sort.column === column.host.id);
+    if (index >= 0) {
+      this.applyColumnSort(column, index);
+    } else if (this.tableSortedColumns.has(column)) {
+      this.clearColumnSort(column);
+    }
+  }
+
+  unregisterColumn(column: UiTableColumn): void {
+    if (this.sortedColumns.get(column.host.id) === column) {
+      this.sortedColumns.delete(column.host.id);
+    }
+  }
+
   onColumnSort(event: CustomEvent<ColumnSort>): void {
     event.stopPropagation();
     this.sortedColumns.set(event.detail.column, event.detail.columnViewModel);
@@ -484,18 +508,27 @@ export class UiTable implements IReorderHost {
 
   private updateColumnSortState(): void {
     for (const column of this.sortedColumns.values()) {
-      column.direction = undefined;
-      column.sortOrder = undefined;
+      this.clearColumnSort(column);
     }
 
     for (let index = 0; index < this.sort.length; index++) {
-      const sort = this.sort[index];
-      const column = this.sortedColumns.get(sort.column);
+      const column = this.sortedColumns.get(this.sort[index].column);
       if (column) {
-        column.direction = sort.direction;
-        column.sortOrder = this.sort.length > 1 ? index + 1 : undefined;
+        this.applyColumnSort(column, index);
       }
     }
+  }
+
+  private applyColumnSort(column: UiTableColumn, index: number): void {
+    column.direction = this.sort[index].direction;
+    column.sortOrder = this.sort.length > 1 ? index + 1 : undefined;
+    this.tableSortedColumns.add(column);
+  }
+
+  private clearColumnSort(column: UiTableColumn): void {
+    column.direction = undefined;
+    column.sortOrder = undefined;
+    this.tableSortedColumns.delete(column);
   }
 
   pageSizeChanged(): void {
