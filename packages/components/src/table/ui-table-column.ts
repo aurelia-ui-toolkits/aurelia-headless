@@ -39,7 +39,12 @@ export class UiTableColumn implements EventListenerObject {
   @bindable
   sortOrder: number | undefined;
 
+  attached(): void {
+    this.table.registerColumn(this);
+  }
+
   detaching(): void {
+    this.table.unregisterColumn(this);
     window.removeEventListener('pointermove', this);
     window.removeEventListener('pointerup', this);
   }

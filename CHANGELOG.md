@@ -4,6 +4,18 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.3.8]
+
+### Fixed
+- `ui-combobox` now ignores superseded value-lookup continuations, so a pending
+  asynchronous lookup cannot restore cleared text or overwrite newer filtering.
+- Anchor elements enhanced with `ui-button` or `ui-icon-button` now reflect URLs
+  assigned by Aurelia router attributes onto the host `href`, preserving normal
+  link behavior such as copying or opening in a new tab.
+- `ui-table` now applies bound initial sort directions and multi-sort order to
+  column headers, and correctly reconciles table-managed sort state when cached
+  columns detach and reattach without overwriting authored directions.
+
 ## [1.3.7]
 
 ### Added

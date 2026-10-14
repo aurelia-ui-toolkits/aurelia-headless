@@ -198,6 +198,54 @@ describe('ui-combobox', () => {
     expect(f.vm.selectedOption).toBe(options[2]);
   });
 
+  it.each([null, undefined])('keeps an external %s reset clear after a pending value lookup resolves', async reset => {
+    let resolveLookup!: (items: unknown[]) => void;
+    const provider = (_filter: string | undefined, value: unknown) =>
+      value === 2 ? new Promise<unknown[]>(resolve => { resolveLookup = resolve; }) : [];
+    const f = await comboboxFixture('', { items: provider });
+    f.component.value = 2;
+    await settle();
+    f.component.value = reset;
+    await settle();
+    expect(f.input.value).toBe('');
+    resolveLookup([options[2]]);
+    await settle();
+    expect(f.component.value).toBe(reset);
+    expect(f.component.text).toBeUndefined();
+    expect(f.input.value).toBe('');
+    expect(f.vm.selectedOption).toBeUndefined();
+    expect(f.vm.filteredItems).toEqual([]);
+  });
+
+  it.each([
+    [null, 'Be'], [undefined, 'Be'],
+    [null, 'no match'], [undefined, 'no match'],
+  ] as const)('preserves typed text after reset %s when a stale value lookup finishes (%s)', async (reset, text) => {
+    let resolveLookup!: (items: unknown[]) => void;
+    let resolveFilter!: (items: unknown[]) => void;
+    const provider = (_filter: string | undefined, value: unknown) => new Promise<unknown[]>(resolve => {
+      if (value === 2) resolveLookup = resolve;
+      else resolveFilter = resolve;
+    });
+    const f = await comboboxFixture('', { items: provider });
+    f.component.value = 2;
+    await settle();
+    f.component.value = reset;
+    await settle();
+    await type(f.input, text);
+    const matches = text === 'Be' ? [options[2]] : [];
+    resolveFilter(matches);
+    await settle();
+    resolveLookup([options[2]]);
+    await settle();
+    expect(f.component.value).toBeUndefined();
+    expect(f.component.text).toBe(text);
+    expect(f.input.value).toBe(text);
+    expect(f.vm.selectedOption).toBeUndefined();
+    expect(f.vm.filteredItems).toEqual(matches);
+    expect(f.vm.open).toBe(true);
+  });
+
   it('ignores stale asynchronous filter responses', async () => {
     const requests = new Map<string, (items: unknown[]) => void>();
     const provider = vi.fn((filter: string) => new Promise<unknown[]>(resolve => requests.set(filter, resolve)));

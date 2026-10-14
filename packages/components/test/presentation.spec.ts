@@ -23,6 +23,19 @@ describe('presentation and action components', () => {
     expect(button.getAttribute('aria-disabled')).toBe('true');
   });
 
+  // The router's load attribute assigns the resolved URL to viewModel.href when its host is a
+  // custom element, so the button has to put it on the anchor itself.
+  it.each(['ui-button', 'ui-icon-button'])('<a %s> reflects an assigned href onto the anchor', async tag => {
+    const f = await mount(`<a ${tag}>Go</a>`, {});
+    const anchor = f.getBy<HTMLAnchorElement>('a')!;
+    const vm = viewModel<{ href: string | null }>(anchor);
+    vm.href = '/users/new';
+    expect(anchor.getAttribute('href')).toBe('/users/new');
+    expect(vm.href).toBe('/users/new');
+    vm.href = null;
+    expect(anchor.hasAttribute('href')).toBe(false);
+  });
+
   it('ui-alert renders content/actions and emits dismissal with a two-way open update', async () => {
     const f = await mount('<ui-alert open.bind="open" dismissible tone="danger" title="Problem">Details<button au-slot="actions">Retry</button></ui-alert>', { open: true });
     f.assertText('.ui-alert__title', 'Problem');

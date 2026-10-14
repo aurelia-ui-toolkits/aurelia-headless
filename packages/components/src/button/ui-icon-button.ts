@@ -1,4 +1,4 @@
-import { bindable, customElement } from 'aurelia';
+import { bindable, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 
 type IconButtonSize = 'small' | 'medium' | 'large';
@@ -6,6 +6,8 @@ type ButtonType = 'button' | 'submit' | 'reset';
 
 @customElement('ui-icon-button')
 export class UiIconButton {
+  readonly element = resolve(INode) as HTMLElement;
+
   @bindable
   type: ButtonType = 'button';
 
@@ -63,6 +65,22 @@ export class UiIconButton {
     if (this.disabled) {
       event.preventDefault();
       event.stopImmediatePropagation();
+    }
+  }
+
+  /**
+   * The router's load/href attributes assign the resolved URL to the view model when their host
+   * is a custom element; reflect it onto the host so <a ui-button> (and <a ui-icon-button>) gets a
+   * real href (open-in-new-tab, copy link, etc.).
+   */
+  get href(): string | null {
+    return this.element.getAttribute('href');
+  }
+  set href(value: string | null) {
+    if (value == null) {
+      this.element.removeAttribute('href');
+    } else {
+      this.element.setAttribute('href', value);
     }
   }
 }
