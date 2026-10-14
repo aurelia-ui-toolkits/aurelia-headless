@@ -7,7 +7,8 @@
   data-inset.attr="inset ? '' : null"
   data-textarea.attr="textarea ? '' : null"
   mouseenter.trigger="onMouseEnter()"
-  mouseleave.trigger="onMouseLeave()">
+  mouseleave.trigger="onMouseLeave()"
+  ui-inputmask-change.trigger="onInputmaskChange()">
   <label class="ui-input__label"
     for.bind="id"
     id.bind="!inset && label ? labelId : null"
@@ -33,6 +34,7 @@
       aria-labelledby.bind="label ? labelId : null"
       aria-invalid.bind="invalid || errors.size ? 'true' : 'false'"
       aria-describedby.bind="errors.size ? errorsId : (helperNodes.length ? helperId : null)"
+      input.trigger="onInput()"
       focusin.trigger="onFocusIn()"
       focusout.trigger="onFocusOut()"
       pointerdown.trigger="onPointerDown()"
@@ -54,6 +56,7 @@
       aria-labelledby.bind="label ? labelId : null"
       aria-invalid.bind="invalid || errors.size ? 'true' : 'false'"
       aria-describedby.bind="errors.size ? errorsId : (helperNodes.length ? helperId : null)"
+      input.trigger="onInput()"
       focusin.trigger="onFocusIn()"
       focusout.trigger="onFocusOut()"
       pointerdown.trigger="onPointerDown()"
@@ -62,7 +65,7 @@
 
     <span class="ui-input__inset-label"
       id.bind="inset && label ? labelId : null"
-      data-floating.attr="focus || value ? '' : null"
+      data-floating.attr="floating ? '' : null"
       show.bind="label && inset">${label}</span>
 
     <span class="ui-input__trailing" show.bind="trailingNodes.length">

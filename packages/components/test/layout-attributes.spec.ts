@@ -91,6 +91,41 @@ describe('custom attributes', () => {
     expect(input.inputmask).toBeUndefined();
   });
 
+  it('ui-inputmask on an inset ui-input floats the label for values the mask writes', async () => {
+    const f = await mount('<ui-input inset label="Amount" ui-inputmask="mask: 99-99; value.bind: value"></ui-input>', { value: '1234' });
+    const input = f.getBy<HTMLInputElement>('input')!;
+    const label = f.getBy<HTMLElement>('.ui-input__inset-label')!;
+    expect(input.value).toBe('12-34');
+    expect(label.hasAttribute('data-floating')).toBe(true);
+    f.component.value = '';
+    await settle();
+    expect(input.value).toBe('');
+    expect(label.hasAttribute('data-floating')).toBe(false);
+    f.component.value = '5678';
+    await settle();
+    expect(input.value).toBe('56-78');
+    expect(label.hasAttribute('data-floating')).toBe(true);
+  });
+
+  it('an inset ui-input floats the label for typed values and element-API writes', async () => {
+    const f = await mount('<ui-input inset label="Name"></ui-input>', {});
+    const host = f.getBy<HTMLElement & { value: string }>('.ui-input')!;
+    const input = f.getBy<HTMLInputElement>('input')!;
+    const label = f.getBy<HTMLElement>('.ui-input__inset-label')!;
+    expect(label.hasAttribute('data-floating')).toBe(false);
+    input.value = 'typed';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await settle();
+    expect(label.hasAttribute('data-floating')).toBe(true);
+    host.value = '';
+    await settle();
+    expect(label.hasAttribute('data-floating')).toBe(false);
+    host.value = 'written';
+    await settle();
+    expect(input.value).toBe('written');
+    expect(label.hasAttribute('data-floating')).toBe(true);
+  });
+
   it('ui-reorder emits a move intent from pointer input, without mutating consumer items', async () => {
     const f = await mount('<ui-list ui-reorder items.bind="items"><ui-list-item repeat.for="item of items" value.bind="item"><span textcontent.bind="item"></span></ui-list-item></ui-list>', { items: ['a', 'b', 'c'] });
     const host = f.getBy<HTMLElement>('ui-list')!;
