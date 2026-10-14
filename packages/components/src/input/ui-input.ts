@@ -97,10 +97,32 @@ export class UiInput {
       // the user to type the decimal separator twice before it sticks.
       if (this.inputEl.value !== value) {
         this.inputEl.value = value;
+        // Programmatic writes fire no input/change event — refresh the float state.
+        this.valueVersion++;
       }
     } else {
       this.initialValue = value;
     }
+  }
+
+  // Programmatic writes to the native value (the setter above, ui-inputmask) fire no input/change
+  // event, so the inputEl.value observation alone goes stale; bumping the version re-evaluates
+  // this getter. ui-inputmask announces its writes with ui-inputmask-change.
+  private valueVersion = 0;
+
+  get floating(): boolean {
+    void this.valueVersion;
+    return this.focus || !!this.inputEl?.value;
+  }
+
+  onInput(): void {
+    // The browser updates inputEl.value before value.bind calls the setter above, which then
+    // skips the redundant native assignment, so user edits invalidate the float state here.
+    this.valueVersion++;
+  }
+
+  onInputmaskChange(): void {
+    this.valueVersion++;
   }
 
   get labelId(): string {

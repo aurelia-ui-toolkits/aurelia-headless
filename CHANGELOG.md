@@ -4,6 +4,13 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.3.9]
+
+### Fixed
+- Inset `ui-input` labels now follow the native input value after user edits,
+  programmatic value writes, and `ui-inputmask` updates, so labels float and
+  settle correctly even when no native input or change event is emitted.
+
 ## [1.3.8]
 
 ### Fixed
