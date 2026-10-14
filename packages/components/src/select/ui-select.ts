@@ -1,4 +1,4 @@
-import { bindable, BindingMode, computed, CustomElement, customElement, IContainer, queueTask, resolve, slotted, ValueConverter, watch } from 'aurelia';
+import { bindable, BindingMode, computed, CustomElement, customElement, IContainer, queueTask, resolve, slotted, ValueConverter } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { IError, IValidatedElement } from '../base/i-validated-element';
 import { Keys } from '../base/keys';
@@ -112,44 +112,9 @@ export class UiSelect {
   @slotted({ slotName: 'trailing' })
   trailingNodes: readonly Node[] = [];
 
-  /** The option shown while the value is empty; bound from the slotted list's emptyItem (EnhanceUiSelect). */
-  emptyOption: UiListItem | undefined;
-
-  /**
-   * The empty option's text. Its content comes from the consumer's bindings, which a computed
-   * getter cannot observe through the DOM, so a MutationObserver keeps this copy current.
-   */
-  emptyOptionText: string = '';
-  private emptyOptionObserver: MutationObserver | undefined;
-
-  // The options render after the value is bound and may come and go (if.bind), so re-sync on change.
-  @watch<UiSelect>(x => x.emptyOption)
-  emptyOptionChanged(): void {
-    this.observeEmptyOption();
-    this.syncSelectedItemFromValue();
-  }
-
   attached(): void {
     this.resolveLabelConverter();
-    this.observeEmptyOption();
     this.syncSelectedItemFromValue();
-  }
-
-  detaching(): void {
-    this.emptyOptionObserver?.disconnect();
-    this.emptyOptionObserver = undefined;
-  }
-
-  private observeEmptyOption(): void {
-    this.emptyOptionObserver?.disconnect();
-    this.emptyOptionObserver = undefined;
-    const primary = this.emptyOption?.element.querySelector('.ui-list-item__primary');
-    const read = () => this.emptyOptionText = primary?.textContent?.trim() ?? '';
-    read();
-    if (primary) {
-      this.emptyOptionObserver = new MutationObserver(read);
-      this.emptyOptionObserver.observe(primary, { childList: true, characterData: true, subtree: true });
-    }
   }
 
   get labelId(): string {
@@ -171,11 +136,8 @@ export class UiSelect {
         ? this.selectedItem.map(item => this.getItemLabel(item)).join('; ')
         : this.getValueDisplayText();
     }
-    if (this.selectedItem !== undefined && !(this.selectedItem instanceof UiListItem)) {
+    if (this.selectedItem !== undefined) {
       return this.getItemLabel(this.selectedItem);
-    }
-    if (!this.hasValue && this.emptyOption) {
-      return this.emptyOptionText;
     }
     const valueDisplayText = this.getValueDisplayText();
     if (valueDisplayText !== undefined) {
@@ -288,11 +250,14 @@ export class UiSelect {
       return;
     }
 
-    // An option without a value of its own reports itself; it stands for "no value".
+    this.selectedItem = event.detail;
+    // An option without a value of its own reports the list item itself; it stands for "no value".
     this.value = event.detail instanceof UiListItem ? undefined : this.getItemValue(event.detail);
-    // Picking the empty option may leave the value unchanged (null stays null), so valueChanged
-    // would not re-sync: derive the selection from the value here.
-    this.selectedItem = this.hasValue ? event.detail : this.emptySelection();
+    // An empty value clears the select. Picking an empty option may leave the value unchanged
+    // (null stays null), in which case valueChanged would not clear the selection.
+    if (!this.hasValue) {
+      this.selectedItem = undefined;
+    }
     this.open = false;
     this.dispatchValueEvent('input');
     this.dispatchValueEvent('change');
@@ -403,7 +368,7 @@ export class UiSelect {
       if (!this.multiple) {
         const empty = this.value === undefined || this.value === null || this.value === '';
         if (empty) {
-          this.selectedItem = this.emptySelection();
+          this.selectedItem = undefined;
         } else if (this.selectedItem === undefined || this.getItemValue(this.selectedItem) !== this.value) {
           this.selectedItem = this.valueField ? undefined : this.value;
         }
@@ -418,18 +383,11 @@ export class UiSelect {
     }
 
     if (this.value === undefined || this.value === null || this.value === '') {
-      this.selectedItem = this.emptySelection();
+      this.selectedItem = undefined;
       return;
     }
 
     this.selectedItem = this.items.find(item => this.getItemValue(item) === this.value);
-  }
-
-  // The list marks an option selected by value: an option without a value of its own is its own
-  // value, while one bound to undefined already matches an undefined selection.
-  private emptySelection(): unknown {
-    const emptyOption = this.emptyOption;
-    return emptyOption && emptyOption.value === emptyOption ? emptyOption : undefined;
   }
 
   private onMultipleMenuSelect(item: unknown): void {
