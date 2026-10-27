@@ -76,6 +76,10 @@ export class UiDatepicker {
   @bindable({ set: booleanAttr })
   time: boolean = false;
 
+  /** Initial popup time in HH:mm format when the field has no value. */
+  @bindable
+  defaultTime: string | undefined;
+
   @bindable({ set: booleanAttr })
   completeTimeOnBlur: boolean = false;
 
@@ -238,6 +242,7 @@ export class UiDatepicker {
         label: this.label,
         dialogFormat: this.dialogFormat,
         time: this.time,
+        defaultTime: this.defaultTime,
         minuteStep: this.minuteStep,
         min: this.min,
         max: this.max,

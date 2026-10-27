@@ -4,6 +4,14 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.4.0]
+
+### Added
+- `ui-datepicker` now supports a `default-time` value in 24-hour `HH:mm`
+  format for empty date-time fields, with a global configuration fallback.
+  Existing values keep their time, date-only pickers ignore the option, and
+  omitted or invalid defaults retain the current-time behavior.
+
 ## [1.3.11]
 
 ### Fixed

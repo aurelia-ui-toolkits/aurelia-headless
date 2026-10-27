@@ -5,9 +5,26 @@ import { settle } from './fixture';
 import { mount, UI, viewModel } from './library-fixture';
 import { UiPromptDialog } from '../src/alert-service/prompt-dialog/ui-prompt-dialog';
 import { UiDatepickerDialog } from '../src/datepicker/ui-datepicker-dialog';
+import { UiDatepickerDialogConfiguration } from '../src/datepicker/ui-datepicker-dialog-configuration';
 import { parseCanonical, toCanonical } from '../src/datepicker/date-utils';
 
 describe('ui-datepicker', () => {
+  it('passes default-time to the popup without populating an empty field on cancellation', async () => {
+    const service = { open: vi.fn(() => ({ whenClosed: () => Promise.resolve({ status: 'cancel' }) })) };
+    const f = await mount('<ui-datepicker time default-time="00:00" value.two-way="value" format="dd/MM/yyyy HH:mm" inputmask-format="dd/MM/yyyy HH:mm"></ui-datepicker>', { value: '' }, [UI.UiDatepicker, Registration.instance(IDialogService, service)]);
+    const vm = viewModel<UI.UiDatepicker>(f.getBy('ui-datepicker')!);
+    const change = vi.fn();
+    f.appHost.addEventListener('change', change);
+
+    await vm.openDialog();
+    await settle();
+
+    expect(service.open).toHaveBeenCalledWith(expect.objectContaining({ model: expect.objectContaining({ value: '', time: true, defaultTime: '00:00' }) }));
+    expect(f.component.value).toBe('');
+    expect(vm.value).toBe('');
+    expect(change).not.toHaveBeenCalled();
+  });
+
   it('round-trips canonical dates through the real input mask and handles dialog acceptance/cancellation', async () => {
     let result = { status: 'ok', value: '2024-02-29' };
     const service = { open: vi.fn(() => ({ whenClosed: () => Promise.resolve(result) })) };
@@ -40,11 +57,56 @@ describe('ui-datepicker', () => {
 });
 
 describe('dialog components', () => {
+  it.each([
+    { defaultTime: '00:00', expected: '00:00:00' },
+    { defaultTime: '08:15', expected: '08:15:00' },
+    { defaultTime: undefined, expected: '14:45:00' },
+    { defaultTime: '25:00', expected: '14:45:00' },
+  ])('uses $expected when selecting a day with default-time $defaultTime', async ({ defaultTime, expected }) => {
+    const dialog = { ok: vi.fn(), cancel: vi.fn() };
+    const f = await mount('<ui-datepicker-dialog></ui-datepicker-dialog>', {}, [UiDatepickerDialog, Registration.instance(IDialogController, dialog)]);
+    const vm = viewModel<UiDatepickerDialog>(f.getBy('ui-datepicker-dialog')!);
+    vi.useFakeTimers({ toFake: ['Date'] });
+    try {
+      vi.setSystemTime(new Date(2024, 1, 15, 14, 45));
+      vm.activate({ value: undefined, time: true, defaultTime });
+      vm.selectDay(vm.days.find(day => day.date?.getDate() === 29 && !day.outside)!);
+      await vm.ok();
+      expect(dialog.ok).toHaveBeenCalledWith(`2024-02-29T${expected}`);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('supports a global default, per-picker override, date-only mode and min constraints', async () => {
+    const configuration = new UiDatepickerDialogConfiguration();
+    configuration.defaultTime = '08:15';
+    const dialog = { ok: vi.fn(), cancel: vi.fn() };
+    const f = await mount('<ui-datepicker-dialog></ui-datepicker-dialog>', {}, [UiDatepickerDialog, Registration.instance(IDialogController, dialog), Registration.instance(UiDatepickerDialogConfiguration, configuration)]);
+    const vm = viewModel<UiDatepickerDialog>(f.getBy('ui-datepicker-dialog')!);
+    vi.useFakeTimers({ toFake: ['Date'] });
+    try {
+      vi.setSystemTime(new Date(2024, 1, 15, 14, 45));
+      vm.activate({ value: undefined, time: true });
+      expect(toCanonical(vm.selectedDate, true)).toBe('2024-02-15T08:15:00');
+      vm.activate({ value: undefined, time: true, defaultTime: '00:00' });
+      expect(toCanonical(vm.selectedDate, true)).toBe('2024-02-15T00:00:00');
+      vm.activate({ value: undefined, time: true, defaultTime: '00:00', min: '2024-02-15T06:00:00' });
+      expect(toCanonical(vm.selectedDate, true)).toBe('2024-02-15T06:00:00');
+      vm.activate({ value: undefined, time: false, defaultTime: '00:00' });
+      vm.selectDay(vm.days.find(day => day.date?.getDate() === 29 && !day.outside)!);
+      await vm.ok();
+      expect(dialog.ok).toHaveBeenCalledWith('2024-02-29');
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it('ui-datepicker-dialog builds a leap-year calendar, disables restricted days and confirms canonical time', async () => {
     const dialog = { ok: vi.fn(), cancel: vi.fn() };
     const f = await mount('<ui-datepicker-dialog></ui-datepicker-dialog>', {}, [UiDatepickerDialog, Registration.instance(IDialogController, dialog)]);
     const vm = viewModel<UiDatepickerDialog>(f.getBy('ui-datepicker-dialog')!);
-    vm.activate({ value: '2024-02-15T10:30:00', time: true, min: '2024-02-10T00:00:00', max: '2024-02-29T23:59:00', disableWeekends: true, firstDay: 1 });
+    vm.activate({ value: '2024-02-15T10:30:00', time: true, defaultTime: '00:00', min: '2024-02-10T00:00:00', max: '2024-02-29T23:59:00', disableWeekends: true, firstDay: 1 });
     await settle();
     expect(vm.days).toHaveLength(42);
     expect(vm.weekdays).toHaveLength(7);

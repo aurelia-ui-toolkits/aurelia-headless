@@ -23,6 +23,8 @@ export interface UiDatepickerDialogData {
   label?: string;
   dialogFormat?: string;
   time?: boolean;
+  /** Initial popup time in HH:mm format; existing values take precedence. */
+  defaultTime?: string;
   minuteStep?: number;
   min?: string;
   max?: string;
@@ -66,7 +68,15 @@ export class UiDatepickerDialog {
       i18n
     };
 
-    const initial = parseCanonical(data.value, !!data.time) ?? new Date();
+    let initial = parseCanonical(data.value, !!data.time);
+    if (!initial) {
+      initial = new Date();
+      const defaultTime = data.defaultTime ?? this.configuration.defaultTime;
+      const parts = /^([01]\d|2[0-3]):([0-5]\d)$/.exec(defaultTime ?? '');
+      if (data.time && parts) {
+        initial.setHours(Number(parts[1]), Number(parts[2]), 0, 0);
+      }
+    }
     this.selectedDate = this.clampDate(initial);
     this.hour = this.selectedDate.getHours();
     this.minute = this.selectedDate.getMinutes();
