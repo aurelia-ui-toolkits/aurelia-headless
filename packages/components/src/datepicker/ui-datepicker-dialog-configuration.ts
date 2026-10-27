@@ -3,6 +3,8 @@ import type { UiDatepickerI18n, UiDatepickerYearRange } from './date-utils';
 export class UiDatepickerDialogConfiguration {
   label: string = 'Select date';
   dialogFormat: string = 'E, MMM d';
+  /** Initial popup time in HH:mm format for empty date-time fields. */
+  defaultTime: string | undefined;
   firstDay: number = 0;
   yearRange: UiDatepickerYearRange = { min: 1900, max: 2100 };
   showAll: boolean = false;

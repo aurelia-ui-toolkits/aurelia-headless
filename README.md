@@ -56,6 +56,21 @@ Aurelia
 <ui-button data-primary click.trigger="save()">Save</ui-button>
 ```
 
+## Datepicker default time
+
+Use `default-time="00:00"` on a date-time picker to initialize its popup at midnight
+when the field is empty:
+
+```html
+<ui-datepicker time default-time="00:00" value.bind="dateTime"
+  format="dd/MM/yyyy HH:mm" inputmask-format="dd/MM/yyyy HH:mm"></ui-datepicker>
+```
+
+The option accepts 24-hour `HH:mm`. Existing values keep their time, and opening or
+cancelling the popup does not populate the field. Date-only pickers ignore the option.
+Omitted or invalid defaults retain the current-time behavior. A global fallback is
+available through `AureliaHeadlessConfiguration.customize(c => { c.datepicker.defaultTime = '00:00'; })`.
+
 ## Theme
 
 Themes are just CSS packages. The components do not depend on a specific theme, so applying the ready-made theme is one import.
