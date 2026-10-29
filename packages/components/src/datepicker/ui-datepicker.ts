@@ -2,6 +2,7 @@ import { DialogCloseResult, IDialogService } from '@aurelia/dialog';
 import { bindable, CustomElement, customElement, INode, queueTask, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { UiFieldConfiguration } from '../field/ui-field-configuration';
+import { UiDatepickerDialogConfiguration } from './ui-datepicker-dialog-configuration';
 import { IError, IValidatedElement } from '../base/i-validated-element';
 import { formatDate, getCanonicalFormat, parseByFormat, parseCanonical } from './date-utils';
 import { UiDatepickerDialog, UiDatepickerDialogData } from './ui-datepicker-dialog';
@@ -11,6 +12,7 @@ let nextDatepickerId = 0;
 @customElement('ui-datepicker')
 export class UiDatepicker {
   private readonly configuration = resolve(UiFieldConfiguration);
+  readonly dialogConfiguration = resolve(UiDatepickerDialogConfiguration);
 
   constructor() {
     defineUiDatepickerElementApis(this.element);
@@ -109,6 +111,10 @@ export class UiDatepicker {
 
   @bindable
   i18n: UiDatepickerDialogData['i18n'];
+
+  get openPickerText(): string {
+    return this.i18n?.openPicker ?? this.dialogConfiguration.i18n.openPicker ?? 'Open date picker';
+  }
 
   @bindable({ set: booleanAttr })
   disabled: boolean = false;

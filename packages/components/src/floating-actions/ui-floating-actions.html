@@ -5,7 +5,7 @@
   </div>
 
   <ui-icon-button class="ui-floating-actions__trigger" if.bind="!expanded"
-    click.trigger="toggle()" title="More actions">
+    click.trigger="toggle()" title.bind="configuration.moreActionsText">
     <svg class="ui-floating-actions__trigger-icon" viewBox="0 0 16 16" aria-hidden="true">
       <circle cx="3" cy="8" r="1.5"></circle>
       <circle cx="8" cy="8" r="1.5"></circle>

@@ -24,7 +24,7 @@
     if.bind="removable"
     type="button"
     tabindex="-1"
-    aria-label="Remove"
+    aria-label.bind="configuration.removeText"
     disabled.bind="disabled"
     click.trigger="onRemoveClick($event)">
     <span class="ui-chip__remove-icon" aria-hidden="true"></span>

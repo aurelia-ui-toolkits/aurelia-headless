@@ -4,6 +4,23 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.4.1]
+
+### Added
+- Component configuration now exposes customizable accessibility labels for
+  alerts, breadcrumbs, chips, floating actions, progress indicators, sliders,
+  and toast regions, plus the default validation error message.
+- Datepicker translations now cover the open button, month and year selectors,
+  calendar navigation, and time fields, with English fallbacks for omitted labels.
+
+### Changed
+- Configure table loading, column-reset, and pagination labels through the
+  `c.table` settings in `AureliaHeadlessConfiguration.customize()`; the corresponding
+  per-table text bindables have been removed.
+- Component configuration objects retain their identity while allowing their
+  individual settings to be customized; datepicker translation members should
+  be updated individually instead of replacing the translation object.
+
 ## [1.4.0]
 
 ### Added

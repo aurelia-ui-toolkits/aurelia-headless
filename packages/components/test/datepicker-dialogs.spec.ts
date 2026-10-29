@@ -9,6 +9,17 @@ import { UiDatepickerDialogConfiguration } from '../src/datepicker/ui-datepicker
 import { parseCanonical, toCanonical } from '../src/datepicker/date-utils';
 
 describe('ui-datepicker', () => {
+  it('uses the per-picker open label and falls back when it is omitted', async () => {
+    const f = await mount('<ui-datepicker i18n.bind="translations"></ui-datepicker>',
+      { translations: { openPicker: 'Choose date' } as UI.UiDatepickerI18n },
+      [UI.UiDatepicker, Registration.instance(IDialogService, {})]);
+    const button = f.getBy('.ui-datepicker__button')!;
+    expect(button.getAttribute('aria-label')).toBe('Choose date');
+    f.component.translations = {};
+    await settle();
+    expect(button.getAttribute('aria-label')).toBe('Open date picker');
+  });
+
   it('passes default-time to the popup without populating an empty field on cancellation', async () => {
     const service = { open: vi.fn(() => ({ whenClosed: () => Promise.resolve({ status: 'cancel' }) })) };
     const f = await mount('<ui-datepicker time default-time="00:00" value.two-way="value" format="dd/MM/yyyy HH:mm" inputmask-format="dd/MM/yyyy HH:mm"></ui-datepicker>', { value: '' }, [UI.UiDatepicker, Registration.instance(IDialogService, service)]);
@@ -57,6 +68,28 @@ describe('ui-datepicker', () => {
 });
 
 describe('dialog components', () => {
+  it('keeps English labels for omitted translations and applies per-picker overrides', async () => {
+    const configuration = new UI.HeadlessConfiguration();
+    const configure = (c: UI.HeadlessConfiguration) => {
+      c.datepicker.i18n.ok = 'Confirm';
+      c.datepicker.i18n.previousMonth = undefined;
+    };
+    configure(configuration);
+    const f = await mount('<ui-datepicker-dialog></ui-datepicker-dialog>', {}, [UiDatepickerDialog,
+      Registration.instance(IDialogController, {}),
+      Registration.instance(UiDatepickerDialogConfiguration, configuration.datepicker)]);
+    const vm = viewModel<UiDatepickerDialog>(f.getBy('ui-datepicker-dialog')!);
+    vm.activate({ value: undefined, time: true, i18n: { month: 'Choose month', year: undefined, nextMonth: undefined, hour: undefined, minute: undefined } });
+    await settle();
+    expect(f.getBy('.ui-datepicker-dialog__month')!.getAttribute('aria-label')).toBe('Choose month');
+    expect(f.getBy('.ui-datepicker-dialog__year')!.getAttribute('aria-label')).toBe('Year');
+    const navigation = f.getAllBy('.ui-datepicker-dialog__nav-button');
+    expect(navigation[0].getAttribute('aria-label')).toBe('Previous month');
+    expect(navigation[1].getAttribute('aria-label')).toBe('Next month');
+    expect(f.getAllBy('.ui-datepicker-dialog__time-field span').map(el => el.textContent)).toEqual(['Hour', 'Minute']);
+    expect(vm.okText).toBe('Confirm');
+  });
+
   it.each([
     { defaultTime: '00:00', expected: '00:00:00' },
     { defaultTime: '08:15', expected: '08:15:00' },

@@ -1,8 +1,11 @@
-import { bindable, customElement } from 'aurelia';
+import { bindable, customElement, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
+import { UiProgressConfiguration } from './ui-progress-configuration';
 
 @customElement('ui-progress')
 export class UiProgress {
+  readonly configuration = resolve(UiProgressConfiguration);
+
   @bindable
   value: number | undefined;
   valueChanged(): void {

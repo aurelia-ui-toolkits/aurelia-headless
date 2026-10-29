@@ -71,6 +71,16 @@ cancelling the popup does not populate the field. Date-only pickers ignore the o
 Omitted or invalid defaults retain the current-time behavior. A global fallback is
 available through `AureliaHeadlessConfiguration.customize(c => { c.datepicker.defaultTime = '00:00'; })`.
 
+Configure datepicker translations through the customization delegate, updating only the
+members you need. The remaining translations keep their defaults:
+
+```typescript
+AureliaHeadlessConfiguration.customize(c => {
+  c.datepicker.i18n.openPicker = 'Choose date';
+  c.datepicker.i18n.ok = 'Confirm';
+});
+```
+
 ## Theme
 
 Themes are just CSS packages. The components do not depend on a specific theme, so applying the ready-made theme is one import.

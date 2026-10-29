@@ -1,4 +1,5 @@
-import { bindable, customElement } from 'aurelia';
+import { bindable, customElement, resolve } from 'aurelia';
+import { UiBreadcrumbsConfiguration } from './ui-breadcrumbs-configuration';
 
 export interface UiBreadcrumbItem {
   label: string;
@@ -8,6 +9,8 @@ export interface UiBreadcrumbItem {
 
 @customElement('ui-breadcrumbs')
 export class UiBreadcrumbs {
+  readonly configuration = resolve(UiBreadcrumbsConfiguration);
+
   @bindable
   items: readonly UiBreadcrumbItem[] = [];
 }

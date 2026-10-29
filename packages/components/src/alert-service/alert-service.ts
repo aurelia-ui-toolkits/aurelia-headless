@@ -20,7 +20,7 @@ export interface IAlertDialogOptions<TModel = unknown, TComponent extends object
 export class AlertService {
   private readonly dialogService = resolve(IDialogService);
   private readonly exceptionsTracker = resolve(ExceptionsTracker);
-  private readonly configuration = resolve(AlertConfiguration);
+  readonly configuration = resolve(AlertConfiguration);
 
   increment$ = new Subject<void>();
   decrement$ = new Subject<void>();

@@ -23,7 +23,7 @@ export class UiTable implements IReorderHost {
   /** The consumer's <table>, projected through the default au-slot. */
   @slotted('table')
   tables: HTMLTableElement[] = [];
-  private readonly configuration = resolve(UiTableConfiguration);
+  readonly configuration = resolve(UiTableConfiguration);
   private columnSizes: Record<string, number> = {};
   private readonly sortedColumns = new Map<string, UiTableColumn>();
   /** Columns whose current direction the table set (as opposed to one they were authored with). */
@@ -95,30 +95,6 @@ export class UiTable implements IReorderHost {
 
   @bindable
   paginationText: string | undefined;
-
-  @bindable
-  loadingText: string = this.configuration.loadingText;
-
-  @bindable
-  resetColumnsText: string = this.configuration.resetColumnsText;
-
-  @bindable
-  rowsPerPageText: string = this.configuration.rowsPerPageText;
-
-  @bindable
-  pageText: string = this.configuration.pageText;
-
-  @bindable
-  firstPageText: string = this.configuration.firstPageText;
-
-  @bindable
-  previousPageText: string = this.configuration.previousPageText;
-
-  @bindable
-  nextPageText: string = this.configuration.nextPageText;
-
-  @bindable
-  lastPageText: string = this.configuration.lastPageText;
 
   attaching(): void {
     this.host.dataset.uiTableId = this.tableId;

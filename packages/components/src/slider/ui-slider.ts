@@ -1,6 +1,7 @@
 import { bindable, BindingMode, CustomElement, customElement, INode, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { IError, IValidatedElement } from '../base/i-validated-element';
+import { UiSliderConfiguration } from './ui-slider-configuration';
 
 let nextSliderId = 0;
 
@@ -11,6 +12,7 @@ export class UiSlider {
   }
 
   readonly element = resolve(INode) as HTMLElement;
+  readonly configuration = resolve(UiSliderConfiguration);
   errors = new Map<IError, boolean>();
   focus = false;
   active = false;

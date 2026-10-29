@@ -1,11 +1,13 @@
 import { bindable, BindingMode, customElement, INode, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
+import { UiAlertConfiguration } from './ui-alert-configuration';
 
 export type AlertTone = 'info' | 'success' | 'warning' | 'danger';
 
 @customElement('ui-alert')
 export class UiAlert {
   private readonly host = resolve(INode) as HTMLElement;
+  readonly configuration = resolve(UiAlertConfiguration);
 
   @bindable
   tone: AlertTone = 'info';
