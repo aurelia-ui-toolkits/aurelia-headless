@@ -22,7 +22,7 @@ export function validate(errorMessage?: string | null) {
       const errors = await this.validationController.validate();
       if (!errors.valid) {
         if (errorMessage !== null && this.alertService) {
-          await this.alertService.error(errorMessage ?? 'Please fix validation errors');
+          await this.alertService.error(errorMessage ?? this.alertService.configuration.validationErrorText);
         }
         return;
       }

@@ -1,8 +1,11 @@
-import { bindable, customElement, slotted } from 'aurelia';
+import { bindable, customElement, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
+import { UiFloatingActionsConfiguration } from './ui-floating-actions-configuration';
 
 @customElement('ui-floating-actions')
 export class UiFloatingActions {
+  readonly configuration = resolve(UiFloatingActionsConfiguration);
+
   /** When set, all actions are shown and the collapse trigger is never rendered. */
   @bindable({ set: booleanAttr })
   alwaysExpanded: boolean = false;

@@ -17,6 +17,13 @@ export interface DateParts {
 export interface UiDatepickerI18n {
   cancel?: string;
   ok?: string;
+  month?: string;
+  year?: string;
+  previousMonth?: string;
+  nextMonth?: string;
+  hour?: string;
+  minute?: string;
+  openPicker?: string;
   dateFnsLocale?: Locale;
 }
 

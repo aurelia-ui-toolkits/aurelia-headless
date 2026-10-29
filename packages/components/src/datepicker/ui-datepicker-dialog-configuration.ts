@@ -8,8 +8,16 @@ export class UiDatepickerDialogConfiguration {
   firstDay: number = 0;
   yearRange: UiDatepickerYearRange = { min: 1900, max: 2100 };
   showAll: boolean = false;
-  i18n: UiDatepickerI18n = {
+  /** Customize individual translations through AureliaHeadlessConfiguration.customize(). */
+  readonly i18n: UiDatepickerI18n = {
     cancel: 'Cancel',
-    ok: 'OK'
+    ok: 'OK',
+    month: 'Month',
+    year: 'Year',
+    previousMonth: 'Previous month',
+    nextMonth: 'Next month',
+    hour: 'Hour',
+    minute: 'Minute',
+    openPicker: 'Open date picker'
   };
 }

@@ -44,7 +44,7 @@
       step.bind="step"
       value.bind="endValue"
       disabled.bind="disabled"
-      aria-label.attr="label ? label + ' end' : 'Range end'"
+      aria-label.attr="label ? label + ' ' + configuration.endText : configuration.rangeEndText"
       aria-invalid.bind="invalid || errors.size ? 'true' : 'false'"
       aria-describedby.bind="errors.size ? errorsId : (helperNodes.length ? helperId : null)"
       input.trigger="onInput($event)"

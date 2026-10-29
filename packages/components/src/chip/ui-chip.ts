@@ -1,12 +1,14 @@
 import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
 import { Keys } from '../base/keys';
+import { UiChipConfiguration } from './ui-chip-configuration';
 
 type ChipTone = 'neutral' | 'primary' | 'success' | 'warning' | 'danger';
 
 @customElement('ui-chip')
 export class UiChip {
   private readonly host = resolve(INode) as HTMLElement;
+  readonly configuration = resolve(UiChipConfiguration);
 
   @bindable({ mode: BindingMode.twoWay, set: booleanAttr })
   selected = false;

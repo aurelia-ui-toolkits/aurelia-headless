@@ -1,4 +1,4 @@
-<template class="ui-toast-region" role="region" aria-label="Notifications">
+<template class="ui-toast-region" role="region" aria-label.bind="configuration.regionText">
   <ui-alert repeat.for="toast of toasts"
     class="ui-toast-region__toast"
     tone.bind="toast.tone"

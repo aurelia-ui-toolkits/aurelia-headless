@@ -7,7 +7,7 @@
   <div class="ui-datepicker-dialog__body">
     <div class="ui-datepicker-dialog__nav">
       <ui-select class="ui-datepicker-dialog__month" value.two-way="visibleMonth" selected-item.two-way="selectedMonth"
-        items.bind="months" value-field="value" label-field="label" portal-target.bind="portalTarget" aria-label="Month"
+        items.bind="months" value-field="value" label-field="label" portal-target.bind="portalTarget" aria-label.bind="data.i18n.month ?? 'Month'"
         change.trigger="monthChanged()" inset.bind="false">
         <ui-list selected.bind="selectedMonth" typeahead-field="label">
           <ui-list-item repeat.for="month of months" value.bind="month"
@@ -15,21 +15,21 @@
         </ui-list>
       </ui-select>
       <ui-select class="ui-datepicker-dialog__year" value.two-way="visibleYear" selected-item.two-way="selectedYear"
-        value-field="value" label-field="label" portal-target.bind="portalTarget" aria-label="Year"
+        value-field="value" label-field="label" portal-target.bind="portalTarget" aria-label.bind="data.i18n.year ?? 'Year'"
         change.trigger="yearChanged()" inset.bind="false" items.bind="years">
         <ui-list selected.bind="selectedYear" typeahead-field="label">
           <ui-list-item repeat.for="year of years" value.bind="year">${year.label}</ui-list-item>
         </ui-list>
       </ui-select>
       <button class="ui-datepicker-dialog__nav-button" ui-icon-button type="button" click.trigger="prev()"
-        aria-label="Previous month">
+        aria-label.bind="data.i18n.previousMonth ?? 'Previous month'">
         <svg class="ui-datepicker-dialog__nav-icon" viewBox="0 0 16 16" aria-hidden="true">
           <path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round"></path>
         </svg>
       </button>
       <button class="ui-datepicker-dialog__nav-button" ui-icon-button type="button" click.trigger="next()"
-        aria-label="Next month">
+        aria-label.bind="data.i18n.nextMonth ?? 'Next month'">
         <svg class="ui-datepicker-dialog__nav-icon" viewBox="0 0 16 16" aria-hidden="true">
           <path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round"></path>
@@ -46,11 +46,11 @@
 
     <div class="ui-datepicker-dialog__time" if.bind="data.time">
       <label class="ui-datepicker-dialog__time-field">
-        <span>Hour</span>
+        <span>${data.i18n.hour ?? 'Hour'}</span>
         <input type="number" min="0" max="23" value.bind="hour" change.trigger="timeChanged()">
       </label>
       <label class="ui-datepicker-dialog__time-field">
-        <span>Minute</span>
+        <span>${data.i18n.minute ?? 'Minute'}</span>
         <input type="number" min="0" max="59" step.bind="minuteStep" value.bind="minute" change.trigger="timeChanged()">
       </label>
     </div>

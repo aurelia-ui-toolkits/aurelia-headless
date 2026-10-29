@@ -8,4 +8,6 @@ export class AlertConfiguration {
   cancelText: string = 'Cancel';
   yesText: string = 'Yes';
   noText: string = 'No';
+  /** Shown by @validate when validation fails and no message is given. */
+  validationErrorText: string = 'Please fix validation errors';
 }
