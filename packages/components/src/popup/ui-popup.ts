@@ -1,5 +1,6 @@
 import { bindable, BindingMode, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
+import { createValueEvent } from '../base/create-value-event';
 import { getFocusableWithin } from '../base/focusable';
 import { Keys } from '../base/keys';
 
@@ -220,10 +221,7 @@ export class UiPopup {
 
   onListSelect(event: Event): void {
     event.stopPropagation();
-    this.element.dispatchEvent(new CustomEvent('list-select', {
-      bubbles: true,
-      detail: (event as CustomEvent).detail
-    }));
+    this.element.dispatchEvent(createValueEvent('list-select', (event as CustomEvent).detail));
   }
 
   onListAction(event: Event): void {

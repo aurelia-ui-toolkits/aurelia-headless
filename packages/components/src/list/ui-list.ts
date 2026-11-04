@@ -1,5 +1,6 @@
 import { bindable, CustomElement, customElement, INode, resolve, slotted } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
+import { createValueEvent } from '../base/create-value-event';
 import { Keys } from '../base/keys';
 import type { IReorderHost } from '../reorder/i-reorder-host';
 import { UiListItem } from './ui-list-item';
@@ -20,6 +21,8 @@ export class UiList implements IReorderHost {
   reorderItems: UiListItem[] = [];
   private listItemsChangedCallback: (() => void) | undefined;
   activeItem: unknown;
+  // Presence is separate from the value: undefined is a valid active option.
+  private hasActiveItem = false;
   /**
    * The rendered item the activation originated from. Hover/keyboard highlighting is
    * instance-based so duplicate values do not light up together; selection stays value-keyed
@@ -105,10 +108,7 @@ export class UiList implements IReorderHost {
       this.slotDerivedItems = true;
     }
     this.syncListItemSelection();
-    // Re-anchor the active row when the rendered set changed (e.g. a virtual repeat window moved).
-    if (this.activeItem !== undefined && (!this.activeListItem || !this.listItems.includes(this.activeListItem))) {
-      this.activeListItem = this.listItems.find(x => x.value === this.activeItem);
-    }
+    this.syncActiveListItem();
     if (this.listItemsChangedCallback) {
       this.listItemsChangedCallback();
       this.listItemsChangedCallback = undefined;
@@ -187,7 +187,7 @@ export class UiList implements IReorderHost {
     }
 
     if (typeof this.disabledField === 'string') {
-      return !!(item as Record<string, unknown>)[this.disabledField];
+      return !!(item as Record<string, unknown> | null | undefined)?.[this.disabledField];
     } else if (typeof this.disabledField === 'function') {
       return this.disabledField(item);
     }
@@ -204,6 +204,15 @@ export class UiList implements IReorderHost {
   syncListItemSelection(): void {
     for (const item of this.listItems) {
       item.selected = this.isItemSelected(item.value);
+    }
+  }
+
+  /** Re-anchor after rows are added, removed, or rebound by virtual repeat. */
+  syncActiveListItem(): void {
+    if (this.hasActiveItem && (!this.activeListItem
+      || this.activeListItem.value !== this.activeItem
+      || !this.listItems.includes(this.activeListItem))) {
+      this.activeListItem = this.listItems.find(item => item.value === this.activeItem);
     }
   }
 
@@ -250,11 +259,11 @@ export class UiList implements IReorderHost {
   }
 
   onMouseLeave(): void {
-    this.activeItem = undefined;
-    this.activeListItem = undefined;
+    this.clearActive();
   }
 
   clearActive(): void {
+    this.hasActiveItem = false;
     this.activeItem = undefined;
     this.activeListItem = undefined;
   }
@@ -318,7 +327,7 @@ export class UiList implements IReorderHost {
 
   private move(direction: 1 | -1): void {
     const items = this.getEffectiveItems();
-    const currentIndex = this.activeItem !== undefined ? items.indexOf(this.activeItem) : -1;
+    const currentIndex = this.hasActiveItem ? items.indexOf(this.activeItem) : -1;
     let nextIndex = currentIndex + direction;
 
     if (this.loop) {
@@ -329,15 +338,18 @@ export class UiList implements IReorderHost {
 
     const next = this.getNonDisabled(items[nextIndex], direction, items);
     if (next !== undefined) {
-      this.scrollItemIntoView(next);
-      this.activateItem(next);
+      this.scrollItemIntoView(next.value);
+      this.activateItem(next.value);
     }
   }
 
-  private getNonDisabled(item: unknown, direction: 1 | -1, items = this.getEffectiveItems()): unknown {
+  private getNonDisabled(item: unknown, direction: 1 | -1, items = this.getEffectiveItems()): { value: unknown } | undefined {
+    if (!items.length) {
+      return undefined;
+    }
     const listItem = this.listItems.find(x => x.value === item);
     if (!listItem?.disabled && !this.isItemDisabled(item)) {
-      return item;
+      return { value: item };
     }
     const startIndex = items.indexOf(item);
     for (let step = 1; step < items.length; step++) {
@@ -345,7 +357,7 @@ export class UiList implements IReorderHost {
       const next = items[index];
       const nextListItem = this.listItems.find(x => x.value === next);
       if (!nextListItem?.disabled && !this.isItemDisabled(next)) {
-        return next;
+        return { value: next };
       }
     }
 
@@ -359,8 +371,8 @@ export class UiList implements IReorderHost {
       return;
     }
 
-    this.scrollItemIntoView(firstItem, 'instant');
-    this.activateItem(firstItem);
+    this.scrollItemIntoView(firstItem.value, 'instant');
+    this.activateItem(firstItem.value);
   }
 
   private setLastActive(): void {
@@ -370,8 +382,8 @@ export class UiList implements IReorderHost {
       return;
     }
 
-    this.scrollItemIntoView(lastItem, 'instant');
-    this.activateItem(lastItem);
+    this.scrollItemIntoView(lastItem.value, 'instant');
+    this.activateItem(lastItem.value);
   }
 
   private setSelectedActive(): void {
@@ -385,13 +397,14 @@ export class UiList implements IReorderHost {
   }
 
   private activateItem(item: unknown, source?: UiListItem): void {
+    this.hasActiveItem = true;
     this.activeItem = item;
     this.activeListItem = source ?? this.listItems.find(x => x.value === item);
-    this.emitActivate(item);
+    this.host.dispatchEvent(createValueEvent('list-activate', item));
   }
 
   private selectActive(): void {
-    if (this.activeItem === undefined) {
+    if (!this.hasActiveItem) {
       return;
     }
     const listItem = this.listItems.find(x => x.value === this.activeItem);
@@ -415,7 +428,7 @@ export class UiList implements IReorderHost {
       this.selectionAnchor = item;
     }
     this.syncListItemSelection();
-    this.emitSelection(item);
+    this.host.dispatchEvent(createValueEvent('list-select', item));
   }
 
   /**
@@ -454,20 +467,6 @@ export class UiList implements IReorderHost {
     }
   }
 
-  private emitActivate(item: unknown): void {
-    this.host.dispatchEvent(new CustomEvent('list-activate', {
-      bubbles: true,
-      detail: item
-    }));
-  }
-
-  private emitSelection(item: unknown): void {
-    this.host.dispatchEvent(new CustomEvent('list-select', {
-      bubbles: true,
-      detail: item
-    }));
-  }
-
   private resolveElementFromEvent(target: EventTarget | null) {
     return target instanceof HTMLElement ? target.closest(LIST_ITEM_SELECTOR) : null;
   }
@@ -485,7 +484,7 @@ export class UiList implements IReorderHost {
     }, 800);
 
     const items = this.getEffectiveItems();
-    const startIndex = this.activeItem !== undefined ? items.indexOf(this.activeItem) : 0;
+    const startIndex = this.hasActiveItem ? items.indexOf(this.activeItem) : 0;
 
     for (let step = 0; step < items.length; step++) {
       const index = (startIndex + step) % items.length;
@@ -500,6 +499,9 @@ export class UiList implements IReorderHost {
   }
 
   private getItemText(item: unknown): string {
+    if (item === undefined) {
+      return this.listItems.find(x => x.value === item)?.element.textContent?.trim() ?? '';
+    }
     if (this.typeaheadField && item && typeof item === 'object') {
       const value = (item as Record<string, unknown>)[this.typeaheadField];
       return value === undefined || value === null ? '' : String(value);

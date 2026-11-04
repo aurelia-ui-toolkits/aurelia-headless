@@ -4,6 +4,16 @@ All notable changes to `@aurelia-ui-toolkits/headless` and
 `@aurelia-ui-toolkits/headless-tailwind` are documented here. The two packages
 are versioned in lockstep.
 
+## [1.4.2]
+
+### Fixed
+- `ui-list` now supports keyboard navigation, typeahead, and selection of
+  `undefined` options, keeping an active empty option distinct from no active row.
+- List, popup, and menu selection events now preserve `undefined` values instead
+  of converting them to `null`, allowing `ui-select` clear options to work by keyboard.
+- Active list highlights now follow their values when virtualized rows are
+  rebound or replaced, while preserving the hovered row for duplicate values.
+
 ## [1.4.1]
 
 ### Added
