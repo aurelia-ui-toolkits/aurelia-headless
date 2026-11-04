@@ -1,5 +1,6 @@
 import { bindable, BindingMode, CustomElement, customElement, INode, resolve } from 'aurelia';
 import { booleanAttr } from '../base/boolean-attr';
+import { createValueEvent } from '../base/create-value-event';
 import { Keys } from '../base/keys';
 import { UiList } from '../list/ui-list';
 import { UiPopup } from '../popup/ui-popup';
@@ -59,10 +60,7 @@ export class UiMenu {
   }
 
   onListSelect(event: Event): void {
-    this.element.dispatchEvent(new CustomEvent('menu-select', {
-      bubbles: true,
-      detail: (event as CustomEvent).detail
-    }));
+    this.element.dispatchEvent(createValueEvent('menu-select', (event as CustomEvent).detail));
 
     if (this.closeOnSelect) {
       this.open = false;

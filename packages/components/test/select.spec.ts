@@ -84,6 +84,32 @@ describe('ui-select', () => {
     expect(f.component.value).toBe(2);
   });
 
+  it.each([undefined, 0])('selects an explicit undefined option by keyboard from value %s', async value => {
+    const f = createFixture(`<ui-select items.bind="items" value.bind="value" value-field="id" label-field="name">
+      <ui-list>
+        <ui-list-item value.bind="undefined">Clear</ui-list-item>
+        <ui-list-item repeat.for="item of $host.items" value.bind="item" textcontent.bind="item.name"></ui-list-item>
+      </ui-list>
+    </ui-select>`, { items: [options[0], options[2]], value: value as unknown }, registrations);
+    await f.started;
+    const control = f.getBy<HTMLElement>('.ui-select__control')!;
+    control.focus();
+    await key(control, 'ArrowDown');
+    const list = document.querySelector<HTMLElement>('ui-list')!;
+    // Opening may focus the previously selected account; explicitly navigate to Clear.
+    if (value !== undefined) {
+      await key(list, 'Home');
+    }
+    expect(rows()[0].hasAttribute('data-active')).toBe(true);
+    const selected = vi.fn();
+    list.addEventListener('list-select', selected);
+    await key(list, 'Enter');
+    expect(selected).toHaveBeenCalledTimes(1);
+    expect((selected.mock.calls[0][0] as CustomEvent).detail).toBeUndefined();
+    expect(f.component.value).toBeUndefined();
+    expect(CustomElement.for<UiSelect>(f.getBy('.ui-select')!).viewModel.open).toBe(false);
+  });
+
   it('opens at the last item with ArrowUp and supports printable-key typeahead', async () => {
     const f = await selectFixture();
     await key(f.control, 'ArrowUp');
